@@ -1,10 +1,4 @@
 import fetch from 'isomorphic-unfetch';
-import { 
-  GET_PERSON, 
-  GET_PERSONS,
-  CREATE_PERSON, 
-  DELETE_PERSONS
-} from 'queries/person';
 
 const fetchQuery = (query) => {
   return fetch('http://localhost:3001/graphql', {
@@ -16,27 +10,48 @@ const fetchQuery = (query) => {
 
 class PersonApi {
   getPerson (personId) {
-    return fetchQuery(
-      GET_PERSON(personId)
-    );
+    return fetchQuery(`{
+      person(_id: "${personId}") {
+        name,
+        biography,
+        portrait
+      }
+    }`);
   }
 
   getPersons (offset, searchTerm, sort) {
-    return fetchQuery(
-      GET_PERSONS(offset, searchTerm, sort)
-    );
+    return fetchQuery(`{
+      persons(offset: ${offset}, searchTerm: "${searchTerm}", sort: "${sort}") {
+        persons {
+          _id,
+          name,
+          created
+        },
+        pagination {
+          total,
+          limit,
+          offset
+        }
+      }
+    }`);
   }
 
-  createPerson (payload) {
-    return fetchQuery(
-      CREATE_PERSON(payload)
-    );
+  createPerson ({name, portrait}) {
+    return fetchQuery(`mutation {
+      createPerson(input: {
+        name: "${name}",
+        portrait: "${portrait}"
+      }) {
+        _id,
+        name
+      }
+    }`);
   }
 
   deletePersons (ids = []) {
-    return fetchQuery(
-      DELETE_PERSONS(ids)
-    );
+    return fetchQuery(`mutation {
+      deletePersons (ids: "${ids}")
+    }`);
   }
 
   uploadPortrait (file) {

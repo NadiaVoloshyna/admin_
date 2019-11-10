@@ -7,11 +7,11 @@ module.exports = withGraphql(withCSS(withSass({
   webpack (config, options) {
     config.resolve.alias = {
       ...config.resolve.alias,
-      'components': path.join(__dirname, 'components/'),
       'queries': path.join(__dirname, 'queries/'),
-      'utils': path.join(__dirname, 'utils/'),
       'api': path.join(__dirname, 'api/'),
-      'actions': path.join(__dirname, 'store/actions'),
+      'pages': path.join(__dirname, 'client/pages'),
+      'shared': path.join(__dirname, 'client/shared'),
+      'assets': path.join(__dirname, 'assets'),
     };
     return config;
   }

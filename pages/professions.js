@@ -1,10 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 import { connect } from 'react-redux';
-import Layout from 'components/layout';
-import { actionTypes, actionCreator } from 'actions/person';
-import { initialState } from '../store/reducers/professions';
-import ProfessionsList from 'components/pages/professions/professionsList';
+import Layout from 'shared/components/layout';
+import { actionTypes, actionCreator } from 'pages/professions/actions';
+import { initialState } from 'pages/professions/reducers';
+import ProfessionsList from 'pages/professions/components/professionsList';
 
 const Professions = () => {
   return (

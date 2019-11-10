@@ -1,10 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 import { connect } from 'react-redux';
-import Layout from 'components/layout';
-import PersonsList from 'components/pages/persons/personsList';
-import { actionTypes, actionCreator } from 'actions/person';
-import { initialState } from '../store/reducers/persons';
+import Layout from 'shared/components/layout';
+import PersonsList from 'pages/persons/components/personsList';
+import { actionTypes, actionCreator } from 'pages/persons/actions';
+import { initialState } from 'pages/persons/reducers';
 
 const Persons = () => {
   return (

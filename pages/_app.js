@@ -6,7 +6,7 @@ import withReduxSaga from 'next-redux-saga'
 import { library } from '@fortawesome/fontawesome-svg-core'
 //import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import initializeStore from '../store';
+import initializeStore from '../client/store';
 
 library.add(faTrashAlt);
 

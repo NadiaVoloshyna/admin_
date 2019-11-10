@@ -5,14 +5,15 @@ import { useRouter } from 'next/router'
 import { Form, Field, useFormState } from 'react-final-form'
 import Head from 'next/head';
 import Router from 'next/router';
-import Layout from 'components/layout';
-import PostNavbar from 'components/pages/post/navbar';
-import PersonsName from 'components/pages/post/name';
-import DuplicateModal from 'components/pages/person/duplicateModal';
-import { initialState } from '../../store/reducers/person';
+import Layout from 'shared/components/layout';
 
-import PersonsPortrait from 'components/pages/person/portrait';
-import PersonsBiography from 'components/pages/person/biography';
+import PostNavbar from 'pages/person/components/navbar';
+import PersonsName from 'pages/person/components/name';
+import DuplicateModal from 'pages/person/components/duplicateModal';
+import PersonsPortrait from 'pages/person/components/portrait';
+import PersonsBiography from 'pages/person/components/biography';
+
+import { initialState } from 'pages/person/reducers';
 
 const onSubmit = (dispatch, values, isNew, person) => {
   const createOrUpdatePerson = (payload) => dispatch({

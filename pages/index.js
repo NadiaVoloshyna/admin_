@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head';
-import Layout from 'components/layout';
+import Layout from 'shared/components/layout';
 import { connect } from 'react-redux';
 
 const Home = () => (
