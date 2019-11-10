@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from './reducers';
 import rootSaga from './sagas';
+import middlewares from './middlewares';
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== 'production') {
@@ -18,7 +19,7 @@ const initializeStore = (preloadedState) => {
   const store = createStore(
     rootReducer,
     preloadedState,
-    bindMiddleware([sagaMiddleware])
+    bindMiddleware([sagaMiddleware, ...middlewares])
   )
 
   store.sagaTask = sagaMiddleware.run(rootSaga)

@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionTypes, actionCreator } from 'actions/person';
 
-const DuplicateModal = ({ name = 'J.K. Rowling 1', id = '5dbf0fe7a4b522e49ecada94' }) => {
-  const { showDuplicatePersonModal } = useSelector(state => state.person);
+const DuplicateModal = () => {
+  const { showDuplicatePersonModal, duplicate } = useSelector(state => state.person);
   const dispatch = useDispatch();
 
   const handleClose = () => dispatch(actionCreator(actionTypes.SHOW_DUPLICATE_PERSON_MODAL, false));
@@ -18,13 +18,13 @@ const DuplicateModal = ({ name = 'J.K. Rowling 1', id = '5dbf0fe7a4b522e49ecada9
       </Modal.Header>
 
       <Modal.Body>
-        <p>Post with {name} name already exist. Please change the name of the person or edit existing post.</p>
+        <p>Post with {duplicate.name} name already exist. Please change the name of the person or edit existing post.</p>
       </Modal.Body>
 
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>I'll change the name</Button>
         
-        <Link href={`/persons/${id}`}>
+        <Link href={`/persons/${duplicate.id}`}>
           <a href="#" className="btn btn-primary">Open existing post</a>
         </Link>
       </Modal.Footer>

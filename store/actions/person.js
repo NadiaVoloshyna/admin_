@@ -16,7 +16,21 @@ export const actionTypes = {
   DELETE_PERSONS: 'DELETE_PERSONS',
   DELETE_PERSONS_SUCCESS: 'DELETE_PERSONS_SUCCESS',
   DELETE_PERSONS_FAILED: 'DELETE_PERSONS_FAILED',
-  SHOW_DUPLICATE_PERSON_MODAL: 'SHOW_DUPLICATE_PERSON_MODAL'
+  SHOW_DUPLICATE_PERSON_MODAL: 'SHOW_DUPLICATE_PERSON_MODAL',
+  SET_DUPLICATE_DATA: 'SET_DUPLICATE_DATA',
+  PERSONS_INITIAL_STATE: 'PERSONS_INITIAL_STATE',
+  UPDATE_PAGINATION: 'UPDATE_PAGINATION',
+  UPDATE_SEARCH_TERM: 'UPDATE_SEARCH_TERM',
+  UPDATE_SORT: 'UPDATE_SORT',
+  UPLOAD_PORTRAIT: 'UPLOAD_PORTRAIT',
+  UPLOAD_PORTRAIT_SUCCESS: 'UPLOAD_PORTRAIT_SUCCESS',
+  GET_PROFESSIONS: 'GET_PROFESSIONS',
+  GET_PROFESSIONS_SUCCESS: 'GET_PROFESSIONS_SUCCESS',
+  GET_PROFESSIONS_FAIL: 'GET_PROFESSIONS_FAIL',
+  PROFESSIONS_INITIAL_STATE: 'PROFESSIONS_INITIAL_STATE',
+  CREATE_PROFESSION: 'CREATE_PROFESSION',
+  CREATE_PROFESSION_SUCCESS: 'CREATE_PROFESSION_SUCCESS',
+  CREATE_PROFESSION_FAIL: 'CREATE_PROFESSION_FAIL'
 }
 
 export const actionCreator = (actionName, payload) => {
@@ -29,76 +43,3 @@ export const actionCreator = (actionName, payload) => {
     payload
   }
 }
-
-/** Get single person's data */
-export function getPerson (payload) {
-  return {
-    type: actionTypes.LOAD_DATA_SUCCESS,
-    payload
-  }
-}
-
-export function getPersonSuccess (payload) {
-  return {
-    type: actionTypes.GET_PERSON_SUCCESS,
-    payload
-  }
-}
-
-export function getPersonFailed (payload) {
-  return {
-    type: actionTypes.GET_PERSON_FAIL,
-    payload
-  }
-}
-
-/** Get all persons data */
-export const getPersons = () => ({ type: actionTypes.GET_PERSONS });
-
-export const getPersonsSuccess = (payload) => ({
-    type: actionTypes.GET_PERSONS_SUCCESS,
-    payload
-});
-
-export const getPersonsFailed = (payload) => ({
-    type: actionTypes.GET_PERSONS_FAIL,
-    payload
-});
-
-/** Create Person */
-export const createPerson = (payload) => ({
-  type: actionTypes.CREATE_PERSON,
-  payload
-});
-
-export const createPersonSuccess = (payload) => ({
-  type: actionTypes.CREATE_PERSON_SUCCESS,
-  payload
-});
-
-export const createPersonFailed = (payload) => ({
-  type: actionTypes.CREATE_PERSON_FAIL,
-  payload
-});
-
-/** Update Person */
-export const updatePerson = (payload) => ({
-  type: actionTypes.UPDATE_PERSON,
-  payload
-});
-
-/** Delete Persons */
-export const deletePersons = (payload) => ({
-  type: actionTypes.DELETE_PERSONS,
-  payload
-});
-
-export const deletePersonsSuccess = (payload) => ({
-  type: actionTypes.DELETE_PERSONS_SUCCESS,
-  payload
-});
-
-export const deletePersonsFailed = (payload) => ({
-  type: actionTypes.DELETE_PERSONS_FAILED,
-  payload
-});

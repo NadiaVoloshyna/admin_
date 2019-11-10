@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
-const Person = mongoose.model('Person', {
+const schema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -16,11 +17,10 @@ const Person = mongoose.model('Person', {
     born: Date,
     died: Date,
     title: String,
-    portraits: {
-        primary: { type: String, required: false },
-        secondary: { type: [String], default: [] }
-    },
+    portrait: String,
     media: { type: Array, default: [] }
-}, 'person');
+});
 
-module.exports = Person;
+schema.plugin(mongoosePaginate);
+
+module.exports = mongoose.model('Person', schema, 'person');

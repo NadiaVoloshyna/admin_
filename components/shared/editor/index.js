@@ -6,25 +6,13 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import useEditor from './useEditor';
 
-const saveChanges = (editor, toggleEditorWindow, writeData) => {
-  //const content = editor.getContents();
-  const htmlContent = editor.root.innerHTML;
-
-  writeData({
-    person: {
-      biography: htmlContent
-    }
-  });
-
-  toggleEditorWindow(false);
-}
-
 const EditorWindow = ({showEditorWindow, toggleEditorWindow}) => {
   const editor = useEditor();
-  const [content, setContent] = useState([]);
 
   if (editor) {
-    editor.on('text-change', function(delta, oldDelta, source) {
+    editor.events.on('afterCommand', (a, b) => {
+      console.log(a)
+      console.log(b)
     });
   }
 
@@ -39,16 +27,11 @@ const EditorWindow = ({showEditorWindow, toggleEditorWindow}) => {
       >
         <Modal.Header>
           <div id="editor-toolbar">
-            {/* <button className="ql-bold"></button>
-            <button className="ql-script" value="sub"></button>
-            <button className="ql-script" value="super"></button>
-
-            <button className="ql-header" value="1"></button>
-            <button className="ql-header" value="2"></button> */}
+            
           </div>
         </Modal.Header>
         <Modal.Body>
-          <div id="editor-container"></div>
+          <textarea id="editor" name="editor"></textarea>
         </Modal.Body>
         <Modal.Footer>
           <ButtonGroup aria-label="Editor action buttons">

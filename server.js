@@ -4,10 +4,12 @@ const { ApolloServer } = require('apollo-server-express');
 
 require('dotenv').config()
 
-const { typeDefs, resolvers } = require('./server/schema');
+const resolvers = require('./server/resolvers');
+const typeDefs = require('./server/typeDefs');
+const models = require('./server/models');
 const DB = require('./server/db');
 
-const port = parseInt(process.env.PORT, 10) || 3000
+const port = parseInt(process.env.PORT, 10) || 3001
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev, quiet: true })
 const handle = app.getRequestHandler()
@@ -17,16 +19,14 @@ DB.connect();
 const apollo = new ApolloServer({
     typeDefs,
     resolvers,
-    dataSources: () => {
+    dataSources: () => models,
+    formatError: (error) => {
+      console.log(error);
       return {
-        Person: DB.collections.Person,
-        Media: DB.collections.Media,
-      };
-    },
-    formatError: (error) => ({
-      message: error.message,
-      code: error.extensions.code
-    })
+        message: error.message,
+        extensions: error.extensions
+      }
+    }
 });
 
 app.prepare().then(() => {

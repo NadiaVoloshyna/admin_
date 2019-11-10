@@ -1,20 +1,12 @@
 import { actionTypes } from '../actions/person';
 
 export const initialState = {
-  persons: [],
+  professions: [],
   pagination: {
     offset: 0
   },
   searchTerm: '',
   sort: 'ascending'
-}
-
-const deletePersons = (state, ids) => {
-  return {
-    ...state,
-    persons: state.persons.
-      filter(person => ids.indexOf(person._id) === -1)
-  }
 }
 
 const updatePagination = (state, props) => {
@@ -29,18 +21,25 @@ const updatePagination = (state, props) => {
 
 const reducer = (state = {}, { type, payload }) => {
   switch (type) {
-    case actionTypes.PERSONS_INITIAL_STATE:
+    case actionTypes.PROFESSIONS_INITIAL_STATE:
       return payload;
 
-    case actionTypes.GET_PERSONS_SUCCESS:
+    case actionTypes.GET_PROFESSIONS_SUCCESS:
       return {
         ...state,
-        persons: payload.persons,
+        professions: payload.professions,
         pagination: payload.pagination
       }
 
-    case actionTypes.DELETE_PERSONS_SUCCESS:
-      return deletePersons(state, payload);
+    case actionTypes.CREATE_PROFESSION_SUCCESS:
+      // Move this to backend
+      const professions = state.professions;
+      professions.push(payload);
+
+      return {
+        ...state,
+        professions
+      }
 
     case actionTypes.UPDATE_PAGINATION:
       return updatePagination(state, payload);

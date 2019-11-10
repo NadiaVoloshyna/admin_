@@ -4,10 +4,6 @@ import { personApi } from 'api';
 
 import { 
   actionTypes,
-  getPersonSuccess, 
-  getPersonFailed,
-  createPersonSuccess,
-  createPersonFailed,
   actionCreator
 } from '../actions/person';
 
@@ -34,7 +30,11 @@ function * createPerson ({ payload }) {
     
     yield put(actionCreator(actionTypes.CREATE_PERSON_SUCCESS, createPerson));
   } catch (error) {
-    if (error.code === 409) {
+    if (error.extensions.code === 409) {
+      yield put(actionCreator(actionTypes.SET_DUPLICATE_DATA, {
+        id: error.extensions.exception.duplicateId,
+        name: error.extensions.exception.duplicateName
+      }))
       yield put(actionCreator(actionTypes.SHOW_DUPLICATE_PERSON_MODAL, true));
     } else {
       // General error
@@ -43,8 +43,20 @@ function * createPerson ({ payload }) {
   }
 }
 
+function * uploadPortrait ({ payload }) {
+  try {
+    const res = yield personApi.uploadPortrait(payload);
+    const image = yield res.json();
+    
+    yield put(actionCreator(actionTypes.UPLOAD_PORTRAIT_SUCCESS, image));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export const personSagas = [
   takeLatest(actionTypes.GET_PERSON, getPerson),
   takeLatest(actionTypes.CREATE_PERSON, createPerson),
+  takeLatest(actionTypes.UPLOAD_PORTRAIT, uploadPortrait)
   //takeLatest(actionTypes.UPDATE_PERSON, updatePerson)
 ];

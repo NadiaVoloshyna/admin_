@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 
 const EditorWindow = dynamic(
-  () => import('../editor/EditorWindow'),
+  () => import('../../../shared/editor'),
   { ssr: false }
 )
 
@@ -24,7 +24,6 @@ const PersonsBiography = ({ biography, client }) => {
         </a>
       </div>
       { showEditorWindow && <EditorWindow 
-        client={client}
         showEditorWindow={showEditorWindow}
         toggleEditorWindow={toggleEditorWindow}
       />}

@@ -1,4 +1,4 @@
-import { call, delay, put, take, takeLatest } from 'redux-saga/effects'
+import { select, call, delay, put, take, takeLatest } from 'redux-saga/effects'
 import { personApi } from 'api';
 
 import { 
@@ -7,9 +7,12 @@ import {
 } from '../actions/person';
 
 function * getPersons () {
+  const persons = yield select(state => state.persons);
+  const { pagination, searchTerm, sort } = persons;
+
   try {
-    const res = yield personApi.getPersons();
-    const { data: { persons } } = yield res.json()
+    const res = yield personApi.getPersons(pagination.offset, searchTerm, sort);
+    const { data: { persons } } = yield res.json();
     
     yield put(actionCreator(actionTypes.GET_PERSONS_SUCCESS, persons));
   } catch (err) {

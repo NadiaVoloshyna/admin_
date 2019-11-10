@@ -9,6 +9,9 @@ const NAV_LINKS = [{
 }, {
     name: 'Persons',
     url: '/persons'
+}, {
+  name: 'Professions',
+  url: '/professions'
 }];
 
 const renderLinks = (active) => {
