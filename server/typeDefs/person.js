@@ -6,10 +6,15 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   scalar DateTime
 
+  type Biography {
+    documentId: String!,
+    documentBody: String
+  }
+
   type Person {
     _id: String,
     name: String!,
-    biography: String,
+    biography: Biography,
     created: DateTime,
     portrait: String
   }
@@ -55,7 +60,7 @@ const typeDefs = gql`
   type Mutation {
     createPerson(input: PersonInput): Person
     updatePerson(_id: String, name: String): Person,
-    deletePersons(ids: String!): String!,
+    deletePersons(ids: [String]!, documentIds: [String]!): String!,
     createProfession(name: String!): Profession!
   }
 `;

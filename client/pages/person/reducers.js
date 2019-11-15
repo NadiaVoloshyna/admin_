@@ -3,10 +3,14 @@ import { actionTypes } from './actions';
 export const initialState = {
   pageConfig: {
     disableActions: false,
+    isLoading: false
   },
   person: {
     name: '',
-    biography: '',
+    biography: {
+      documentId: null,
+      documentBody: ''
+    },
     portrait: '',
   },
   duplicate: {
@@ -29,6 +33,15 @@ const reducer = (state = {}, { type, payload }) => {
           ...state.pageConfig,
           disableActions: !payload
         },
+      }
+
+    case actionTypes.TOGGLE_IS_LOADING:
+      return {
+        ...state,
+        pageConfig: {
+          ...state.pageConfig,
+          isLoading: payload
+        }
       }
 
     case actionTypes.GET_PERSON_SUCCESS:

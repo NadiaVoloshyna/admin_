@@ -1,10 +1,10 @@
 import React from 'react';
 
-const PostNavbar = ({ disableActions }) => (
-  <nav className="navbar navbar-light bg-light mb-5 justify-content-end">
+const PersonActions = ({ disableActions }) => (
+  <div className="bg-light text-right mb-4">
     <div className="btn-group" role="group">
       <button 
-        type="button" 
+        type="submit"
         className="btn btn-success"
         disabled={disableActions}
       >Save</button>
@@ -14,7 +14,7 @@ const PostNavbar = ({ disableActions }) => (
         disabled={disableActions}
       >Discard</button>
     </div>
-  </nav>
+  </div>
 )
 
-export default PostNavbar;
+export default PersonActions;

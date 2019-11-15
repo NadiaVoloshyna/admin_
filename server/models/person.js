@@ -13,7 +13,13 @@ const schema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    biography: String,
+    biography: {
+        documentId: {
+            type: String,
+            required: true
+        },
+        documentBody: String
+    },
     born: Date,
     died: Date,
     title: String,

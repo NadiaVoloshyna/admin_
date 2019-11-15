@@ -8,10 +8,11 @@ mongoose.connection.on('open', function () {
     console.log('Connected to mongo server.');
 });
 
-module.exports = async () => {
+module.exports = async (logger) => {
   try {
     await mongoose.connect(CONNECTION_URL, { useNewUrlParser: true });
   } catch (error) {
+    logger.error(error);
     throw error;
   }
 }

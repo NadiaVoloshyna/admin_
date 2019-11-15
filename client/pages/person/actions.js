@@ -14,6 +14,8 @@ export const actionTypes = {
 
   UPLOAD_PORTRAIT: 'UPLOAD_PORTRAIT',
   UPLOAD_PORTRAIT_SUCCESS: 'UPLOAD_PORTRAIT_SUCCESS',
+
+  TOGGLE_IS_LOADING: 'TOGGLE_IS_LOADING'
 }
 
 export const actionCreator = (actionName, payload) => {

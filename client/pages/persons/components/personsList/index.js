@@ -47,21 +47,15 @@ const PersonsList = () => {
   const handleOnSelect = (row, isSelect) => {
     setSelectedRecords(records => {
       if (isSelect) {
-        return [...records, row._id]
+        return [...records, row]
       } else {
-        return records.filter(record => record !== row._id)
+        return records.filter(record => record._id !== row._id)
       }
     });
   }
 
   const handleOnSelectAll = (isSelect, rows) => {
-    const ids = rows.map(r => r._id);
-    
-    if (isSelect) {
-      setSelectedRecords(ids);
-    } else {
-      setSelectedRecords([]);
-    }
+    setSelectedRecords(isSelect ? rows : []);
   }
 
   const search = (searchTerm) => {

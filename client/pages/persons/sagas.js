@@ -20,13 +20,17 @@ function * getPersons () {
   }
 }
 
-function * deletePersons ({payload: idsToDelete}) {
+function * deletePersons ({payload: personsToDelete}) {
+
+  const ids = personsToDelete.map(item => item._id);
+  const documentIds = personsToDelete.map(item => item.biography.documentId);
+
   try {
-    const res = yield personApi.deletePersons(idsToDelete);
+    const res = yield personApi.deletePersons(ids, documentIds);
     const { data: { deletePersons } } = yield res.json()
     
     if (deletePersons === 'success') {
-      yield put(actionCreator(actionTypes.DELETE_PERSONS_SUCCESS, idsToDelete));
+      yield put(actionCreator(actionTypes.DELETE_PERSONS_SUCCESS, ids));
     } else {
       yield put(actionCreator(actionTypes.DELETE_PERSONS_FAILED, 'Failure'));
     }

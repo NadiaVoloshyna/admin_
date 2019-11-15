@@ -1,4 +1,6 @@
-module.exports = (args) => {
+const { ApolloError } = require('apollo-server');
+
+const createQueryForPagination = (args) => {
   const { offset, searchTerm, sort } = args;
   const limit = 10;
 
@@ -25,4 +27,18 @@ module.exports = (args) => {
     query,
     options
   }
+}
+
+const handleError = (error) => {
+  console.log(error)
+  const message = error.errmsg || 'Internal error happened';
+  const code = error.code || 500;
+  const additionalProperties = error.additionalProperties || null;
+  
+  throw new ApolloError(message, code, additionalProperties);
+}
+
+module.exports = {
+  createQueryForPagination,
+  handleError
 }

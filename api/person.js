@@ -10,10 +10,14 @@ const fetchQuery = (query) => {
 
 class PersonApi {
   getPerson (personId) {
+    console.log('api', personId);
     return fetchQuery(`{
       person(_id: "${personId}") {
         name,
-        biography,
+        biography {
+          documentId,
+          documentBody
+        },
         portrait
       }
     }`);
@@ -25,7 +29,10 @@ class PersonApi {
         persons {
           _id,
           name,
-          created
+          created,
+          biography {
+            documentId
+          }
         },
         pagination {
           total,
@@ -48,9 +55,12 @@ class PersonApi {
     }`);
   }
 
-  deletePersons (ids = []) {
+  deletePersons (ids = [], documentIds = []) {
     return fetchQuery(`mutation {
-      deletePersons (ids: "${ids}")
+      deletePersons (
+        ids: ${JSON.stringify(ids)}, 
+        documentIds: ${JSON.stringify(documentIds)}
+      )
     }`);
   }
 

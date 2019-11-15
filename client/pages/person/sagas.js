@@ -28,6 +28,7 @@ function * createPerson ({ payload }) {
 
     if (errors && errors.length) throw errors[0];
     
+    yield put(actionCreator(actionTypes.TOGGLE_IS_LOADING, true));
     yield put(actionCreator(actionTypes.CREATE_PERSON_SUCCESS, createPerson));
   } catch (error) {
     if (error.extensions.code === 409) {
