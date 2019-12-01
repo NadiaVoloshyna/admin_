@@ -7,13 +7,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _debounce from 'lodash/debounce'
-import { actionTypes, actionCreator } from 'pages/persons/actions';
+import { actionTypes, actions } from 'pages/persons/actions';
 import RemotePagination from 'shared/components/pagination';
 import format from 'date-fns/format';
 
 const usePage = () => {
-  const state = useSelector(state => state.persons);
-  return { ...state };
+  const personsState = useSelector(state => state.persons);
+  const sharedState = useSelector(state => state.shared);
+  return { ...personsState, pagination: sharedState };
 }
 
 function linkFormatter (cell, row) {
@@ -59,7 +60,7 @@ const PersonsList = () => {
   }
 
   const search = (searchTerm) => {
-    dispatch(actionCreator(actionTypes.GET_PERSONS, {
+    dispatch(actions.getPersons({
       searchTerm
     }));
   }
@@ -70,7 +71,7 @@ const PersonsList = () => {
     const { page, searchText } = args;
 
     if (type === 'pagination') {
-      dispatch(actionCreator(actionTypes.GET_PERSONS, {
+      dispatch(actions.getPersons({
         offset: page - 1
       }))
     } 
@@ -86,7 +87,7 @@ const PersonsList = () => {
         <Row>
           <Col>
             <Button 
-              onClick={() => dispatch(actionCreator(actionTypes.DELETE_PERSONS, selectedRecords))} 
+              onClick={() => dispatch(actions.deletePersons(selectedRecords))} 
               size="sm"
               variant="secondary"
               disabled={!selectedRecords.length}
@@ -98,7 +99,7 @@ const PersonsList = () => {
             <Form.Control 
               as="select"
               value={sort}
-              onChange={(e) => dispatch(actionCreator(actionTypes.GET_PERSONS, { sort: e.target.value }))}
+              onChange={(e) => dispatch(actions.getPersons({ sort: e.target.value }))}
             >
               <option value="ascending">A to Z</option>
               <option value="descending">Z to A</option>

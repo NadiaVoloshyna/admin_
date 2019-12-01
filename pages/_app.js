@@ -5,14 +5,16 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 import { library } from '@fortawesome/fontawesome-svg-core'
 //import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import initializeStore from '../client/store';
 
-library.add(faTrashAlt);
+import 'assets/styles/styles.scss';
+
+library.add(faTrashAlt, faUserTie);
 
 class MyApp extends App {
   static async getInitialProps ({ Component, ctx }) {
-    let pageProps = {}
+    let pageProps = {};
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps({ ctx })
@@ -25,7 +27,9 @@ class MyApp extends App {
     const { Component, pageProps, store } = this.props
     return (
       <Provider store={store}>
-        <Component {...pageProps} />
+        <div className="bg-light">
+          <Component {...pageProps} />
+        </div>
       </Provider>
     )
   }

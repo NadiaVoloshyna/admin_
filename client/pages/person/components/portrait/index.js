@@ -1,5 +1,5 @@
 import React from 'react';
-import { actionCreator, actionTypes } from 'pages/person/actions';
+import { actions } from 'pages/person/actions';
 import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button'
 import Dropzone from 'shared/components/dropzone';
@@ -9,7 +9,7 @@ const PersonPortrait = ({ portrait }) => {
   const dispatch = useDispatch();
 
   const onDrop = (acceptedFiles => {
-    dispatch(actionCreator(actionTypes.UPLOAD_PORTRAIT, acceptedFiles));
+    dispatch(actions.uploadPortrait(acceptedFiles));
   });
 
   const uploadButton = () => {

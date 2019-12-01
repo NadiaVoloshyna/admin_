@@ -1,0 +1,19 @@
+import actionCreator from 'utils/actionCreator';
+
+export const actionTypes = {
+  USERS_INITIAL_STATE: 'USERS_INITIAL_STATE',
+  
+  INVITE_USER: 'INVITE_USER',
+  INVITE_USER_SUCCESS: 'INVITE_USER_SUCCESS',
+  INVITE_USER_FAIL: 'INVITE_USER_FAIL',
+
+  LOGIN_USER: 'LOGIN_USER',
+  LOGIN_USER_SUCCESS: 'LOGIN_USER_SUCCESS',
+  LOGIN_USER_FAIL: 'LOGIN_USER_FAIL',
+
+  GET_USERS: 'GET_USERS',
+  GET_USERS_SUCCESS: 'GET_USERS_SUCCESS',
+  GET_USERS_FAIL: 'GET_USERS_FAIL'
+}
+
+export const actions = actionCreator(actionTypes);

@@ -52,16 +52,28 @@ const typeDefs = gql`
     professions(offset: Int!, searchTerm: String, sort: String): Professions!
   }
 
+  type Status {
+    status: String!
+  }
+
   input PersonInput {
     name: String!,
     portrait: String
   }
 
   type Mutation {
+    # Person
     createPerson(input: PersonInput): Person
     updatePerson(_id: String, name: String): Person,
+
+    # Persons
     deletePersons(ids: [String]!, documentIds: [String]!): String!,
+
+    # Profession
     createProfession(name: String!): Profession!
+
+    # Users
+    inviteUser(email: String!, role: String!): Status!
   }
 `;
 

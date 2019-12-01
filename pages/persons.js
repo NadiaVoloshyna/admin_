@@ -1,9 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 import { connect } from 'react-redux';
+import { auth } from 'utils/auth';
 import Layout from 'shared/components/layout';
 import PersonsList from 'pages/persons/components/personsList';
-import { actionTypes, actionCreator } from 'pages/persons/actions';
+import { actions } from 'pages/persons/actions';
 import { initialState } from 'pages/persons/reducers';
 
 const Persons = () => {
@@ -15,23 +16,24 @@ const Persons = () => {
       </Head>
 
       <Layout activePage="Persons">
-        <div className="card mb-5">
-          <div className="card-body d-flex justify-content-end">
-            <a className="btn btn-primary" href="/persons/new">Create Post</a>
-          </div>
-        </div>
+        <Layout.Navbar>
+          <a className="btn btn-primary" href="/persons/new">Create Post</a>
+        </Layout.Navbar>
 
-        <PersonsList />
+        <Layout.Content>
+          <PersonsList />
+        </Layout.Content>
       </Layout>
     </div>
   )
 }
 
 Persons.getInitialProps = ({ ctx }) => {
+  auth(ctx);
   const  { store } = ctx;
 
-  store.dispatch(actionCreator(actionTypes.PERSONS_INITIAL_STATE, initialState));
-  store.dispatch(actionCreator(actionTypes.GET_PERSONS));
+  store.dispatch(actions.personsInitialState(initialState));
+  store.dispatch(actions.getPersons());
 }
 
 export default connect()(Persons);

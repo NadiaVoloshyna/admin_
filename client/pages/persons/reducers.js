@@ -2,11 +2,11 @@ import { actionTypes } from './actions';
 
 export const initialState = {
   persons: [],
-  pagination: {
-    offset: 0
-  },
-  searchTerm: '',
-  sort: 'ascending'
+  // pagination: {
+  //   offset: 0
+  // },
+  // searchTerm: '',
+  // sort: 'ascending'
 }
 
 const deletePersons = (state, ids) => {
@@ -17,15 +17,15 @@ const deletePersons = (state, ids) => {
   }
 }
 
-const updatePagination = (state, props) => {
-  return {
-    ...state,
-    pagination: {
-      ...state.pagination,
-      ...props
-    }
-  }
-}
+// const updatePagination = (state, props) => {
+//   return {
+//     ...state,
+//     pagination: {
+//       ...state.pagination,
+//       ...props
+//     }
+//   }
+// }
 
 const reducer = (state = {}, { type, payload }) => {
   switch (type) {
@@ -42,15 +42,15 @@ const reducer = (state = {}, { type, payload }) => {
     case actionTypes.DELETE_PERSONS_SUCCESS:
       return deletePersons(state, payload);
 
-    case actionTypes.UPDATE_PAGINATION:
-      return updatePagination(state, payload);
+    // case actionTypes.UPDATE_PAGINATION:
+    //   return updatePagination(state, payload);
 
-    case actionTypes.UPDATE_SEARCH_TERM: 
-    case actionTypes.UPDATE_SORT:
-      return {
-        ...state,
-        ...payload
-      }
+    // case actionTypes.UPDATE_SEARCH_TERM: 
+    // case actionTypes.UPDATE_SORT:
+    //   return {
+    //     ...state,
+    //     ...payload
+    //   }
 
     default:
       return state

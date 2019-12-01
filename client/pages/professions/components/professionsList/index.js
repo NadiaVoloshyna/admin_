@@ -9,7 +9,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _debounce from 'lodash/debounce'
-import { actionTypes, actionCreator } from 'pages/professions/actions';
+import { actionTypes, actions } from 'pages/professions/actions';
 import RemotePagination from 'shared/components/pagination';
 
 const usePage = () => {
@@ -57,20 +57,20 @@ const ProfessionsList = () => {
     const { page, searchTerm } = args;
 
     if (type === 'pagination') {
-      dispatch(actionCreator(actionTypes.GET_PROFESSIONS, {
+      dispatch(actions.getProfessions({
         offset: page - 1
       }))
     } 
 
     if (type === 'search') {
-      dispatch(actionCreator(actionTypes.GET_PROFESSIONS, {
+      dispatch(actions.getProfessions({
         searchTerm
       }));
     }
   }
 
   const onProfessionCreate = () => {
-    dispatch(actionCreator(actionTypes.CREATE_PROFESSION, profession));
+    dispatch(actions.createProfession(profession));
     setProfession('');
   }
 
@@ -124,7 +124,7 @@ const ProfessionsList = () => {
                 <FormControl 
                   as="select"
                   value={sort}
-                  onChange={(e) => dispatch(actionCreator(actionTypes.GET_PROFESSIONS, { sort: e.target.value }))}
+                  onChange={(e) => dispatch(actions.getProfessions({ sort: e.target.value }))}
                 >
                   <option value="ascending">A to Z</option>
                   <option value="descending">Z to A</option>
@@ -134,7 +134,7 @@ const ProfessionsList = () => {
 
                 <InputGroup.Append>
                   <Button 
-                    onClick={() => dispatch(actionCreator(actionTypes.DELETE_PROFESSIONS, selectedRecords))} 
+                    onClick={() => dispatch(actions.deleteProfessions(selectedRecords))} 
                     size="sm"
                     variant="secondary"
                     disabled={!selectedRecords.length}

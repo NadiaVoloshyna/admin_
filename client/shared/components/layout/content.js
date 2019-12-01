@@ -2,8 +2,9 @@ import React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 
 const LayoutContent = (props) => {
+
   return (
-    <div className="col-10 bg-light page-content">
+    <div className="page-content">
       <div className="row justify-content-center">
         <div className="col-10 page-content__inner-wrapper">
           { props.children }

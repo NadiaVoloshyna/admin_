@@ -30,7 +30,7 @@ const createQueryForPagination = (args) => {
 }
 
 const handleError = (error) => {
-  console.log(error)
+  console.error(error)
   const message = error.errmsg || 'Internal error happened';
   const code = error.code || 500;
   const additionalProperties = error.additionalProperties || null;

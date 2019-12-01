@@ -3,7 +3,7 @@ import { personApi } from 'api';
 
 import { 
   actionTypes,
-  actionCreator,
+  actions,
 } from './actions';
 
 function * createProfession ({ payload }) {
@@ -12,9 +12,9 @@ function * createProfession ({ payload }) {
     const { data } = yield res.json();
     const { createProfession } = data;
     
-    yield put(actionCreator(actionTypes.CREATE_PROFESSION_SUCCESS, createProfession));
+    yield put(actions.createProfessionSuccess(createProfession));
   } catch (err) {
-    yield put(actionCreator(actionTypes.CREATE_PROFESSION_FAIL, err));
+    yield put(actions.createProfessionFail(err));
   }
 }
 
@@ -26,9 +26,9 @@ function * getProfessions () {
     const res = yield personApi.getProfessions(pagination.offset, searchTerm, sort);
     const { data: { professions } } = yield res.json();
     
-    yield put(actionCreator(actionTypes.GET_PROFESSIONS_SUCCESS, professions));
+    yield put(actions.getProfessionsSuccess(professions));
   } catch (err) {
-    yield put(actionCreator(actionTypes.GET_PROFESSIONS_FAIL, err));
+    yield put(actions.getProfessionsFail(err));
   }
 }
 

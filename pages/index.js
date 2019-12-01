@@ -2,6 +2,7 @@ import React from 'react'
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 import { connect } from 'react-redux';
+import { auth } from 'utils/auth';
 
 const Home = () => (
   <div>
@@ -15,5 +16,9 @@ const Home = () => (
     </Layout>
   </div>
 )
+
+Home.getInitialProps = ({ ctx }) => {
+  auth(ctx);
+}
 
 export default connect()(Home);

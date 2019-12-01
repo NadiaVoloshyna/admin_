@@ -17,7 +17,6 @@ export const initialState = {
     id: null,
     name: null
   },
-  isPersonCreated: false,
   showDuplicatePersonModal: false
 }
 
@@ -56,8 +55,16 @@ const reducer = (state = {}, { type, payload }) => {
         person: {
           ...state.person,
           ...payload
-        },
-        isPersonCreated: true
+        }
+      }
+
+    case actionTypes.UPDATE_PERSON_SUCCESS:
+      return {
+        ...state,
+        person: {
+          ...state.person,
+          ...payload
+        }
       }
 
     case actionTypes.SET_DUPLICATE_DATA:

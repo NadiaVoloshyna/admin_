@@ -3,13 +3,13 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import { actionTypes, actionCreator } from 'pages/person/actions';
+import { actionTypes, actions } from 'pages/person/actions';
 
 const DuplicateModal = () => {
   const { showDuplicatePersonModal, duplicate } = useSelector(state => state.person);
   const dispatch = useDispatch();
 
-  const handleClose = () => dispatch(actionCreator(actionTypes.SHOW_DUPLICATE_PERSON_MODAL, false));
+  const handleClose = () => dispatch(actions.showDuplicatePersonModal(false));
 
   return (
     <Modal show={showDuplicatePersonModal} onHide={handleClose}>

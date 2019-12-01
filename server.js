@@ -1,19 +1,17 @@
 const express = require('express')
 const next = require('next')
-const pino = require('pino');
+const { logger } = require('./server/loggers');
+
+require('dotenv').config();
+
 const { ApolloServer } = require('apollo-server-express');
-
-require('dotenv').config()
-
-const logger = pino({
-  level: process.env.debug === true ? 'debug' : 'info'
-});
+const authService = require('./server/services/auth');
 
 const resolvers = require('./server/resolvers')(logger);
 const typeDefs = require('./server/typeDefs');
 const models = require('./server/models');
 const DB = require('./server/db');
-const routes = require('./server/routes')(logger);
+const routes = require('./server/routes');
 
 const port = parseInt(process.env.PORT, 10) || 3001
 const dev = process.env.NODE_ENV !== 'production'
@@ -42,10 +40,12 @@ const apollo = new ApolloServer({
 
 app.prepare().then(() => {
   const server = express();
+  server.use(express.json());
+  authService.initialize(server);
 
   apollo.applyMiddleware({ app: server });
 
-  server.use(routes);
+  routes(server, logger);
   
   server.all('*', (req, res) => {
     return handle(req, res)

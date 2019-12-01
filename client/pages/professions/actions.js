@@ -1,3 +1,5 @@
+import actionCreator from 'utils/actionCreator';
+
 export const actionTypes = {
   PROFESSIONS_INITIAL_STATE: 'PROFESSIONS_INITIAL_STATE',
   
@@ -10,13 +12,4 @@ export const actionTypes = {
   CREATE_PROFESSION_FAIL: 'CREATE_PROFESSION_FAIL'
 }
 
-export const actionCreator = (actionName, payload) => {
-  if (!actionTypes[actionName]) {
-    throw new Error(`Couldn't find action: ${actionName} in actions`);
-  }
-  
-  return {
-    type: actionName,
-    payload
-  }
-}
+export const actions = actionCreator(actionTypes);

@@ -1,4 +1,8 @@
+import actionCreator from 'utils/actionCreator';
+
 export const actionTypes = {
+  PERSON_INITIAL_STATE: 'PERSON_INITIAL_STATE',
+  
   GET_PERSON: 'GET_PERSON',
   GET_PERSON_SUCCESS: 'GET_PERSON_SUCCESS',
   GET_PERSON_FAIL: 'GET_PERSON_FAIL',
@@ -8,6 +12,7 @@ export const actionTypes = {
   CREATE_PERSON_FAIL: 'CREATE_PERSON_FAIL',
 
   UPDATE_PERSON: 'UPDATE_PERSON',
+  UPDATE_PERSON_SUCCESS: 'UPDATE_PERSON_SUCCESS',
 
   SHOW_DUPLICATE_PERSON_MODAL: 'SHOW_DUPLICATE_PERSON_MODAL',
   SET_DUPLICATE_DATA: 'SET_DUPLICATE_DATA',
@@ -18,13 +23,4 @@ export const actionTypes = {
   TOGGLE_IS_LOADING: 'TOGGLE_IS_LOADING'
 }
 
-export const actionCreator = (actionName, payload) => {
-  if (!actionTypes[actionName]) {
-    throw new Error(`Couldn't find action: ${actionName} in actions`);
-  }
-  
-  return {
-    type: actionName,
-    payload
-  }
-}
+export const actions = actionCreator(actionTypes);

@@ -1,55 +1,73 @@
-import { call, delay, put, take, takeLatest } from 'redux-saga/effects'
-//import es6promise from 'es6-promise'
-import { personApi } from 'api';
+import { call, delay, put, take, takeLatest } from 'redux-saga/effects';
+import PersonApi from './api';
 
 import { 
   actionTypes,
-  actionCreator
+  actions
 } from './actions';
-
-//es6promise.polyfill()
 
 function * getPerson ({ payload }) {
   try {
-    const res = yield personApi.getPerson(payload);
-    const { data: { person } } = yield res.json()
-    
-    yield put(actionCreator(actionTypes.GET_PERSON_SUCCESS, person));
+    const response = yield PersonApi.getPerson(payload);
+    const person = yield response.json()
+    yield put(actions.getPersonSuccess(person));
   } catch (err) {
-    yield put(actionCreator(actionTypes.GET_PERSON_FAIL, err));
+    yield put(actions.getPersonFail(err));
   }
 }
 
 function * createPerson ({ payload }) {
   try {
-    const res = yield personApi.createPerson(payload);
-    const { data, errors } = yield res.json();
-    const { createPerson } = data;
+    yield put(actions.toggleIsLoading(true));
 
-    if (errors && errors.length) throw errors[0];
-    
-    yield put(actionCreator(actionTypes.TOGGLE_IS_LOADING, true));
-    yield put(actionCreator(actionTypes.CREATE_PERSON_SUCCESS, createPerson));
-  } catch (error) {
-    if (error.extensions.code === 409) {
-      yield put(actionCreator(actionTypes.SET_DUPLICATE_DATA, {
-        id: error.extensions.exception.duplicateId,
-        name: error.extensions.exception.duplicateName
-      }))
-      yield put(actionCreator(actionTypes.SHOW_DUPLICATE_PERSON_MODAL, true));
-    } else {
-      // General error
-      //yield put(actionCreator(actionTypes.CREATE_PERSON_FAIL, error));
+    const response = yield PersonApi.create(payload);
+    const person = yield response.json();
+
+    if (response.status === 301 || response.status === 302) {
+      yield put(actions.toggleIsLoading(false));
+      window.location = person.id;
+      return;
     }
+    
+    if (response.status === 409) {
+      yield put(actions.setDuplicateData({
+        id: person.id,
+        name: person.name
+      }))
+      yield put(actions.showDuplicatePersonModal(true));
+    }
+
+    if (response.status === 500) {
+      throw Error(response.message);
+    }
+} catch (error) {
+    console.error(error);
+  }
+}
+
+function * updatePerson ({ payload }) {
+  try {
+    const response = yield PersonApi.update(payload);
+    
+    if (response.status === 200) {
+      yield put(actions.updatePersonSuccess(payload));
+      yield put(actions.toggleIsLoading(false));
+    }
+
+    if (response.status === 500) {
+      throw Error(response.message);
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
 
 function * uploadPortrait ({ payload }) {
   try {
-    const res = yield personApi.uploadPortrait(payload);
+    const res = yield PersonApi.uploadPortrait(payload);
     const image = yield res.json();
     
-    yield put(actionCreator(actionTypes.UPLOAD_PORTRAIT_SUCCESS, image));
+    yield put(actions.uploadPortraitSuccess(image));
   } catch (error) {
     console.error(error);
   }
@@ -58,6 +76,6 @@ function * uploadPortrait ({ payload }) {
 export const personSagas = [
   takeLatest(actionTypes.GET_PERSON, getPerson),
   takeLatest(actionTypes.CREATE_PERSON, createPerson),
-  takeLatest(actionTypes.UPLOAD_PORTRAIT, uploadPortrait)
-  //takeLatest(actionTypes.UPDATE_PERSON, updatePerson)
+  takeLatest(actionTypes.UPLOAD_PORTRAIT, uploadPortrait),
+  takeLatest(actionTypes.UPDATE_PERSON, updatePerson)
 ];

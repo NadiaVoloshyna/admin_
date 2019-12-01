@@ -1,10 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/router'
-import { Form, Field, useFormState } from 'react-final-form'
+import { useSelector } from 'react-redux';
+import { Form, Field, useFormState } from 'react-final-form' 
 import Head from 'next/head';
-import Router from 'next/router';
 import Layout from 'shared/components/layout';
 
 import PersonActions from 'pages/person/components/actions';
@@ -14,52 +12,29 @@ import PersonPortrait from 'pages/person/components/portrait';
 import PersonBiography from 'pages/person/components/biography';
 import PersonProfession from 'pages/person/components/profession';
 import PersonYears from 'pages/person/components/years';
-import { actionTypes, actionCreator } from 'pages/person/actions';
+import { actions as pageActions } from 'pages/person/actions';
+import { auth } from 'utils/auth';
 
 import { initialState } from 'pages/person/reducers';
 
-const onSubmit = (dispatch, values, isNew, person) => {
-  dispatch(actionCreator(actionTypes.TOGGLE_IS_LOADING, true));
-
-  const createOrUpdatePerson = (payload) => dispatch({
-    type: isNew ? 'CREATE_PERSON': 'UPDATE_PERSON',
-    payload
-  });
-
-  createOrUpdatePerson({
-    ...person,
-    name: values.name
-  });
-}
-
-const usePage = () => {
-  const dispatch = useDispatch();
-
+const Person = ({ isNew, toggleIsLoading, toggleActions, createPerson, updatePerson }) => {
   const personState = useSelector(state => state.person);
-
-  const toggleActions = (payload) => dispatch({
-    type: 'TOGGLE_ACTIONS',
-    payload
-  });
-
-  return { 
-    personState, 
-    toggleActions,
-  };
-}
-
-const Person = ({ isNew }) => {
-  const dispatch = useDispatch();
-  const router = useRouter()
-
-  const { personState, toggleActions } = usePage();
-  const { person, pageConfig, isPersonCreated } = personState;
-
+  
+  const { person, pageConfig } = personState;
   const { name, portrait, biography } = person;
   const { disableActions, isLoading } = pageConfig;
 
-  if (isNew && isPersonCreated) {
-    router.push(`/persons/${person._id}`);
+  const onSubmit = (values) => {
+    toggleIsLoading && toggleIsLoading(true);
+
+    if (isNew) {
+      createPerson(values);
+    } else {
+      updatePerson({
+        id: person._id,
+        ...values
+      });
+    }
   }
   
   return (
@@ -70,8 +45,12 @@ const Person = ({ isNew }) => {
       </Head>
 
       <Layout activePage="Person" isLoading={isLoading}>
+        <Layout.Navbar>
+          a
+        </Layout.Navbar>
+
         <Form
-          onSubmit={(values) => onSubmit(dispatch, values, isNew, person)}
+          onSubmit={(values) => onSubmit(values)}
           initialValues={{ name }}
           render={({ handleSubmit, form, submitting, pristine, values }) => {
 
@@ -117,23 +96,28 @@ const Person = ({ isNew }) => {
 }
 
 Person.getInitialProps = ({ ctx }) => {
+  auth(ctx);
   const  { query, store, isServer } = ctx;
   
   const isNew = query.id === 'new';
 
-  store.dispatch({
-    type: 'PERSON_INITIAL_STATE',
-    payload: initialState
-  })
+  store.dispatch(pageActions.personInitialState(initialState));
   
   if (!isNew && isServer) {
-    store.dispatch({
-      type: 'GET_PERSON',
-      payload: query.id
-    });
+    store.dispatch(pageActions.getPerson(query.id));
   };
 
   return { isNew }
 }
 
-export default connect()(Person);
+const mapDispatchToProps = {
+  toggleIsLoading: pageActions.toggleIsLoading,
+  toggleActions: pageActions.toggleActions,
+  createPerson: pageActions.createPerson,
+  updatePerson: pageActions.updatePerson
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Person);

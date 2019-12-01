@@ -1,41 +1,39 @@
 import { select, call, delay, put, take, takeLatest } from 'redux-saga/effects'
-import { personApi } from 'api';
+import PersonApi from './api';
 
 import { 
   actionTypes,
-  actionCreator,
+  actions,
 } from './actions';
 
 function * getPersons () {
-  const persons = yield select(state => state.persons);
-  const { pagination, searchTerm, sort } = persons;
+  const sharedState = yield select(state => state.shared);
+  const { offset, searchTerm, sort } = sharedState;
 
   try {
-    const res = yield personApi.getPersons(pagination.offset, searchTerm, sort);
-    const { data: { persons } } = yield res.json();
+    const response = yield PersonApi.getPersons(offset, searchTerm, sort);
+    const data = yield response.json();
     
-    yield put(actionCreator(actionTypes.GET_PERSONS_SUCCESS, persons));
-  } catch (err) {
-    yield put(actionCreator(actionTypes.GET_PERSONS_FAIL, err));
+    yield put(actions.getPersonsSuccess(data));
+  } catch (error) {
+    console.error(error);
+    yield put(actions.getPersonsFail(error));
   }
 }
 
 function * deletePersons ({payload: personsToDelete}) {
-
-  const ids = personsToDelete.map(item => item._id);
-  const documentIds = personsToDelete.map(item => item.biography.documentId);
+  const ids = personsToDelete.map(id => id._id);
+  const documentIds = personsToDelete.map(id => id.biography.documentId);
 
   try {
-    const res = yield personApi.deletePersons(ids, documentIds);
-    const { data: { deletePersons } } = yield res.json()
-    
-    if (deletePersons === 'success') {
-      yield put(actionCreator(actionTypes.DELETE_PERSONS_SUCCESS, ids));
+    const response = yield PersonApi.deletePersons(ids, documentIds);
+    if (response.status === 200) {
+      yield put(actions.deletePersonsSuccess(ids));
     } else {
-      yield put(actionCreator(actionTypes.DELETE_PERSONS_FAILED, 'Failure'));
+      yield put(actions.deletePersonsFailed());
     }
   } catch (err) {
-    yield put(actionCreator(actionTypes.DELETE_PERSONS_FAILED, err));
+    yield put(actions.deletePersonsFailed(err));
   }
 }
 

@@ -9,61 +9,6 @@ const fetchQuery = (query) => {
 }
 
 class PersonApi {
-  getPerson (personId) {
-    console.log('api', personId);
-    return fetchQuery(`{
-      person(_id: "${personId}") {
-        name,
-        biography {
-          documentId,
-          documentBody
-        },
-        portrait
-      }
-    }`);
-  }
-
-  getPersons (offset, searchTerm, sort) {
-    return fetchQuery(`{
-      persons(offset: ${offset}, searchTerm: "${searchTerm}", sort: "${sort}") {
-        persons {
-          _id,
-          name,
-          created,
-          biography {
-            documentId
-          }
-        },
-        pagination {
-          total,
-          limit,
-          offset
-        }
-      }
-    }`);
-  }
-
-  createPerson ({name, portrait}) {
-    return fetchQuery(`mutation {
-      createPerson(input: {
-        name: "${name}",
-        portrait: "${portrait}"
-      }) {
-        _id,
-        name
-      }
-    }`);
-  }
-
-  deletePersons (ids = [], documentIds = []) {
-    return fetchQuery(`mutation {
-      deletePersons (
-        ids: ${JSON.stringify(ids)}, 
-        documentIds: ${JSON.stringify(documentIds)}
-      )
-    }`);
-  }
-
   uploadPortrait (file) {
     const data = new FormData();
     data.append('image', file[0]);
