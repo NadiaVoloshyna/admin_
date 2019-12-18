@@ -1,7 +1,9 @@
 import { actionTypes } from './actions';
+import { paginationState, paginationReducers } from 'shared/reducers/pagination';
 
 export const initialState = {
   users: [],
+  pagination: paginationState()
 }
 
 const reducer = (state = {}, { type, payload }) => {
@@ -13,11 +15,14 @@ const reducer = (state = {}, { type, payload }) => {
       return {
         ...state,
         users: payload.users,
-        pagination: payload.pagination
+        pagination: {
+          ...state.pagination,
+          ...payload.pagination
+        }
       }
 
     default:
-      return state
+      return paginationReducers(state, { type, payload });
   }
 }
 

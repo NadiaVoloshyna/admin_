@@ -1,41 +1,51 @@
-import React from 'react';
-import { actions } from 'pages/person/actions';
-import { useDispatch } from 'react-redux';
-import Button from 'react-bootstrap/Button'
-import Dropzone from 'shared/components/dropzone';
-import cx from 'classnames';
+import React, { useState } from 'react';
+import _unescape from 'lodash/unescape';
+import { Field } from 'react-final-form';
+import { Image, Transformation } from 'cloudinary-react';
+import dynamic from 'next/dynamic'
 
-const PersonPortrait = ({ portrait }) => {
-  const dispatch = useDispatch();
+const MediaLibrary = dynamic(
+  () => import('../../../../shared/components/mediaLibrary'),
+  { ssr: false }
+)
 
-  const onDrop = (acceptedFiles => {
-    dispatch(actions.uploadPortrait(acceptedFiles));
-  });
-
-  const uploadButton = () => {
-    return (
-      <Button 
-        variant="outline-secondary"
-      >Upload Image</Button>
-    )
-  }
-
-  const portraitClassNames = cx(
-    'portrait card-body',
-    portrait && 'with-image'
-  );
+const PersonPortrait = ({ portrait, name = '' }) => {
+  const [image, setImage] = useState(_unescape(portrait).replace(/&#x2F;/g, '/'));
 
   return (
     <div className="card mb-3">
       <div className="card-header">
         Portraits
       </div>
-      <div className={portraitClassNames}> 
-        <Dropzone
-          text="Upload Portrait"
-          component={uploadButton}
-          onDrop={onDrop}
-        />
+
+      <div className="portrait card-body"> 
+        <Field name="portrait">
+          {props => {
+            const onSelect = (({assets}) => {
+              props.input.onChange(assets[0].public_id);
+              setImage(assets[0].public_id);
+            });
+
+            if (image) {
+              return <Image
+                cloudName="ukrainian" 
+                publicId={image}
+                height="235"
+                crop="fill" 
+              />
+            }
+
+            return <MediaLibrary 
+              onMediaSelect={onSelect}
+              btnText="Select Portrait"
+              openOptions={{
+                folder: {
+                  path: name, resource_type: 'image'
+                }
+              }}
+            />
+          }}
+        </Field>
       </div>
       <style global jsx>{`
         .portrait {
@@ -45,8 +55,9 @@ const PersonPortrait = ({ portrait }) => {
           align-items: center;
         }
 
-        .with-image {
-          background: transparent url('/images/${portrait}') no-repeat top/100%;
+        .portrait img {
+          max-height: 100%;
+          max-width: 100%;
         }
       `}</style>
     </div>

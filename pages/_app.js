@@ -5,12 +5,12 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 import { library } from '@fortawesome/fontawesome-svg-core'
 //import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faTrashAlt, faUserTie } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faUserTie, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import initializeStore from '../client/store';
 
 import 'assets/styles/styles.scss';
 
-library.add(faTrashAlt, faUserTie);
+library.add(faTrashAlt, faUserTie, faCalendarAlt);
 
 class MyApp extends App {
   static async getInitialProps ({ Component, ctx }) {

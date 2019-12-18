@@ -8,6 +8,10 @@ class PersonsApi extends ApiService {
   deletePersons = (ids, documentIds) => {
     return this.delete('/api/persons', { ids, documentIds });
   }
+
+  create = (name) => {
+    return this.post('/api/persons', name);
+  }
 }
 
 export default new PersonsApi();

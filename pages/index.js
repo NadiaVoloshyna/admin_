@@ -12,7 +12,13 @@ const Home = () => (
     </Head>
 
     <Layout activePage="Home">
-    Home
+      <Layout.Navbar>
+        Home
+      </Layout.Navbar>
+
+      <Layout.Content>
+        
+      </Layout.Content>
     </Layout>
   </div>
 )

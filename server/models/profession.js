@@ -7,7 +7,16 @@ const schema = new mongoose.Schema({
         required: true,
         unique: true, 
         dropDups: true
-    }
+    },
+    // mediaType: {
+    //     type: String,
+    //     required: true
+    // },
+    // media: [{ type: Schema.Types.ObjectId, ref: 'Media' }],
+    // active: {
+    //     type: Boolean,
+    //     required: true
+    // }
 });
 
 schema.plugin(mongoosePaginate);

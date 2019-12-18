@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-unfetch';
+import _startsWith from 'lodash/startsWith';
 
 const baseUrl = 'http://localhost:3001';
 
@@ -7,7 +8,13 @@ export default class ApiService {
   static request = (url, method, body, headers = {}) => {
     let requestOptions = {
       method,
-      headers: Object.assign({ 'Content-Type': 'application/json' }, headers)
+    }
+
+    if (headers) {
+      requestOptions = {
+        ...requestOptions,
+        headers: Object.assign({ 'Content-Type': 'application/json' }, headers)
+      }
     }
 
     if (body) {
@@ -17,7 +24,9 @@ export default class ApiService {
       }
     }
 
-    return fetch(baseUrl + url, requestOptions);
+    const requestUrl = _startsWith(url, '/api') ? baseUrl + url : url;
+
+    return fetch(requestUrl, requestOptions);
   }
 
   post = (url, body, headers = {}) => {
@@ -34,5 +43,15 @@ export default class ApiService {
 
   delete = (url, body, headers) => {
     return ApiService.request(url, 'DELETE', body, headers);
+  }
+
+  uploadFile = (url, files) => {
+    const body = new FormData();
+    body.append('file', files[0]);
+
+    return fetch(baseUrl + url, {
+      method: 'POST',
+      body
+    });
   }
 }

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import cx from 'classnames';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import LayoutNavbar from './navbar';
+import { LayoutContext } from './index';
 
 const NAV_LINKS = [{
   name: 'Home',
@@ -11,6 +10,10 @@ const NAV_LINKS = [{
 }, {
   name: 'Persons',
   url: '/persons'
+}, {
+  name: 'Library',
+  url: '/library',
+  visibleTo: ['admin', 'author']
 }, {
   name: 'Professions',
   url: '/professions'
@@ -20,38 +23,37 @@ const NAV_LINKS = [{
   visibleTo: 'admin'
 }];
 
-const renderLinks = (active, { isAdmin, isAuthor, isReviewer }) => {
+const renderLinks = (active, { role }) => {
   let linksToRender = NAV_LINKS.reduce((acc, next) => {
-    if (isAdmin && next.visibleTo === 'admin' || typeof next.visibleTo === 'undefined') {
+    if (typeof next.visibleTo === 'undefined' || next.visibleTo.indexOf(role) !== -1) {
       acc.push(next);
     }
 
     return acc;
   }, []);
   
-  return linksToRender.map(link => (
-    <Link key={link.name} href={link.url}>
-      <a className={cx('nav-link', {'active': link.name === active})}>{ link.name }</a>
-    </Link>
-  ))
+  return linksToRender.map(link => {
+    const linkClassName = cx(
+      'nav-link', 
+      link.name === active && 'active'
+    );
+    
+    return (
+      <Link key={link.name} href={link.url}>
+        <a className={linkClassName}>{ link.name }</a>
+      </Link>
+    )
+  });
 }
 
-const LayoutSidebar = (props) => {
-  const userState = useSelector(state => state.shared);
-  const { user } = userState;
+const LayoutSidebar = () => {
+  const { activePage, user } = useContext(LayoutContext);
 
   return (
     <>
       <div className="col sidebar">
-        <LayoutNavbar>
-          Welcome, { user && user.name }
-          <div className="user-icon">
-            <FontAwesomeIcon icon='user-tie' size="2x" />
-          </div>
-        </LayoutNavbar>
-
         <nav className="d-flex flex-column h-100">
-          { renderLinks(props.activePage, userState) }
+          { renderLinks(activePage, user) }
 
           <Link href="/auth/logout">
             <a className="nav-link mt-auto">Logout</a>
@@ -59,16 +61,24 @@ const LayoutSidebar = (props) => {
         </nav>
       </div>
 
-      <style jsx>{`
+      <style global jsx>{`
         .sidebar {
           height: 100vh;
           border-right: 1px solid rgba(0,0,0,.1);
         }
 
-        .user-icon {
+        .sidebar .user-icon {
           width: 38px;
           height: 38px;
           text-align: center;
+        }
+
+        .sidebar .nav-link {
+          color: var(--gray-dark);
+        }
+
+        .sidebar .nav-link.active, .sidebar .nav-link:hover {
+          color: var(--blue);
         }
       `}</style>
     </>

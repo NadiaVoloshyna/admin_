@@ -1,22 +1,9 @@
 import { actionTypes } from './actions';
+import { paginationState, paginationReducers } from 'shared/reducers/pagination';
 
 export const initialState = {
   professions: [],
-  pagination: {
-    offset: 0
-  },
-  searchTerm: '',
-  sort: 'ascending'
-}
-
-const updatePagination = (state, props) => {
-  return {
-    ...state,
-    pagination: {
-      ...state.pagination,
-      ...props
-    }
-  }
+  pagination: paginationState()
 }
 
 const reducer = (state = {}, { type, payload }) => {
@@ -28,7 +15,10 @@ const reducer = (state = {}, { type, payload }) => {
       return {
         ...state,
         professions: payload.professions,
-        pagination: payload.pagination
+        pagination: {
+          ...state.pagination,
+          ...payload.pagination
+        }
       }
 
     case actionTypes.CREATE_PROFESSION_SUCCESS:
@@ -41,18 +31,8 @@ const reducer = (state = {}, { type, payload }) => {
         professions
       }
 
-    case actionTypes.UPDATE_PAGINATION:
-      return updatePagination(state, payload);
-
-    case actionTypes.UPDATE_SEARCH_TERM: 
-    case actionTypes.UPDATE_SORT:
-      return {
-        ...state,
-        ...payload
-      }
-
     default:
-      return state
+      return paginationReducers(state, { type, payload });
   }
 }
 

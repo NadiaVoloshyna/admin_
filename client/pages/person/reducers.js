@@ -12,12 +12,40 @@ export const initialState = {
       documentBody: ''
     },
     portrait: '',
+    professions: []
   },
   duplicate: {
     id: null,
     name: null
   },
   showDuplicatePersonModal: false
+}
+
+const selectProfession = (state, profession) => {
+  return {
+    ...state,
+    person: {
+      ...state.person,
+      professions: [
+        ...state.person.professions,
+        profession
+      ]
+    }
+  }
+}
+
+const deleteProfession = (state, profession) => {
+  const professions = state.person.professions;
+  const index = professions.indexOf(profession);
+  if (index !== -1) professions.splice(index, 1);
+
+  return {
+    ...state,
+    person: {
+      ...state.person,
+      professions
+    }
+  }
 }
 
 const reducer = (state = {}, { type, payload }) => {
@@ -87,6 +115,12 @@ const reducer = (state = {}, { type, payload }) => {
           portrait: payload
         }
       }
+    
+    case actionTypes.SELECT_PROFESSION:
+      return selectProfession(state, payload);
+
+    case actionTypes.DELETE_PROFESSION:
+      return deleteProfession(state, payload);
 
     default:
       return state

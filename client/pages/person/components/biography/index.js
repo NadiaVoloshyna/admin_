@@ -14,7 +14,9 @@ const PersonBiography = ({ biography, name }) => {
         Biography
         { !!biography.documentId &&
           <Button 
+            className="float-right"
             variant="outline-secondary"
+            size="sm"
             onClick={() => openInNewTab(biography.documentId)}>
             Edit
           </Button>
@@ -47,9 +49,6 @@ const PersonBiography = ({ biography, name }) => {
       <style jsx>{`
         .person-biography .card-body {
           height: 276px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
         }
       `}</style>
     </div>

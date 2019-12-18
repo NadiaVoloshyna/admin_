@@ -1,34 +1,51 @@
 import { select, call, delay, put, take, takeLatest } from 'redux-saga/effects'
-import { personApi } from 'api';
+import ProfessionApi from './api';
 
 import { 
   actionTypes,
   actions,
 } from './actions';
 
-function * createProfession ({ payload }) {
+function * getProfessions () {
+  const professionsState = yield select(state => state.professions);
+  const { pagination: { offset, searchTerm, sort } } = professionsState;
+  
   try {
-    const res = yield personApi.createProfession(payload);
-    const { data } = yield res.json();
-    const { createProfession } = data;
+    const response = yield ProfessionApi.getProfessions(offset, searchTerm, sort);
+    const professions = yield response.json();
     
-    yield put(actions.createProfessionSuccess(createProfession));
-  } catch (err) {
-    yield put(actions.createProfessionFail(err));
+    if (response.status === 200) {
+      yield put(actions.getProfessionsSuccess(professions));
+    }
+
+    if (response.status === 500) {
+      throw new Error(response.message);
+    }
+  } catch (error) {
+    console.error(error);
+    yield put(actions.getProfessionsFail(error));
   }
 }
 
-function * getProfessions () {
-  const professions = yield select(state => state.professions);
-  const { pagination, searchTerm, sort } = professions;
-  
+function * createProfession ({ payload }) {
   try {
-    const res = yield personApi.getProfessions(pagination.offset, searchTerm, sort);
-    const { data: { professions } } = yield res.json();
+    const response = yield ProfessionApi.create(payload);
+    const profession = yield response.json();
     
-    yield put(actions.getProfessionsSuccess(professions));
-  } catch (err) {
-    yield put(actions.getProfessionsFail(err));
+    if (response.status === 201) {
+      yield put(actions.createProfessionSuccess(profession));
+    }
+
+    if (response.status === 409) {
+      console.log('Duplicate profession');
+    }
+    
+    if (response.status === 500) {
+      throw new Error(response.message);
+    }
+  } catch (error) {
+    console.error(error);
+    yield put(actions.createProfessionFail(error));
   }
 }
 

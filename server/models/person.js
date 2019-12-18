@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate');
 
-const schema = new mongoose.Schema({
+const schema = new Schema({
     name: {
         type: String,
         required: true,
@@ -24,7 +25,21 @@ const schema = new mongoose.Schema({
     died: Date,
     title: String,
     portrait: String,
-    media: { type: Array, default: [] }
+    professions: [{ 
+        name: {
+            type: String,
+            required: true
+        }, 
+        mediaType: {
+            type: String,
+            required: true
+        },
+        active: {
+            type: Boolean,
+            required: true
+        },
+        media: [{ type: Schema.Types.ObjectId, ref: 'Media' }],
+    }]
 });
 
 schema.plugin(mongoosePaginate);

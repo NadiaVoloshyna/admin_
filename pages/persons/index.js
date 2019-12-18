@@ -1,13 +1,15 @@
 import React from 'react';
 import Head from 'next/head';
+import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import { auth } from 'utils/auth';
 import Layout from 'shared/components/layout';
 import PersonsList from 'pages/persons/components/personsList';
+import CreateDropdown from 'shared/components/createDropdown';
 import { actions } from 'pages/persons/actions';
 import { initialState } from 'pages/persons/reducers';
 
-const Persons = () => {
+const Persons = ({ createPerson }) => {
   return (
     <div>
       <Head>
@@ -15,9 +17,17 @@ const Persons = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <Layout activePage="Persons">
+      <Layout activePage="persons">
         <Layout.Navbar>
-          <a className="btn btn-primary" href="/persons/new">Create Post</a>
+          <div className="row">
+            <div className="col-10 m-auto">
+              <CreateDropdown
+                buttonText="Create Person"
+                placeholder="Person's name"
+                onCreate={createPerson}
+              />
+            </div>
+          </div>
         </Layout.Navbar>
 
         <Layout.Content>
@@ -30,10 +40,17 @@ const Persons = () => {
 
 Persons.getInitialProps = ({ ctx }) => {
   auth(ctx);
-  const  { store } = ctx;
+  const { store } = ctx;
 
   store.dispatch(actions.personsInitialState(initialState));
   store.dispatch(actions.getPersons());
 }
 
-export default connect()(Persons);
+const mapDispatchToProps = {
+  createPerson: actions.createPerson
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Persons);

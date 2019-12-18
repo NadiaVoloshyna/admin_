@@ -1,21 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Link from 'next/link'
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _debounce from 'lodash/debounce'
-import { actionTypes, actions } from 'pages/persons/actions';
-import RemotePagination from 'shared/components/pagination';
+import Link from 'next/link';
 import format from 'date-fns/format';
-
-const usePage = () => {
-  const personsState = useSelector(state => state.persons);
-  const sharedState = useSelector(state => state.shared);
-  return { ...personsState, pagination: sharedState };
-}
+import DataGrid from 'shared/components/dataGrid';
 
 function linkFormatter (cell, row) {
   return (
@@ -38,96 +25,23 @@ const columns = [{
 
 const PersonsList = () => {
   const dispatch = useDispatch();
-  const { persons, error, loading, pagination, sort } = usePage();
-  const [ selectedRecords, setSelectedRecords ] = useState([]);
-  
-  if (!persons.length) return null;
-  if (error) return null;
-  if (loading) return null;
+  const personsState = useSelector(state => state.persons);
+  const { persons, pagination, error, loading } = personsState;
 
-  const handleOnSelect = (row, isSelect) => {
-    setSelectedRecords(records => {
-      if (isSelect) {
-        return [...records, row]
-      } else {
-        return records.filter(record => record._id !== row._id)
-      }
-    });
-  }
-
-  const handleOnSelectAll = (isSelect, rows) => {
-    setSelectedRecords(isSelect ? rows : []);
-  }
-
-  const search = (searchTerm) => {
-    dispatch(actions.getPersons({
-      searchTerm
-    }));
-  }
-
-  const debouncedSearch = _debounce(search, 2000);
-
-  const handleTableChange = (type, args) => {
-    const { page, searchText } = args;
-
-    if (type === 'pagination') {
-      dispatch(actions.getPersons({
-        offset: page - 1
-      }))
-    } 
-
-    if (type === 'search') {
-      debouncedSearch(searchText);
-    }
-  }
+  const onPersonGet = (payload) => dispatch(actions.getPersons(payload));
+  const onPersonDelete = (records) => dispatch(actions.deletePersons(records));
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <Row>
-          <Col>
-            <Button 
-              onClick={() => dispatch(actions.deletePersons(selectedRecords))} 
-              size="sm"
-              variant="secondary"
-              disabled={!selectedRecords.length}
-            >
-              <FontAwesomeIcon icon='trash-alt' /> &nbsp; Delete Persons
-            </Button>
-          </Col>
-          <Col>
-            <Form.Control 
-              as="select"
-              value={sort}
-              onChange={(e) => dispatch(actions.getPersons({ sort: e.target.value }))}
-            >
-              <option value="ascending">A to Z</option>
-              <option value="descending">Z to A</option>
-              <option value="newest">Newest</option>
-              <option value="older">Older</option>
-            </Form.Control>
-          </Col>
-        </Row>
-      </div>
-
-      <RemotePagination
-        data={ persons }
-        columns={columns}
-        pagination={pagination}
-        onTableChange={ handleTableChange }
-        handleOnSelect={ handleOnSelect }
-        handleOnSelectAll={ handleOnSelectAll }
-      />
-
-      <style jsx>{`
-        .table {
-          margin-bottom: 0;
-        }
-        .card-header {
-          border-bottom: none;
-        }
-      `}</style>
-    </div>
+    <DataGrid
+      tableName="person"
+      data={persons} 
+      columns={columns} 
+      error={error} 
+      loading={loading} 
+      pagination={pagination}
+      onItemsGet={onPersonGet}
+      onItemsDelete={onPersonDelete}
+    />
   )
 }
 

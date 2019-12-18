@@ -7,8 +7,8 @@ import {
 } from './actions';
 
 function * getPersons () {
-  const sharedState = yield select(state => state.shared);
-  const { offset, searchTerm, sort } = sharedState;
+  const personsState = yield select(state => state.persons);
+  const { pagination: { offset, searchTerm, sort } } = personsState;
 
   try {
     const response = yield PersonApi.getPersons(offset, searchTerm, sort);
@@ -37,7 +37,37 @@ function * deletePersons ({payload: personsToDelete}) {
   }
 }
 
+function * createPerson ({ payload }) {
+  try {
+    yield put(actions.toggleIsLoading(true));
+
+    const response = yield PersonApi.create(payload);
+    const person = yield response.json();
+
+    if (response.status === 301 || response.status === 302) {
+      yield put(actions.toggleIsLoading(false));
+      window.location = `persons/${person.id}`;
+      return;
+    }
+    
+    if (response.status === 409) {
+      yield put(actions.setDuplicateData({
+        id: person.id,
+        name: person.name
+      }))
+      yield put(actions.showDuplicatePersonModal(true));
+    }
+
+    if (response.status === 500) {
+      throw Error(response.message);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export const personsSagas = [
   takeLatest(actionTypes.GET_PERSONS, getPersons),
+  takeLatest(actionTypes.CREATE_PERSON, createPerson),
   takeLatest(actionTypes.DELETE_PERSONS, deletePersons)
 ];

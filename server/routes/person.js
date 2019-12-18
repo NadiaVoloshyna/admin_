@@ -2,6 +2,7 @@ const router = require('express').Router();
 const cheerio = require('cheerio');
 const Person = require('../models/person');
 const GoogleApi = require('../services/google');
+const Cloudinary = require('../services/cloudinary');
 const { query, body, check } = require('express-validator');
 const { createQueryForPagination } = require('../helpers/resolvers');
 const handleError = require('../helpers/handleError');
@@ -102,7 +103,7 @@ router.get('/:id', [
  * 6. If document was created add document id to persons data
  */
 router.post('/', [
-  body('name').isString().escape()
+  body('name').isString().escape(),
 ], errorHandler, async (req, res) => {
   const { name } = req.body;
   
@@ -110,7 +111,7 @@ router.post('/', [
 
   // Check if person exists
   try {
-    person = await Person.findOne({ name: name });
+    person = await Person.findOne({ name });
 
     if (person) {
       // Person with this name is already exist
@@ -119,6 +120,17 @@ router.post('/', [
         name: person.name
       });
       return;
+    }
+  } catch (error) {
+    return handleError.custom(res, 500, error);
+  }
+
+  // Create cloudinary folder
+  try {
+    const result = await Cloudinary.createFolder(name);
+
+    if (!result || !result.success) {
+      throw new Error(`Failed to create ${name} folder in Cloudinary`);
     }
   } catch (error) {
     return handleError.custom(res, 500, error);
@@ -186,15 +198,18 @@ router.delete('/', [
  */
 router.put('/:id', [
   check('id').isMongoId(),
-  body('name').isString().not().isEmpty().escape()
+  body('name').isString().not().isEmpty().escape(),
+  body('portrait').if(body('portrait').exists()).isString().escape(),
+  body('born').if(body('born').exists()).isString().escape(),
+  body('died').if(body('died').exists()).isString().escape(),
 ], errorHandler, async (req, res) => {
-  const { name } = req.body;
+  const { portrait, born, died } = req.body;
   const { id } = req.params;
 
   try {
     await Person.findOneAndUpdate(
       { _id: id },
-      { $set: { name } },
+      { $set: { portrait, born, died } },
       { new: true }
     );
     } catch (error) {

@@ -1,15 +1,12 @@
-const express = require('express')
-const next = require('next')
+const express = require('express');
+const fileUpload = require('express-fileupload');
+const next = require('next');
 const { logger } = require('./server/loggers');
 
 require('dotenv').config();
 
-const { ApolloServer } = require('apollo-server-express');
 const authService = require('./server/services/auth');
 
-const resolvers = require('./server/resolvers')(logger);
-const typeDefs = require('./server/typeDefs');
-const models = require('./server/models');
 const DB = require('./server/db');
 const routes = require('./server/routes');
 
@@ -20,30 +17,14 @@ const handle = app.getRequestHandler();
 
 DB.connect(logger);
 
-const apollo = new ApolloServer({
-    typeDefs,
-    resolvers,
-    dataSources: () => models,
-    formatError: (error) => {
-      logger.error(error);
-
-      return {
-        message: error.message,
-        extensions: error.extensions
-      }
-    },
-    formatResponse: response => {
-      logger.debug(response);
-      return response;
-    },
-});
-
 app.prepare().then(() => {
   const server = express();
   server.use(express.json());
-  authService.initialize(server);
+  server.use(express.urlencoded({ extended: false }));
 
-  apollo.applyMiddleware({ app: server });
+  server.use(fileUpload());
+
+  authService.initialize(server);
 
   routes(server, logger);
   

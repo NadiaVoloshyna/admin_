@@ -17,12 +17,16 @@ const Users = () => {
   
   return (
     <>
-      <Layout activePage="Users" >
+      <Layout activePage="users" >
         <Layout.Navbar>
-          <Button 
-            variant="outline-primary"
-            onClick={() => toggleShowInviteUserModal(true)}
-          >Invite User</Button>
+          <div className="row">
+            <div className="col-10 m-auto">
+              <Button 
+                variant="primary"
+                onClick={() => toggleShowInviteUserModal(true)}
+              >Invite User</Button>
+            </div>
+          </div>
         </Layout.Navbar>
 
         <Layout.Content>

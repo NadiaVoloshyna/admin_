@@ -2,12 +2,13 @@ import React from 'react';
 import Head from 'next/head';
 import { connect } from 'react-redux';
 import Layout from 'shared/components/layout';
-import { actionTypes, actions } from 'pages/professions/actions';
+import CreateDropdown from 'shared/components/createDropdown';
+import { actions } from 'pages/professions/actions';
 import { auth } from 'utils/auth';
 import { initialState } from 'pages/professions/reducers';
 import ProfessionsList from 'pages/professions/components/professionsList';
 
-const Professions = () => {
+const Professions = ({createProfession}) => {
   return (
     <div>
       <Head>
@@ -17,7 +18,15 @@ const Professions = () => {
 
       <Layout activePage="Professions">
         <Layout.Navbar>
-          Professions
+          <div className="row">
+            <div className="col-10 m-auto">
+              <CreateDropdown
+                onCreate={createProfession}
+                buttonText="Create Profession"
+                placeholder="Profession's name"
+              />
+            </div>
+          </div>
         </Layout.Navbar>
 
         <Layout.Content>
@@ -30,10 +39,17 @@ const Professions = () => {
 
 Professions.getInitialProps = ({ ctx }) => {
   auth(ctx);
-  const  { store } = ctx;
+  const { store } = ctx;
 
   store.dispatch(actions.professionsInitialState(initialState));
   store.dispatch(actions.getProfessions());
 }
 
-export default connect()(Professions);
+const mapDispatchToProps = {
+  createProfession: actions.createProfession
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Professions);

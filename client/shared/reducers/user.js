@@ -1,14 +1,10 @@
-import { actionTypes } from './actions';
+import { actionTypes } from '../actions';
 
 export const initialState = {
   user: null,
   isAdmin: false,
   isAuthor: false,
   isReviewer: false,
-
-  offset: 0,
-  searchTerm: '',
-  sort: 'ascending'
 }
 
 const setUserState = (state, user) => {
@@ -21,22 +17,14 @@ const setUserState = (state, user) => {
   }
 }
 
-const reducer = (state = initialState, { type, payload }) => {
+const userReducers = (state = initialState, { type, payload }) => {
   switch (type) {
     case actionTypes.SET_USER: 
       return setUserState(state, payload)
-
-    case actionTypes.UPDATE_SEARCH_TERM: 
-    case actionTypes.UPDATE_SORT:
-    case actionTypes.UPDATE_PAGINATION:
-      return {
-        ...state,
-        ...payload
-      }
 
     default:
       return state
   }
 }
 
-export default reducer;
+export default userReducers;

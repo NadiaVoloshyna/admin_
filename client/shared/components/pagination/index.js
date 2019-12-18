@@ -18,7 +18,7 @@ const RemotePagination = ({ data, columns, onTableChange, handleOnSelect, handle
         pagination={
           paginationFactory({
             custom: true,
-            page: pagination.offset,
+            page: (pagination.offset / pagination.limit) + 1,
             sizePerPage: pagination.limit,
             totalSize: pagination.total
           })

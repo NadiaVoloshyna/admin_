@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
-const gridfs = require('gridfs-stream');
+const Grid = require('gridfs-stream');
 
 const CONNECTION_URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-s1beo.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 mongoose.connection.on('open', function () {
-    mongoose.gridfs = gridfs(mongoose.connection.db, mongoose.mongo);
-    console.log('Connected to mongo server.');
+  const gfs = Grid(mongoose.connection.db, mongoose.mongo);
+  mongoose.gridfs = gfs;
+
+  console.log('Connected to mongo server.');
 });
 
 module.exports = async (logger) => {

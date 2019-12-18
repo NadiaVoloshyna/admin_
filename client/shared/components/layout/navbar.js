@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import { useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LayoutContext } from './index';
 
 const LayoutNavbar = (props) => {
+  const { user } = useContext(LayoutContext);
+
   return (
     <>
-      <div className="row mb-5">
-        <div className="col">
-          <nav className="navbar navbar-light shadow-sm">
+      <div className="row">
+        <Navbar variant="light" bg="white" className="layout-navbar shadow-sm" fixed="top">
+          <div className="col d-flex justify-content-between align-items-center border-right h-100">
+            Welcome, { user && user.name }
+            <div className="user-icon">
+              <FontAwesomeIcon icon='user-tie' size="2x" />
+            </div>
+          </div>
+
+          <div className="col-10">
             { props.children }
-          </nav>
-        </div>
+          </div>
+        </Navbar>
       </div>
 
-      <style jsx>{`
-        .navbar {
+      <style global jsx>{`
+        .layout-navbar {
           height: 54px;
           max-height: 54px;
-          background-color: #ffffff;
-          margin-left: -15px;
-          margin-right: -15px;
+          padding: 0;
         }
       `}</style>
     </>

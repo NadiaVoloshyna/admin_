@@ -16,35 +16,6 @@ function * getPerson ({ payload }) {
   }
 }
 
-function * createPerson ({ payload }) {
-  try {
-    yield put(actions.toggleIsLoading(true));
-
-    const response = yield PersonApi.create(payload);
-    const person = yield response.json();
-
-    if (response.status === 301 || response.status === 302) {
-      yield put(actions.toggleIsLoading(false));
-      window.location = person.id;
-      return;
-    }
-    
-    if (response.status === 409) {
-      yield put(actions.setDuplicateData({
-        id: person.id,
-        name: person.name
-      }))
-      yield put(actions.showDuplicatePersonModal(true));
-    }
-
-    if (response.status === 500) {
-      throw Error(response.message);
-    }
-} catch (error) {
-    console.error(error);
-  }
-}
-
 function * updatePerson ({ payload }) {
   try {
     const response = yield PersonApi.update(payload);
@@ -64,18 +35,24 @@ function * updatePerson ({ payload }) {
 
 function * uploadPortrait ({ payload }) {
   try {
-    const res = yield PersonApi.uploadPortrait(payload);
-    const image = yield res.json();
+    const response = yield PersonApi.upload(payload);
+    const imageId = yield response.json();
     
-    yield put(actions.uploadPortraitSuccess(image));
+    if (response.status === 200) {
+      yield put(actions.uploadPortraitSuccess(imageId));
+    }
+
+    if (response.status === 500) {
+      throw new Error(response.message);
+    }
   } catch (error) {
     console.error(error);
+    yield put(actions.uploadPortraitFail(error));
   }
 }
 
 export const personSagas = [
   takeLatest(actionTypes.GET_PERSON, getPerson),
-  takeLatest(actionTypes.CREATE_PERSON, createPerson),
   takeLatest(actionTypes.UPLOAD_PORTRAIT, uploadPortrait),
   takeLatest(actionTypes.UPDATE_PERSON, updatePerson)
 ];

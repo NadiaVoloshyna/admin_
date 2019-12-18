@@ -1,180 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _debounce from 'lodash/debounce'
-import { actionTypes, actions } from 'pages/professions/actions';
-import RemotePagination from 'shared/components/pagination';
-
-const usePage = () => {
-  const state = useSelector(state => state.professions);
-  return { ...state };
-}
+import { actions } from 'pages/professions/actions';
+import DataGrid from 'shared/components/dataGrid';
 
 const columns = [{
   dataField: 'name',
-  text: ''
+  text: 'Name'
 }];
 
 const ProfessionsList = () => {
   const dispatch = useDispatch();
-  const { professions, error, loading, pagination, sort } = usePage();
-  
-  const [ selectedRecords, setSelectedRecords ] = useState([]);
-  const [ profession, setProfession ] = useState('');
-  const [ searchTerm, setSearchTerm ] = useState('');
-  
-  if (error) return null;
-  if (loading) return null;
+  const { 
+    professions, 
+    error, 
+    loading, 
+    pagination,
+  } = useSelector(state => state.professions);
 
-  const handleOnSelect = (row, isSelect) => {
-    setSelectedRecords(records => {
-      if (isSelect) {
-        return [...records, row._id]
-      } else {
-        return records.filter(record => record !== row._id)
-      }
-    });
-  }
-
-  const handleOnSelectAll = (isSelect, rows) => {
-    const ids = rows.map(r => r._id);
-    
-    if (isSelect) {
-      setSelectedRecords(ids);
-    } else {
-      setSelectedRecords([]);
-    }
-  }
-
-  const handleTableChange = (type, args) => {
-    const { page, searchTerm } = args;
-
-    if (type === 'pagination') {
-      dispatch(actions.getProfessions({
-        offset: page - 1
-      }))
-    } 
-
-    if (type === 'search') {
-      dispatch(actions.getProfessions({
-        searchTerm
-      }));
-    }
-  }
-
-  const onProfessionCreate = () => {
-    dispatch(actions.createProfession(profession));
-    setProfession('');
-  }
-
-  const onSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  }
+  const onProfessionGet = (payload) => dispatch(actions.getProfessions(payload));
+  const onProfessionDelete = (records) => dispatch(actions.deleteProfessions(records))
 
   return (
-    <>
-      <Card>
-        <Card.Header>
-          <InputGroup>
-            <FormControl 
-              placeholder="Type profession name"
-              value={profession}
-              onChange={(e) => setProfession(e.target.value)}
-            />
-            <InputGroup.Append>
-              <Button 
-                variant="primary"
-                onClick={onProfessionCreate}
-              >Add Profession</Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </Card.Header>
-
-        <Card.Header>
-          <Row>
-            <Col>
-              <InputGroup>
-                <FormControl 
-                  placeholder="Find profession"
-                  onChange={onSearchChange}
-                  value={searchTerm}
-                />
-
-                <InputGroup.Append>
-                  <Button
-                    variant="primary"
-                    disabled={!searchTerm}
-                    onClick={() => handleTableChange('search', { searchTerm })}
-                  >
-                    Search
-                  </Button>
-                </InputGroup.Append>
-              </InputGroup>
-            </Col>
-
-            <Col>
-              <InputGroup>
-                <FormControl 
-                  as="select"
-                  value={sort}
-                  onChange={(e) => dispatch(actions.getProfessions({ sort: e.target.value }))}
-                >
-                  <option value="ascending">A to Z</option>
-                  <option value="descending">Z to A</option>
-                  <option value="newest">Newest</option>
-                  <option value="older">Older</option>
-                </FormControl>
-
-                <InputGroup.Append>
-                  <Button 
-                    onClick={() => dispatch(actions.deleteProfessions(selectedRecords))} 
-                    size="sm"
-                    variant="secondary"
-                    disabled={!selectedRecords.length}
-                  >
-                    <FontAwesomeIcon icon='trash-alt' /> &nbsp; Delete Professions
-                  </Button>
-                </InputGroup.Append>
-              </InputGroup>
-            </Col>
-          </Row>
-        </Card.Header>
-
-        <Card.Body>
-          { !!professions.length &&
-            <RemotePagination
-              data={ professions }
-              columns={columns}
-              pagination={pagination}
-              onTableChange={ handleTableChange }
-              handleOnSelect={ handleOnSelect }
-              handleOnSelectAll={ handleOnSelectAll }
-            />
-          }
-          { !professions.length && 
-            <Card.Text className="text-center">
-              There are no professions yet.
-            </Card.Text> 
-          }
-        </Card.Body>
-      </Card>
-
-      <style jsx>{`
-        .table {
-          margin-bottom: 0;
-        }
-        .card-header {
-          border-bottom: none;
-        }
-      `}</style>
-    </>
+    <DataGrid
+      tableName="profession"
+      data={professions} 
+      columns={columns} 
+      error={error} 
+      loading={loading} 
+      pagination={pagination}
+      onItemsGet={onProfessionGet}
+      onItemsDelete={onProfessionDelete}
+    />
   )
 }
 

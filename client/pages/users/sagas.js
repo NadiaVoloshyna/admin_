@@ -7,8 +7,8 @@ import {
 } from './actions';
 
 function * getUsers () {
-  const sharedState = yield select(state => state.shared);
-  const { offset, searchTerm, sort } = sharedState;
+  const state = yield select(state => state.users);
+  const { pagination: { offset, searchTerm, sort } } = state;
 
   try {
     const response = yield UserAPI.getUsers(offset, searchTerm, sort);
