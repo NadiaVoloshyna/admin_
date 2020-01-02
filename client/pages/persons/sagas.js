@@ -5,8 +5,11 @@ import {
   actionTypes,
   actions,
 } from './actions';
+import { actions as sharedActions } from 'shared/actions';
 
 function * getPersons () {
+  sharedActions.toggleIsLoading();
+
   const personsState = yield select(state => state.persons);
   const { pagination: { offset, searchTerm, sort } } = personsState;
 
@@ -18,10 +21,14 @@ function * getPersons () {
   } catch (error) {
     console.error(error);
     yield put(actions.getPersonsFail(error));
+  } finally {
+    sharedActions.toggleIsLoading();
   }
 }
 
 function * deletePersons ({payload: personsToDelete}) {
+  sharedActions.toggleIsLoading();
+
   const ids = personsToDelete.map(id => id._id);
   const documentIds = personsToDelete.map(id => id.biography.documentId);
 
@@ -34,18 +41,21 @@ function * deletePersons ({payload: personsToDelete}) {
     }
   } catch (err) {
     yield put(actions.deletePersonsFailed(err));
+  } finally {
+    sharedActions.toggleIsLoading();
   }
 }
 
 function * createPerson ({ payload }) {
-  try {
-    yield put(actions.toggleIsLoading(true));
+  sharedActions.toggleIsLoading();
 
-    const response = yield PersonApi.create(payload);
+  const { value: name } = payload;
+
+  try {
+    const response = yield PersonApi.create({ name });
     const person = yield response.json();
 
     if (response.status === 301 || response.status === 302) {
-      yield put(actions.toggleIsLoading(false));
       window.location = `persons/${person.id}`;
       return;
     }
@@ -63,6 +73,8 @@ function * createPerson ({ payload }) {
     }
   } catch (error) {
     console.error(error);
+  } finally {
+    sharedActions.toggleIsLoading();
   }
 }
 

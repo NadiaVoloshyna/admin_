@@ -5,9 +5,12 @@ import { actionTypes, actions } from './actions';
 function * registerUser ({ payload }) {
   try {
     const response = yield API.register(payload);
-    const { data: { status } } = yield response.json();
-    
-    yield put(actions.registerUserSuccess(status));
+
+    if (response.status === 302) {
+      window.location = 'login';
+    } else {
+      throw new Error(response.message);
+    }
   } catch (err) {
     console.log(err)
     yield put(actions.registerUserFail(err));

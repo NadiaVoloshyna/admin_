@@ -17,13 +17,16 @@ const DataGrid = (props) => {
     error, 
     loading, 
     pagination,
-    onChange, 
     onItemsGet,
-    onItemsDelete
+    onItemsDelete,
+    onEdit,
+    hideSelectColumn
   } = props;
   
   const [ selectedRecords, setSelectedRecords ] = useState([]);
   const [ searchTerm, setSearchTerm ] = useState('');
+
+  const hasData = !!data.length;
   
   if (error) return null;
   if (loading) return null;
@@ -31,35 +34,23 @@ const DataGrid = (props) => {
   const handleOnSelect = (row, isSelect) => {
     setSelectedRecords(records => {
       if (isSelect) {
-        return [...records, row._id]
+        return [...records, row]
       } else {
-        return records.filter(record => record !== row._id)
+        return records.filter(record => record._id !== row._id)
       }
     });
   }
 
   const handleOnSelectAll = (isSelect, rows) => {
-    const ids = rows.map(r => r._id);
-    
-    if (isSelect) {
-      setSelectedRecords(ids);
-    } else {
-      setSelectedRecords([]);
-    }
+    setSelectedRecords(isSelect ? rows : []);
   }
 
   const onSearchChange = (event) => {
     setSearchTerm(event.target.value);
   }
 
-  // const search = (searchTerm) => {
-  //   onItemsGet({ searchTerm });
-  // }
-
-  //const debouncedSearch = _debounce(search, 2000);
-
   const onTableChange = (type, args) => {
-    const { page, searchTerm } = args;
+    const { page, searchTerm, cellEdit } = args;
 
     if (type === 'pagination') {
       onItemsGet({ offset: page - 1 });
@@ -68,78 +59,93 @@ const DataGrid = (props) => {
     if (type === 'search') {
       onItemsGet({ searchTerm });
     }
+
+    if (type === 'cellEdit') {
+      onEdit && onEdit({
+        id: cellEdit.rowId,
+        [cellEdit.dataField]: cellEdit.newValue
+      });
+    }
   }
 
   return (
     <>
       <Card>
-        <Card.Header>
-          <Row>
-            <Col>
-              <InputGroup>
-                <FormControl 
-                  placeholder={`Find ${tableName}`}
-                  onChange={onSearchChange}
-                  value={searchTerm}
-                />
+        { hasData && 
+          <>
+            <Card.Header>
+              <Row>
+                <Col>
+                  <InputGroup>
+                    <FormControl 
+                      placeholder={`Find ${tableName}`}
+                      onChange={onSearchChange}
+                      value={searchTerm}
+                    />
 
-                <InputGroup.Append>
-                  <Button
-                    variant="primary"
-                    disabled={!searchTerm}
-                    onClick={() => onTableChange('search', { searchTerm })}
-                  >
-                    Search
-                  </Button>
-                </InputGroup.Append>
-              </InputGroup>
-            </Col>
+                    <InputGroup.Append>
+                      <Button
+                        variant="primary"
+                        disabled={!searchTerm}
+                        onClick={() => onTableChange('search', { searchTerm })}
+                      >
+                        Search
+                      </Button>
+                    </InputGroup.Append>
+                  </InputGroup>
+                </Col>
 
-            <Col>
-              <InputGroup>
-                <FormControl 
-                  as="select"
-                  value={pagination.sort}
-                  onChange={(e) => onItemsGet({ sort: e.target.value})}
-                >
-                  <option value="ascending">A to Z</option>
-                  <option value="descending">Z to A</option>
-                  <option value="newest">Newest</option>
-                  <option value="older">Older</option>
-                </FormControl>
+                <Col>
+                  <InputGroup>
+                    <FormControl 
+                      as="select"
+                      value={pagination.sort}
+                      onChange={(e) => onItemsGet({ sort: e.target.value})}
+                    >
+                      <option value="ascending">A to Z</option>
+                      <option value="descending">Z to A</option>
+                      <option value="newest">Newest</option>
+                      <option value="older">Older</option>
+                    </FormControl>
 
-                <InputGroup.Append>
-                  <Button 
-                    onClick={() => onItemsDelete(selectedRecords)} 
-                    size="sm"
-                    variant="secondary"
-                    disabled={!selectedRecords.length}
-                  >
-                    <FontAwesomeIcon icon='trash-alt' /> &nbsp; Delete {tableName}s
-                  </Button>
-                </InputGroup.Append>
-              </InputGroup>
-            </Col>
-          </Row>
-        </Card.Header>
+                    { !hideSelectColumn && 
+                      <InputGroup.Append>
+                        <Button 
+                          onClick={() => onItemsDelete(selectedRecords)} 
+                          size="sm"
+                          variant="secondary"
+                          disabled={!selectedRecords.length}
+                        >
+                          <FontAwesomeIcon icon='trash-alt' /> &nbsp; Delete {tableName}s
+                        </Button>
+                      </InputGroup.Append>
+                      }
+                  </InputGroup>
+                </Col>
+              </Row>
+            </Card.Header>
 
-        <Card.Body className="pt-0">
-          { !!data.length &&
-            <RemotePagination
-              data={ data }
-              columns={columns}
-              pagination={pagination}
-              onTableChange={ onTableChange }
-              handleOnSelect={ handleOnSelect }
-              handleOnSelectAll={ handleOnSelectAll }
-            />
-          }
-          { !data.length && 
+            <Card.Body>
+              <RemotePagination
+                data={ data }
+                columns={columns}
+                pagination={pagination}
+                hideSelectColumn={hideSelectColumn}
+                onTableChange={ onTableChange }
+                handleOnSelect={ handleOnSelect }
+                handleOnSelectAll={ handleOnSelectAll }
+              />
+            </Card.Body>
+          </>
+        }
+
+        { !hasData && 
+          <Card.Body>
             <Card.Text className="text-center">
               There are no {tableName}s yet.
             </Card.Text> 
-          }
-        </Card.Body>
+          </Card.Body>
+        }
       </Card>
 
       <style global jsx>{`

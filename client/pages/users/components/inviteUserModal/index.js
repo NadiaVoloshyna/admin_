@@ -9,6 +9,7 @@ import { actions } from 'pages/users/actions';
 
 const InviteUserModal = (props) => {
   const dispatch = useDispatch();
+  const { canInviteAdmin, onClose, show } = props;
 
   const onSubmit = ({ email, role }) => {
     dispatch(actions.inviteUser({
@@ -16,11 +17,11 @@ const InviteUserModal = (props) => {
       role
     }));
 
-    props.onClose && props.onClose();
+    onClose && onClose();
   }
 
   return (
-    <Modal show={props.show} onHide={props.onClose}>
+    <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
         <Modal.Title>Invite user.</Modal.Title>
       </Modal.Header>
@@ -52,6 +53,7 @@ const InviteUserModal = (props) => {
                       component="select"
                     >
                       <option selected>Select user's role</option>
+                      { canInviteAdmin && <option value="admin">Admin</option> }
                       <option value="author">Author</option>
                       <option value="reviewer">Reviewer</option>
                     </Field>
@@ -60,7 +62,7 @@ const InviteUserModal = (props) => {
                 
                 <ButtonToolbar className="justify-content-end">
                   <ButtonGroup>
-                    <Button variant="secondary" onClick={props.onClose}>Discard</Button>
+                    <Button variant="secondary" onClick={onClose}>Discard</Button>
                     <Button variant="primary" type="submit">Send Invite</Button>
                   </ButtonGroup>
                 </ButtonToolbar>

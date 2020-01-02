@@ -12,6 +12,10 @@ class UserApi extends ApiService {
   invite = (email = '', role = '') => {
     return this.post('/api/users/invite', { email, role });
   }
+
+  update = ({id, ...body}) => {
+    return this.put(`/api/users/${id}`, body);
+  }
 }
 
 export default new UserApi();

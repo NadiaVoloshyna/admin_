@@ -20,5 +20,5 @@ export const initMediaLibrary = (args) => {
     if (inline) {
       window.ml.show();
     }
-  });
+  }, 100);
 }

@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const CreateDropdown = ({ onCreate, buttonText = 'Create', placeholder = '' }) => {
   const [value, setValue] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   const InputControl = () => (
     <InputGroup>
@@ -21,6 +22,7 @@ const CreateDropdown = ({ onCreate, buttonText = 'Create', placeholder = '' }) =
           onClick={() => {
             onCreate({value});
             setValue('');
+            setIsOpen(false);
           }}
         >Create</Button>
       </InputGroup.Append>
@@ -29,12 +31,23 @@ const CreateDropdown = ({ onCreate, buttonText = 'Create', placeholder = '' }) =
 
   return (
     <>
-      <Dropdown focusFirstItemOnShow={false} >
-        <Dropdown.Toggle>{ buttonText }</Dropdown.Toggle>
+      <Dropdown
+        className="create-dropdown"
+        show={isOpen} 
+        focusFirstItemOnShow={false}
+        onToggle={(isOpen) => setIsOpen(isOpen)}
+      >
+        <Dropdown.Toggle className="create-dropdown-toggle">{ buttonText }</Dropdown.Toggle>
         <Dropdown.Menu className="w-100 p-2 bg-light">
           <Dropdown.Item as={InputControl} />
         </Dropdown.Menu>
       </Dropdown>
+
+      <style global jsx>{`
+        .create-dropdown .dropdown-toggle:after {
+          display: none;
+        }
+      `}</style>
     </>
   )
 }

@@ -13,20 +13,18 @@ import PersonProfession from 'pages/person/components/profession';
 import ProfessionSection from 'pages/person/components/professionSection';
 import PersonYears from 'pages/person/components/years';
 import { actions as pageActions } from 'pages/person/actions';
+import { actions as professionsActions } from 'pages/professions/actions';
 import { auth } from 'utils/auth';
 
 import { initialState } from 'pages/person/reducers';
 
-const Person = ({ toggleIsLoading, toggleActions, updatePerson }) => {
+const Person = ({ updatePerson }) => {
   const personState = useSelector(state => state.person);
   
-  const { person, pageConfig } = personState;
+  const { person } = personState;
   const { name, portrait, biography, professions } = person;
-  const { disableActions, isLoading } = pageConfig;
 
   const onSubmit = (values) => {
-    toggleIsLoading && toggleIsLoading(true);
-
     updatePerson({
       id: person._id,
       ...values
@@ -41,50 +39,51 @@ const Person = ({ toggleIsLoading, toggleActions, updatePerson }) => {
         <script src="https://media-library.cloudinary.com/global/all.js" defer></script>
       </Head>
 
-      <Layout activePage="Person" isLoading={isLoading}>
-        <Layout.Navbar className="d-flex justify-content-between">
-          <div className="row">
-            <div className="col">Person</div>
-            <div className="col text-right">
-              <PersonActions disableActions={disableActions} />
-            </div>
-          </div>
-        </Layout.Navbar>
+      <Layout activePage="Person">
+        <Form
+          onSubmit={(values) => onSubmit(values)}
+          initialValues={{ name }}
+          render={({ handleSubmit, form, submitting, pristine, values }) => {
 
-        <Layout.Content maxWidth className="col-12">
-          <Form
-            onSubmit={(values) => onSubmit(values)}
-            initialValues={{ name }}
-            render={({ handleSubmit, form, submitting, pristine, values }) => {
+            // if (disableActions !== submitting || pristine) {
+            //   console.log('disableActions', disableActions);
+            //   console.log('submitting || pristine', submitting || pristine);
+            //   console.log('@@@@@@@@@@@@', disableActions !== submitting || pristine);
+            //   toggleActions(submitting || pristine);
+            // }
 
-              // if (disableActions !== submitting || pristine) {
-              //   console.log('disableActions', disableActions);
-              //   console.log('submitting || pristine', submitting || pristine);
-              //   console.log('@@@@@@@@@@@@', disableActions !== submitting || pristine);
-              //   toggleActions(submitting || pristine);
-              // }
-
-              return (
-                <form onSubmit={handleSubmit} className="needs-validation" noValidate>
+            return (
+              <form onSubmit={handleSubmit} className="needs-validation" noValidate>
+                <Layout.Navbar className="d-flex justify-content-between">
                   <div className="row">
-                    <div className="col-8">
+                    <div className="col-10 m-auto">
+                      <div className="row">
+                        <div className="col">Person</div>
+                        <div className="col text-right">
+                          <PersonActions disableActions={submitting || pristine} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Layout.Navbar>
+
+                <Layout.Content>
+                  <div className="row">
+                    <div className="col-9">
                       <PersonName />
-                      <PersonBiography 
-                        biography={biography}
-                        name={person.name}
-                      />
+                      <PersonBiography biography={biography} />
                       <ProfessionSection professions={professions} />
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                       <PersonPortrait portrait={portrait} name={name} />
                       <PersonYears />
                       <PersonProfession professions={professions} />
                     </div>
                   </div>
-                </form>
-            )}}
-          />
-        </Layout.Content>
+                </Layout.Content>
+              </form>
+          )}}
+        />
       </Layout>
 
       <DuplicateModal />
@@ -100,12 +99,11 @@ Person.getInitialProps = ({ ctx }) => {
   
   if (isServer) {
     store.dispatch(pageActions.getPerson(query.id));
+    store.dispatch(professionsActions.getAllProfessions());
   };
 }
 
 const mapDispatchToProps = {
-  toggleIsLoading: pageActions.toggleIsLoading,
-  toggleActions: pageActions.toggleActions,
   updatePerson: pageActions.updatePerson
 };
 

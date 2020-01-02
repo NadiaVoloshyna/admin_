@@ -10,8 +10,9 @@ export const LayoutContext = React.createContext({
 });
 
 const Layout = (props) => {
-  const { activePage, isLoading } = props;
+  const { activePage } = props;
   const { user } = useSelector(state => state.user);
+  const { isLoading } = useSelector(state => state.shared);
 
   const contextValue = {
     activePage, 
@@ -34,13 +35,11 @@ Layout.Content = LayoutContent;
 Layout.Navbar = LayoutNavbar;
 
 Layout.propTypes = {
-  activePage: string,
-  isLoading: bool
+  activePage: string
 }
 
 Layout.defaultProps = {
-  activePage: '',
-  isLoading: false
+  activePage: ''
 }
 
 export default Layout

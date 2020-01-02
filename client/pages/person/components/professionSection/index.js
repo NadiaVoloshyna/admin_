@@ -4,40 +4,25 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-//import MediaGallery from '';
-
-const professionContentConfig = {
-  'Writer': {
-    title: 'Nothing here yet',
-    text: 'You can open the media library and choose content for this author',
-    buttonText: 'Add content',
-    buttonLink: ''
-  }
-}
-
 const ProfessionSection = ({ professions }) => {
   const dispatch = useDispatch();
 
   const renderSectionItem = () => {
     return professions.map(profession => {
-      const content = professionContentConfig[profession];
-
       return (
         <Card className="mb-3">
           <Card.Header>
-            { profession }
+            { profession.name }
             <Form.Check 
               type="switch"
               label="on"
               checked
-              id={`${profession}-switch`}
+              id={`${profession.name}-switch`}
               className="float-right"
             />
           </Card.Header>
           <Card.Body>
-            <Card.Title>{content.title}</Card.Title>
-            <Card.Text>{content.text}</Card.Text>
-            <Button variant="primary">{content.buttonText}</Button>
+            <Button variant="primary">Add content</Button>
           </Card.Body>
         </Card>
       )

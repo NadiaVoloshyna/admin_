@@ -57,7 +57,7 @@ passport.use(new LocalStrategy({
   },
   async (email, password, done) => {
     try {
-      const currentUser = await User.findOne({ email });
+      const currentUser = await User.findOne({ email, active: true });
 
       if (currentUser && await verifyPassword(currentUser.password, password)) {
         done(null, currentUser.toJSON());

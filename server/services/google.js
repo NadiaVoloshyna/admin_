@@ -3,7 +3,8 @@ const eachSeries = require('async/eachSeries');
 const credentials = require('../../config/googleapi.json');
 
 const SCOPES = [
-  'https://www.googleapis.com/auth/drive'
+  'https://www.googleapis.com/auth/drive',
+  'https://www.googleapis.com/auth/drive.file'
 ];
 
 const ROOT_FOLDER = credentials.root_folder_id;
@@ -38,6 +39,13 @@ module.exports = {
     return await drive.files.export({
       fileId: documentId,
       mimeType: 'text/html'
+    });
+  },
+
+  getFileMeta: async (fileId) => {
+    return await drive.files.get({ 
+      fileId,
+      fields: 'lastModifyingUser,modifiedTime,permissions'
     });
   },
 

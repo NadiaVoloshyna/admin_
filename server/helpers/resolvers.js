@@ -1,8 +1,22 @@
 const { ApolloError } = require('apollo-server');
 
 const createQueryForPagination = (args) => {
-  const { offset, searchTerm, sort } = args;
-  const limit = 10;
+  // No queries -> return all records
+  if (!args || !Object.keys(args).length) {
+    return {
+      query: {},
+      options: {
+        pagination: false
+      }
+    }
+  }
+
+  const { 
+    offset = 0, 
+    searchTerm = '', 
+    sort = 'ascending', 
+    limit = 10 
+  } = args;
 
   const query = searchTerm ? { name: {
     $regex: searchTerm, 

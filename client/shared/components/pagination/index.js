@@ -1,24 +1,39 @@
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import cellEditFactory from 'react-bootstrap-table2-editor';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 
-const RemotePagination = ({ data, columns, onTableChange, handleOnSelect, handleOnSelectAll, pagination }) => {
+const RemotePagination = (props) => {
+  const { 
+    data, 
+    columns, 
+    onTableChange, 
+    handleOnSelect, 
+    handleOnSelectAll,
+    pagination,
+    hideSelectColumn
+  } = props;
+
   const selectRow = {
     mode: 'checkbox',
     clickToSelect: false,
     selectColumnPosition: 'right',
     onSelect: handleOnSelect,
-    onSelectAll: handleOnSelectAll
+    onSelectAll: handleOnSelectAll,
+    hideSelectColumn
   };
 
+  const activePage = (pagination.offset / pagination.limit) + 1;
+  const shouldShowPagination = (pagination.offset / pagination.limit) > 1;
+
   return (
-    <div>
+    <>
       <PaginationProvider
         pagination={
           paginationFactory({
             custom: true,
-            page: (pagination.offset / pagination.limit) + 1,
+            page: activePage,
             sizePerPage: pagination.limit,
             totalSize: pagination.total
           })
@@ -47,6 +62,10 @@ const RemotePagination = ({ data, columns, onTableChange, handleOnSelect, handle
                           remote
                           selectRow={ selectRow }
                           onTableChange={ onTableChange }
+                          cellEdit={ cellEditFactory({ 
+                            mode: 'dbclick',
+                            blurToSave: true
+                          }) }
                           { ...toolkitprops.baseProps }
                           { ...paginationTableProps }
                         />
@@ -55,17 +74,29 @@ const RemotePagination = ({ data, columns, onTableChange, handleOnSelect, handle
                   }
                 </ToolkitProvider>
                 <div>
-                  <PaginationListStandalone
-                    { ...paginationProps }
-                    dataSize={pagination.total}
-                  />
+                  { !!shouldShowPagination &&
+                    <PaginationListStandalone
+                      { ...paginationProps }
+                      dataSize={pagination.total}
+                    />
+                  }
                 </div>
               </div>
             )
           }
         }
       </PaginationProvider>
-    </div>
+
+      <style global jsx>{`
+        .react-bootstrap-table table {
+          margin: 0;
+        }
+
+        .react-bootstrap-table table th {
+          font-size: 14px;
+        }
+      `}</style>
+    </>
   );
 }
 

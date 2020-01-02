@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { actions } from 'pages/persons/actions';
 import Link from 'next/link';
 import format from 'date-fns/format';
 import DataGrid from 'shared/components/dataGrid';
@@ -15,11 +16,13 @@ function linkFormatter (cell, row) {
 const columns = [{
   dataField: 'name',
   text: 'Name',
-  formatter: linkFormatter
+  formatter: linkFormatter,
+  editable: false
 }, {
   dataField: 'created',
   text: 'Created',
   searchable: false,
+  editable: false,
   formatter: (cell) => <span className="font-weight-light">{ format(new Date(cell), 'dd-MM-yyyy HH:MM') } </span>
 }];
 

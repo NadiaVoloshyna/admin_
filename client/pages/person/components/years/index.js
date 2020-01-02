@@ -15,7 +15,12 @@ const customInput = ({name, value}) => {
 
   return (
     <InputGroup>
-      <FormControl type="text" name={name} value={formattedDate} readOnly />
+      <FormControl 
+        type="text" 
+        name={name} 
+        value={formattedDate}
+        autoComplete="off"
+      />
       <InputGroup.Append>
         <InputGroup.Text>
           <FontAwesomeIcon icon='calendar-alt' />
@@ -37,6 +42,7 @@ const PersonYears = () => {
                 selected={props.input.value}
                 onChange={(value) => props.input.onChange(value)}
                 customInput={ customInput(props.input) }
+                disabledKeyboardNavigation
               />
             )}
           </Field>

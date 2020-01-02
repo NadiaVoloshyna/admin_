@@ -6,6 +6,7 @@ import professions from 'pages/professions/reducers';
 import user from 'shared/reducers/user';
 import users from 'pages/users/reducers';
 import library from 'pages/library/reducers';
+import shared from 'shared/reducers';
 
 export default combineReducers({
   user,
@@ -13,5 +14,6 @@ export default combineReducers({
   persons,
   professions,
   users,
-  library
+  library,
+  shared
 })

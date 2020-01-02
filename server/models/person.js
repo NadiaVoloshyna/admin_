@@ -19,7 +19,7 @@ const schema = new Schema({
             type: String,
             required: true
         },
-        documentBody: String
+        documentMeta: String
     },
     born: Date,
     died: Date,

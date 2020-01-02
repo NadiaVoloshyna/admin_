@@ -20,7 +20,7 @@ export const actionTypes = {
   TOGGLE_IS_LOADING: 'TOGGLE_IS_LOADING',
 
   SELECT_PROFESSION: 'SELECT_PROFESSION',
-  DELETE_PROFESSION: 'DELETE_PROFESSION'
+  DELETE_PROFESSION: 'DELETE_PROFESSION',
 }
 
 export const actions = actionCreator(actionTypes);

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import Layout from 'shared/components/layout';
 import InviteUserModal from 'pages/users/components/inviteUserModal';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import UsersList from 'pages/users/components/usersList';
 import { actions as pageActions } from 'pages/users/actions';
@@ -13,11 +12,12 @@ import { initialState } from 'pages/users/reducers';
 
 const Users = () => {
   const { users } = useSelector(state => state.users);
+  const { isSuper } = useSelector(state => state.user);
   const [showInviteUserModal, toggleShowInviteUserModal] = useState(false);
   
   return (
     <>
-      <Layout activePage="users" >
+      <Layout activePage="Users" >
         <Layout.Navbar>
           <div className="row">
             <div className="col-10 m-auto">
@@ -30,21 +30,14 @@ const Users = () => {
         </Layout.Navbar>
 
         <Layout.Content>
-          { users && !users.length &&
-            <Jumbotron className="text-center">
-              <p>There are no users yet. To invite someone please press invite button.</p>
-            </Jumbotron>
-          } 
-
-          { users && users.length && 
-            <UsersList users={users} /> 
-          }
+          <UsersList users={users} />
         </Layout.Content>
       </Layout>
 
       <InviteUserModal 
         show={showInviteUserModal} 
         onClose={() => toggleShowInviteUserModal(false)}
+        canInviteAdmin={isSuper}
       />
     </>
   )
@@ -60,7 +53,7 @@ Users.getInitialProps = ({ ctx }) => {
 
   return {
     user
-  };
+  }
 }
 
 const mapDispatchToProps = {
@@ -70,4 +63,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps
-)(withError(Users, 'admin'));
+)(withError(Users, 'super'));

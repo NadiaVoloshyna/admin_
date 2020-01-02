@@ -13,14 +13,14 @@ const NAV_LINKS = [{
 }, {
   name: 'Library',
   url: '/library',
-  visibleTo: ['admin', 'author']
+  visibleTo: ['super', 'admin', 'author']
 }, {
   name: 'Professions',
   url: '/professions'
 }, {
   name: 'Users',
   url: '/users',
-  visibleTo: 'admin'
+  visibleTo: ['super', 'admin']
 }];
 
 const renderLinks = (active, { role }) => {
@@ -54,16 +54,12 @@ const LayoutSidebar = () => {
       <div className="col sidebar">
         <nav className="d-flex flex-column h-100">
           { renderLinks(activePage, user) }
-
-          <Link href="/auth/logout">
-            <a className="nav-link mt-auto">Logout</a>
-          </Link>
         </nav>
       </div>
 
       <style global jsx>{`
         .sidebar {
-          height: 100vh;
+          height: calc(100vh - 54px);
           border-right: 1px solid rgba(0,0,0,.1);
         }
 

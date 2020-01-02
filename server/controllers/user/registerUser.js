@@ -57,5 +57,6 @@ module.exports = async (req, res, next) => {
   }
 
   // 5. Redirect to home page
-  res.redirect('/auth/login');
+  //res.redirect('/auth/login');
+  res.status(302).end();
 }

@@ -12,6 +12,7 @@ module.exports = withGraphql(withCSS(withSass({
       'shared': path.join(__dirname, 'client/shared'),
       'assets': path.join(__dirname, 'assets'),
       'utils': path.join(__dirname, 'client/utils'),
+      'store': path.join(__dirname, 'client/store'),
     };
     return config;
   }

@@ -1,36 +1,35 @@
 import React, { useState } from 'react';
 import { actions } from 'pages/person/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form';
 import { Field } from 'react-final-form';
 
-let defaultProfessions = ['Writer', 'Artist', 'Singer', 'Composer'];
-
-const PersonProfession = ({ professions }) => {
+const PersonProfession = ({ professions: selectedProfessions }) => {
   const [selected, setSelected] = useState('');
   const dispatch = useDispatch();
+  let { professions = [] } = useSelector(state => state.professions);
 
   const selectProfession = ({ target: { value } }) => {
     if (!value) return;
 
-    const index = defaultProfessions.indexOf(value);
-    if (index !== -1) defaultProfessions.splice(index, 1);
+    const index = professions.findIndex(p => p._id === value);
+    dispatch(actions.selectProfession(professions[index]));
 
-    dispatch(actions.selectProfession(value));
+    if (index !== -1) professions.splice(index, 1);
     setSelected('');
   }
 
   const deleteProfession = (value) => {
     dispatch(actions.deleteProfession(value));
-    defaultProfessions = [...defaultProfessions, value];
+    professions = [...professions, value];
   }
 
   const renderListItem = () => {
-    return professions.map(profession => 
-      <ListGroup.Item key={profession} className="d-flex justify-content-between">
-        {profession}
+    return selectedProfessions.map(profession => 
+      <ListGroup.Item key={profession._id} className="d-flex justify-content-between">
+        {profession.name}
         <span 
           onClick={() => deleteProfession(profession)}
           className="font-weight-bold" 
@@ -60,7 +59,7 @@ const PersonProfession = ({ professions }) => {
               value={selected}
             >
               <option></option>
-              { defaultProfessions.map((p, i) => <option key={i} value={p}>{p}</option>) }
+              { professions.map((p) => <option key={p._id} value={p._id}>{p.name}</option>) }
             </Form.Control>
           </ListGroup.Item>
           { renderListItem() }

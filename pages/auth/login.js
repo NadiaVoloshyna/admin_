@@ -1,14 +1,16 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Head from 'next/head';
 import Form from 'react-bootstrap/Form';
 import { Form as FinalForm, Field } from 'react-final-form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { actions as pageActions } from 'pages/users/actions';
 
 const Login = (props) => {
+  const { showErrorMessage } = useSelector(state => state.users)
   const { loginUser } = props;
 
   const onSubmit = ({ email, password }) => {
@@ -46,6 +48,10 @@ const Login = (props) => {
                   >Facebook</Button>
                 </ButtonGroup>
               </div>
+
+              { showErrorMessage &&
+                <Alert className="mt-3" variant="danger">Your credentials are invalid. Please try again.</Alert>
+              }
 
               <div className="border-top mb-3 mt-3" />
 

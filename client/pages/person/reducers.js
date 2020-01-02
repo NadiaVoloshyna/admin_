@@ -1,15 +1,12 @@
 import { actionTypes } from './actions';
 
 export const initialState = {
-  pageConfig: {
-    disableActions: false,
-    isLoading: false
-  },
+  pageConfig: {},
   person: {
     name: '',
     biography: {
       documentId: null,
-      documentBody: ''
+      documentMeta: null
     },
     portrait: '',
     professions: []
@@ -52,24 +49,6 @@ const reducer = (state = {}, { type, payload }) => {
   switch (type) {
     case 'PERSON_INITIAL_STATE':
       return payload;
-      
-    case 'TOGGLE_ACTIONS':
-      return {
-        ...state,
-        pageConfig: {
-          ...state.pageConfig,
-          disableActions: !payload
-        },
-      }
-
-    case actionTypes.TOGGLE_IS_LOADING:
-      return {
-        ...state,
-        pageConfig: {
-          ...state.pageConfig,
-          isLoading: payload
-        }
-      }
 
     case actionTypes.GET_PERSON_SUCCESS:
       return {

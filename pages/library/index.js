@@ -1,33 +1,45 @@
 import React from 'react';
 import Head from 'next/head';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { auth } from 'utils/auth';
 import Layout from 'shared/components/layout';
-import { actions } from 'pages/library/actions';
+import { actions as pageActions } from 'pages/library/actions';
 import { initialState } from 'pages/library/reducers';
-import dynamic from 'next/dynamic'
-
-const MediaLibrary = dynamic(
-  () => import('../../client/shared/components/mediaLibrary'),
-  { ssr: false }
-)
+import Breadcrumbs from 'pages/library/components/breadcrumbs';
+import NewAssetDropdown from 'pages/library/components/newAssetDropdown';
+import FileSystem from 'pages/library/components/fileSystem';
+import { getActiveFolder, constructBreadcrumbs } from 'pages/library/helpers';
 
 const Library = () => {
+  const { media, breadcrumbs, activeFolderId } = useSelector(state => {
+    const { media, breadcrumbs } = state.library;
+    const activeFolder = getActiveFolder(breadcrumbs);
+
+    return {
+      media, 
+      breadcrumbs,
+      activeFolderId: activeFolder ? activeFolder._id : null
+    }
+  });
+
   return (
     <div>
       <Head>
         <title>Media Library</title>
         <link rel='icon' href='/favicon.ico' />
         <script src="https://media-library.cloudinary.com/global/all.js" defer></script>
+        <script src="https://widget.cloudinary.com/v2.0/global/all.js" defer></script>
       </Head>
 
       <Layout activePage="Library">
         <Layout.Navbar>
-          Library
+          <NewAssetDropdown activeFolderId={activeFolderId} />
         </Layout.Navbar>
 
-        <Layout.Content maxHeight className="col-12 pt-3">
-          <MediaLibrary inline />
+        <Layout.Content maxHeight className="col-12 py-3">
+          <Breadcrumbs breadcrumbs={breadcrumbs} />
+
+          <FileSystem assets={media} />
         </Layout.Content>
       </Layout>
     </div>
@@ -36,14 +48,23 @@ const Library = () => {
 
 Library.getInitialProps = ({ ctx }) => {
   auth(ctx);
-  const { store, isServer } = ctx;
+  const { store, isServer, query } = ctx;
 
-  store.dispatch(actions.libraryInitialState(initialState));
-  store.dispatch(actions.fetchMedia());
+  store.dispatch(pageActions.libraryInitialState({
+    ...initialState,
+    //breadcrumbs: constructBreadcrumbs(query.path)
+  }));
+
+  store.dispatch(pageActions.getAssets());
 
   return {
     isServer
   }
 }
 
-export default connect()(Library);
+const mapDispatchToProps = {};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Library);

@@ -1,12 +1,12 @@
 const Person = require('./person');
-const Media = require('./media');
+const Asset = require('./asset');
 const Profession = require('./profession');
 const User = require('./user');
 const Invite = require('./invite');
 
 module.exports = {
   Person,
-  Media,
+  Asset,
   Profession,
   User,
   Invite

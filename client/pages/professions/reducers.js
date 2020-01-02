@@ -6,6 +6,14 @@ export const initialState = {
   pagination: paginationState()
 }
 
+const deleteProfessions = (state, ids) => {
+  return {
+    ...state,
+    professions: state.professions.
+      filter(profession => ids.indexOf(profession._id) === -1)
+  }
+}
+
 const reducer = (state = {}, { type, payload }) => {
   switch (type) {
     case actionTypes.PROFESSIONS_INITIAL_STATE:
@@ -30,6 +38,9 @@ const reducer = (state = {}, { type, payload }) => {
         ...state,
         professions
       }
+    
+    case actionTypes.DELETE_PROFESSIONS_SUCCESS:
+      return deleteProfessions(state, payload);
 
     default:
       return paginationReducers(state, { type, payload });

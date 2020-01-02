@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import cx from 'classnames';
 import _startsWith from 'lodash/startsWith';
 import { any, bool } from 'prop-types';
@@ -6,29 +6,33 @@ import Spinner from 'react-bootstrap/Spinner';
 import LayoutSidebar from './sidebar';
 import { LayoutContext } from './index';
 
-const getClass = (classNames, name) => {
+const getClass = (classNames, names) => {
   const arrayOfClasses = classNames.split(' ');
 
-  return arrayOfClasses.find(key => _startsWith(key, name));
+  names = Array.isArray(names) ? names : [names];
+
+  return arrayOfClasses.find(key => {
+    return names.some(name => _startsWith(key, name));
+  });
 }
 
 const LayoutContent = (props) => {
   const { 
     className,
     children,
-    isLoading,
     maxHeight,
   } = props;
 
-  const padding = getClass(className, 'pt-') || 'pt-5';
+  const { isLoading } = useContext(LayoutContext);
+
+  const padding = getClass(className, ['pt-', 'pb-', 'pr-', 'pl-', 'py-', 'px-']) || 'pt-5';
   const col = getClass(className, 'col-') || 'col-10';
   
-  const pageContentClassName = cx('col-10', maxHeight && 'h-100');
-  const rowClassName = cx('row justify-content-center', maxHeight && 'h-100');
+  const pageContentClassName = cx('col-10');
+  const rowClassName = cx('row justify-content-center', maxHeight && 'max-height', padding);
   const innerContentClassName = cx(
     'page-content',
     col,
-    padding,
     maxHeight && 'h-100'
   );
 
@@ -55,6 +59,10 @@ const LayoutContent = (props) => {
       <style global jsx>{`
         .page {
           padding-top: 54px;
+        }
+
+        .max-height {
+          height: calc(100vh - 54px);
         }
 
         .page-content {

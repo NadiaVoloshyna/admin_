@@ -17,7 +17,7 @@ const Persons = ({ createPerson }) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <Layout activePage="persons">
+      <Layout activePage="Persons">
         <Layout.Navbar>
           <div className="row">
             <div className="col-10 m-auto">

@@ -9,9 +9,10 @@ const errorHandler = require('../middlewares/errorHandler');
  * Get subset of professions based of query parameters
  */
 router.get('/', [
-  query('offset').exists().escape().isNumeric(),
-  query('searchTerm').exists().escape(),
-  query('sort').exists().escape().isIn([
+  query('offset').if(body('offset').exists()).escape().isNumeric(),
+  query('searchTerm').if(body('searchTerm').exists()).escape(),
+  query('limit').if(body('limit').exists()).escape().isNumeric(),
+  query('sort').if(body('sort').exists()).escape().isIn([
     'ascending',
     'descending',
     'newest',
@@ -19,7 +20,7 @@ router.get('/', [
   ]),
 ], errorHandler, async (req, res) => {
   try {
-    const { query, options } = createQueryForPagination({ ...req.query, limit: 10});
+    const { query, options } = createQueryForPagination({ ...req.query});
     const professions = await Profession.paginate(query, options);
 
     const response = {
@@ -53,7 +54,7 @@ router.post('/', [
 
   // Check if profession exists
   try {
-    const profession = await new Profession({name});
+    const profession = await Profession.findOne({name});
 
     if (profession) {
       // profession with this name is already exist
@@ -80,6 +81,26 @@ router.post('/', [
     id: newProfession._id,
     name: newProfession.name
   });
+});
+
+/**
+ * Delete one or multiple professions
+ */
+router.delete('/', [
+  body('ids').exists().isArray({min: 1}).withMessage('At least one id is required'),
+], errorHandler, async (req, res) => {
+  const { ids } = req.body;
+
+  try {
+    await Profession.deleteMany({ 
+      _id: ids
+    });
+
+    res.status(200).end();
+    return;
+  } catch (error) {
+    return handleError.custom(res, 500, error);
+  }
 });
 
 module.exports = router;

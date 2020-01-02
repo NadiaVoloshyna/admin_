@@ -5,7 +5,8 @@ import DataGrid from 'shared/components/dataGrid';
 
 const columns = [{
   dataField: 'name',
-  text: 'Name'
+  text: 'Name',
+  editable: false
 }];
 
 const ProfessionsList = () => {

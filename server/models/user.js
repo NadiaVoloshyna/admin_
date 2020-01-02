@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
   },
   active: {
     type: Boolean,
-    default: false,
+    default: true,
     required: true
   },
   google: {
@@ -38,7 +38,7 @@ const schema = new mongoose.Schema({
 });
 
 schema.methods.toJson = function () {
-  const { firstName, lastName, displayName, email, created, role, active } = this.toObject();
+  const { _id, firstName, lastName, displayName, email, created, role, active } = this.toObject();
   
   return {
     firstName,
@@ -48,7 +48,8 @@ schema.methods.toJson = function () {
     email,
     created,
     role,
-    active
+    active,
+    _id
   };
 }
 

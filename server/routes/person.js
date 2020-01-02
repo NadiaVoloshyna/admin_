@@ -22,7 +22,7 @@ router.get('/', [
   ]),
 ], errorHandler, async (req, res) => {
   try {
-    const { query, options } = createQueryForPagination({ ...req.query, limit: 10});
+    const { query, options } = createQueryForPagination({ ...req.query});
     const persons = await Person.paginate(query, options);
 
     const response = {
@@ -47,7 +47,7 @@ router.get('/:id', [
   check('id').isMongoId()
 ], errorHandler, async (req, res) => {
   let person, 
-    documentBody = null
+    documentMeta = null
     _id = req.params.id;
 
   if (!_id) {
@@ -66,17 +66,19 @@ router.get('/:id', [
     return handleError.custom(res, 500, error);
   }
 
-  // Get Google Doc by id
-  // strip head/body from returned html
+  // Get Google Doc Metadata by id
   try {
-    const response = await GoogleApi.getDocumentContent(person.biography.documentId);
+    const response = await GoogleApi.getFileMeta(person.biography.documentId);
 
-    // TODO: check this part
     if (response && response.data) {
-      const $ = cheerio.load(response.data);
-      const bodyHtml = $('body').html();
-
-      documentBody = bodyHtml;
+      const { modifiedTime, lastModifyingUser, permissions } = response.data;
+      documentMeta = {
+        modifiedTime,
+        lastModifyingUser: lastModifyingUser.displayName,
+        permissions: permissions.filter(item => item.role !== 'owner')
+      };
+    } else {
+      throw new Error("Couldn't fetch file's metadata");
     }
   } catch (error) {
     return handleError.custom(res, 500, error);
@@ -86,7 +88,7 @@ router.get('/:id', [
     ...person,
     biography: {
       ...person.biography,
-      documentBody
+      documentMeta
     }
   };
 
