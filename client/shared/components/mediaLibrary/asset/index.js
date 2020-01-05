@@ -1,37 +1,39 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/Card';
-import { actions } from 'pages/library/actions';
-import { applyTransformations, isOfType } from 'pages/library/helpers';
+import { applyTransformations, isOfType } from 'shared/helpers';
 
-const Asset = ({item, onClick}) => {
-  const { name, _id, type, parent, url } = item;
+const Asset = (props) => {
+  const { 
+    item, 
+    onSelect, 
+    onDelete,
+    inline 
+  } = props;
+
+  const { name, type, url } = item;
   const { isFolder, isImage } = isOfType(type);
-  const dispatch = useDispatch();
 
-  const onSelect = () => {
-    if (isFolder) {
-      dispatch(actions.applyBreadcrumbs(item));
-      dispatch(actions.getAssets(_id));
-    } else {
-      onClick && onClick();
-    }
+  const onClick = (event) => {
+    event.stopPropagation();
+    onSelect && onSelect(item);
   }
 
-  const onDelete = (e) => {
-    e.stopPropagation();
-    dispatch(actions.deleteAsset(_id));
+  const onCloseClick = (event) => {
+    event.stopPropagation();
+    onDelete && onDelete(item);
   }
 
   return (
     <>
       <Card 
         className={`asset asset-${type}`}
-        onClick={onSelect}
+        onClick={onClick}
       >
-        <div className="close" onClick={onDelete}>
-          <span aria-hidden="true">&times;</span>
-        </div>
+        { inline &&
+          <div className="close" onClick={onCloseClick}>
+            <span aria-hidden="true">&times;</span>
+          </div>
+        }
 
         { (isImage) && 
           <Card.Img variant="top" src={applyTransformations(url, 'c_thumb,w_auto,c_scale')} /> 

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import ProfessionModal from '../professionModal';
 
 const ProfessionSection = ({ professions }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const ProfessionSection = ({ professions }) => {
             />
           </Card.Header>
           <Card.Body>
-            <Button variant="primary">Add content</Button>
+            <ProfessionModal />
           </Card.Body>
         </Card>
       )

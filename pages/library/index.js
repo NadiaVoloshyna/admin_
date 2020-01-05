@@ -1,29 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { auth } from 'utils/auth';
 import Layout from 'shared/components/layout';
 import { actions as pageActions } from 'pages/library/actions';
 import { initialState } from 'pages/library/reducers';
-import Breadcrumbs from 'pages/library/components/breadcrumbs';
-import NewAssetDropdown from 'pages/library/components/newAssetDropdown';
-import FileSystem from 'pages/library/components/fileSystem';
-import { getActiveFolder, constructBreadcrumbs } from 'pages/library/helpers';
+import CreateAssetDropdown, { ASSET_TYPES } from 'pages/library/components/createAssetDropdown';
+import AssetDetailsModal from 'pages/library/components/assetDetailsModal';
+import MediaLibrary from 'shared/components/mediaLibrary';
+import { isOfType } from 'shared/helpers';
+import api from 'pages/library/api';
+
+const supportedAssetTypes = [
+  ASSET_TYPES.FOLDER,
+  ASSET_TYPES.IMAGE
+];
 
 const Library = () => {
-  const { media, breadcrumbs, activeFolderId } = useSelector(state => {
-    const { media, breadcrumbs } = state.library;
-    const activeFolder = getActiveFolder(breadcrumbs);
+  const [ selectedAsset, setSelectedAsset ] = useState(null);
+  const [ currentFolder, setCurrentFolder ] = useState(null);
+  const [ newAsset, setNewAsset ] = useState(null);
+  const [ isShow, setIsShow ] = useState(false);
 
-    return {
-      media, 
-      breadcrumbs,
-      activeFolderId: activeFolder ? activeFolder._id : null
+  const onAssetSelect = (asset) => {
+    const { isFolder } = isOfType(asset.type);
+
+    if (isFolder) {
+      setCurrentFolder(asset);
+    } else {
+      setSelectedAsset(asset);
+      setIsShow(true);
     }
-  });
+  }
+
+  const onAssetCreate = async (asset) => {
+    if (currentFolder) {
+      asset.parent = currentFolder._id;
+    }
+
+    const response = await api.createAsset(asset);
+    const newAsset = await response.json();
+
+    setNewAsset(newAsset);
+  }
 
   return (
-    <div>
+    <>
       <Head>
         <title>Media Library</title>
         <link rel='icon' href='/favicon.ico' />
@@ -33,33 +55,37 @@ const Library = () => {
 
       <Layout activePage="Library">
         <Layout.Navbar>
-          <NewAssetDropdown activeFolderId={activeFolderId} />
+          <CreateAssetDropdown 
+            onAssetCreate={onAssetCreate} 
+            supportedTypes={supportedAssetTypes}
+          />
         </Layout.Navbar>
 
-        <Layout.Content maxHeight className="col-12 py-3">
-          <Breadcrumbs breadcrumbs={breadcrumbs} />
-
-          <FileSystem assets={media} />
+        <Layout.Content className="col-12 py-3">
+          <MediaLibrary 
+            inline
+            onAssetSelect={onAssetSelect}
+            newAsset={newAsset}
+          />
         </Layout.Content>
       </Layout>
-    </div>
+
+      { selectedAsset &&
+        <AssetDetailsModal 
+          item={selectedAsset}
+          show={isShow}
+          setShow={setIsShow}
+        />
+      }
+    </>
   )
 }
 
 Library.getInitialProps = ({ ctx }) => {
   auth(ctx);
-  const { store, isServer, query } = ctx;
+  const { store } = ctx;
 
-  store.dispatch(pageActions.libraryInitialState({
-    ...initialState,
-    //breadcrumbs: constructBreadcrumbs(query.path)
-  }));
-
-  store.dispatch(pageActions.getAssets());
-
-  return {
-    isServer
-  }
+  store.dispatch(pageActions.libraryInitialState(initialState));
 }
 
 const mapDispatchToProps = {};

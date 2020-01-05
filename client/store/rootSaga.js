@@ -5,7 +5,6 @@ import { personsSagas } from 'pages/persons/sagas';
 import { professionsSagas } from 'pages/professions/sagas';
 import { usersSagas } from 'pages/users/sagas';
 import { registerSagas } from 'pages/register/sagas';
-import { librarySagas } from 'pages/library/sagas';
 
 export default function * rootSaga() {
   yield all([
@@ -13,7 +12,6 @@ export default function * rootSaga() {
     ...personsSagas,
     ...professionsSagas,
     ...usersSagas,
-    ...registerSagas,
-    ...librarySagas
+    ...registerSagas
   ])
 }
