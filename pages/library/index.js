@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Head from 'next/head';
 import { connect } from 'react-redux';
-import { auth } from 'utils/auth';
+import UserContext from 'shared/components/userContext';
 import Layout from 'shared/components/layout';
 import { actions as pageActions } from 'pages/library/actions';
 import { initialState } from 'pages/library/reducers';
-import CreateAssetDropdown, { ASSET_TYPES } from 'pages/library/components/createAssetDropdown';
+import { withUser } from 'shared/components/withUser';
+import CreateAssetDropdown, { ASSET_TYPES } from 'shared/components/createAssetDropdown';
 import AssetDetailsModal from 'pages/library/components/assetDetailsModal';
 import MediaLibrary from 'shared/components/mediaLibrary';
 import { isOfType } from 'shared/helpers';
@@ -13,10 +14,13 @@ import api from 'pages/library/api';
 
 const supportedAssetTypes = [
   ASSET_TYPES.FOLDER,
-  ASSET_TYPES.IMAGE
+  ASSET_TYPES.ALBUM,
+  ASSET_TYPES.IMAGE,
+  ASSET_TYPES.VIDEO
 ];
 
 const Library = () => {
+  const { userRoleUp } = useContext(UserContext);
   const [ selectedAsset, setSelectedAsset ] = useState(null);
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ newAsset, setNewAsset ] = useState(null);
@@ -55,15 +59,17 @@ const Library = () => {
 
       <Layout activePage="Library">
         <Layout.Navbar>
-          <CreateAssetDropdown 
-            onAssetCreate={onAssetCreate} 
-            supportedTypes={supportedAssetTypes}
-          />
+          { userRoleUp('admin') &&
+            <CreateAssetDropdown 
+              onAssetCreate={onAssetCreate} 
+              supportedTypes={supportedAssetTypes}
+            />
+          }
         </Layout.Navbar>
 
         <Layout.Content className="col-12 py-3">
-          <MediaLibrary 
-            inline
+          <MediaLibrary
+            canDelete={userRoleUp('admin')}
             onAssetSelect={onAssetSelect}
             newAsset={newAsset}
           />
@@ -82,15 +88,12 @@ const Library = () => {
 }
 
 Library.getInitialProps = ({ ctx }) => {
-  auth(ctx);
   const { store } = ctx;
-
   store.dispatch(pageActions.libraryInitialState(initialState));
 }
 
 const mapDispatchToProps = {};
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Library);
+export default connect(null, mapDispatchToProps)(
+  withUser(Library)
+);

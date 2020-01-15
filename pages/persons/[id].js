@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect, useSelector } from 'react-redux';
-import { Form, Field, useFormState } from 'react-final-form' 
+import _unescape from 'lodash/unescape';
+import { withUser } from 'shared/components/withUser';
+import { Form, Field, useFormState } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 
@@ -12,23 +15,33 @@ import PersonBiography from 'pages/person/components/biography';
 import PersonProfession from 'pages/person/components/profession';
 import ProfessionSection from 'pages/person/components/professionSection';
 import PersonYears from 'pages/person/components/years';
+import PersonAPI from 'pages/person/api';
+import ProfessionsAPI from 'pages/professions/api';
 import { actions as pageActions } from 'pages/person/actions';
 import { actions as professionsActions } from 'pages/professions/actions';
-import { auth } from 'utils/auth';
 
 import { initialState } from 'pages/person/reducers';
 
-const Person = ({ updatePerson }) => {
-  const personState = useSelector(state => state.person);
-  
-  const { person } = personState;
-  const { name, portrait, biography, professions } = person;
+const Person = (props) => {
+  const { updatePerson, person, professions } = props;
+  const { name, portrait, biography, rootAssetId, professions: personsProfessions } = person;
 
   const onSubmit = (values) => {
     updatePerson({
       id: person._id,
-      ...values
+      ...values,
+      professions: values.professions.map(item => ({
+        profession: item, 
+        active: false,
+        media: []
+      }))
     });
+  }
+
+  const availableProfessions = () => {
+    return props.professions.filter(prof => 
+      personsProfessions.some(item => item.profession._id !== prof._id)
+    );
   }
   
   return (
@@ -41,17 +54,25 @@ const Person = ({ updatePerson }) => {
 
       <Layout activePage="Person">
         <Form
-          onSubmit={(values) => onSubmit(values)}
-          initialValues={{ name }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => {
-
-            // if (disableActions !== submitting || pristine) {
-            //   console.log('disableActions', disableActions);
-            //   console.log('submitting || pristine', submitting || pristine);
-            //   console.log('@@@@@@@@@@@@', disableActions !== submitting || pristine);
-            //   toggleActions(submitting || pristine);
-            // }
-
+          onSubmit={onSubmit}
+          mutators={{
+            ...arrayMutators
+          }}
+          initialValues={{ 
+            name, 
+            portrait: _unescape(portrait).replace(/&#x2F;/g, '/'),
+            professions: personsProfessions
+          }}
+          render={({
+            form: {
+              mutators: { push, pop }
+            },
+            handleSubmit, 
+            form, 
+            submitting, 
+            pristine, 
+            values 
+          }) => {
             return (
               <form onSubmit={handleSubmit} className="needs-validation" noValidate>
                 <Layout.Navbar className="d-flex justify-content-between">
@@ -72,12 +93,23 @@ const Person = ({ updatePerson }) => {
                     <div className="col-9">
                       <PersonName />
                       <PersonBiography biography={biography} />
-                      <ProfessionSection professions={professions} />
+                      <ProfessionSection
+                        professions={professions}
+                        rootFolder={{
+                          _id: rootAssetId,
+                          name,
+                          type: 'folder'
+                        }}
+                      />
                     </div>
                     <div className="col-3">
-                      <PersonPortrait portrait={portrait} name={name} />
+                      <PersonPortrait />
                       <PersonYears />
-                      <PersonProfession professions={professions} />
+                      <PersonProfession 
+                        professions={availableProfessions()}
+                        onAdd={push}
+                        onRemove={pop}
+                      />
                     </div>
                   </div>
                 </Layout.Content>
@@ -91,23 +123,38 @@ const Person = ({ updatePerson }) => {
   )
 }
 
-Person.getInitialProps = ({ ctx }) => {
-  auth(ctx);
+Person.getInitialProps = async ({ ctx }) => {
   const { query, store, isServer } = ctx;
+  let person = {};
+  let professions = {};
 
   store.dispatch(pageActions.personInitialState(initialState));
   
   if (isServer) {
-    store.dispatch(pageActions.getPerson(query.id));
-    store.dispatch(professionsActions.getAllProfessions());
+    const personReq      = PersonAPI.getPerson(query.id);
+    const professionsReq = ProfessionsAPI.getAllProfessions();
+    const personRes      = await personReq;
+    const professionsRes = await professionsReq;
+    person         = await personRes.json();
+    professions    = await professionsRes.json();
   };
+
+  return {
+    person: {
+      ...person,
+      professions: person.professions.map(item => ({
+        ...item,
+        ...item.profession
+      }))
+    },
+    professions: professions.professions
+  }
 }
 
 const mapDispatchToProps = {
   updatePerson: pageActions.updatePerson
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Person);
+export default connect(null, mapDispatchToProps)(
+  withUser(Person)
+);

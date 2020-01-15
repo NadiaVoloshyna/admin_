@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import _unescape from 'lodash/unescape';
 import { Field } from 'react-final-form';
-import Button from 'react-bootstrap/Button';
 import MediaLibraryModal from 'shared/components/mediaLibraryModal';
-import { Image, Transformation } from 'cloudinary-react';
+import { Image } from 'cloudinary-react';
 
-const PersonPortrait = ({ portrait, name = '' }) => {
-  const [image, setImage] = useState(_unescape(portrait).replace(/&#x2F;/g, '/'));
+const PersonPortrait = () => {
 
   return (
     <>
@@ -18,23 +16,21 @@ const PersonPortrait = ({ portrait, name = '' }) => {
         <div className="portrait card-body"> 
           <Field name="portrait">
             {props => {
+              const { input: { onChange, value } } = props;
               const onSelect = (asset => {
-                props.input.onChange(asset.url);
-                setImage(asset.url);
+                onChange(asset.url);
               });
 
-              if (image) {
+              if (value) {
                 return <Image
                   cloudName="ukrainian" 
-                  publicId={image}
+                  publicId={value}
                   height="235"
                   crop="fill" 
                 />
               }
 
-              return (
-                <MediaLibraryModal onAssetSelect={onSelect} />
-              )
+              return <MediaLibraryModal onAssetSelect={onSelect} />
             }}
           </Field>
         </div>

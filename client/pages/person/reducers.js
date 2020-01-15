@@ -19,13 +19,18 @@ export const initialState = {
 }
 
 const selectProfession = (state, profession) => {
+  const newProfession = {
+    id: profession._id,
+    active: false,
+    media: []
+  }
   return {
     ...state,
     person: {
       ...state.person,
       professions: [
         ...state.person.professions,
-        profession
+        newProfession
       ]
     }
   }

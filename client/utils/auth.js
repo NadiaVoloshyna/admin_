@@ -13,5 +13,11 @@ export const auth = (ctx, role) => {
     return;
   }
 
+  // Get user from store on the client
+  if (!ctx.req) {
+    const state = ctx.store.getState();
+    user = state.user.user;
+  }
+
   return user;
 }

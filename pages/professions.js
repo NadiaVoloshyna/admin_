@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Layout from 'shared/components/layout';
 import CreateDropdown from 'shared/components/createDropdown';
 import { actions } from 'pages/professions/actions';
-import { auth } from 'utils/auth';
+import { withUser } from 'shared/components/withUser';
 import { initialState } from 'pages/professions/reducers';
 import ProfessionsList from 'pages/professions/components/professionsList';
 
@@ -38,7 +38,6 @@ const Professions = ({createProfession}) => {
 }
 
 Professions.getInitialProps = ({ ctx }) => {
-  auth(ctx);
   const { store } = ctx;
 
   store.dispatch(actions.professionsInitialState(initialState));
@@ -49,7 +48,6 @@ const mapDispatchToProps = {
   createProfession: actions.createProfession
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Professions);
+export default connect(null, mapDispatchToProps)(
+  withUser(Professions)
+);

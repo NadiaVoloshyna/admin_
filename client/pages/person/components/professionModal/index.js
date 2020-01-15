@@ -7,14 +7,14 @@ import Col from 'react-bootstrap/Col';
 import MediaLibrary from 'shared/components/mediaLibrary';
 import FileSystem from 'shared/components/mediaLibrary/fileSystem';
 import Breadcrumbs from 'shared/components/mediaLibrary/breadcrumbs';
-import CreateAssetDropdown, { ASSET_TYPES } from 'pages/library/components/createAssetDropdown';
+import CreateAssetDropdown, { ASSET_TYPES } from 'shared/components/createAssetDropdown';
 import { isOfType } from 'shared/helpers';
 
 const supportedAssetTypes = [
   ASSET_TYPES.ALBUM
 ];
 
-const ProfessionModal = () => {
+const ProfessionModal = ({ rootFolder }) => {
   const [ showModal, setShowModal ] = useState(false);
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ assets, setAssets ] = useState([]);
@@ -29,10 +29,6 @@ const ProfessionModal = () => {
 
     if (!isFolder && !hasBeenSelected) {
       setAssets([...assets, asset]);
-    }
-
-    if (isFolder) {
-      setCurrentFolder(asset);
     }
   }
 
@@ -49,15 +45,13 @@ const ProfessionModal = () => {
     <>
       <Button variant="primary" onClick={() => setShowModal(true)}>Add content</Button>
 
-      <Modal 
-        size="xl"
+      <Modal
+        dialogClassName="w-100 mw-100"
         show={showModal} 
         onHide={handleClose}
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-            <CreateAssetDropdown supportedTypes={supportedAssetTypes} />
-          </Modal.Title>
+          <Modal.Title>Select assets</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -69,13 +63,15 @@ const ProfessionModal = () => {
             />
             <FileSystem 
               assets={assets}
-              inline
               // onSelect={onSelect}
               onDelete={onPersonMLDelete}
             />
             </Col>
             <Col md={6}>
-              <MediaLibrary onAssetSelect={onMLAssetSelect} />
+              <MediaLibrary 
+                onAssetSelect={onMLAssetSelect} 
+                root={rootFolder}
+              />
             </Col>
           </Row>
         </Modal.Body>

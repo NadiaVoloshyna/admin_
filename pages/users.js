@@ -6,8 +6,8 @@ import InviteUserModal from 'pages/users/components/inviteUserModal';
 import Button from 'react-bootstrap/Button';
 import UsersList from 'pages/users/components/usersList';
 import { actions as pageActions } from 'pages/users/actions';
-import { auth } from 'utils/auth';
 import { withError } from 'shared/components/withError';
+import { withUser } from 'shared/components/withUser';
 import { initialState } from 'pages/users/reducers';
 
 const Users = () => {
@@ -45,22 +45,17 @@ const Users = () => {
 
 Users.getInitialProps = ({ ctx }) => {
   const { store } = ctx;
-  const user = auth(ctx);
-  
+
   // Set initial state
   store.dispatch(pageActions.usersInitialState(initialState));
   store.dispatch(pageActions.getUsers());
-
-  return {
-    user
-  }
 }
 
-const mapDispatchToProps = {
-  
-};
+const mapDispatchToProps = {};
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(withError(Users, 'super'));
+export default connect(null, mapDispatchToProps)(
+  withError(
+    withUser(Users),
+    'super'
+  )
+);

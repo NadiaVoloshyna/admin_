@@ -3,9 +3,9 @@ import _remove from 'lodash/remove';
 import Breadcrumbs from './breadcrumbs';
 import FileSystem from './fileSystem';
 import api from 'shared/api/assets';
-import { isOfType, applyBreadcrumbs } from 'shared/helpers';
+import { isOfType } from 'shared/helpers';
 
-const MediaLibrary = ({ inline, onAssetSelect, newAsset }) => {
+const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, root }) => {
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ assets, setAssets ] = useState([]);
 
@@ -17,7 +17,7 @@ const MediaLibrary = ({ inline, onAssetSelect, newAsset }) => {
   }
 
   useEffect(() => {
-    getAssets();
+    getAssets(root ? root._id : null);
   }, []);
 
   useEffect(() => {
@@ -54,12 +54,13 @@ const MediaLibrary = ({ inline, onAssetSelect, newAsset }) => {
       <Breadcrumbs 
         currentFolder={currentFolder}
         onCrumbClick={onSelect}
+        root={root}
       />
       <FileSystem 
         assets={assets}
-        inline={inline}
         onSelect={onSelect}
         onDelete={onDelete}
+        canDelete={canDelete}
       />
     </>
   );

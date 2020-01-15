@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
@@ -28,10 +28,10 @@ const PersonBiography = ({ biography }) => {
               <li>Permissions:
                 <ul>
                   {documentMeta.permissions.map(item => (
-                    <>
+                    <Fragment key={item.displayName}>
                       <li>name: {item.displayName}</li>
                       <li>role: {item.role}</li>
-                    </>
+                    </Fragment>
                   ))}
                 </ul>
               </li>

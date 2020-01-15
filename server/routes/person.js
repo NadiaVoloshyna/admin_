@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const cheerio = require('cheerio');
 const Person = require('../models/person');
+const Asset = require('../models/asset');
 const GoogleApi = require('../services/google');
 const Cloudinary = require('../services/cloudinary');
 const { query, body, check } = require('express-validator');
@@ -54,14 +55,14 @@ router.get('/:id', [
     res.status(404).end();
   };
 
-  if (_id === 'new') {
-    res.status(200).end();
-  }
-
   // Get person from database
   try {
-    const document = await Person.findOne({ _id });
+    const document = await Person
+      .findOne({ _id })
+      .populate('professions.profession');
+
     person = document.toJSON();
+    console.log('get person', person);
   } catch (error) {
     return handleError.custom(res, 500, error);
   }
@@ -92,6 +93,8 @@ router.get('/:id', [
     }
   };
 
+  console.log('responseBody', responseBody);
+
   res.status(200).send(responseBody)
 });
 
@@ -107,9 +110,10 @@ router.get('/:id', [
 router.post('/', [
   body('name').isString().escape(),
 ], errorHandler, async (req, res) => {
+  // 1. Get current user
+  const userId = req.user._id;
   const { name } = req.body;
-  
-  let person, documentId, newPerson;
+  let person, documentId, newPerson, rootAsset;
 
   // Check if person exists
   try {
@@ -149,10 +153,22 @@ router.post('/', [
     return handleError.custom(res, 500, error);
   }
 
+  try {
+    rootAsset = await new Asset({
+      type: 'folder',
+      name,
+      createdBy: userId
+    }).save();
+  } catch (error) {
+    return handleError.custom(res, 500, error);
+  }
+
   // Create person
   try {
     newPerson = await new Person({
       name,
+      rootAssetId: rootAsset._id,
+      createdBy: userId,
       biography: {
         documentId
       }
@@ -205,20 +221,22 @@ router.put('/:id', [
   body('born').if(body('born').exists()).isString().escape(),
   body('died').if(body('died').exists()).isString().escape(),
 ], errorHandler, async (req, res) => {
-  const { portrait, born, died } = req.body;
+  const { portrait, born, died, professions } = req.body;
   const { id } = req.params;
 
   try {
     await Person.findOneAndUpdate(
       { _id: id },
-      { $set: { portrait, born, died } },
-      { new: true }
+      { 
+        $set: { portrait, born, died },
+        $push: { professions: { $each: professions } } 
+      }
     );
-    } catch (error) {
-      return handleError.custom(res, 500, error);
-    }
+  } catch (error) {
+    return handleError.custom(res, 500, error);
+  }
 
-    res.status(200).end();
+  res.status(200).end();
 });
 
 module.exports = router;

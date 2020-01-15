@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { applyBreadcrumbs } from 'shared/helpers';
 
-const root = {
+const rootFolder = {
   name: 'Root',
   parent: null,
   _id: null,
   type: 'folder'
 }
 
-const Breadcrumbs = ({ currentFolder, onCrumbClick }) => {
+const Breadcrumbs = ({ currentFolder, onCrumbClick, root = rootFolder }) => {
   const [ breadcrumbs, setBreadcrumbs ] = useState([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Breadcrumbs = ({ currentFolder, onCrumbClick }) => {
   return (
     <Breadcrumb>
       { [root, ...breadcrumbs].map(folder => {
-        const isActive = (!!currentFolder && folder._id === currentFolder._id);
+        const isActive = (!currentFolder || folder._id === currentFolder._id);
         
         return (
           <Breadcrumb.Item 

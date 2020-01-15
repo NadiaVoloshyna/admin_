@@ -1,7 +1,23 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate');
 
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
+
+// Person's profession schema
+const professionSchema = mongoose.Schema({ 
+    profession: {
+        type: ObjectId,
+        ref: 'Profession'
+    }, 
+    active: {
+        type: Boolean,
+        required: true
+    },
+    media: [{ type: ObjectId, ref: 'Media' }],
+}, { _id : false });
+
+// Person's schema
 const schema = new Schema({
     name: {
         type: String,
@@ -14,6 +30,10 @@ const schema = new Schema({
         required: true,
         default: Date.now
     },
+    createdBy: {
+        type: ObjectId,
+        required: true,
+    },
     biography: {
         documentId: {
             type: String,
@@ -25,21 +45,11 @@ const schema = new Schema({
     died: Date,
     title: String,
     portrait: String,
-    professions: [{ 
-        name: {
-            type: String,
-            required: true
-        }, 
-        mediaType: {
-            type: String,
-            required: true
-        },
-        active: {
-            type: Boolean,
-            required: true
-        },
-        media: [{ type: Schema.Types.ObjectId, ref: 'Media' }],
-    }]
+    rootAssetId: {
+        type: ObjectId,
+        required: true
+    },
+    professions: [professionSchema]
 });
 
 schema.plugin(mongoosePaginate);

@@ -1,31 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from 'react-select'
-import { actions } from 'pages/person/actions';
-import { useDispatch, useSelector } from 'react-redux';
 import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Form from 'react-bootstrap/Form';
-import { Field } from 'react-final-form';
 
-const PersonProfession = ({ professions: selectedProfessions }) => {
-  const dispatch = useDispatch();
-  let { professions = [] } = useSelector(state => state.professions);
+const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
 
-  const onChange = (newValue, actionMeta) => {
-    if (actionMeta.action === 'select-option') {
-      dispatch(actions.selectProfession(actionMeta.option.value));
+  const onChange = (value, meta) => {
+    if (meta.action === 'select-option') {
+      onAdd('professions', meta.option.value);
     }
 
-    if (actionMeta.action === 'remove-value') {
-      dispatch(actions.deleteProfession(actionMeta.removedValue.value));
+    if (meta.action === 'remove-value') {
+      onRemove('professions');
     }
 
-    if (actionMeta.action === 'clear') {
+    if (meta.action === 'clear') {
       console.log('Delete all professions');
     }
-
-    console.log(newValue);
-    console.log(actionMeta);
   }
 
   return (

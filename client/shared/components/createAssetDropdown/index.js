@@ -10,7 +10,8 @@ import Album from './album';
 export const ASSET_TYPES = {
   FOLDER: 'FOLDER',
   IMAGE: 'IMAGE',
-  ALBUM: 'ALBUM'
+  ALBUM: 'ALBUM',
+  VIDEO: 'VIDEO'
 }
 
 const availableAssets = {
@@ -23,10 +24,13 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
   const [ isOpen, setIsOpen ] = useState(false);
   const [ formToShow, setFormToShow ] = useState('');
 
-  const onCreate = (isOpen, { name, url, type }) => {
+  const onCreate = (isOpen, item) => {
     setIsOpen(isOpen);
     setFormToShow('');
 
+    if (!item) return;
+
+    const { name, url, type } = item;
     const asset = {
       type,
       name
@@ -42,18 +46,19 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
   return (
     <>
       <Dropdown
-        className="create-dropdown"
+        className="create-dropdown w-100"
         show={isOpen} 
         focusFirstItemOnShow={false}
         onToggle={(isOpen) => {
           !formToShow && setIsOpen(isOpen)
         }}
       >
-        <Dropdown.Toggle>New</Dropdown.Toggle>
+        <Dropdown.Toggle>New Asset</Dropdown.Toggle>
         <Dropdown.Menu className={cx(formToShow && 'w-100 p-2 bg-light')}>
           { !formToShow && supportedTypes.map(item => {
             return (
-              <Dropdown.Item 
+              <Dropdown.Item
+                key={item}
                 eventKey={item} 
                 onSelect={(item) => {setIsOpen(true); setFormToShow(item)}}
               >
@@ -63,7 +68,11 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
           })}
 
           { formToShow && 
-            <Dropdown.Item as={availableAssets[formToShow]} onToggle={onCreate} /> 
+            <Dropdown.Item 
+              className="min-w-50"
+              as={availableAssets[formToShow]} 
+              onToggle={onCreate} 
+            /> 
           }
         </Dropdown.Menu>
       </Dropdown>

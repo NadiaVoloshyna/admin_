@@ -43,10 +43,6 @@ router.post('/', [
   // 1. Get current user
   const userId = req.user._id;
 
-  if (!userId) {
-    return handleError.custom(res, 500, 'Not authorized!');
-  }
-
   // 2. Create new asset
   try {
     const asset = await new Asset({

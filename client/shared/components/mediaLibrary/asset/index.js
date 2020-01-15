@@ -7,7 +7,7 @@ const Asset = (props) => {
     item, 
     onSelect, 
     onDelete,
-    inline 
+    canDelete
   } = props;
 
   const { name, type, url } = item;
@@ -29,7 +29,7 @@ const Asset = (props) => {
         className={`asset asset-${type}`}
         onClick={onClick}
       >
-        { inline &&
+        { canDelete &&
           <div className="close" onClick={onCloseClick}>
             <span aria-hidden="true">&times;</span>
           </div>

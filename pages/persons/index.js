@@ -1,8 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
-import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
-import { auth } from 'utils/auth';
+import { withUser } from 'shared/components/withUser';
 import Layout from 'shared/components/layout';
 import PersonsList from 'pages/persons/components/personsList';
 import CreateDropdown from 'shared/components/createDropdown';
@@ -39,7 +38,6 @@ const Persons = ({ createPerson }) => {
 }
 
 Persons.getInitialProps = ({ ctx }) => {
-  auth(ctx);
   const { store } = ctx;
 
   store.dispatch(actions.personsInitialState(initialState));
@@ -50,7 +48,6 @@ const mapDispatchToProps = {
   createPerson: actions.createPerson
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Persons);
+export default connect(null, mapDispatchToProps)(
+  withUser(Persons)
+);
