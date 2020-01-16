@@ -6,7 +6,11 @@ const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
 
   const onChange = (value, meta) => {
     if (meta.action === 'select-option') {
-      onAdd('professions', meta.option.value);
+      onAdd('professions', {
+        profession: meta.option.value, 
+        active: false,
+        media: []
+      });
     }
 
     if (meta.action === 'remove-value') {

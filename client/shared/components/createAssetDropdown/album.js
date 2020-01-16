@@ -1,63 +1,135 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Form as FinalForm } from 'react-final-form';
+import CloudinaryUpload from 'shared/components/mediaLibrary/upload';
+import { FormField } from 'shared/components/form';
+import { ASSET_TYPES } from './index';
 
-const Album = ({ onToggle }) => {
+const validation = values => {
+  const errors = {};
+  if (!values.artist) {
+    errors.artist = 'Artist is required';
+  }
+  if (!values.name) {
+    errors.name = 'Album name is required';
+  }
+  if (!values.year) {
+    errors.year = 'Tear of the album is required';
+  }
+  return errors;
+}
+
+const Album = ({ onSubmit, onDismiss }) => {
+  const [image, setImage] = useState(false);
+
+  const onImageUpload = (image) => {
+    setImage(image);
+  }
+
+  const onImageUploadError = (error) => {
+    console.log(error);
+    // TODO: log the error
+  }
+
+  const onSubmitForm = ({ artist, name, year, description }) => {
+    if (!image) return;
+
+    onSubmit({
+      artist,
+      name, 
+      year,
+      description,
+      url: image.url, 
+      type: ASSET_TYPES.ALBUM
+    });
+  }
+
   return (
-    <Card>
-      <Row noGutters>
-        <Col md="4" className="d-flex justify-content-center align-items-center">
+    <FinalForm
+      onSubmit={onSubmitForm}
+      validate={validation}
+      render={({
+        handleSubmit,
+        submitting, 
+        pristine
+      }) => {
+        return (
+          <Form 
+            className="clearfix needs-validation"
+            onSubmit={handleSubmit}
+            noValidate
+          >
+            <Card>
+              <Card.Body>
+                <Row>
+                  <Col>
+                    <Form.Group as={Row}>
+                      <Form.Label column sm="2">Artist</Form.Label>
+                      <Col sm="10">
+                        <FormField name="artist" />
+                      </Col>
+                    </Form.Group>
 
-        </Col>
-        <Col>
-          <Card.Body>
-            <Form className="clearfix">
-              <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  className="mb-3"
-                  autoFocus
-                />
+                    <Form.Group as={Row}>
+                      <Form.Label column sm="2">Name</Form.Label>
+                      <Col sm="10">
+                        <FormField name="name" />
+                      </Col>
+                    </Form.Group>
 
-                <Form.Label>Year</Form.Label>
-                <Form.Control 
-                  className="mb-3"
-                />
+                    <Form.Group as={Row}>
+                      <Form.Label column sm="2">Year</Form.Label>
+                      <Col sm="10">
+                        <FormField 
+                          name="year" 
+                          type="number"
+                        />
+                      </Col>
+                    </Form.Group>
 
-                <Form.Label>Description</Form.Label>
-                <Form.Control 
-                className="mb-3"
-                  as="textarea" 
-                  rows="3" 
-                />
-              </Form.Group>
-              
-              <ButtonGroup className="float-right">
-                <Button
-                  variant="secondary"
-                  onClick={() => onToggle(false)}
-                >Discard</Button>
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    setValue('');
-                    onToggle(false, {
-                      name: value,
-                      url: image.url,
-                      type: 'image'
-                    });
-                  }}
-                >Add</Button>
-              </ButtonGroup>
-            </Form>
-          </Card.Body>
-        </Col>
-      </Row>
-    </Card>
+                    <Form.Group as={Row}>
+                      <Form.Label column sm="2">Description</Form.Label>
+                      <Col sm="10">
+                        <FormField 
+                          name="description"
+                          type="textarea"
+                          rows={3}
+                        />
+                      </Col>
+                    </Form.Group>
+                  </Col>
+
+                  <Col md="auto" className="text-center">
+                    <CloudinaryUpload
+                      width={247}
+                      onSuccess={onImageUpload} 
+                      onError={onImageUploadError}
+                    />
+
+                    <ButtonGroup className="float-right mt-3">
+                      <Button
+                        variant="secondary"
+                        onClick={() => onDismiss()}
+                      >Discard</Button>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        disabled={submitting || pristine}
+                      >Save</Button>
+                    </ButtonGroup>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          </Form>
+        )
+      }}
+    />
   )
 };
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import _unescape from 'lodash/unescape';
 import { withUser } from 'shared/components/withUser';
-import { Form, Field, useFormState } from 'react-final-form';
+import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
@@ -18,7 +18,6 @@ import PersonYears from 'pages/person/components/years';
 import PersonAPI from 'pages/person/api';
 import ProfessionsAPI from 'pages/professions/api';
 import { actions as pageActions } from 'pages/person/actions';
-import { actions as professionsActions } from 'pages/professions/actions';
 
 import { initialState } from 'pages/person/reducers';
 
@@ -29,18 +28,13 @@ const Person = (props) => {
   const onSubmit = (values) => {
     updatePerson({
       id: person._id,
-      ...values,
-      professions: values.professions.map(item => ({
-        profession: item, 
-        active: false,
-        media: []
-      }))
+      ...values
     });
   }
 
   const availableProfessions = () => {
     return props.professions.filter(prof => 
-      personsProfessions.some(item => item.profession._id !== prof._id)
+      personsProfessions.every(item => item.profession._id !== prof._id)
     );
   }
   
@@ -140,13 +134,14 @@ Person.getInitialProps = async ({ ctx }) => {
   };
 
   return {
-    person: {
-      ...person,
-      professions: person.professions.map(item => ({
-        ...item,
-        ...item.profession
-      }))
-    },
+    // person: {
+    //   ...person,
+    //   professions: person.professions.map(item => ({
+    //     ...item,
+    //     ...item.profession
+    //   }))
+    // },
+    person,
     professions: professions.professions
   }
 }

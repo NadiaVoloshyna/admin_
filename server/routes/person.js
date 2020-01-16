@@ -229,7 +229,7 @@ router.put('/:id', [
       { _id: id },
       { 
         $set: { portrait, born, died },
-        $push: { professions: { $each: professions } } 
+        $addToSet: { professions: { $each: professions } } 
       }
     );
   } catch (error) {

@@ -6,8 +6,9 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CloudinaryUpload from 'shared/components/mediaLibrary/upload';
+import { ASSET_TYPES } from './index';
 
-const Image = ({ onToggle }) => {
+const Image = ({ onDismiss, onSubmit }) => {
   const [value, setValue] = useState('');
   const [image, setImage] = useState(false);
 
@@ -20,20 +21,20 @@ const Image = ({ onToggle }) => {
     console.log(error);
   }
 
+  const onAssetAdd = () => {
+    setValue('');
+    onSubmit({
+      name: value,
+      url: image.url,
+      type: ASSET_TYPES.IMAGE
+    });
+  }
+
   return (
     <Card>
-      <Row noGutters>
-        <Col md="4" className="d-flex justify-content-center align-items-center">
-          { !!image && <img src={image.url} className="mw-100 mh-100" /> }
-          { !image && 
-            <CloudinaryUpload 
-              onSuccess={onImageUpload} 
-              onError={onImageUploadError}
-            />
-          }
-        </Col>
-        <Col md="8">
-          <Card.Body>
+      <Card.Body>
+        <Row>
+          <Col>
             <Form className="clearfix">
               <Form.Group>
                 <Form.Control 
@@ -47,24 +48,25 @@ const Image = ({ onToggle }) => {
               <ButtonGroup className="float-right">
                 <Button
                   variant="secondary"
-                  onClick={() => onToggle(false)}
+                  onClick={() => onDismiss()}
                 >Discard</Button>
                 <Button
                   variant="primary"
-                  onClick={() => {
-                    setValue('');
-                    onToggle(false, {
-                      name: value,
-                      url: image.url,
-                      type: 'image'
-                    });
-                  }}
+                  onClick={onAssetAdd}
                 >Add</Button>
               </ButtonGroup>
             </Form>
-          </Card.Body>
-        </Col>
-      </Row>
+          </Col>
+
+          <Col md="auto" className="text-center">
+            <CloudinaryUpload
+              width={240}
+              onSuccess={onImageUpload} 
+              onError={onImageUploadError}
+            />
+          </Col>
+        </Row>
+      </Card.Body>
     </Card>
   )
 };

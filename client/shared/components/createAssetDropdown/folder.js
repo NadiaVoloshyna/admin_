@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
+import { ASSET_TYPES } from './index';
 
-const Folder = ({ onToggle }) => {
+const Folder = ({ onSubmit, onDismiss }) => {
   const [value, setValue] = useState('');
 
   return (
@@ -19,9 +20,9 @@ const Folder = ({ onToggle }) => {
           variant="primary"
           onClick={() => {
             setValue('');
-            onToggle(false, {
+            onSubmit({
               name: value,
-              type: 'folder'
+              type: ASSET_TYPES.FOLDER
             });
           }}
         >Create</Button>

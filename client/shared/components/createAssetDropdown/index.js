@@ -20,27 +20,52 @@ const availableAssets = {
   ALBUM: Album
 }
 
+const createAssetShape = (props) => {
+  const { name, url, type, year, description, artist } = props;
+
+  switch (type) {
+    case ASSET_TYPES.IMAGE:
+      return {
+        type,
+        name,
+        url
+      }
+    case ASSET_TYPES.ALBUM:
+      return {
+        type,
+        name,
+        url,
+        year,
+        description,
+        artist
+      }
+    default:
+      return {
+        type,
+        name
+      }
+  }
+}
+
 const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
   const [ isOpen, setIsOpen ] = useState(false);
-  const [ formToShow, setFormToShow ] = useState('');
+  const [ formToShow, setFormToShow ] = useState(null);
 
-  const onCreate = (isOpen, item) => {
+  const onDropdownToggle = (isOpen = false, form = null) => {
     setIsOpen(isOpen);
-    setFormToShow('');
+    setFormToShow(form);
+  }
 
-    if (!item) return;
+  const onCreate = (item) => {
+    onDropdownToggle();
 
-    const { name, url, type } = item;
-    const asset = {
-      type,
-      name
-    }
-
-    if (url) {
-      asset.url = url;
-    }
-
+    const asset = createAssetShape(item);
     onAssetCreate(asset);
+  }
+
+  const onAssetTypeSelect = (form) => {
+    setIsOpen(true);
+    setFormToShow(form);
   }
 
   return (
@@ -49,18 +74,19 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
         className="create-dropdown w-100"
         show={isOpen} 
         focusFirstItemOnShow={false}
-        onToggle={(isOpen) => {
-          !formToShow && setIsOpen(isOpen)
-        }}
+        onToggle={(isOpen) => onDropdownToggle(isOpen)}
       >
         <Dropdown.Toggle>New Asset</Dropdown.Toggle>
-        <Dropdown.Menu className={cx(formToShow && 'w-100 p-2 bg-light')}>
+        <Dropdown.Menu 
+          className={cx(formToShow && 'w-100 p-2 bg-light')} 
+          rootCloseEvent="click"
+        >
           { !formToShow && supportedTypes.map(item => {
             return (
               <Dropdown.Item
                 key={item}
                 eventKey={item} 
-                onSelect={(item) => {setIsOpen(true); setFormToShow(item)}}
+                onSelect={(form) => onDropdownToggle(true, form)}
               >
                 { _upperFirst(_toLower(item)) }
               </Dropdown.Item>
@@ -71,7 +97,8 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
             <Dropdown.Item 
               className="min-w-50"
               as={availableAssets[formToShow]} 
-              onToggle={onCreate} 
+              onSubmit={onCreate}
+              onDismiss={onDropdownToggle}
             /> 
           }
         </Dropdown.Menu>

@@ -8,8 +8,8 @@ import { FieldArray } from 'react-final-form-arrays';
 
 const ProfessionSection = ({ rootFolder }) => {
   const renderSectionItem = ({ input }) => {
-    console.log(input);
-    const { onChange, value: { name } } = input;
+    const { onChange, value: { profession: { name } } } = input;
+    
     const onSelect = (asset => {
       onChange(asset.url);
     });
