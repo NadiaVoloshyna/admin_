@@ -10,8 +10,8 @@ const Asset = (props) => {
     canDelete
   } = props;
 
-  const { name, type, url } = item;
-  const { isFolder, isImage } = isOfType(type);
+  const { name, type, url, year } = item;
+  const { isFolder, isImage, isAlbum } = isOfType(type);
 
   const onClick = (event) => {
     event.stopPropagation();
@@ -26,7 +26,7 @@ const Asset = (props) => {
   return (
     <>
       <Card 
-        className={`asset asset-${type}`}
+        className={`asset asset-${type.toLowerCase()}`}
         onClick={onClick}
       >
         { canDelete &&
@@ -35,37 +35,44 @@ const Asset = (props) => {
           </div>
         }
 
-        { (isImage) && 
+        { (isImage || isAlbum) && 
           <Card.Img variant="top" src={applyTransformations(url, 'c_thumb,w_auto,c_scale')} /> 
         }
 
-        { (isFolder) && <Card.Body>
+        { (isFolder) && 
+          <Card.Body>
             <Card.Text>{ name }</Card.Text>
+          </Card.Body>
+        }
+
+        { (isAlbum) &&
+          <Card.Body>
+            <Card.Text>{ name }</Card.Text>
+            <Card.Text><small>{ year }</small></Card.Text>
           </Card.Body>
         }
       </Card>
       <style global jsx>{`
         .asset-wrapper {
-          flex-basis: 33%;
+          //flex-basis: 33%;
           padding: 0 10px 20px;
         }
 
-        .asset-wrapper:nth-child(3n) {
-          padding-right: 0;
-        }
+        // .asset-wrapper:nth-child(3n) {
+        //   padding-right: 0;
+        // }
 
-        .asset-wrapper:nth-child(3n + 1) {
-          padding-left: 0;
-        }
+        // .asset-wrapper:nth-child(3n + 1) {
+        //   padding-left: 0;
+        // }
 
         .asset {
           cursor: pointer;
-          align-items: center;
         }
 
-        .asset:not(.asset-folder) {
-          height: 200px;
-        }
+        // .asset:not(.asset-folder) {
+        //   height: 200px;
+        // }
 
         .asset.asset-folder .card-body {
           display: flex;
@@ -78,6 +85,10 @@ const Asset = (props) => {
           width: auto;
           max-height: 100%;
           height: auto;
+        }
+
+        .asset.asset-album p {
+          margin: 0;
         }
 
         .asset:hover .close {

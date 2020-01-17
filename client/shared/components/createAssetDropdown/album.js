@@ -12,8 +12,8 @@ import { ASSET_TYPES } from './index';
 
 const validation = values => {
   const errors = {};
-  if (!values.artist) {
-    errors.artist = 'Artist is required';
+  if (!values.author) {
+    errors.author = 'Author is required';
   }
   if (!values.name) {
     errors.name = 'Album name is required';
@@ -36,11 +36,12 @@ const Album = ({ onSubmit, onDismiss }) => {
     // TODO: log the error
   }
 
-  const onSubmitForm = ({ artist, name, year, description }) => {
+  const onSubmitForm = ({ author, name, year, description }) => {
+    console.log(author);
     if (!image) return;
 
     onSubmit({
-      artist,
+      author,
       name, 
       year,
       description,
@@ -69,9 +70,9 @@ const Album = ({ onSubmit, onDismiss }) => {
                 <Row>
                   <Col>
                     <Form.Group as={Row}>
-                      <Form.Label column sm="2">Artist</Form.Label>
+                      <Form.Label column sm="2">Author</Form.Label>
                       <Col sm="10">
-                        <FormField name="artist" />
+                        <FormField name="author" />
                       </Col>
                     </Form.Group>
 

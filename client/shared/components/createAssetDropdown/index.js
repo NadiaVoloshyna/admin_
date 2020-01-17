@@ -21,7 +21,7 @@ const availableAssets = {
 }
 
 const createAssetShape = (props) => {
-  const { name, url, type, year, description, artist } = props;
+  const { name, url, type, year, description, author } = props;
 
   switch (type) {
     case ASSET_TYPES.IMAGE:
@@ -37,7 +37,7 @@ const createAssetShape = (props) => {
         url,
         year,
         description,
-        artist
+        author
       }
     default:
       return {
@@ -61,11 +61,6 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
 
     const asset = createAssetShape(item);
     onAssetCreate(asset);
-  }
-
-  const onAssetTypeSelect = (form) => {
-    setIsOpen(true);
-    setFormToShow(form);
   }
 
   return (

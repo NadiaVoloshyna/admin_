@@ -14,9 +14,10 @@ export const applyTransformations = (url, transformations) => {
 }
 
 export const isOfType = (type) => ({
-  isFolder: type === 'folder',
-  isImage:  type === 'image',
-  isVideo:  type === 'video'
+  isFolder: type === 'FOLDER',
+  isImage:  type === 'IMAGE',
+  isVideo:  type === 'VIDEO',
+  isAlbum:  type === 'ALBUM'
 })
 
 export const constructBreadcrumbs = (path) => {
