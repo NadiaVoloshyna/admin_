@@ -1,5 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
+import Layout from 'shared/components/layout';
+import { connect } from 'react-redux';
+import { withUser } from 'shared/components/withUser';
+import { withError } from 'shared/components/withError';
 
 function UserProfile () {
   return (
@@ -31,6 +35,7 @@ const mapDispatchToProps = {};
 
 export default connect(null, mapDispatchToProps)(
   withError(
-    
+    withUser(UserProfile),
+    'admin'
   )
 );
