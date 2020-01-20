@@ -56,6 +56,6 @@ const mapDispatchToProps = {};
 export default connect(null, mapDispatchToProps)(
   withError(
     withUser(Users),
-    'super'
+    'admin'
   )
 );
