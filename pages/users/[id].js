@@ -14,29 +14,23 @@ function UserProfile () {
         </Layout.Navbar>
 
         <Layout.Content>
+          <div>
+            <div>Useres List</div>
+          </div>
         </Layout.Content>
       </Layout>
-
-      <div>
-        <div>Useres List</div>
-      </div>
     </div>
   )
 };
 
-Users.getInitialProps = ({ a }) => {
-  const { store } = a ;
-
-  // Set initial state
-  store.dispatch(pageActions.usersInitialState(initialState));
-  store.dispatch(pageActions.getUsers());
+UserProfile.getInitialProps = ({  }) => {
+  
 }
 
 const mapDispatchToProps = {};
 
 export default connect(null, mapDispatchToProps)(
   withError(
-    withUser(UserProfile),
-    'admin'
+    
   )
 );
