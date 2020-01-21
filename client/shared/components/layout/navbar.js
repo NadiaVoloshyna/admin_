@@ -41,16 +41,16 @@ const LayoutNavbar = (props) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Link href="/users/[id]">
-                        <a>Profile</a>
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link href="/auth/logout">
-                      <a>Logout</a>
-                    </Link>
-                  </Dropdown.Item>
+                  <Link href="/users/[id]">
+                    <a className="dropdown-item">
+                        Profile
+                    </a>
+                  </Link>
+                  <Link href="/autoh/logout">
+                    <a className="dropdown-item">
+                        Logout
+                    </a>
+                  </Link>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
