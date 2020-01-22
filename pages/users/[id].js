@@ -33,7 +33,6 @@ UserProfile.getInitialProps = ({ ctx }) => {
   return { 
     id: query.id
   }
-  console.log(query.id)
 }
 
 const mapDispatchToProps = {};
