@@ -28,7 +28,7 @@ const LayoutContent = (props) => {
   const padding = getClass(className, ['pt-', 'pb-', 'pr-', 'pl-', 'py-', 'px-']) || 'pt-5';
   const col = getClass(className, 'col-') || 'col-10';
   
-  const pageContentClassName = cx('col-10');
+  const pageContentClassName = cx('col');
   const rowClassName = cx('row justify-content-center', maxHeight && 'max-height', padding);
   const innerContentClassName = cx(
     'page-content',

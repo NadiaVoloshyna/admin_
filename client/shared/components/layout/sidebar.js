@@ -51,7 +51,7 @@ const LayoutSidebar = () => {
 
   return (
     <>
-      <div className="col sidebar">
+      <div className="sidebar">
         <nav className="d-flex flex-column h-100">
           { renderLinks(activePage, user) }
         </nav>
@@ -61,6 +61,7 @@ const LayoutSidebar = () => {
         .sidebar {
           height: calc(100vh - 54px);
           border-right: 1px solid rgba(0,0,0,.1);
+          width: 320px;
         }
 
         .sidebar .user-icon {

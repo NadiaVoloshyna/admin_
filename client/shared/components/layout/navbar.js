@@ -33,7 +33,7 @@ const LayoutNavbar = (props) => {
     <>
       <div className="row">
         <Navbar variant="light" bg="white" className="layout-navbar shadow-sm" fixed="top">
-          <div className="col d-flex justify-content-between align-items-center border-right h-100">
+          <div className="user-wrapper d-flex justify-content-between align-items-center border-right h-100">
             <div className="user-name d-flex justify-content-start"> 
               <Dropdown>
                 <Dropdown.Toggle as={CustomToggle}>
@@ -59,7 +59,7 @@ const LayoutNavbar = (props) => {
             </div> */}
           </div>
 
-          <div className="col-10">
+          <div className="px-3">
             { props.children }
           </div>
         </Navbar>
@@ -73,7 +73,11 @@ const LayoutNavbar = (props) => {
         }
 
         .layout-navbar .user-name {
-          padding-left: 16px;
+          padding: 0 16px;
+        }
+
+        .user-wrapper {
+          width: 320px;
         }
       `}</style>
     </>
