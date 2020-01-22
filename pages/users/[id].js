@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { withUser } from 'shared/components/withUser';
 import { withError } from 'shared/components/withError';
 
-function UserProfile () {
+
+function UserProfile ({ id }) {
   return (
     <div className="users-page">
       <Head>
@@ -19,7 +20,7 @@ function UserProfile () {
 
         <Layout.Content>
           <div>
-            <div>Useres List</div>
+            <div>{ id }</div>
           </div>
         </Layout.Content>
       </Layout>
@@ -27,8 +28,11 @@ function UserProfile () {
   )
 };
 
-UserProfile.getInitialProps = ({  }) => {
-  
+UserProfile.getInitialProps = ({ ctx }) => {
+  const { query } = ctx;
+  return { 
+    id: query.id
+  }
 }
 
 const mapDispatchToProps = {};
