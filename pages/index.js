@@ -2,9 +2,9 @@ import React from 'react'
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 import { connect } from 'react-redux';
-import { auth } from 'utils/auth';
+import { withUser } from 'shared/components/withUser';
 
-const Home = () => (
+const Home = ({ user }) => (
   <div>
     <Head>
       <title>Home</title>
@@ -25,8 +25,9 @@ const Home = () => (
   </div>
 )
 
-Home.getInitialProps = ({ ctx }) => {
-  auth(ctx);
+Home.getInitialProps = async ({ ctx }) => {
 }
 
-export default connect()(Home);
+export default connect()(
+  withUser(Home)
+);

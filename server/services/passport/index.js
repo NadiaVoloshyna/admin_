@@ -5,16 +5,12 @@ const bcrypt = require('bcrypt');
 const User = require('../../models/user');
 
 passport.serializeUser((user, done) => {
-  done(null, {
-    id: user._id,
-    name: user.firstName,
-    role: user.role
-  });
+  done(null, user);
 });
 
-passport.deserializeUser(async ({ id }, done) => {
+passport.deserializeUser(async ({ _id }, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(_id);
 
     if (user) {
       done(null, user);
@@ -34,7 +30,7 @@ passport.use(
     try {
       const currentUser = await User.findOne({ 'google.id': profile.id });
       if (currentUser) {
-        done(null, currentUser.toJSON());
+        done(null, currentUser.toJson());
       } else {
         done(
           `Unfortunatelly you don\'t have access to this site. 

@@ -1,9 +1,7 @@
 const router = require('express').Router();
-const cheerio = require('cheerio');
 const Person = require('../models/person');
 const Asset = require('../models/asset');
 const GoogleApi = require('../services/google');
-const Cloudinary = require('../services/cloudinary');
 const { query, body, check } = require('express-validator');
 const { createQueryForPagination } = require('../helpers/resolvers');
 const handleError = require('../helpers/handleError');
@@ -59,10 +57,10 @@ router.get('/:id', [
   try {
     const document = await Person
       .findOne({ _id })
-      .populate('professions.profession');
+      .populate('professions.profession')
+      .populate('professions.media');
 
     person = document.toJSON();
-    console.log('get person', person);
   } catch (error) {
     return handleError.custom(res, 500, error);
   }
@@ -131,17 +129,6 @@ router.post('/', [
     return handleError.custom(res, 500, error);
   }
 
-  // Create cloudinary folder
-  try {
-    const result = await Cloudinary.createFolder(name);
-
-    if (!result || !result.success) {
-      throw new Error(`Failed to create ${name} folder in Cloudinary`);
-    }
-  } catch (error) {
-    return handleError.custom(res, 500, error);
-  }
-
   // Create google document for current person
   try {
     const { data } = await GoogleApi.createDocument(name);
@@ -155,7 +142,7 @@ router.post('/', [
 
   try {
     rootAsset = await new Asset({
-      type: 'folder',
+      type: 'FOLDER',
       name,
       createdBy: userId
     }).save();
@@ -225,11 +212,13 @@ router.put('/:id', [
   const { id } = req.params;
 
   try {
-    await Person.findOneAndUpdate(
+    await Person.updateOne(
       { _id: id },
       { 
-        $set: { portrait, born, died },
-        $addToSet: { professions: { $each: professions } } 
+        portrait,
+        born,
+        died,
+        professions
       }
     );
   } catch (error) {

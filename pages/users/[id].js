@@ -34,8 +34,5 @@ UserProfile.getInitialProps = ({  }) => {
 const mapDispatchToProps = {};
 
 export default connect(null, mapDispatchToProps)(
-  withError(
-    withUser(UserProfile),
-    'admin'
-  )
+  withUser(UserProfile)
 );

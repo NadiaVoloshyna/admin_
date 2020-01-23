@@ -14,14 +14,24 @@ const supportedAssetTypes = [
   ASSET_TYPES.ALBUM
 ];
 
-const ProfessionModal = ({ rootFolder }) => {
+const ProfessionModal = ({ rootFolder, onAssetSelect, isOpen, onModalToggle }) => {
   const [ showModal, setShowModal ] = useState(false);
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ assets, setAssets ] = useState([]);
 
+  // Update showModal on siOpen prop update
+  React.useEffect(() => {
+    setShowModal(isOpen);
+  }, [isOpen])
+
   const handleClose = () => {
-    setShowModal(false);
+    onModalToggle(false);
   };
+
+  const closeModalAndSave = () => {
+    onModalToggle(false);
+    onAssetSelect(assets);
+  }
   
   const onMLAssetSelect = (asset) => {
     const { isFolder } = isOfType(asset.type);
@@ -42,46 +52,42 @@ const ProfessionModal = ({ rootFolder }) => {
   }
 
   return (
-    <>
-      <Button variant="primary" onClick={() => setShowModal(true)}>Add content</Button>
+    <Modal
+      dialogClassName="w-100 mw-100"
+      show={showModal} 
+      onHide={handleClose}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Select assets</Modal.Title>
+      </Modal.Header>
 
-      <Modal
-        dialogClassName="w-100 mw-100"
-        show={showModal} 
-        onHide={handleClose}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Select assets</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <Row>
-            <Col md={6}>
-            <Breadcrumbs 
-              currentFolder={currentFolder}
-              onCrumbClick={() => {}}
+      <Modal.Body>
+        <Row>
+          <Col md={6}>
+          <Breadcrumbs 
+            currentFolder={currentFolder}
+            onCrumbClick={() => {}}
+          />
+          <FileSystem 
+            assets={assets}
+            // onSelect={onSelect}
+            onDelete={onPersonMLDelete}
+          />
+          </Col>
+          <Col md={6}>
+            <MediaLibrary 
+              onAssetSelect={onMLAssetSelect} 
+              root={rootFolder}
             />
-            <FileSystem 
-              assets={assets}
-              // onSelect={onSelect}
-              onDelete={onPersonMLDelete}
-            />
-            </Col>
-            <Col md={6}>
-              <MediaLibrary 
-                onAssetSelect={onMLAssetSelect} 
-                root={rootFolder}
-              />
-            </Col>
-          </Row>
-        </Modal.Body>
+          </Col>
+        </Row>
+      </Modal.Body>
 
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Discard</Button>
-          <Button variant="success" onClick={handleClose}>Save Changes</Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>Discard</Button>
+        <Button variant="success" onClick={closeModalAndSave}>Save Changes</Button>
+      </Modal.Footer>
+    </Modal>
   )
 }
 

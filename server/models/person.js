@@ -14,7 +14,7 @@ const professionSchema = mongoose.Schema({
         type: Boolean,
         required: true
     },
-    media: [{ type: ObjectId, ref: 'Media' }],
+    media: [{ type: ObjectId, ref: 'Asset' }],
 }, { _id : false });
 
 // Person's schema

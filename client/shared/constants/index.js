@@ -1,0 +1,6 @@
+export const ASSET_TYPES = {
+  FOLDER: 'FOLDER',
+  ALBUM: 'ALBUM',
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO'
+}

@@ -41,6 +41,10 @@ export const withUser = (PageComponent, { ssr } = {}) => {
 
   if (ssr || PageComponent.getInitialProps) {
     withUser.getInitialProps = async context => {
+      const user = auth(context.ctx);
+      // Don't invoke getInitialProps if user is not authenticated
+      if (!user) return {};
+
       // Run getInitialProps from HOCed PageComponent
       const pageProps =
         typeof PageComponent.getInitialProps === 'function'
@@ -50,7 +54,7 @@ export const withUser = (PageComponent, { ssr } = {}) => {
       // Pass props to PageComponent
       return {
         ...pageProps,
-        user: auth(context.ctx)
+        user
       }
     }
   }

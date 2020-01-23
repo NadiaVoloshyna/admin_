@@ -37,7 +37,7 @@ const LayoutNavbar = (props) => {
             <div className="user-name d-flex justify-content-start"> 
               <Dropdown>
                 <Dropdown.Toggle as={CustomToggle}>
-                  <span>Welcome, { user && user.name } <small>&#x25bc;</small></span>
+                  <span>Welcome, { user && user.firstName } <small>&#x25bc;</small></span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>

@@ -134,13 +134,6 @@ Person.getInitialProps = async ({ ctx }) => {
   };
 
   return {
-    // person: {
-    //   ...person,
-    //   professions: person.professions.map(item => ({
-    //     ...item,
-    //     ...item.profession
-    //   }))
-    // },
     person,
     professions: professions.professions
   }
