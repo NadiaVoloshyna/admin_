@@ -41,7 +41,7 @@ const LayoutNavbar = (props) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Link href="/users/[id]">
+                  <Link href={`/users/${user.id}`}>
                     <a className="dropdown-item">
                         Profile
                     </a>
