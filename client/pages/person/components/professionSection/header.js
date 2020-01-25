@@ -47,22 +47,13 @@ const ProfessionSectionHeader = ({ name, active, updateActive, onModalOpen }) =>
         <Dropdown.Toggle as={CustomToggle} variant="success" />
 
         <Dropdown.Menu>
-          <Dropdown.Item 
-            as="button" 
-            onClick={() => onModalOpen(true)}
-          >
+          <Dropdown.Item onClick={() => onModalOpen(true)}>
             Add Content
           </Dropdown.Item>
-          <Dropdown.Item 
-            as="button" 
-            onClick={() => updateActive()}
-          >
+          <Dropdown.Item onClick={() => updateActive()}>
             { active ? 'Disable' : 'Enable' }
           </Dropdown.Item>
-          <Dropdown.Item 
-            as="button" 
-            onClick={() => {}}
-          >
+          <Dropdown.Item onClick={() => {}}>
             Delete Section
           </Dropdown.Item>
         </Dropdown.Menu>

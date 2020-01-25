@@ -1,26 +1,31 @@
 import React, { useContext } from 'react';
 import cx from 'classnames';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LayoutContext } from './index';
 
 const NAV_LINKS = [{
   name: 'Home',
-  url: '/'
+  url: '/',
+  icon: 'home'
 }, {
   name: 'Persons',
-  url: '/persons'
+  url: '/persons',
+  icon: 'user-shield' || 'male'
 }, {
   name: 'Library',
   url: '/library',
-  visibleTo: ['super', 'admin', 'author']
+  visibleTo: ['super', 'admin', 'author'],
+  icon: 'photo-video'
 }, {
   name: 'Professions',
-  url: '/professions'
+  url: '/professions',
+  icon: 'id-card' || 'address-card'
 }, {
   name: 'Users',
   url: '/users',
-  visibleTo: ['super', 'admin']
+  visibleTo: ['super', 'admin'],
+  icon: 'users'
 }];
 
 const renderLinks = (active, { role }) => {
@@ -40,7 +45,10 @@ const renderLinks = (active, { role }) => {
     
     return (
       <Link key={link.name} href={link.url}>
-        <a className={linkClassName}>{ link.name }</a>
+        <a className={linkClassName}>
+          <FontAwesomeIcon icon={link.icon} title={link.name} />
+          <span className="d-none d-lg-inline ml-2">{ link.name }</span>
+        </a>
       </Link>
     )
   });
@@ -61,7 +69,18 @@ const LayoutSidebar = () => {
         .sidebar {
           height: calc(100vh - 54px);
           border-right: 1px solid rgba(0,0,0,.1);
-          width: 320px;
+          width: 220px;
+        }
+
+        @media (max-width: 991.98px) {
+          .sidebar {
+            width: 70px;
+            text-align: center;
+          }
+
+          .sidebar .nav-link {
+            font-size: 1.5rem;
+          }
         }
 
         .sidebar .user-icon {

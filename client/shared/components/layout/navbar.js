@@ -59,7 +59,7 @@ const LayoutNavbar = (props) => {
             </div> */}
           </div>
 
-          <div className="px-3">
+          <div className="col px-3">
             { props.children }
           </div>
         </Navbar>
@@ -76,8 +76,14 @@ const LayoutNavbar = (props) => {
           padding: 0 16px;
         }
 
-        .user-wrapper {
-          width: 320px;
+        .layout-navbar .user-wrapper {
+          width: 220px;
+        }
+
+        @media (max-width: 991.98px) {
+          .layout-navbar .user-wrapper {
+            width: 70px;
+          }
         }
       `}</style>
     </>

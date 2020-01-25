@@ -9,13 +9,28 @@ import {
   faTrashAlt, 
   faUserTie, 
   faCalendarAlt,
-  faEllipsisV
+  faEllipsisV,
+  faHome,
+  faPhotoVideo,
+  faUsers,
+  faUserShield,
+  faIdCard
 } from '@fortawesome/free-solid-svg-icons';
 import initializeStore from '../client/store';
 
 import 'assets/styles/styles.scss';
 
-library.add(faTrashAlt, faUserTie, faCalendarAlt, faEllipsisV);
+library.add(
+  faTrashAlt, 
+  faUserTie, 
+  faCalendarAlt, 
+  faEllipsisV, 
+  faHome, 
+  faPhotoVideo, 
+  faUsers,
+  faUserShield,
+  faIdCard
+);
 
 class MyApp extends App {
   static async getInitialProps ({ Component, ctx }) {
