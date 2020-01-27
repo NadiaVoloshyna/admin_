@@ -17,7 +17,7 @@ const Persons = ({ createPerson }) => {
       </Head>
 
       <Layout activePage="Persons">
-        <Layout.Navbar>
+        <Layout.Navbar className="mb-5">
           <div className="row">
             <div className="col-10 m-auto">
               <CreateDropdown

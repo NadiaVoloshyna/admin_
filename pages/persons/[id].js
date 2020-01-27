@@ -69,20 +69,16 @@ const Person = (props) => {
           }) => {
             return (
               <form onSubmit={handleSubmit} className="needs-validation" noValidate>
-                <Layout.Navbar className="d-flex justify-content-between">
+                <Layout.Navbar className="mb-5">
                   <div className="row">
-                    <div className="col-10 m-auto">
-                      <div className="row">
-                        <div className="col">Person</div>
-                        <div className="col text-right">
-                          <PersonActions disableActions={submitting || pristine} />
-                        </div>
-                      </div>
+                    <div className="col">Person</div>
+                    <div className="col text-right">
+                      <PersonActions disableActions={submitting || pristine} />
                     </div>
                   </div>
                 </Layout.Navbar>
 
-                <Layout.Content>
+                <Layout.Content className="col-12 py-3">
                   <div className="row">
                     <div className="col-9">
                       <PersonName />

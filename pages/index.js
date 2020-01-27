@@ -16,7 +16,7 @@ const Home = ({ user }) => (
         Home
       </Layout.Navbar>
 
-      <Layout.Content maxHeight className="pt-0">
+      <Layout.Content className="pt-0">
         <div className="h-100 d-flex justify-content-center align-items-center">
           <h1 className="display-2">UkraЇnian</h1>
         </div>

@@ -17,7 +17,7 @@ const Professions = ({createProfession}) => {
       </Head>
 
       <Layout activePage="Professions">
-        <Layout.Navbar>
+        <Layout.Navbar className="mb-5">
           <div className="row">
             <div className="col-10 m-auto">
               <CreateDropdown

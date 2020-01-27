@@ -58,7 +58,7 @@ const Library = () => {
       </Head>
 
       <Layout activePage="Library">
-        <Layout.Navbar>
+        <Layout.Navbar className="mb-3">
           { userRoleUp('admin') &&
             <CreateAssetDropdown 
               onAssetCreate={onAssetCreate} 

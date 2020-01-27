@@ -1,8 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { string, bool } from 'prop-types';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import LayoutContent from './content';
 import LayoutNavbar from './navbar';
+import LayoutSidebar from './sidebar';
 
 export const LayoutContext = React.createContext({
   activePage: null,
@@ -24,7 +27,12 @@ const Layout = (props) => {
     <div className={`${props.activePage.toLowerCase()}-page`}>
       <div className='container-fluid'>
         <LayoutContext.Provider value={contextValue}>
-          { props.children }
+          <Row>
+            <LayoutSidebar />
+            <Col className="d-flex flex-column vh-100">
+              { props.children }
+            </Col>
+          </Row>
         </LayoutContext.Provider>
       </div>
     </div>
