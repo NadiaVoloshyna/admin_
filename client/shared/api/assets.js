@@ -13,6 +13,15 @@ class MediaApi extends ApiService {
   deleteAsset = (id) => {
     return this.delete(`/api/assets/${id}`);
   }
+
+  moveAsset = (assetId, parentId) => {
+    return this.put(`/api/assets/${assetId}`, {
+      action: 'move',
+      payload: {
+        parentId
+      }
+    });
+  }
 }
 
 export default new MediaApi();

@@ -6,7 +6,7 @@ const rootFolder = {
   name: 'Root',
   parent: null,
   _id: null,
-  type: 'folder'
+  type: 'FOLDER'
 }
 
 const Breadcrumbs = ({ currentFolder, onCrumbClick, root = rootFolder }) => {

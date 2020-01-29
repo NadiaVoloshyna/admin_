@@ -67,11 +67,12 @@ const Library = () => {
           }
         </Layout.Navbar>
 
-        <Layout.Content className="col-12 py-3">
+        <Layout.Content>
           <MediaLibrary
             canDelete={userRoleUp('admin')}
             onAssetSelect={onAssetSelect}
             newAsset={newAsset}
+            isDragDrop={true}
           />
         </Layout.Content>
       </Layout>

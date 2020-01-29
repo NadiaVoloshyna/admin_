@@ -5,7 +5,7 @@ import FileSystem from './fileSystem';
 import api from 'shared/api/assets';
 import { isOfType } from 'shared/helpers';
 
-const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, root }) => {
+const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, root }) => {
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ assets, setAssets ] = useState([]);
 
@@ -49,6 +49,19 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, root }) => {
     }
   }
 
+  const onMove = async (asset, parent) => {
+    const response = await api.moveAsset(asset._id, parent._id);
+
+    if (response.status === 200) {
+      const newAssets = assets.filter(item => item._id !== asset._id);
+      setAssets(newAssets);
+      console.log('Moved successfully');
+    } else {
+      // TODO: log and show error message
+      console.error(response.statusText);
+    }
+  }
+
   return (
     <>
       <Breadcrumbs 
@@ -60,7 +73,9 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, root }) => {
         assets={assets}
         onSelect={onSelect}
         onDelete={onDelete}
+        onMove={onMove}
         canDelete={canDelete}
+        isDragDrop={isDragDrop}
       />
     </>
   );

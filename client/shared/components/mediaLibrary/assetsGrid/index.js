@@ -3,15 +3,15 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Asset from '../asset';
 
-const AssetsGrid = ({ assets, onSelect, onDelete, canDelete = false }) => {
+const AssetsGrid = ({ assets, onSelect, onDelete, onMove, canDelete = false, isDragDrop }) => {
   return (
     <Row>
       { assets.map(item => (
         <Col 
           sm={6}
           md={4}
-          lg={4}
-          xl={3}
+          lg={3}
+          xl={2}
           key={item._id} 
           className="asset-wrapper"
         >
@@ -19,7 +19,9 @@ const AssetsGrid = ({ assets, onSelect, onDelete, canDelete = false }) => {
             item={item}
             onSelect={onSelect}
             onDelete={onDelete}
+            onMove={onMove}
             canDelete={canDelete}
+            isDragDrop={isDragDrop}
           />
         </Col>
       ))}

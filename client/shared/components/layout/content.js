@@ -5,25 +5,17 @@ import { any, bool } from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
 import { LayoutContext } from './index';
 
-const getClass = (classNames, names) => {
-  const arrayOfClasses = classNames.split(' ');
-
-  names = Array.isArray(names) ? names : [names];
-
-  return arrayOfClasses.find(key => {
-    return names.some(name => _startsWith(key, name));
-  });
-}
-
 const LayoutContent = (props) => {
   const { 
     children,
+    className
   } = props;
 
   const { isLoading } = useContext(LayoutContext);
+  const contentCX = cx('row flex-grow-1 page-content', className && className);
   
   return (
-    <div className="row flex-grow-1 page-content">
+    <div className={contentCX}>
       <div className="col page-content-inner">
         { children }
 

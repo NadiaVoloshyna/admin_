@@ -1,36 +1,7 @@
-import React, { forwardRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
-
-const CustomToggle = forwardRef(({ onClick }, ref) => (
-  <>
-    <div 
-      className="toggle px-2 rounded"
-      ref={ref}
-      onClick={e => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      <FontAwesomeIcon icon='ellipsis-v' />
-    </div>
-    <style jsx>{`
-      .toggle {
-        cursor: pointer;
-        color: var(--gray);
-        //background: var(--gray);
-      }
-
-      .toggle:hover {
-        opacity: .5;
-        background: var(--gray);
-        color: var(--light);
-      }
-    `}</style>
-  </>
-));
+import ElipsisToggle from 'shared/components/elipsisDropdownToggle';
 
 const ProfessionSectionHeader = ({ name, active, updateActive, onModalOpen }) => {
   return (
@@ -44,7 +15,7 @@ const ProfessionSectionHeader = ({ name, active, updateActive, onModalOpen }) =>
       /> */}
 
       <Dropdown className="float-right">
-        <Dropdown.Toggle as={CustomToggle} variant="success" />
+        <Dropdown.Toggle as={ElipsisToggle} variant="success" />
 
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => onModalOpen(true)}>

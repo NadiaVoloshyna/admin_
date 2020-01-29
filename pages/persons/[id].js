@@ -22,6 +22,7 @@ import { actions as pageActions } from 'pages/person/actions';
 import { initialState } from 'pages/person/reducers';
 
 const Person = (props) => {
+  const [ disableActions, setActionsDisabled ] = useState(false);
   const { updatePerson, person, professions } = props;
   const { name, portrait, biography, rootAssetId, professions: personsProfessions } = person;
 
@@ -47,38 +48,39 @@ const Person = (props) => {
       </Head>
 
       <Layout activePage="Person">
-        <Form
-          onSubmit={onSubmit}
-          mutators={{
-            ...arrayMutators
-          }}
-          initialValues={{ 
-            name, 
-            portrait: _unescape(portrait).replace(/&#x2F;/g, '/'),
-            professions: personsProfessions
-          }}
-          render={({
-            form: {
-              mutators: { push, pop }
-            },
-            handleSubmit, 
-            form, 
-            submitting, 
-            pristine, 
-            values 
-          }) => {
-            return (
-              <form onSubmit={handleSubmit} className="needs-validation" noValidate>
-                <Layout.Navbar className="mb-5">
-                  <div className="row">
-                    <div className="col">Person</div>
-                    <div className="col text-right">
-                      <PersonActions disableActions={submitting || pristine} />
-                    </div>
-                  </div>
-                </Layout.Navbar>
+        <Layout.Navbar className="mb-3">
+          <div className="row">
+            <div className="col">Person</div>
+            <div className="col text-right">
+              <PersonActions disableActions={disableActions} />
+            </div>
+          </div>
+        </Layout.Navbar>
 
-                <Layout.Content className="col-12 py-3">
+        <Layout.Content className="py-3 pt-4">
+          <Form
+            onSubmit={onSubmit}
+            mutators={{
+              ...arrayMutators
+            }}
+            initialValues={{ 
+              name, 
+              portrait: _unescape(portrait).replace(/&#x2F;/g, '/'),
+              professions: personsProfessions
+            }}
+            render={({
+              form: {
+                mutators: { push, pop }
+              },
+              handleSubmit, 
+              form, 
+              submitting, 
+              pristine, 
+              values 
+            }) => {
+              setActionsDisabled(submitting || pristine);
+              return (
+                <form onSubmit={handleSubmit} className="needs-validation" noValidate>
                   <div className="row">
                     <div className="col-9">
                       <PersonName />
@@ -102,10 +104,10 @@ const Person = (props) => {
                       />
                     </div>
                   </div>
-                </Layout.Content>
-              </form>
-          )}}
-        />
+                </form>
+            )}}
+          />
+        </Layout.Content>
       </Layout>
 
       <DuplicateModal />

@@ -1,13 +1,19 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import cx from 'classnames';
 import { applyTransformations, isOfType } from 'shared/helpers';
+import Draggable from './draggable';
+import Droppable from './droppable';
+import Actions from '../actionsMenu';
 
 const Asset = (props) => {
   const { 
     item, 
     onSelect, 
     onDelete,
-    canDelete
+    canDelete,
+    onMove,
+    isDragDrop
   } = props;
 
   const { name, type, url, year } = item;
@@ -18,61 +24,56 @@ const Asset = (props) => {
     onSelect && onSelect(item);
   }
 
-  const onCloseClick = (event) => {
+  const onDeleteClick = (event) => {
     event.stopPropagation();
     onDelete && onDelete(item);
   }
 
   return (
-    <>
-      <Card 
-        className={`asset asset-${type.toLowerCase()}`}
-        onClick={onClick}
-      >
-        { canDelete &&
-          <div className="close" onClick={onCloseClick}>
-            <span aria-hidden="true">&times;</span>
-          </div>
-        }
+    <Droppable item={item} onDrop={onMove} isDragDrop={isDragDrop}>
+      <Draggable item={item} isDragDrop={isDragDrop}>
+        <Card 
+          className={`asset asset-${type.toLowerCase()}`}
+          onClick={onClick}
+        >
 
-        { (isImage || isAlbum) && 
-          <Card.Img variant="top" src={applyTransformations(url, 'c_thumb,w_auto,c_scale')} /> 
-        }
+          { (isImage || isAlbum) && 
+            <Card.Img variant="top" src={applyTransformations(url, 'c_thumb,w_auto,c_scale')} /> 
+          }
 
-        { (isFolder) && 
-          <Card.Body>
-            <Card.Text>{ name }</Card.Text>
-          </Card.Body>
-        }
+          { (isFolder) && 
+            <Card.Body>
+              <Card.Text>{ name }</Card.Text>
+            </Card.Body>
+          }
 
-        { (isAlbum) &&
-          <Card.Body>
-            <Card.Text>{ name }</Card.Text>
-            <Card.Text><small>{ year }</small></Card.Text>
-          </Card.Body>
-        }
-      </Card>
+          { (isAlbum) &&
+            <Card.Body>
+              <Card.Text>{ name }</Card.Text>
+              <Card.Text><small>{ year }</small></Card.Text>
+            </Card.Body>
+          }
+
+          <Actions
+            canDelete={canDelete}
+            onDelete={onDeleteClick}
+          />
+        </Card>
+      </Draggable>
+
       <style global jsx>{`
         .asset-wrapper {
-          //flex-basis: 33%;
           padding: 0 10px 20px;
         }
 
-        // .asset-wrapper:nth-child(3n) {
-        //   padding-right: 0;
-        // }
-
-        // .asset-wrapper:nth-child(3n + 1) {
-        //   padding-left: 0;
-        // }
-
         .asset {
           cursor: pointer;
+          position: relative;
         }
 
-        // .asset:not(.asset-folder) {
-        //   height: 200px;
-        // }
+        .asset:hover .actions-menu {
+          display: block;
+        }
 
         .asset.asset-folder .card-body {
           display: flex;
@@ -117,7 +118,7 @@ const Asset = (props) => {
           opacity: .5;
         }
       `}</style>
-    </>
+    </Droppable>
   )
 }
 
