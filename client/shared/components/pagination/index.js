@@ -25,7 +25,7 @@ const RemotePagination = (props) => {
   };
 
   const activePage = (pagination.offset / pagination.limit) + 1;
-  const shouldShowPagination = (pagination.offset / pagination.limit) > 1;
+  const shouldShowPagination = (pagination.total / pagination.limit) > 1;
 
   return (
     <>

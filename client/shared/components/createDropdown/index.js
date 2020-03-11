@@ -44,6 +44,10 @@ const CreateDropdown = ({ onCreate, buttonText = 'Create', placeholder = '' }) =
       </Dropdown>
 
       <style global jsx>{`
+        .create-dropdown {
+          width: 100%;
+        }
+
         .create-dropdown .dropdown-toggle:after {
           display: none;
         }

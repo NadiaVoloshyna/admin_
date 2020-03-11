@@ -7,6 +7,7 @@ const mailer = require('../services/mailer');
 const cryptoRandomString = require('crypto-random-string');
 const { createQueryForPagination } = require('../helpers/resolvers');
 const handleError = require('../helpers/handleError');
+const { USER_ROLES } = require('../constants');
 const { template, subject } = require('../services/mailer/templates/inviteUser');
 
 /**
@@ -21,9 +22,9 @@ router.post('/invite', [
   // TODO: uncomment in prod
   //body('email').escape().isEmail().normalizeEmail(),
   body('role').escape().isIn([
-    'admin',
-    'author',
-    'reviewer'
+    USER_ROLES.ADMIN,
+    USER_ROLES.AUTHOR,
+    USER_ROLES.REVIEWER
   ])
 ], errorHandler, async (req, res) => {
   const { email, role } = req.body;
@@ -84,6 +85,25 @@ router.get('/', [
     }
 
     res.status(200).send(response);
+  } catch (error) {
+    handleError.custom(res, 500, error);
+  }
+});
+
+router.get('/role', [
+  query('role').isIn([
+    USER_ROLES.ADMIN,
+    USER_ROLES.AUTHOR,
+    USER_ROLES.REVIEWER
+  ])
+], errorHandler, async (req, res) => {
+  const { role } = req.query;
+
+  try {
+    const documents = await User.find({ role });
+    const users = documents.map(item => item.toJson());
+
+    res.status(200).send(users);
   } catch (error) {
     handleError.custom(res, 500, error);
   }

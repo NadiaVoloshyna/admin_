@@ -21,6 +21,9 @@ export const actionTypes = {
 
   SELECT_PROFESSION: 'SELECT_PROFESSION',
   DELETE_PROFESSION: 'DELETE_PROFESSION',
+
+  SET_STATUS: 'SET_STATUS',
+  SET_PERMISSION: 'SET_PERMISSION'
 }
 
 export const actions = actionCreator(actionTypes);

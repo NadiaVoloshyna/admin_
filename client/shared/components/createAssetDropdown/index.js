@@ -3,22 +3,42 @@ import cx from 'classnames';
 import _upperFirst from 'lodash/upperFirst';
 import _toLower from 'lodash/toLower';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Folder from './folder';
 import Image from './image';
 import Album from './album';
+import Audio from './audio';
 
 export const ASSET_TYPES = {
   FOLDER: 'FOLDER',
   IMAGE: 'IMAGE',
   ALBUM: 'ALBUM',
-  VIDEO: 'VIDEO'
+  VIDEO: 'VIDEO',
+  AUDIO: 'AUDIO'
 }
 
 const availableAssets = {
-  FOLDER: Folder,
-  IMAGE: Image,
-  ALBUM: Album
-}
+  FOLDER: {
+    name: 'FOLDER',
+    icon: 'folder',
+    component: Folder
+  }, 
+  IMAGE: {
+    name: 'IMAGE',
+    icon: 'image',
+    component: Image
+  },
+  ALBUM: {
+    name: 'ALBUM',
+    icon: 'compact-disc',
+    component: Album
+  },
+  AUDIO: {
+    name: 'AUDIO',
+    icon: 'file-audio',
+    component: Audio
+  }
+};
 
 const createAssetShape = (props) => {
   const { name, url, type, year, description, author } = props;
@@ -62,7 +82,7 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
     const asset = createAssetShape(item);
     onAssetCreate(asset);
   }
-
+  console.log(supportedTypes);
   return (
     <>
       <Dropdown
@@ -83,6 +103,7 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
                 eventKey={item} 
                 onSelect={(form) => onDropdownToggle(true, form)}
               >
+                <FontAwesomeIcon icon={availableAssets[item].icon} className="mr-2" />
                 { _upperFirst(_toLower(item)) }
               </Dropdown.Item>
             )
@@ -91,7 +112,7 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
           { formToShow && 
             <Dropdown.Item 
               className="min-w-50"
-              as={availableAssets[formToShow]} 
+              as={availableAssets[formToShow].component} 
               onSubmit={onCreate}
               onDismiss={onDropdownToggle}
             /> 

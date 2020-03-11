@@ -1,7 +1,8 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import cx from 'classnames';
-import { applyTransformations, isOfType } from 'shared/helpers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { applyTransformations, isOfType, getAssetMetadata } from '../helpers';
 import Draggable from './draggable';
 import Droppable from './droppable';
 import Actions from '../actionsMenu';
@@ -17,7 +18,7 @@ const Asset = (props) => {
   } = props;
 
   const { name, type, url, year } = item;
-  const { isFolder, isImage, isAlbum } = isOfType(type);
+  const { isImage, isAlbum } = isOfType(type);
 
   const onClick = (event) => {
     event.stopPropagation();
@@ -37,22 +38,21 @@ const Asset = (props) => {
           onClick={onClick}
         >
 
-          { (isImage || isAlbum) && 
-            <Card.Img variant="top" src={applyTransformations(url, 'c_thumb,w_auto,c_scale')} /> 
+          { (isImage || isAlbum) &&
+            <Card.Img 
+              variant="top"
+              src={applyTransformations(url, 'c_thumb,w_auto,c_scale')}
+            />
           }
 
-          { (isFolder) && 
-            <Card.Body>
-              <Card.Text>{ name }</Card.Text>
-            </Card.Body>
-          }
+          <Card.Body>
+            <div className="d-flex align-items-center">
+              <FontAwesomeIcon icon={getAssetMetadata(type).icon} size="lg" className="mr-2 text-muted" />
+              <Card.Text className="text-truncate"><small>{ name }</small></Card.Text>
+            </div>
 
-          { (isAlbum) &&
-            <Card.Body>
-              <Card.Text>{ name }</Card.Text>
-              <Card.Text><small>{ year }</small></Card.Text>
-            </Card.Body>
-          }
+            { (isAlbum) && <Card.Text><small>{ year }</small></Card.Text> }
+          </Card.Body>
 
           <Actions
             canDelete={canDelete}
@@ -62,10 +62,6 @@ const Asset = (props) => {
       </Draggable>
 
       <style global jsx>{`
-        .asset-wrapper {
-          padding: 0 10px 20px;
-        }
-
         .asset {
           cursor: pointer;
           position: relative;
@@ -77,15 +73,12 @@ const Asset = (props) => {
 
         .asset.asset-folder .card-body {
           display: flex;
-          justify-content: center;
           align-items: center;
         }
 
         .asset.asset-image .card-img-top {
-          max-width: 100%;
-          width: auto;
-          max-height: 100%;
-          height: auto;
+          height: 250px;
+          object-fit: cover;
         }
 
         .asset.asset-album p {

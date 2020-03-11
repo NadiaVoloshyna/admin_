@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
+const { PERSON_POST_STATUSES, USER_ROLES } = require('../constants');
 
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
@@ -17,6 +18,32 @@ const professionSchema = mongoose.Schema({
     media: [{ type: ObjectId, ref: 'Asset' }],
 }, { _id : false });
 
+// Person's permissions schema
+const permissionSchema = mongoose.Schema({ 
+    role: {
+        type: String,
+        required: true,
+        enum: [
+            USER_ROLES.AUTHOR,
+            USER_ROLES.REVIEWER
+        ]
+    },
+    permissionId: {
+        type: String,
+        required: true
+    },
+    user: {
+        type: ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    active: {
+        type: Boolean,
+        default: true,
+        required: true
+    }
+});
+
 // Person's schema
 const schema = new Schema({
     name: {
@@ -24,6 +51,19 @@ const schema = new Schema({
         required: true,
         unique: true, 
         dropDups: true
+    },
+    status: {
+        type: String,
+        required: true,
+        default: PERSON_POST_STATUSES.NEW,
+        enum: [
+            PERSON_POST_STATUSES.NEW,
+            PERSON_POST_STATUSES.IN_PROGRESS,
+            PERSON_POST_STATUSES.AWAITS_REVIEW,
+            PERSON_POST_STATUSES.IN_REVIEW,
+            PERSON_POST_STATUSES.READY_TO_PUBLISH,
+            PERSON_POST_STATUSES.PUBLISHED
+        ]   
     },
     created: {
         type: Date,
@@ -39,7 +79,12 @@ const schema = new Schema({
             type: String,
             required: true
         },
-        documentMeta: String
+        modifiedTime: Date,
+        lastModifiedBy: String,
+        permissions: {
+            authors: Array,
+            reviewers: Array
+        }
     },
     born: Date,
     died: Date,
@@ -49,7 +94,8 @@ const schema = new Schema({
         type: ObjectId,
         required: true
     },
-    professions: [professionSchema]
+    professions: [professionSchema],
+    permissions: [permissionSchema]
 });
 
 schema.plugin(mongoosePaginate);

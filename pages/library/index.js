@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Head from 'next/head';
 import { connect } from 'react-redux';
-import UserContext from 'shared/components/userContext';
+import { UserContext } from 'shared/context';
 import Layout from 'shared/components/layout';
 import { actions as pageActions } from 'pages/library/actions';
 import { initialState } from 'pages/library/reducers';
@@ -9,6 +9,7 @@ import { withUser } from 'shared/components/withUser';
 import CreateAssetDropdown, { ASSET_TYPES } from 'shared/components/createAssetDropdown';
 import AssetDetailsModal from 'pages/library/components/assetDetailsModal';
 import MediaLibrary from 'shared/components/mediaLibrary';
+import Button from 'react-bootstrap/Button';
 import { isOfType } from 'shared/helpers';
 import api from 'pages/library/api';
 
@@ -16,7 +17,7 @@ const supportedAssetTypes = [
   ASSET_TYPES.FOLDER,
   ASSET_TYPES.ALBUM,
   ASSET_TYPES.IMAGE,
-  ASSET_TYPES.VIDEO
+  ASSET_TYPES.AUDIO
 ];
 
 const Library = () => {
@@ -25,6 +26,7 @@ const Library = () => {
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ newAsset, setNewAsset ] = useState(null);
   const [ isShow, setIsShow ] = useState(false);
+  const [ isUploadBoxOpen, setIsUploadBoxOpen ] = useState(false);
 
   const onAssetSelect = (asset) => {
     const { isFolder } = isOfType(asset.type);
@@ -48,6 +50,10 @@ const Library = () => {
     setNewAsset(newAsset);
   }
 
+  const toggleUploadBox = () => {
+    setIsUploadBoxOpen(!isUploadBoxOpen);
+  }
+
   return (
     <>
       <Head>
@@ -60,10 +66,13 @@ const Library = () => {
       <Layout activePage="Library">
         <Layout.Navbar className="mb-3">
           { userRoleUp('admin') &&
-            <CreateAssetDropdown 
-              onAssetCreate={onAssetCreate} 
-              supportedTypes={supportedAssetTypes}
-            />
+            <>
+              <CreateAssetDropdown 
+                onAssetCreate={onAssetCreate} 
+                supportedTypes={supportedAssetTypes}
+              />
+              <Button onClick={toggleUploadBox}>Upload</Button>
+            </>
           }
         </Layout.Navbar>
 
@@ -73,6 +82,7 @@ const Library = () => {
             onAssetSelect={onAssetSelect}
             newAsset={newAsset}
             isDragDrop={true}
+            isUploadBoxOpen={isUploadBoxOpen}
           />
         </Layout.Content>
       </Layout>

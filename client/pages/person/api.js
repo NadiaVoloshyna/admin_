@@ -12,6 +12,18 @@ class PersonApi extends ApiService {
   upload = (files) => {
     return this.uploadFile('/api/images', files);
   }
+
+  updateStatus = (id, status) => {
+    return this.put(`/api/persons/${id}/status`, { status });
+  }
+
+  updatePermissions = (role, users, fileId, personId) => {
+    return this.post(`/api/persons/${personId}/permissions`, {
+      role,
+      users,
+      fileId
+    });
+  }
 }
 
 export default new PersonApi();

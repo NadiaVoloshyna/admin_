@@ -14,7 +14,11 @@ import {
   faPhotoVideo,
   faUsers,
   faUserShield,
-  faIdCard
+  faIdCard,
+  faFolder,
+  faImage,
+  faCompactDisc,
+  faFileAudio
 } from '@fortawesome/free-solid-svg-icons';
 import initializeStore from '../client/store';
 
@@ -29,7 +33,11 @@ library.add(
   faPhotoVideo, 
   faUsers,
   faUserShield,
-  faIdCard
+  faIdCard,
+  faFolder,
+  faImage,
+  faCompactDisc,
+  faFileAudio
 );
 
 class MyApp extends App {

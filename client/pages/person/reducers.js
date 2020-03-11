@@ -1,15 +1,17 @@
 import { actionTypes } from './actions';
+import { PERSON_POST_STATUSES } from 'shared/constants';
 
-export const initialState = {
+const initialState = {
   pageConfig: {},
   person: {
     name: '',
+    status: PERSON_POST_STATUSES.IN_PROGRESS,
     biography: {
-      documentId: null,
-      documentMeta: null
+      documentId: null
     },
     portrait: '',
-    professions: []
+    professions: [],
+    permissions: []
   },
   duplicate: {
     id: null,
@@ -50,7 +52,7 @@ const deleteProfession = (state, profession) => {
   }
 }
 
-const reducer = (state = {}, { type, payload }) => {
+const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'PERSON_INITIAL_STATE':
       return payload;
@@ -105,6 +107,24 @@ const reducer = (state = {}, { type, payload }) => {
 
     case actionTypes.DELETE_PROFESSION:
       return deleteProfession(state, payload);
+
+    case actionTypes.SET_STATUS:
+      return {
+        ...state,
+        person: {
+          ...state.person,
+          status: payload
+        }
+      }
+
+    case actionTypes.SET_PERMISSION:
+      return {
+        ...state,
+        person: {
+          ...state.person,
+          permissions: [...state.person.permissions, ...payload]
+        }
+      }
 
     default:
       return state

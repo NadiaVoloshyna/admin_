@@ -1,17 +1,11 @@
 import React from 'react';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Asset from '../asset';
 
 const AssetsGrid = ({ assets, onSelect, onDelete, onMove, canDelete = false, isDragDrop }) => {
   return (
-    <Row>
+    <div className="asset-grid">
       { assets.map(item => (
-        <Col 
-          sm={6}
-          md={4}
-          lg={3}
-          xl={2}
+        <div 
           key={item._id} 
           className="asset-wrapper"
         >
@@ -23,9 +17,21 @@ const AssetsGrid = ({ assets, onSelect, onDelete, onMove, canDelete = false, isD
             canDelete={canDelete}
             isDragDrop={isDragDrop}
           />
-        </Col>
+        </div>
       ))}
-    </Row>
+
+      <style global jsx>{`
+        .asset-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          width: 100%;
+        }
+
+        .asset-wrapper {
+          padding: 0 10px 20px;
+        }
+      `}</style>
+    </div>
   )
 }
 

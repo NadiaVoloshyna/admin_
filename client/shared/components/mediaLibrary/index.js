@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import _remove from 'lodash/remove';
 import Breadcrumbs from './breadcrumbs';
 import FileSystem from './fileSystem';
+import UploadBox from './uploadBox';
+import ActionsPanel from './actionsPanel';
 import api from 'shared/api/assets';
 import { isOfType } from 'shared/helpers';
+import { ASSET_TYPES } from 'shared/constants';
 
-const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, root }) => {
+const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUploadBoxOpen, root }) => {
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ assets, setAssets ] = useState([]);
 
@@ -64,11 +67,16 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, root }) 
 
   return (
     <>
+      <UploadBox open={isUploadBoxOpen} />
+
       <Breadcrumbs 
         currentFolder={currentFolder}
         onCrumbClick={onSelect}
         root={root}
       />
+
+      <ActionsPanel />
+
       <FileSystem 
         assets={assets}
         onSelect={onSelect}

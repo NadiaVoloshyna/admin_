@@ -4,6 +4,7 @@ import { actions } from 'pages/persons/actions';
 import Link from 'next/link';
 import format from 'date-fns/format';
 import DataGrid from 'shared/components/dataGrid';
+import StatusBadge from 'shared/components/statusBadge';
 
 function linkFormatter (cell, row) {
   return (
@@ -12,7 +13,7 @@ function linkFormatter (cell, row) {
     </Link>
   )
 }
-
+ 
 const columns = [{
   dataField: 'name',
   text: 'Name',
@@ -24,6 +25,12 @@ const columns = [{
   searchable: false,
   editable: false,
   formatter: (cell) => <span className="font-weight-light">{ format(new Date(cell), 'dd-MM-yyyy HH:MM') } </span>
+}, {
+  dataField: 'status',
+  text: 'Status',
+  searchable: false,
+  editable: false,
+  formatter: (cell) => <StatusBadge status={cell} />
 }];
 
 const PersonsList = () => {

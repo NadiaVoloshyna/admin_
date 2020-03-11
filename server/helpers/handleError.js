@@ -3,7 +3,8 @@ const { logger } = require('../loggers');
 
 const statuses = {
   '401': 'Unauthorized',
-  '403': 'Forbidden'
+  '403': 'Forbidden',
+  '500': 'Internal Server Error',
 }
 
 const validation = (res, status, errors) => {

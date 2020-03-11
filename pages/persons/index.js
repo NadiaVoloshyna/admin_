@@ -18,15 +18,11 @@ const Persons = ({ createPerson }) => {
 
       <Layout activePage="Persons">
         <Layout.Navbar className="mb-5">
-          <div className="row">
-            <div className="col-10 m-auto">
-              <CreateDropdown
-                buttonText="Create Person"
-                placeholder="Person's name"
-                onCreate={createPerson}
-              />
-            </div>
-          </div>
+          <CreateDropdown
+            buttonText="Create Person"
+            placeholder="Person's name"
+            onCreate={createPerson}
+          />
         </Layout.Navbar>
 
         <Layout.Content>

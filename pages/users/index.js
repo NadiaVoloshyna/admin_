@@ -6,7 +6,6 @@ import InviteUserModal from 'pages/users/components/inviteUserModal';
 import Button from 'react-bootstrap/Button';
 import UsersList from 'pages/users/components/usersList';
 import { actions as pageActions } from 'pages/users/actions';
-import { withError } from 'shared/components/withError';
 import { withUser } from 'shared/components/withUser';
 import { initialState } from 'pages/users/reducers';
 
@@ -18,15 +17,11 @@ const Users = () => {
   return (
     <>
       <Layout activePage="Users" >
-        <Layout.Navbar>
-          <div className="row">
-            <div className="col-10 m-auto">
-              <Button 
-                variant="primary"
-                onClick={() => toggleShowInviteUserModal(true)}
-              >Invite User</Button>
-            </div>
-          </div>
+        <Layout.Navbar className="mb-3">
+          <Button 
+            variant="primary"
+            onClick={() => toggleShowInviteUserModal(true)}
+          >Invite User</Button>
         </Layout.Navbar>
 
         <Layout.Content>
@@ -54,8 +49,5 @@ Users.getInitialProps = ({ ctx }) => {
 const mapDispatchToProps = {};
 
 export default connect(null, mapDispatchToProps)(
-  withError(
-    withUser(Users),
-    'admin'
-  )
+  withUser(Users),
 );

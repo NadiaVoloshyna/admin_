@@ -1,3 +1,15 @@
+// Bootstrap overwrites
+$web-font-path: 'https://fonts.googleapis.com/css?family=Montserrat:300i,400,500,600,700&display=swap&subset=cyrillic,cyrillic-ext,latin-ext !default';
+@import url($web-font-path);
+
+$font-family-sans-serif: "Montserrat", Arial, sans-serif !default;
+$font-family-base:       $font-family-sans-serif !default;
+
+$status-in-progress:      #D1E2E7;
+$status-in-review:        #FED808;
+$status-ready-to-publish: #4A8FE2;
+$status-published:        #7DD31F;
+
 // Bootstrap
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";

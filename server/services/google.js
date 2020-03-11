@@ -16,7 +16,7 @@ const auth = new google.auth.JWT(
 
 const drive = google.drive({ version: 'v3', auth });
 
-module.exports = {
+const GoogleApi = {
   createPermission: async (fileId, resource) => {
     return await drive.permissions.create({
       resource,
@@ -42,10 +42,10 @@ module.exports = {
     });
   },
 
-  getFileMeta: async (fileId) => {
+  getFileMeta: async (fileId, fields) => {
     return await drive.files.get({ 
       fileId,
-      fields: 'lastModifyingUser,modifiedTime,permissions'
+      fields: fields || 'lastModifyingUser,modifiedTime'
     });
   },
 
@@ -63,19 +63,35 @@ module.exports = {
     }, callback);
   },
 
-  listAllFiles: async () => {
-    drive.files.list({
-      q: `'${ROOT_FOLDER}' in parents`
-    }, (err, res) => {
-      if (err) throw err;
-      const files = res.data.files;
-      if (files.length) {
-      files.map(async (file) => {
-        console.log(file);
-      });
-      } else {
-        console.log('No files found');
+  createPermissions: (fileId, role, emailAddress) => {
+    return drive.permissions.create({
+      fileId,
+      fields: 'id,emailAddress',
+      resource: {
+        type: 'user',
+        role,
+        emailAddress
       }
     });
-  }
+  },
+
+  getPermissions: (fileId, permissionId) => {
+    return drive.permissions.get({
+      fileId,
+      permissionId
+    })
+  },
+
+  /**
+   * Updates file permissions. Sets a new role for one of its maintainers
+   */
+  updatePermissions: (fileId, permissionId, resource) => {
+    return drive.permissions.update({
+      fileId,
+      permissionId,
+      resource
+    })
+  },
 }
+
+module.exports = GoogleApi;

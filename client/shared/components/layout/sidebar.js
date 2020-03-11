@@ -94,7 +94,7 @@ const renderUserDropdown = (user) => {
                 Profile
             </a>
           </Link>
-          <Link href="/autoh/logout">
+          <Link href="/auth/logout">
             <a className="dropdown-item">
                 Logout
             </a>

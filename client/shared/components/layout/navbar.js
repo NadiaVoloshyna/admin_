@@ -3,7 +3,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import cx from 'classnames';
 
 const LayoutNavbar = (props) => {
-  const navBarCX = cx('layout-navbar shadow-sm w-100',
+  const navBarCX = cx('layout-navbar shadow-sm w-100 justify-content-between',
     props.className && props.className
   )
   return (

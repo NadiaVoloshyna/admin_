@@ -1,20 +1,24 @@
 import React from 'react'
 import App from 'next/app';
 import { auth } from 'utils/auth';
-import UserContext from '../userContext';
+import { UserContext } from 'shared/context';
+import { getPermissions } from 'shared/permissionManager';
 
 export const withUser = (PageComponent, { ssr } = {}) => {
   const withUser = ({ ...props }) => {
-    const { user } = props;
+    const { user, person } = props;
     const isSuper = user.role === 'super';
     const isAdmin = user.role === 'admin';
     const isAuthor = user.role === 'author';
     const isReviewer = user.role === 'reviewer';
+
     const userContext = {
+      ...user,
       isSuper,
       isAdmin,
       isAuthor,
       isReviewer,
+      permissions: getPermissions(PageComponent.name, user, person),
       userRoleUp: (role) => {
         if (role === 'super') return isSuper;
         if (role === 'admin') return isSuper || isAdmin;
@@ -23,9 +27,14 @@ export const withUser = (PageComponent, { ssr } = {}) => {
       }
     }
 
+    const newProps = {
+      ...props,
+      user: userContext
+    }
+
     return (
       <UserContext.Provider value={userContext}>
-        <PageComponent {...props} />
+        <PageComponent {...newProps} />
       </UserContext.Provider>
     );
   }

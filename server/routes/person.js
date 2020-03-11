@@ -6,6 +6,7 @@ const { query, body, check } = require('express-validator');
 const { createQueryForPagination } = require('../helpers/resolvers');
 const handleError = require('../helpers/handleError');
 const errorHandler = require('../middlewares/errorHandler');
+const { PERSON_POST_STATUSES, USER_ROLES, GOOGLE_USER_ROLES } = require('../constants');
 
 /**
  * Get subset of persons based of query parameters
@@ -58,7 +59,8 @@ router.get('/:id', [
     const document = await Person
       .findOne({ _id })
       .populate('professions.profession')
-      .populate('professions.media');
+      .populate('professions.media')
+      .populate('permissions.user', '-password');
 
     person = document.toJSON();
   } catch (error) {
@@ -70,11 +72,10 @@ router.get('/:id', [
     const response = await GoogleApi.getFileMeta(person.biography.documentId);
 
     if (response && response.data) {
-      const { modifiedTime, lastModifyingUser, permissions } = response.data;
+      const { modifiedTime, lastModifyingUser } = response.data;
       documentMeta = {
         modifiedTime,
-        lastModifyingUser: lastModifyingUser.displayName,
-        permissions: permissions.filter(item => item.role !== 'owner')
+        lastModifiedBy: lastModifyingUser && lastModifyingUser.displayName || null
       };
     } else {
       throw new Error("Couldn't fetch file's metadata");
@@ -87,11 +88,9 @@ router.get('/:id', [
     ...person,
     biography: {
       ...person.biography,
-      documentMeta
+      ...documentMeta
     }
   };
-
-  console.log('responseBody', responseBody);
 
   res.status(200).send(responseBody)
 });
@@ -226,6 +225,78 @@ router.put('/:id', [
   }
 
   res.status(200).end();
+});
+
+/**
+ * Sets document status
+ * 2. Updates the status of the Person
+ */
+router.put('/:id/status', [
+  check('id').isMongoId(),
+  body('status').isIn([
+    PERSON_POST_STATUSES.IN_PROGRESS,
+    PERSON_POST_STATUSES.AWAITS_REVIEW,
+    PERSON_POST_STATUSES.IN_REVIEW,
+    PERSON_POST_STATUSES.READY_TO_PUBLISH,
+    PERSON_POST_STATUSES.PUBLISHED
+  ]),
+], errorHandler, async (req, res) => {
+  const { status } = req.body;
+  const { id } = req.params;
+
+  try {
+    await Person.updateOne(
+      { _id: id },
+      { status }
+    );
+  } catch (error) {
+    return handleError.custom(res, 500, error);
+  }
+
+  res.status(200).end();
+});
+
+router.post('/:id/permissions', [
+  check('id').isMongoId(),
+  body('fileId').isString().not().isEmpty().escape(),
+  body('role').isIn([
+    USER_ROLES.AUTHOR,
+    USER_ROLES.REVIEWER
+  ]),
+  body('users').isArray({
+    min: 1,
+    max: 3
+  })
+], errorHandler, async (req, res) => {
+  const { id: _id } = req.params;
+  const { role, users, fileId } = req.body;
+  const googleRole = GOOGLE_USER_ROLES[role.toUpperCase()]
+
+  try {
+    const requests = users.map(user => GoogleApi.createPermissions(fileId, googleRole, user.email));
+    const responses = await Promise.all(requests);
+
+    const permissions = responses.map(({ data }) => ({
+      role,
+      permissionId: data.id,
+      user: users.find(item => item.email === data.emailAddress)._id,
+    }))
+
+    await Person.updateOne(
+      { _id },
+      { 
+        '$push': { 
+          'permissions': { 
+            '$each': permissions 
+          } 
+        } 
+      },
+    );
+
+    res.status(201).send(permissions);
+  } catch (error) {
+    return handleError.custom(res, 500, error);
+  }
 });
 
 module.exports = router;

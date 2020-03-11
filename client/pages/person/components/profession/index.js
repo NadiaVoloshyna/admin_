@@ -1,5 +1,5 @@
 import React from 'react';
-import Select from 'react-select'
+import Select from 'react-select';
 import Card from 'react-bootstrap/Card';
 
 const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
@@ -28,11 +28,14 @@ const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
         <Card.Header>
           Profession
         </Card.Header>
-        <Card.Body>
+        <Card.Body className="p-0">
           <Select 
             isMulti
             options={professions.map(item => ({value: item, label: item.name}))} 
             onChange={onChange}
+            styles={{
+              control: styles => ({ ...styles, border: 'none' }),
+            }}
           />
         </Card.Body>
       </Card>
