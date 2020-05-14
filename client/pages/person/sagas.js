@@ -9,7 +9,8 @@ function * getPerson ({ payload }) {
 
   try {
     const response = yield PersonApi.getPerson(payload);
-    const person = yield response.json()
+    const person = yield response.json();
+    
     yield put(actions.getPersonSuccess(person));
   } catch (err) {
     yield put(actions.getPersonFail(err));

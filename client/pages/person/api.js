@@ -17,12 +17,8 @@ class PersonApi extends ApiService {
     return this.put(`/api/persons/${id}/status`, { status });
   }
 
-  updatePermissions = (role, users, fileId, personId) => {
-    return this.post(`/api/persons/${personId}/permissions`, {
-      role,
-      users,
-      fileId
-    });
+  updatePermissions = (id, users) => {
+    return this.post(`/api/persons/${id}/permissions`, { users });
   }
 }
 

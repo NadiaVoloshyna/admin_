@@ -2,11 +2,15 @@ import ApiService from 'shared/api';
 
 class PersonsApi extends ApiService {
   getPersons = (offset, searchTerm, sort) => {
-    return this.get(`/api/persons?offset=${offset}&searchTerm=${searchTerm}&sort=${sort}`);
+    return this.get(`/api/persons?offset=${offset}&searchTerm=${searchTerm}&sort=${sort}`)
+      .then(res => res.json())
+      .catch(error => {
+        throw new Error(error);
+      });
   }
 
-  deletePersons = (ids, documentIds) => {
-    return this.delete('/api/persons', { ids, documentIds });
+  deletePersons = (ids) => {
+    return this.delete('/api/persons', { ids });
   }
 
   create = (name) => {

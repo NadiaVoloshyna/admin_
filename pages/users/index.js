@@ -38,7 +38,7 @@ const Users = () => {
   )
 }
 
-Users.getInitialProps = ({ ctx }) => {
+Users.getInitialProps = (ctx) => {
   const { store } = ctx;
 
   // Set initial state
@@ -48,6 +48,4 @@ Users.getInitialProps = ({ ctx }) => {
 
 const mapDispatchToProps = {};
 
-export default connect(null, mapDispatchToProps)(
-  withUser(Users),
-);
+export default connect(null, mapDispatchToProps)(Users);

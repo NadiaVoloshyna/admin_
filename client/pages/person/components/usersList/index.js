@@ -7,31 +7,32 @@ import _upperFirst from 'lodash/upperFirst';
 import ElipsisDropdownToggle from 'shared/components/elipsisDropdownToggle';
 import AssigneUsersModal from 'shared/components/assigneUsersModal';
 
-const PersonUserList = ({ permissions = [], personId, documentId }) => {
+const PersonUserList = ({ permissions = [], personId, userPermissions }) => {
   return (
     <Card className="person-user-list">
       <Card.Header className="border-bottom-0 d-flex justify-content-between">
         Users
-        <Dropdown>
-          <Dropdown.Toggle as={ElipsisDropdownToggle} />
 
-          <Dropdown.Menu>
-            <AssigneUsersModal 
-              as={<Dropdown.Item>Invite Author</Dropdown.Item>}
-              personId={personId} 
-              documentId={documentId}
-              assignedUsers={permissions}
-              role="author"
-            />
-            <AssigneUsersModal 
-              as={<Dropdown.Item>Invite Reviewer</Dropdown.Item>}
-              personId={personId} 
-              documentId={documentId}
-              assignedUsers={permissions}
-              role="reviewer"
-            />
-          </Dropdown.Menu>
-        </Dropdown>
+        { userPermissions.createAny('person-assignUser').granted &&
+          <Dropdown>
+            <Dropdown.Toggle as={ElipsisDropdownToggle} />
+
+            <Dropdown.Menu>
+              <AssigneUsersModal 
+                as={<Dropdown.Item>Invite Author</Dropdown.Item>}
+                personId={personId}
+                assignedUsers={permissions}
+                role="author"
+              />
+              <AssigneUsersModal 
+                as={<Dropdown.Item>Invite Reviewer</Dropdown.Item>}
+                personId={personId}
+                assignedUsers={permissions}
+                role="reviewer"
+              />
+            </Dropdown.Menu>
+          </Dropdown>
+        }
       </Card.Header>
       
       { !!permissions.length &&
@@ -45,15 +46,17 @@ const PersonUserList = ({ permissions = [], personId, documentId }) => {
                   <td>{ user.firstName } { user.lastName }</td>
                   <td>{ _upperFirst(role) }</td>
                   <td className="text-right"><Badge variant="success">Active</Badge></td>
-                  <td className="text-right">
-                    <Dropdown>
-                      <Dropdown.Toggle as={ElipsisDropdownToggle} />
+                  { userPermissions.createAny('person-canDeactivate').granted && 
+                    <td className="text-right">
+                      <Dropdown>
+                        <Dropdown.Toggle as={ElipsisDropdownToggle} />
 
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Deactivate</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
+                        <Dropdown.Menu>
+                          <Dropdown.Item>Deactivate</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </td>
+                  }
                 </tr>
               )
             })}

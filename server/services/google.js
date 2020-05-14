@@ -49,24 +49,16 @@ const GoogleApi = {
     });
   },
 
-  deleteDocuments: (documentIds, callback) => {
-    eachSeries(documentIds, (id, deleteCallback) => {
-      drive.files.delete({ 
-        fileId: id
-      }, (err, res) => {
-        if (err) {
-          deleteCallback(err)
-        } else {
-          deleteCallback(null, res)
-        }
-      })
-    }, callback);
+  delete: (id) => {
+    return drive.files.delete({ 
+      fileId: id
+    });
   },
 
   createPermissions: (fileId, role, emailAddress) => {
     return drive.permissions.create({
       fileId,
-      fields: 'id,emailAddress',
+      fields: 'id,emailAddress,role',
       resource: {
         type: 'user',
         role,
@@ -85,11 +77,11 @@ const GoogleApi = {
   /**
    * Updates file permissions. Sets a new role for one of its maintainers
    */
-  updatePermissions: (fileId, permissionId, resource) => {
+  updatePermissions: (fileId, permissionId, role) => {
     return drive.permissions.update({
       fileId,
       permissionId,
-      resource
+      resource: { role }
     })
   },
 }

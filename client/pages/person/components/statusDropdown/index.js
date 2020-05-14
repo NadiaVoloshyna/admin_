@@ -8,6 +8,7 @@ import _startCase from 'lodash/startCase';
 import PersonAPI from 'pages/person/api';
 import { actions } from 'pages/person/actions';
 import { actions as sharedActions } from 'shared/actions';
+import permissions from '../../../../permissions';
 
 const PERMISSIONS = {
   NEW: {
@@ -56,17 +57,16 @@ const getStatusActions = (status) => {
   return PERMISSIONS[status];
 }
 
-const StatusDropdown = ({ status, personId, user, permissions }) => {
+const StatusDropdown = ({ status, personId, user }) => {
   const dispatch = useDispatch();
-  const myPermission = permissions.find(item => item.user._id === user._id);
-  const canChangeStatus = myPermission && myPermission.active || user.userRoleUp('admin');
+  const canChangeStatus = permissions.can(user.role).createAny('changeStatus');
   const statusConfig = getStatusActions(status);
   const hasPriviladge = statusConfig.roles.find(item => item.indexOf(user.role) !== -1);
 
-  if (!canChangeStatus || !hasPriviladge) {
+  if (canChangeStatus.granted === false || !hasPriviladge) {
     return (
       <Button 
-        variant={statusConfig.variant} 
+        variant={statusConfig.variant}
         className="status-dropdown"
       >{ _startCase(_lowerCase(status)) }</Button>
     )

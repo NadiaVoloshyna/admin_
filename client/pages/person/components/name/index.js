@@ -4,7 +4,7 @@ import { Field } from 'react-final-form';
 
 const validate = value => (value ? undefined : 'Person\'s name is reuqired');
 
-const PersonName = () => {
+const PersonName = ({ canEdit }) => {
   return (
     <div className="form-group mb-4">
       <Field name="name" validate={validate}>
@@ -13,7 +13,13 @@ const PersonName = () => {
 
           return (
             <div>
-              <input {...input} type="text" placeholder="Name" className={inputClasses} />
+              <input 
+                {...input} 
+                type="text" 
+                placeholder="Name" 
+                className={inputClasses} 
+                disabled={!canEdit}
+              />
               {meta.error && meta.touched && <span className="invalid-feedback">{meta.error}</span>}
             </div>
           )

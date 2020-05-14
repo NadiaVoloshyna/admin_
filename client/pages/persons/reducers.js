@@ -4,7 +4,6 @@ import { paginationState, paginationReducers } from 'shared/reducers/pagination'
 export const initialState = {
   persons: [],
   pagination: paginationState()
-
 }
 
 const deletePersons = (state, ids) => {

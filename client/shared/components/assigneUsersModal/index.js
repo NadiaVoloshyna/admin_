@@ -11,10 +11,11 @@ import PersonApi from 'pages/person/api';
 import { actions } from 'pages/person/actions';
 import { actions as sharedActions } from 'shared/actions';
 
-const AssigneUsersModal = ({ personId, documentId, role, as, assignedUsers = [] }) => {
+const AssigneUsersModal = ({ personId, role, as, assignedUsers = [] }) => {
   const dispatch = useDispatch();
   const [ isOpen, setIsOpen ] = useState(false);
   const [ users, setUsers ] = useState([]);
+  const [ selected, setSelected ] = useState([]);
 
   const toggleIsOpen = () => setIsOpen(!isOpen);
 
@@ -24,12 +25,8 @@ const AssigneUsersModal = ({ personId, documentId, role, as, assignedUsers = [] 
     UsersApi.getUsersByRole(role)
       .then(response => response.json())
       .then(users => {
-        const availableForAssignment = users.map(({ _id, email }) => ({
-          _id,
-          email,
-          assigned: assignedUsers.some(item => item.user._id === _id)
-        }))
-        setUsers(availableForAssignment);
+        const filtered = users.filter(user => !assignedUsers.find(item => item.user._id === user._id));
+        setUsers(filtered);
         dispatch(sharedActions.toggleIsLoading());
       })
       .catch(error => {
@@ -43,7 +40,7 @@ const AssigneUsersModal = ({ personId, documentId, role, as, assignedUsers = [] 
     dispatch(sharedActions.toggleIsLoading());
     toggleIsOpen();
 
-    PersonApi.updatePermissions(role, users, documentId, personId)
+    PersonApi.updatePermissions(personId, selected)
       .then(response => response.json())
       .then(response => {
         dispatch(actions.setPermission(response));
@@ -57,13 +54,8 @@ const AssigneUsersModal = ({ personId, documentId, role, as, assignedUsers = [] 
   }
 
   const onUserSelect = ({ _id }) => {
-    const selectedUsers = users.map(item => {
-      return {
-        ...item,
-        assigned: item._id === _id && !item.assigned
-      }
-    })
-    setUsers(selectedUsers);
+    const selectedUser = users.find(item => item._id === _id);
+    setSelected([...selected, selectedUser]);
   }
 
   return (
@@ -100,7 +92,6 @@ const AssigneUsersModal = ({ personId, documentId, role, as, assignedUsers = [] 
                     <Form.Check
                       type="checkbox"
                       id={`checkbox-${item._id}`}
-                      checked={item.assigned}
                       onChange={() => onUserSelect(item)}
                     />
                   </Col>

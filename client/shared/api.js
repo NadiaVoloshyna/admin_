@@ -4,29 +4,39 @@ import _startsWith from 'lodash/startsWith';
 const baseUrl = 'http://localhost:3001';
 
 export default class ApiService {
+  static cookie = undefined;
 
-  static request = (url, method, body, headers = {}) => {
+  static request = (url, method, body, headers) => {
     let requestOptions = {
       method,
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        cookie: ApiService.cookie || undefined
+      }
     }
 
     if (headers) {
-      requestOptions = {
-        ...requestOptions,
-        headers: Object.assign({ 'Content-Type': 'application/json' }, headers)
+      requestOptions.headers = {
+        ...requestOptions.headers,
+        ...headers
       }
     }
 
     if (body) {
-      requestOptions = {
-        ...requestOptions,
-        body: typeof body === 'string' ? body : JSON.stringify(body)
-      }
+      requestOptions.body = typeof body === 'string' ? body : JSON.stringify(body)
     }
 
     const requestUrl = _startsWith(url, '/api') ? baseUrl + url : url;
 
     return fetch(requestUrl, requestOptions);
+  }
+
+  setCookie = (req) => {
+    if (req && req.headers && req.headers.cookie) {
+      ApiService.cookie = req.headers.cookie;
+    }
+    return this;
   }
 
   post = (url, body, headers = {}) => {

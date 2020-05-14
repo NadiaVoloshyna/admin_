@@ -16,11 +16,19 @@ const USER_ROLES = {
 
 const GOOGLE_USER_ROLES = {
   AUTHOR: 'writer',
-  REVIEWER: 'commenter'
+  REVIEWER: 'commenter',
+  READER: 'reader'
+}
+
+const FROM_GOOGLE_ROLES = {
+  WRITER: 'author',
+  COMMENTER: 'reviewer',
+  READER: 'reader'
 }
 
 module.exports = {
   PERSON_POST_STATUSES,
   USER_ROLES,
-  GOOGLE_USER_ROLES
+  GOOGLE_USER_ROLES,
+  FROM_GOOGLE_ROLES
 }

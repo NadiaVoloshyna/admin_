@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import person from 'pages/person/reducers';
-import persons from 'pages/persons/reducers';
-import professions from 'pages/professions/reducers';
+import person from 'pages/Person/reducers';
+import persons from 'pages/Persons/reducers';
+import professions from 'pages/Professions/reducers';
 import user from 'shared/reducers/user';
 import users from 'pages/users/reducers';
-import library from 'pages/library/reducers';
+import library from 'pages/Library/reducers';
 import shared from 'shared/reducers';
 
 export default combineReducers({

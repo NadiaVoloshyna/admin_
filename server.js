@@ -1,11 +1,12 @@
 const express = require('express');
+const session = require("express-session");
+const cookieParser = require('cookie-parser');
+const password = require('passport');
 const fileUpload = require('express-fileupload');
 const next = require('next');
 const { logger } = require('./server/loggers');
 
 require('dotenv').config();
-
-const authService = require('./server/services/auth');
 
 const DB = require('./server/db');
 const routes = require('./server/routes');
@@ -19,18 +20,34 @@ DB.connect(logger);
 
 app.prepare().then(() => {
   const server = express();
+
+  const sessionConfig = {
+    secret: 'secret',
+    cookie: {
+      maxAge: 86400 * 1000 // 24 hours in milliseconds
+    },
+    resave: false,
+    saveUninitialized: false
+  };
+
+  server.use(cookieParser('secret'));
+  server.use(session(sessionConfig));
+
+  // Express Session
   server.use(express.json());
   server.use(express.urlencoded({ extended: false }));
+  server.use(password.initialize());
+  server.use(password.session());
 
-  server.use(fileUpload());
+  require('./server/services/passport');
 
-  authService.initialize(server);
+  // server.use(fileUpload());
 
   routes(server, logger);
   
   server.all('*', (req, res) => {
     return handle(req, res)
-  })
+  });
 
   server.listen(port, err => {
     if (err) throw err

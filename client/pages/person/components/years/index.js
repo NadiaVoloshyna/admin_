@@ -4,21 +4,7 @@ import Col from 'react-bootstrap/Col';
 import FormControl from 'react-bootstrap/FormControl';
 import { Field } from 'react-final-form';
 
-// const clear = (string) => {
-//   return string.replace(/\D/g, '');
-// }
-
-// const format = (string) => {
-//   return string.split('').reduce((prev, next, index) => {
-//     prev = prev + next;
-//     if (index === 1 || index === 3) {
-//       prev = prev + '/';
-//     }
-//     return prev;
-//   }, '');
-// }
-
-const DateInput = ({ name }) => {
+const DateInput = ({ name, disabled }) => {
   return (
     <Field name={name}>
       { props => {
@@ -27,6 +13,7 @@ const DateInput = ({ name }) => {
         return (
           <FormControl
             {...input}
+            disabled={disabled}
             type="date"
             placeholder="dd/MM/yyyy"
             autoComplete="off"
@@ -37,19 +24,19 @@ const DateInput = ({ name }) => {
   )
 }
 
-const PersonYears = () => {
+const PersonYears = ({ canEdit }) => {
   return (
     <Row>
       <Col>
         <div className="form-group">
           <label htmlFor="born">Born</label>
-          <DateInput name="born" />
+          <DateInput name="born" disabled={!canEdit} />
         </div>
       </Col>
       <Col>
         <div className="form-group">
           <label htmlFor="died">Died</label>
-          <DateInput name="died" />
+          <DateInput name="died" disabled={!canEdit} />
         </div>
       </Col>
     </Row>

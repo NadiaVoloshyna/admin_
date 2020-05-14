@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 const { PERSON_POST_STATUSES, USER_ROLES } = require('../constants');
+const GoogleApi = require('../services/google');
 
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
@@ -96,6 +97,24 @@ const schema = new Schema({
     },
     professions: [professionSchema],
     permissions: [permissionSchema]
+}).pre('remove', { document: true }, async function(next) {
+    try {
+        const { biography: { documentId }, rootAssetId } = this;
+
+        // Remove google document
+        await GoogleApi.delete(documentId);
+
+        // Remove assets
+        const Asset = mongoose.model('Asset');
+        const asset = await Asset.findById(rootAssetId.toString());
+
+        await asset.remove();
+    } catch (error) {
+        // TODO: handle error cases
+        console.error(error);
+    }
+
+    next();
 });
 
 schema.plugin(mongoosePaginate);

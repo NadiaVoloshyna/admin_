@@ -7,33 +7,33 @@ import LayoutContent from './content';
 import LayoutNavbar from './navbar';
 import LayoutSidebar from './sidebar';
 
-export const LayoutContext = React.createContext({
-  activePage: null,
-  isLoading: false
-});
+// export const LayoutContext = React.createContext({
+//   activePage: null,
+//   isLoading: false
+// });
 
 const Layout = (props) => {
-  const { activePage } = props;
-  const { user } = useSelector(state => state.user);
-  const { isLoading } = useSelector(state => state.shared);
+  // const { activePage } = props;
+  // const { user } = useSelector(state => state.user);
+  // const { isLoading } = useSelector(state => state.shared);
 
-  const contextValue = {
-    activePage, 
-    isLoading,
-    user
-  }
+  // const contextValue = {
+  //   activePage, 
+  //   isLoading,
+  //   user
+  // }
 
   return (
     <div className={`${props.activePage.toLowerCase()}-page`}>
       <div className='container-fluid'>
-        <LayoutContext.Provider value={contextValue}>
+        {/* <LayoutContext.Provider value={contextValue}> */}
           <Row>
             <LayoutSidebar />
             <Col className="d-flex flex-column vh-100">
               { props.children }
             </Col>
           </Row>
-        </LayoutContext.Provider>
+        {/* </LayoutContext.Provider> */}
       </div>
     </div>
   )

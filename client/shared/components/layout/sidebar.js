@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Dropdown from 'react-bootstrap/Dropdown';
 import LayoutNavbar from './navbar';
-import { LayoutContext } from './index';
+import { UserContext } from 'shared/context';
 
 const NAV_LINKS = [{
   name: 'Home',
@@ -116,7 +116,7 @@ const renderUserDropdown = (user) => {
 }
 
 const LayoutSidebar = () => {
-  const { activePage, user } = useContext(LayoutContext);
+  const { activePage, user } = useContext(UserContext);
 
   return (
     <>

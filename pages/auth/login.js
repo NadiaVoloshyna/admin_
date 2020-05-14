@@ -130,10 +130,6 @@ const Login = (props) => {
   )
 }
 
-Login.getInitialProps = ({ ctx }) => {
-  const  { query, store, isServer } = ctx;
-}
-
 const mapDispatchToProps = {
   loginUser: pageActions.loginUser
 };

@@ -3,7 +3,6 @@ import cx from 'classnames';
 import _startsWith from 'lodash/startsWith';
 import { any, bool } from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
-import { LayoutContext } from './index';
 
 const LayoutContent = (props) => {
   const { 
@@ -11,7 +10,7 @@ const LayoutContent = (props) => {
     className
   } = props;
 
-  const { isLoading } = useContext(LayoutContext);
+  const isLoading = false; // TODO: get it from state
   const contentCX = cx('row flex-grow-1 page-content', className && className);
   
   return (

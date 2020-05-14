@@ -4,29 +4,13 @@ const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 const User = require('../../models/user');
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser(async ({ _id }, done) => {
-  try {
-    const user = await User.findById(_id);
-
-    if (user) {
-      done(null, user);
-    }
-  } catch (error) {
-    console.error(error);
-    done(error);
-  }
-});
-
 passport.use(
   new GoogleStrategy({
     callbackURL: '/auth/google/redirect',
     clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
     clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET
   }, async (accessToken, refreshToken, profile, done) => {
+    
     try {
       const currentUser = await User.findOne({ 'google.id': profile.id });
       if (currentUser) {
@@ -68,3 +52,20 @@ passport.use(new LocalStrategy({
     }
   }
 ));
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser(async ({ _id }, done) => {
+  try {
+    const user = await User.findById(_id);
+
+    if (user) {
+      done(null, user);
+    }
+  } catch (error) {
+    console.error(error);
+    done(error);
+  }
+});

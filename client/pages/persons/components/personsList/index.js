@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from 'pages/persons/actions';
 import Link from 'next/link';
 import format from 'date-fns/format';
 import DataGrid from 'shared/components/dataGrid';
 import StatusBadge from 'shared/components/statusBadge';
+import ShouldDeletePersonsModal from 'pages/persons/components/shouldDeletePersonsModal';
 
 function linkFormatter (cell, row) {
   return (
@@ -33,25 +34,48 @@ const columns = [{
   formatter: (cell) => <StatusBadge status={cell} />
 }];
 
-const PersonsList = () => {
+const PersonsList = ({ onDelete, hideSelectColumn }) => {
+  const [ showModal, setShowModal ] = useState(false);
+  const [ toDelete, setToDelete ] = useState([]);
   const dispatch = useDispatch();
   const personsState = useSelector(state => state.persons);
   const { persons, pagination, error, loading } = personsState;
 
+
   const onPersonGet = (payload) => dispatch(actions.getPersons(payload));
-  const onPersonDelete = (records) => dispatch(actions.deletePersons(records));
+
+  const onPersonDelete = (records) => {
+    setToDelete(records);
+    setShowModal(true);
+  };
+
+  const onConfirm = () => {
+    setShowModal(false);
+    onDelete(toDelete);
+  };
+  
+  const onDiscard = () => setShowModal(false);
 
   return (
-    <DataGrid
-      tableName="person"
-      data={persons} 
-      columns={columns} 
-      error={error} 
-      loading={loading} 
-      pagination={pagination}
-      onItemsGet={onPersonGet}
-      onItemsDelete={onPersonDelete}
-    />
+    <>
+      <DataGrid
+        tableName="person"
+        data={persons} 
+        columns={columns} 
+        error={error} 
+        loading={loading} 
+        pagination={pagination}
+        onItemsGet={onPersonGet}
+        onItemsDelete={onPersonDelete}
+        hideSelectColumn={hideSelectColumn}
+      />
+      <ShouldDeletePersonsModal 
+        show={showModal}
+        persons={toDelete}
+        onConfirm={onConfirm}
+        onDiscard={onDiscard}
+      />
+    </>
   )
 }
 
