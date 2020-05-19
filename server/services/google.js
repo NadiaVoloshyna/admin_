@@ -1,17 +1,15 @@
 const { google } = require('googleapis');
-const eachSeries = require('async/eachSeries');
-const credentials = require('../../config/googleapi.json');
 
 const SCOPES = [
   'https://www.googleapis.com/auth/drive',
   'https://www.googleapis.com/auth/drive.file'
 ];
 
-const ROOT_FOLDER = credentials.root_folder_id;
-
 const auth = new google.auth.JWT(
-  credentials.client_email, null,
-  credentials.private_key, SCOPES
+  process.env.GOOGLE_DOC_CLIENT_EMAIL, 
+  null,
+  process.env.GOOGLE_DOC_PRIVATE_KEY, 
+  SCOPES
 );
 
 const drive = google.drive({ version: 'v3', auth });
@@ -29,7 +27,7 @@ const GoogleApi = {
       resource: {
         'name' : title,
         'mimeType' : 'application/vnd.google-apps.document',
-        'parents':[ROOT_FOLDER]
+        'parents':[process.env.GOOGLE_DOC_ROOT_FOLDER_ID]
       },
       fields: 'id'
     });

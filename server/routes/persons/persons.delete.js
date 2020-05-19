@@ -32,6 +32,12 @@ const checkPermissions = (req, res, next) => {
   let permission = ac.can(user.role).deleteAny('person');
 
   if (permission.granted === false) {
+    permission = ac.can(user.role).deleteOwn('person');
+    
+    if (permission.granted === false) {
+      return res.status(403).end();
+    }
+
     // Filter out persons not created by user and not in in_progress status
     persons = persons.filter(person => 
       person.createdBy._id.equals(user._id) &&
@@ -40,12 +46,6 @@ const checkPermissions = (req, res, next) => {
     res.locals.persons = persons;
 
     if (!persons || !persons.length) {
-      return res.status(400).end();
-    }
-
-    permission = ac.can(user.role).deleteOwn('person');
-    
-    if (permission.granted === false) {
       return res.status(403).end();
     }
   }

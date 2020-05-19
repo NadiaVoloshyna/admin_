@@ -182,7 +182,7 @@ const Register = (props) => {
   )
 }
 
-Register.getInitialProps = ({ ctx }) => {
+Register.getInitialProps = (ctx) => {
   const  { query, store, isServer } = ctx;
   
   return { token: query.token };
