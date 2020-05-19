@@ -7,7 +7,7 @@ mongoose.connection.on('open', function () {
   const gfs = Grid(mongoose.connection.db, mongoose.mongo);
   mongoose.gridfs = gfs;
 
-  console.log('Connected to mongo server.');
+  console.log('Connected to mongo server!');
 });
 
 module.exports = async (logger) => {
