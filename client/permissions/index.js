@@ -28,6 +28,9 @@ let GrantList = {
       'create:any': ['*'],
     }
   },
+  admin: {
+    // TODO: Define complete list of permissions
+  },
   // Author permissions
   author: {
     person: {
