@@ -8,7 +8,7 @@ const { logger } = require('./server/loggers');
 
 require('dotenv').config();
 
-const DB = require('./server/db');
+const DB = require('./server/services/db');
 const routes = require('./server/routes');
 
 const port = parseInt(process.env.PORT, 10) || 3001
