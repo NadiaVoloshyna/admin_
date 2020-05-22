@@ -1,6 +1,12 @@
 const { body } = require('express-validator');
 const errorHandler = require('../../middlewares/errorHandler');
-const registerUser = require('../../controllers/user/registerUser');
+const Invite = require('../../models/invite');
+const User = require('../../models/user');
+const bcrypt = require('bcrypt');
+const handleError = require('../../helpers/handleError');
+const isExpiredInvitation = require('../../helpers/isExpiredInvitation');
+
+
 
 module.exports = (router) => {
   // Register user
