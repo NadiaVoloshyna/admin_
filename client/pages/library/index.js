@@ -1,13 +1,13 @@
-import React, { useState, useContext } from './node_modules/react';
-import Head from './node_modules/next/head';
-import { UserContext } from './node_modules/shared/context';
-import Layout from './node_modules/shared/components/layout';
-import CreateAssetDropdown, { ASSET_TYPES } from './node_modules/shared/components/createAssetDropdown';
-import AssetDetailsModal from './node_modules/pages/Library/components/assetDetailsModal';
-import MediaLibrary from './node_modules/shared/components/mediaLibrary';
-import Button from './node_modules/react-bootstrap/Button';
-import { isOfType } from './node_modules/shared/helpers';
-import api from './node_modules/pages/Library/api';
+import React, { useState, useContext } from 'react';
+import Head from 'next/head';
+import { UserContext } from 'shared/context';
+import Layout from 'shared/components/layout';
+import CreateAssetDropdown, { ASSET_TYPES } from 'shared/components/createAssetDropdown';
+import AssetDetailsModal from 'pages/Library/components/assetDetailsModal';
+import MediaLibrary from 'shared/components/mediaLibrary';
+import Button from 'react-bootstrap/Button';
+import { isOfType } from 'shared/helpers';
+import api from 'pages/Library/api';
 
 const supportedAssetTypes = [
   ASSET_TYPES.FOLDER,

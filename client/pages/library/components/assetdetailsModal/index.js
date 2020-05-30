@@ -1,8 +1,8 @@
-import React from './node_modules/react';
-import Modal from './node_modules/react-bootstrap/Modal';
-import Container from './node_modules/react-bootstrap/Container';
-import Row from './node_modules/react-bootstrap/Row';
-import Col from './node_modules/react-bootstrap/Col';
+import React from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const AssetDetailsModal = ({ show, item, setShow }) => {
   return (
