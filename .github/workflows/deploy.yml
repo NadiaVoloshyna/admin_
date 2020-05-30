@@ -26,10 +26,7 @@ jobs:
         version: '270.0.0'
         service_account_email: ${{ secrets.GSE_EMAIL }}
         service_account_key: ${{ secrets.GSE_KEY }}
-
-    - name: Set project
-      run: |-
-        gcloud config set project ${{ secrets.PROJECT_ID }}
+        project_id: ${{ secrets.PROJECT_ID }}
         
     - name: Deploy to App Engine
       run: |-
