@@ -8,6 +8,9 @@ on:
   pull_request:
     branches: [ dev ]
 
+env:
+  CLOUDSDK_CORE_PROJECT: ${{ secrets.PROJECT_ID }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -26,7 +29,6 @@ jobs:
         version: '270.0.0'
         service_account_email: ${{ secrets.GSE_EMAIL }}
         service_account_key: ${{ secrets.GSE_KEY }}
-        project_id: ${{ secrets.PROJECT_ID }}
         
     - name: Deploy to App Engine
       run: |-
