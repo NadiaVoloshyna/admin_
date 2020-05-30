@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 import CreateDropdown from 'shared/components/createDropdown';
-import ProfessionsList from 'pages/professions/components/professionsList';
+import ProfessionsList from 'pages/Professions/components/professionsList';
 
 const ProfessionsPage = ({createProfession}) => {
   return (

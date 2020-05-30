@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { actions } from 'pages/professions/actions';
+import { actions } from 'pages/Professions/actions';
 import DataGrid from 'shared/components/dataGrid';
 
 const columns = [{

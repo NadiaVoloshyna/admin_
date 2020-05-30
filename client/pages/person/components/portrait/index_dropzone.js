@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { actions } from 'pages/person/actions';
+import { actions } from 'pages/Person/actions';
 import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button'
 import Dropzone from 'shared/components/dropzone';

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { actions } from 'pages/persons/actions';
+import { actions } from 'pages/Persons/actions';
 import Link from 'next/link';
 import format from 'date-fns/format';
 import DataGrid from 'shared/components/dataGrid';
 import StatusBadge from 'shared/components/statusBadge';
-import ShouldDeletePersonsModal from 'pages/persons/components/shouldDeletePersonsModal';
+import ShouldDeletePersonsModal from 'pages/Persons/components/shouldDeletePersonsModal';
 
 function linkFormatter (cell, row) {
   return (

@@ -7,8 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import UsersApi from 'shared/api/users';
-import PersonApi from 'pages/person/api';
-import { actions } from 'pages/person/actions';
+import PersonApi from 'pages/Person/api';
+import { actions } from 'pages/Person/actions';
 import { actions as sharedActions } from 'shared/actions';
 
 const AssigneUsersModal = ({ personId, role, as, assignedUsers = [] }) => {

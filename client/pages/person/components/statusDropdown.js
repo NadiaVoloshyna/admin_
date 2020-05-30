@@ -5,8 +5,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import _lowerCase from 'lodash/lowerCase';
 import _startCase from 'lodash/startCase';
-import PersonAPI from 'pages/person/api';
-import { actions } from 'pages/person/actions';
+import PersonAPI from 'pages/Person/api';
+import { actions } from 'pages/Person/actions';
 import { actions as sharedActions } from 'shared/actions';
 
 const config = {
