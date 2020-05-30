@@ -1,7 +1,7 @@
 import React from 'react';
 import Popover from 'react-bootstrap/Popover';
 
-const Overlay = (props) => {
+const PasswordRequirementsOverlay = (props) => {
   return (
     <Popover>
       <Popover.Content>
@@ -28,4 +28,4 @@ const Overlay = (props) => {
   );
 }
 
-export default Overlay;
+export default PasswordRequirementsOverlay;
