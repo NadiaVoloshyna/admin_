@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actions } from 'pages/professions/actions';
-import { initialState } from 'pages/professions/reducers';
+import { actions } from 'pages/Professions/actions';
+import { initialState } from 'pages/Professions/reducers';
 import ProfessionsPage from 'pages/Professions';
 
 const Professions = (props) => <ProfessionsPage {...props} />
