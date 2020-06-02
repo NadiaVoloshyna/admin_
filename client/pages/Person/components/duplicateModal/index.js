@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import { actionTypes, actions } from 'pages/person/actions';
+import { actionTypes, actions } from 'pages/Person/actions';
 
 const DuplicateModal = () => {
   const { showDuplicatePersonModal, duplicate } = useSelector(state => state.person);

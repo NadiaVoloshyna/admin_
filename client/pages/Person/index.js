@@ -7,16 +7,16 @@ import Head from 'next/head';
 import Error from 'next/error';
 import Layout from 'shared/components/layout';
 
-import PersonActions from 'pages/person/components/actions';
-import PersonName from 'pages/person/components/name';
-import DuplicateModal from 'pages/person/components/duplicateModal';
-import PersonPortrait from 'pages/person/components/portrait';
-import PersonProfession from 'pages/person/components/profession';
-import ProfessionSection from 'pages/person/components/professionSection';
-import PersonYears from 'pages/person/components/years';
-import StatusDropdown from 'pages/person/components/statusDropdown';
-import DocumentAction from 'pages/person/components/documentAction';
-import PersonUserList from 'pages/person/components/usersList';
+import PersonActions from 'pages/Person/components/actions';
+import PersonName from 'pages/Person/components/name';
+import DuplicateModal from 'pages/Person/components/duplicateModal';
+import PersonPortrait from 'pages/Person/components/portrait';
+import PersonProfession from 'pages/Person/components/profession';
+import ProfessionSection from 'pages/Person/components/professionSection';
+import PersonYears from 'pages/Person/components/years';
+import StatusDropdown from 'pages/Person/components/statusDropdown';
+import DocumentAction from 'pages/Person/components/documentAction';
+import PersonUserList from 'pages/Person/components/usersList';
 
 const PersonPage = (props) => {
   const { person } = useSelector(state => state.person);

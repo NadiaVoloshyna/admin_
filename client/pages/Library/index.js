@@ -3,11 +3,11 @@ import Head from 'next/head';
 import { UserContext } from 'shared/context';
 import Layout from 'shared/components/layout';
 import CreateAssetDropdown, { ASSET_TYPES } from 'shared/components/createAssetDropdown';
-import AssetDetailsModal from 'pages/library/components/assetDetailsModal';
+import AssetDetailsModal from 'pages/Library/components/assetDetailsModal';
 import MediaLibrary from 'shared/components/mediaLibrary';
 import Button from 'react-bootstrap/Button';
 import { isOfType } from 'shared/helpers';
-import api from 'pages/library/api';
+import api from 'pages/Library/api';
 
 const supportedAssetTypes = [
   ASSET_TYPES.FOLDER,
