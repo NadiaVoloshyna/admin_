@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 
-const HomePage = ({ user }) => (
+const HomePage = () => (
   <div>
     <Head>
       <title>Home</title>

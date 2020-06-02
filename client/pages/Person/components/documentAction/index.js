@@ -6,8 +6,8 @@ import permissions from '../../../../permissions';
 
 const DocumentAction = ({ documentId, me }) => {
   const getDocumentMode = () => {
-    if (permissions.can(me.role).readOwn('document')) return 'view';
-    if (permissions.can(me.role).updateOwn('document')) return 'edit';
+    if (permissions.can(me.role).readOwn('document').granted) return 'view';
+    if (permissions.can(me.role).updateOwn('document').granted) return 'edit';
   }
 
   const mode = getDocumentMode();

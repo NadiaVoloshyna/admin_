@@ -37,7 +37,7 @@ const UsersList = ({ users }) => {
 
   const columns = getColumns(isSuper);
 
-  const onUserGet = (payload) => dispatch(actions.getUsers(payload));
+  const onUsersGet = () => dispatch(actions.getUsers());
   const onEdit = (payload) => dispatch(actions.updateUser(payload));
 
   return (
@@ -48,7 +48,7 @@ const UsersList = ({ users }) => {
       error={error} 
       loading={loading} 
       pagination={pagination}
-      onItemsGet={onUserGet}
+      onItemsGet={onUsersGet}
       onEdit={onEdit}
       hideSelectColumn
     />
