@@ -16,6 +16,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.11.2",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
+    "@google-cloud/secret-manager": "^3.0.0",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "accesscontrol": "^2.2.1",
