@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import _unescape from 'lodash/unescape';
 
 import PersonAPI from 'pages/Person/api';
-import ProfessionsAPI from 'pages/professions/api';
-import { actions as pageActions } from 'pages/person/actions';
+import ProfessionsAPI from 'pages/Professions/api';
+import { actions as pageActions } from 'pages/Person/actions';
 import PersonPage from 'pages/Person';
 
 const Person = (props) => <PersonPage {...props} />

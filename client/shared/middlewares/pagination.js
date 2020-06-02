@@ -1,6 +1,6 @@
 import { actions } from 'shared/actions';
-import { actionTypes as personTypes } from 'pages/persons/actions';
-import { actionTypes as professionTypes } from 'pages/professions/actions';
+import { actionTypes as personTypes } from 'pages/Persons/actions';
+import { actionTypes as professionTypes } from 'pages/Professions/actions';
 
 const updatePaginationMiddleware = store => next => action => {
   if (action.type === personTypes.GET_PERSONS || action.type === professionTypes.GET_PROFESSIONS) {

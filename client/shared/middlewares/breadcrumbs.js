@@ -1,4 +1,4 @@
-import { actionTypes } from 'pages/library/actions';
+import { actionTypes } from 'pages/Library/actions';
 
 const selectFolderMiddleware = store => next => action => {
   if (action.type === actionTypes.APPLY_BREADCRUMBS && action.payload !== 'Root') {
