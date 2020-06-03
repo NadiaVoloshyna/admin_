@@ -4,19 +4,10 @@ import Link from 'next/link';
 import { actions } from 'pages/users/actions';
 import DataGrid from 'shared/components/dataGrid';
 
-function linkFormatter (cell, row) {
-  return (
-    <Link href={`/persons/${row._id}`}>
-      <a>{ cell }</a>
-    </Link>
-  )
-}
-
 const getColumns = (editable) => [{
   dataField: 'fullName',
   text: 'Name',
   editable: false
-  //formatter: linkFormatter
 }, {
   dataField: 'role',
   text: 'Role',
@@ -46,8 +37,7 @@ const UsersList = ({ users }) => {
 
   const columns = getColumns(isSuper);
 
-  const onUserGet = (payload) => dispatch(actions.getUsers(payload));
-  const onUserDelete = (records) => dispatch(actions.deleteUsers(records));
+  const onUsersGet = () => dispatch(actions.getUsers());
   const onEdit = (payload) => dispatch(actions.updateUser(payload));
 
   return (
@@ -58,8 +48,7 @@ const UsersList = ({ users }) => {
       error={error} 
       loading={loading} 
       pagination={pagination}
-      onItemsGet={onUserGet}
-      onItemsDelete={onUserDelete}
+      onItemsGet={onUsersGet}
       onEdit={onEdit}
       hideSelectColumn
     />

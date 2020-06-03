@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 import { connect } from 'react-redux';
-import { withUser } from 'shared/components/withUser';
 
 
 function UserProfile ({ id }) {
