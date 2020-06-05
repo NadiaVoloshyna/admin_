@@ -5,12 +5,11 @@ const SCOPES = [
   'https://www.googleapis.com/auth/drive.file'
 ];
 
-const auth = new google.auth.JWT(
-  process.env.GOOGLE_DOC_CLIENT_EMAIL, 
-  null,
-  process.env.GOOGLE_DOC_PRIVATE_KEY, 
-  SCOPES
-);
+const auth = new google.auth.JWT({
+  email: process.env.GOOGLE_DOC_CLIENT_EMAIL,
+  key: process.env.GOOGLE_DOC_PRIVATE_KEY, 
+  scopes: SCOPES,
+});
 
 const drive = google.drive({ version: 'v3', auth });
 
@@ -29,7 +28,7 @@ const GoogleApi = {
         'mimeType' : 'application/vnd.google-apps.document',
         'parents':[process.env.GOOGLE_DOC_ROOT_FOLDER_ID]
       },
-      fields: 'id'
+      fields: 'id' 
     });
   },
 

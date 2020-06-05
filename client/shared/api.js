@@ -1,7 +1,8 @@
 import fetch from 'isomorphic-unfetch';
 import _startsWith from 'lodash/startsWith';
+import getConfig from 'next/config';
 
-const baseUrl = 'http://localhost:3001';
+const { publicRuntimeConfig } = getConfig();
 
 export default class ApiService {
   static cookie = undefined;
@@ -27,7 +28,7 @@ export default class ApiService {
       requestOptions.body = typeof body === 'string' ? body : JSON.stringify(body)
     }
 
-    const requestUrl = _startsWith(url, '/api') ? baseUrl + url : url;
+    const requestUrl = _startsWith(url, '/api') ? publicRuntimeConfig.baseUrl + url : url;
 
     return fetch(requestUrl, requestOptions);
   }
