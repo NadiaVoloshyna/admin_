@@ -29,7 +29,27 @@ let GrantList = {
     }
   },
   admin: {
-    // TODO: Define complete list of permissions
+    person: {
+      'create:own': ['*'],
+      'delete:any': ['*']
+    },
+    'person-assignUser': {
+      'create:any': ['*'],
+    },
+    document: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+    },
+    inviteAuthor: {
+      'create:any': ['*'],
+    },
+    inviteWriter: {
+      'create:any': ['*'],
+    },
+    changeStatus: {
+      'create:any': ['*'],
+    }
   },
   // Author permissions
   author: {

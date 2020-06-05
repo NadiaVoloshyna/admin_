@@ -1,9 +1,10 @@
 const path = require('path');
 const withSass = require('@zeit/next-sass');
-const withCSS = require('@zeit/next-css')
-const withGraphql = require('next-plugin-graphql');
+const withCSS = require('@zeit/next-css');
+const isProd = process.env.NODE_ENV === 'production';
+const protocol = isProd ? 'https' : 'http';
 
-module.exports = withGraphql(withCSS(withSass({
+module.exports = withCSS(withSass({
   webpack (config, options) {
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -15,5 +16,9 @@ module.exports = withGraphql(withCSS(withSass({
       'store': path.join(__dirname, 'client/store'),
     };
     return config;
+  },
+
+  publicRuntimeConfig: {
+    baseUrl: `${protocol}://${process.env.BASE_URL}`
   }
-})));
+}));
