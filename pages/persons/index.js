@@ -1,31 +1,26 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { actions } from 'pages/Persons/actions';
-import { initialState } from 'pages/Persons/reducers';
-import PersonApi from 'pages/Persons/api';
+import { paginationState } from 'shared/reducers/pagination';
+import PersonsApi from 'pages/Persons/api';
 import PersonsPage from 'pages/Persons';
 
 const Persons = (props) => <PersonsPage {...props} />
 
 Persons.getInitialProps = async (ctx) => {
-  const { store, req } = ctx;
-
-  store.dispatch(actions.personsInitialState(initialState));
-  console.log('personsInitialState', initialState);
+  const { req } = ctx;
+  const { offset, searchTerm, sort } = paginationState();
 
   try {
     // sharedActions.toggleIsLoading();
-    const { pagination: { offset, searchTerm, sort } } = initialState;
-    const persons = await PersonApi
-      .setCookie(req)
-      .getPersons(offset, searchTerm, sort);
-
-    await store.dispatch(actions.getPersonsSuccess(persons));
+    const { persons, pagination } = await PersonsApi
+    .setCookie(req)
+    .getPersons(offset, searchTerm, sort);
+    
+    return { persons, pagination: { offset, searchTerm, sort, ...pagination } };
   } catch (error) {
-    await store.dispatch(actions.getPersonsFail(error));
+    console.error(error);
   } finally {
     // sharedActions.toggleIsLoading();
   }
-}
+};
 
-export default connect()(Persons);
+export default Persons;

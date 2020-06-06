@@ -1,9 +1,8 @@
 import { actions } from 'shared/actions';
-import { actionTypes as personTypes } from 'pages/Persons/actions';
 import { actionTypes as professionTypes } from 'pages/Professions/actions';
 
 const updatePaginationMiddleware = store => next => action => {
-  if (action.type === personTypes.GET_PERSONS || action.type === professionTypes.GET_PROFESSIONS) {
+  if (action.type === professionTypes.GET_PROFESSIONS) {
     const { offset, searchTerm, sort } = action.payload || {};
 
     if (typeof offset !== 'undefined') {

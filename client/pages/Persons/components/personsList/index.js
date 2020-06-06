@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { actions } from 'pages/Persons/actions';
 import Link from 'next/link';
 import format from 'date-fns/format';
 import DataGrid from 'shared/components/dataGrid';
@@ -34,15 +32,19 @@ const columns = [{
   formatter: (cell) => <StatusBadge status={cell} />
 }];
 
-const PersonsList = ({ onDelete, hideSelectColumn }) => {
+const PersonsList = (props) => {
+  const {
+    hideSelectColumn,
+    persons,
+    pagination,
+    onPersonsGet,
+    onDelete,
+    error,
+    loading
+  } = props;
+
   const [ showModal, setShowModal ] = useState(false);
   const [ toDelete, setToDelete ] = useState([]);
-  const dispatch = useDispatch();
-  const personsState = useSelector(state => state.persons);
-  const { persons, pagination, error, loading } = personsState;
-
-
-  const onPersonGet = (payload) => dispatch(actions.getPersons(payload));
 
   const onPersonDelete = (records) => {
     setToDelete(records);
@@ -65,7 +67,7 @@ const PersonsList = ({ onDelete, hideSelectColumn }) => {
         error={error} 
         loading={loading} 
         pagination={pagination}
-        onItemsGet={onPersonGet}
+        onItemsGet={onPersonsGet}
         onItemsDelete={onPersonDelete}
         hideSelectColumn={hideSelectColumn}
       />
