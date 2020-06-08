@@ -5,8 +5,8 @@ class PersonApi extends ApiService {
     return this.get(`/api/persons/${id}`);
   }
 
-  update = (payload) => {
-    return this.put(`/api/persons/${payload.id}`, payload);
+  update = (id, payload) => {
+    return this.put(`/api/persons/${id}`, payload);
   }
 
   upload = (files) => {

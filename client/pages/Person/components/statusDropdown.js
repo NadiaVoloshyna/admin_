@@ -1,12 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import _lowerCase from 'lodash/lowerCase';
 import _startCase from 'lodash/startCase';
-import PersonAPI from 'pages/Person/api';
-import { actions } from 'pages/Person/actions';
-import { actions as sharedActions } from 'shared/actions';
 
 const config = {
   NEW: { 
@@ -26,23 +22,9 @@ const config = {
   PRE_PUBLISH: { text: 'Publish', variant: '' }
 }
 
-const StatusDropdown = ({ status, personId, user }) => {
-  const dispatch = useDispatch();
+const StatusDropdown = ({ status, user, updateStatus }) => {
   const statusConfig = config[status];
   const canChangeStatus = config[status].roles.includes(user.role);
-
-  const updateStatus = (newStatus) => {
-    dispatch(sharedActions.toggleIsLoading());
-    PersonAPI.updateStatus(personId, newStatus)
-      .then(() => {
-        dispatch(actions.setStatus(newStatus));
-        dispatch(sharedActions.toggleIsLoading());
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(sharedActions.toggleIsLoading());
-      });
-  }
 
   const singleButton = (variant, text) => (
     <Button 

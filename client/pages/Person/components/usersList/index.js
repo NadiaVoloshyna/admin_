@@ -5,11 +5,11 @@ import Badge from 'react-bootstrap/Badge';
 import Dropdown from 'react-bootstrap/Dropdown';
 import _upperFirst from 'lodash/upperFirst';
 import ElipsisDropdownToggle from 'shared/components/elipsisDropdownToggle';
-import AssigneUsersModal from 'shared/components/assigneUsersModal';
+import AssigneUsersModal from 'pages/Person/components/assigneUsersModal';
 
-const PersonUserList = ({ permissions = [], personId, userPermissions }) => {
+const PersonUserList = ({ onUsersGet, users, usersForAssignment, userPermissions, setPermission }) => {
   return (
-    <Card className="person-user-list">
+    <Card className="person-user-list mb-4">
       <Card.Header className="border-bottom-0 d-flex justify-content-between">
         Users
 
@@ -20,14 +20,16 @@ const PersonUserList = ({ permissions = [], personId, userPermissions }) => {
             <Dropdown.Menu>
               <AssigneUsersModal 
                 as={<Dropdown.Item>Invite Author</Dropdown.Item>}
-                personId={personId}
-                assignedUsers={permissions}
+                users={usersForAssignment}
+                setPermission={setPermission}
+                onUsersGet={onUsersGet}
                 role="author"
               />
               <AssigneUsersModal 
                 as={<Dropdown.Item>Invite Reviewer</Dropdown.Item>}
-                personId={personId}
-                assignedUsers={permissions}
+                users={usersForAssignment}
+                setPermission={setPermission}
+                onUsersGet={onUsersGet}
                 role="reviewer"
               />
             </Dropdown.Menu>
@@ -35,10 +37,10 @@ const PersonUserList = ({ permissions = [], personId, userPermissions }) => {
         }
       </Card.Header>
       
-      { !!permissions.length &&
+      { !!users.length &&
         <Table className="m-0">
           <tbody>
-            { permissions.map(item => {
+            { users.map(item => {
               const { role, user, _id } = item;
 
               return (

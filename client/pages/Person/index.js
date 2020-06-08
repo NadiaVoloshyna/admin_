@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
 import _unescape from 'lodash/unescape';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -7,9 +6,11 @@ import Head from 'next/head';
 import Error from 'next/error';
 import Layout from 'shared/components/layout';
 
+import PersonApi from 'pages/Person/api';
+import UsersApi from 'shared/api/users';
+
 import PersonActions from 'pages/Person/components/actions';
 import PersonName from 'pages/Person/components/name';
-import DuplicateModal from 'pages/Person/components/duplicateModal';
 import PersonPortrait from 'pages/Person/components/portrait';
 import PersonProfession from 'pages/Person/components/profession';
 import ProfessionSection from 'pages/Person/components/professionSection';
@@ -19,27 +20,94 @@ import DocumentAction from 'pages/Person/components/documentAction';
 import PersonUserList from 'pages/Person/components/usersList';
 
 const PersonPage = (props) => {
-  const { person } = useSelector(state => state.person);
+  const [ person, setPerson ] = useState(props.person);
+  const [ usersForAssignment, setUsersForAssignment ] = useState([]);
   const [ disableActions, setActionsDisabled ] = useState(false);
-  const { updatePerson, professions, errorCode, user } = props;
+  const [ isLoading, setIsLoading ] = useState(false); 
 
-  if (errorCode) {
-    return <Error statusCode={errorCode} />;
+  if (props.errorCode) {
+    return <Error statusCode={errorCode} />; 
   }
 
+  const { user, professions } = props;
   const { name, portrait, rootAssetId, professions: personsProfessions, status, biography, permissions } = person;
+
   const canEdit = (
     user.isAdmin ||
     user.isSuper ||
     user.isAuthor && permissions.some(item => item.user._id === user._id )
   );
 
-  const onSubmit = (values) => {
-    updatePerson({
-      id: person._id,
-      ...values
-    });
+  /**
+   * Updates the person
+   * @param {Object} values Person fields to update
+   */
+  const onPersonSave = (values) => {
+    setIsLoading(true);
+
+    PersonApi.update(person._id, values)
+      .then(response => console.log(response))
+      .catch(error => {
+        console.error(error);
+      })
+      .finally(() => setIsLoading(false));
   }
+
+  /**
+   * Updates the status of the document
+   * @param {String} newStatus New status of the document
+   */
+  const updateStatus = (newStatus) => {
+    setIsLoading(true);
+    
+    PersonApi.updateStatus(person._id, status)
+      .then(() => setPerson({ ...person, newStatus }))
+      .catch(error => {
+        // TODO: log error
+        console.error(error);
+      })
+      .finally(() => setIsLoading(true));
+  }
+
+  /**
+   * Assignes the user to be the author or reviewer for this post
+   * @param {String} selectedUserId The ID if the user to be assigned either as author or the reviewer
+   */
+  const setPermission = (selectedUserId) => {
+    setIsLoading(true);
+
+    PersonApi.updatePermissions(person._id, selectedUserId)
+      .then(response => response.json())
+      .then(permissions => setPerson({
+        ...person,
+        permissions: [...person.permissions, ...permissions]
+      }))
+      .catch(error => {
+        // TODO: handle error
+        console.error(error);
+      })
+      .finally(() => setIsLoading(false));
+  }
+
+  /**
+   * Gets the list of users by it's role
+   * @param {String} role The role of the user (author or reviewer)
+   */
+  const getUsersForAssignment = (role) => {
+    setIsLoading(true);
+
+    UsersApi.getUsersByRole(role)
+      .then(response => response.json())
+      .then(users => {
+        const filtered = users.filter(user => !permissions.find(item => item.user._id === user._id));
+        setUsersForAssignment(filtered);
+      })
+      .catch(error => {
+        // TODO: handle error
+        console.error(error);
+      })
+      .finally(() => setIsLoading(false));
+  };
 
   const availableProfessions = () => {
     return props.professions.filter(prof => 
@@ -56,44 +124,46 @@ const PersonPage = (props) => {
       </Head>
 
       <Layout activePage="Person">
-        <Layout.Navbar className="mb-3">
-          <div>Person</div>
-          <PersonActions disableActions={disableActions} />
-        </Layout.Navbar>
+        <Form
+          onSubmit={onPersonSave}
+          mutators={{
+            ...arrayMutators
+          }}
+          initialValues={{ 
+            name, 
+            portrait: _unescape(portrait).replace(/&#x2F;/g, '/'),
+            professions: personsProfessions
+          }}
+          render={({
+            form: {
+              mutators: { push, pop }
+            },
+            handleSubmit, 
+            form, 
+            submitting, 
+            pristine, 
+            values 
+          }) => {
+            setActionsDisabled(submitting || pristine);
 
-        <Layout.Content className="py-3 pt-4">
-          <Form
-            onSubmit={onSubmit}
-            mutators={{
-              ...arrayMutators
-            }}
-            initialValues={{ 
-              name, 
-              portrait: _unescape(portrait).replace(/&#x2F;/g, '/'),
-              professions: personsProfessions
-            }}
-            render={({
-              form: {
-                mutators: { push, pop }
-              },
-              handleSubmit, 
-              form, 
-              submitting, 
-              pristine, 
-              values 
-            }) => {
-              setActionsDisabled(submitting || pristine);
+            return (
+              <form onSubmit={handleSubmit} className="needs-validation" noValidate>
+                <Layout.Navbar className="mb-3">
+                  <div>Person</div>
+                  <PersonActions disableActions={disableActions} />
+                </Layout.Navbar>
 
-              return (
-                <form onSubmit={handleSubmit} className="needs-validation" noValidate>
+                <Layout.Content className="py-3 pt-4" isLoading={isLoading} >
                   <div className="row">
                     <div className="col-9">
                       <PersonName canEdit={canEdit} />
                       { user.userRoleUp('admin') && 
-                        <PersonUserList 
-                          permissions={permissions}
+                        <PersonUserList
+                          onUsersGet={getUsersForAssignment}
+                          users={permissions}
+                          usersForAssignment={usersForAssignment}
                           userPermissions={user.permissions}
-                          personId={person._id}
+                          setPermission={setPermission}
                         />
                       }
                       <ProfessionSection
@@ -109,9 +179,8 @@ const PersonPage = (props) => {
                       <div className="mb-4 d-flex">
                         <StatusDropdown 
                           status={status} 
-                          personId={person._id}
                           user={user}
-                          permissions={permissions}
+                          updateStatus={updateStatus}
                         />
                         <DocumentAction 
                           documentId={biography.documentId} 
@@ -128,13 +197,11 @@ const PersonPage = (props) => {
                       />
                     </div>
                   </div>
-                </form>
-            )}}
-          />
-        </Layout.Content>
+                </Layout.Content>
+              </form>
+          )}}
+        />
       </Layout>
-
-      <DuplicateModal />
     </div>
   )
 }
