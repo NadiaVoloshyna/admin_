@@ -46,7 +46,10 @@ const PersonPage = (props) => {
     setIsLoading(true);
 
     PersonApi.update(person._id, values)
-      .then(response => console.log(response))
+      .then(response => {
+        // TODO: probably we need to show some kind of toast with update confirmation
+        console.log(response)
+      })
       .catch(error => {
         console.error(error);
       })
@@ -66,7 +69,7 @@ const PersonPage = (props) => {
         // TODO: log error
         console.error(error);
       })
-      .finally(() => setIsLoading(true));
+      .finally(() => setIsLoading(false));
   }
 
   /**
