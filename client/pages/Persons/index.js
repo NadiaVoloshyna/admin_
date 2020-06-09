@@ -3,11 +3,15 @@ import { useDispatch } from 'react-redux';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 import PersonsList from 'pages/Persons/components/personsList';
+import DuplicateModal from 'pages/Persons/components/duplicateModal';
 import CreateDropdown from 'shared/components/createDropdown';
 import PersonsApi from 'pages/Persons/api';
 import { actions as sharedActions } from 'shared/actions';
 
 const PersonsPage = ({ user, persons, pagination }) => {
+  const [ isPersonExist, setIsPersonExist ] = useState(false);
+  const [ duplicate, setDuplicate ] = useState({});
+
   const dispatch = useDispatch();
   const [personsState, setPersons] = useState(persons);
   const [paginationState, setPaginationState] = useState(pagination);
@@ -62,11 +66,11 @@ const PersonsPage = ({ user, persons, pagination }) => {
       }
       
       if (response.status === 409) {
-        const duplicateData = {
+        setDuplicate({
           id: person.id,
           name: person.name
-        };
-        throw Error(duplicateData);
+        });
+        setIsPersonExist(true);
       }
 
       if (response.status === 500) {
@@ -107,6 +111,12 @@ const PersonsPage = ({ user, persons, pagination }) => {
           />
         </Layout.Content>
       </Layout>
+
+      <DuplicateModal 
+        show={isPersonExist}
+        onClose={setIsPersonExist}
+        duplicate={duplicate}
+      />
     </div>
   )
 }

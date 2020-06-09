@@ -10,7 +10,7 @@ const LayoutContent = (props) => {
     className
   } = props;
 
-  const isLoading = false; // TODO: get it from state
+  const isLoading = props.isLoading;
   const contentCX = cx('row flex-grow-1 page-content', className && className);
   
   return (

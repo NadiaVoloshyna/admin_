@@ -1,56 +1,24 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import UsersApi from 'shared/api/users';
-import PersonApi from 'pages/Person/api';
-import { actions } from 'pages/Person/actions';
-import { actions as sharedActions } from 'shared/actions';
 
-const AssigneUsersModal = ({ personId, role, as, assignedUsers = [] }) => {
-  const dispatch = useDispatch();
+const AssigneUsersModal = ({ role, as, onUsersGet, users = [], setPermission }) => {
   const [ isOpen, setIsOpen ] = useState(false);
-  const [ users, setUsers ] = useState([]);
   const [ selected, setSelected ] = useState([]);
 
   const toggleIsOpen = () => setIsOpen(!isOpen);
 
   const getUsers = () => {
-    dispatch(sharedActions.toggleIsLoading());
-
-    UsersApi.getUsersByRole(role)
-      .then(response => response.json())
-      .then(users => {
-        const filtered = users.filter(user => !assignedUsers.find(item => item.user._id === user._id));
-        setUsers(filtered);
-        dispatch(sharedActions.toggleIsLoading());
-      })
-      .catch(error => {
-        // TODO: handle error
-        console.error(error);
-        dispatch(sharedActions.toggleIsLoading());
-      });
+    onUsersGet(role);
   };
 
   const assignUsers = () => {
-    dispatch(sharedActions.toggleIsLoading());
     toggleIsOpen();
-
-    PersonApi.updatePermissions(personId, selected)
-      .then(response => response.json())
-      .then(response => {
-        dispatch(actions.setPermission(response));
-        dispatch(sharedActions.toggleIsLoading());
-      })
-      .catch(error => {
-        // TODO: handle error
-        console.error(error);
-        dispatch(sharedActions.toggleIsLoading());
-      });
+    setPermission(selected);
   }
 
   const onUserSelect = ({ _id }) => {

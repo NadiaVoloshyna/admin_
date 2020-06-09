@@ -14,13 +14,14 @@ module.exports = (router) => {
     body('born').if(body('born').exists()).isString().escape(),
     body('died').if(body('died').exists()).isString().escape(),
   ], errorHandler, async (req, res) => {
-    const { portrait, born, died, professions } = req.body;
+    const { name, portrait, born, died, professions } = req.body;
     const { id } = req.params;
 
     try {
       await Person.updateOne(
         { _id: id },
         { 
+          name,
           portrait,
           born,
           died,

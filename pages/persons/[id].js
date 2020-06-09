@@ -1,17 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import _unescape from 'lodash/unescape';
 
 import PersonAPI from 'pages/Person/api';
 import ProfessionsAPI from 'pages/Professions/api';
-import { actions as pageActions } from 'pages/Person/actions';
 import PersonPage from 'pages/Person';
+import { personState } from 'pages/Person/state';
 
 const Person = (props) => <PersonPage {...props} />
 
 Person.getInitialProps = async (ctx) => {
-  const { query, store, isServer, req } = ctx;
-  let person = {};
+  const { query, isServer, req } = ctx;
+  let person = personState;
   let professions = {};
   
   if (isServer) {
@@ -25,8 +24,6 @@ Person.getInitialProps = async (ctx) => {
 
     person         = await personRes.json();
     professions    = await professionsRes.json();
-
-    store.dispatch(pageActions.getPersonSuccess(person));
   };
 
   return {
@@ -35,8 +32,4 @@ Person.getInitialProps = async (ctx) => {
   }
 }
 
-const mapDispatchToProps = {
-  updatePerson: pageActions.updatePerson
-};
-
-export default connect(null, mapDispatchToProps)(Person);
+export default Person;

@@ -1,13 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import _lowerCase from 'lodash/lowerCase';
 import _startCase from 'lodash/startCase';
-import PersonAPI from 'pages/Person/api';
-import { actions } from 'pages/Person/actions';
-import { actions as sharedActions } from 'shared/actions';
 import permissions from '../../../../permissions';
 
 const PERMISSIONS = {
@@ -57,8 +53,7 @@ const getStatusActions = (status) => {
   return PERMISSIONS[status];
 }
 
-const StatusDropdown = ({ status, personId, user }) => {
-  const dispatch = useDispatch();
+const StatusDropdown = ({ status, user, updateStatus }) => {
   const canChangeStatus = permissions.can(user.role).createAny('changeStatus');
   const statusConfig = getStatusActions(status);
   const hasPriviladge = statusConfig.roles.find(item => item.indexOf(user.role) !== -1);
@@ -70,19 +65,6 @@ const StatusDropdown = ({ status, personId, user }) => {
         className="status-dropdown"
       >{ _startCase(_lowerCase(status)) }</Button>
     )
-  }
-
-  const updateStatus = (newStatus) => {
-    dispatch(sharedActions.toggleIsLoading());
-    PersonAPI.updateStatus(personId, newStatus)
-      .then(() => {
-        dispatch(actions.setStatus(newStatus));
-        dispatch(sharedActions.toggleIsLoading());
-      })
-      .catch(error => {
-        console.log(error);
-        dispatch(sharedActions.toggleIsLoading());
-      });
   }
   
   return (
