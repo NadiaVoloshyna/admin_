@@ -7,10 +7,11 @@ if (dotEnvExists) {
 }
 
 // GCP side
-const gcs = require('@google-cloud/storage');
+const { Storage } = require('@google-cloud/storage');
+const storage = new Storage();
 const bucketName = `${process.env.GCLOUD_PROJECT}.appspot.com`;
 
-gcs
+storage
   .bucket(bucketName)
   .file('.env')
   .download({ destination: '.env' })
