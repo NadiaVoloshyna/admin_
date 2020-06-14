@@ -3,6 +3,7 @@ const fs = require('fs');
 const dotEnvExists = fs.existsSync('.env');
 
 if (dotEnvExists) {
+  console.info('configuration.js: .env already exists. Using development configuration');
   process.exit();
 }
 
@@ -15,8 +16,8 @@ storage
   .bucket(bucketName)
   .file('.env')
   .download({ destination: '.env' })
-  .then(() => console.info('app configuration.js: .env downloaded successfully'))
+  .then(() => console.info('configuration.js: .env downloaded successfully'))
   .catch((e) => console.error(
-    'app configuration.js: there was an error downloading .env', 
+    'configuration.js: there was an error downloading .env', 
     JSON.stringify(e, undefined, 2)
   ));
