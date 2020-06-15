@@ -31,7 +31,7 @@ const ChangeRoleModal = ({ show, toggleShow, userId, userRole }) => {
       </Modal.Header>
       <Modal.Body>
         <Form
-          onSubmit={(values) => onSubmit(values)}
+          onSubmit={onSubmit}
           render={({ handleSubmit }) => {
             return (
               <form onSubmit={handleSubmit} className="needs-validation" noValidate>
