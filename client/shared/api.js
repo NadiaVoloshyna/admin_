@@ -52,6 +52,10 @@ export default class ApiService {
     return ApiService.request(url, 'PUT', body, headers);
   }
 
+  patch = (url, body, headers = {}) => {
+    return ApiService.request(url, 'PATCH', body, headers);
+  }
+
   delete = (url, body, headers) => {
     return ApiService.request(url, 'DELETE', body, headers);
   }
