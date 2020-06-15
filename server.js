@@ -10,7 +10,6 @@ require('dotenv').config();
 const DB = require('./server/services/db');
 const routes = require('./server/routes');
 
-const PORT = process.env.PORT || 8080;
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev, quiet: true })
 const handle = app.getRequestHandler();
