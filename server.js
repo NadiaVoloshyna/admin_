@@ -2,7 +2,6 @@ const express = require('express');
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 const password = require('passport');
-const fileUpload = require('express-fileupload');
 const next = require('next');
 const { logger } = require('./server/loggers');
 

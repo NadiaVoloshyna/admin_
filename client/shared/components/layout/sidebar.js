@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import cx from 'classnames';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Dropdown from 'react-bootstrap/Dropdown';
-import LayoutNavbar from './navbar';
 import { UserContext } from 'shared/context';
+import ChangeRoleModal from '../changeRoleModal';
 
 const NAV_LINKS = [{
   name: 'Home',
@@ -77,6 +77,9 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 ));
 
 const renderUserDropdown = (user) => {
+  const [isChangeRoleModalOpen, setIsOpen] = useState(false);
+  const toggleIsModalOpen = () => setIsOpen(!isChangeRoleModalOpen);
+
   return (
     <div className="m-3">
       <Dropdown>
@@ -89,6 +92,12 @@ const renderUserDropdown = (user) => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
+          <a 
+            onClick={toggleIsModalOpen} 
+            className="dropdown-item"
+          >
+            Change role
+          </a>
           <Link href={`/users/${user.id}`}>
             <a className="dropdown-item">
                 Profile
@@ -101,6 +110,14 @@ const renderUserDropdown = (user) => {
           </Link>
         </Dropdown.Menu>
       </Dropdown>
+
+      <ChangeRoleModal 
+        show={isChangeRoleModalOpen}
+        toggleShow={toggleIsModalOpen}
+        userId={user._id} 
+        userRole={user.role}
+      />
+
       <style jsx>{`
         .user-icon {
           width: 40px;
