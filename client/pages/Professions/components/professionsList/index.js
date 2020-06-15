@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { actions } from 'pages/Professions/actions';
 import DataGrid from 'shared/components/dataGrid';
 
 const columns = [{
@@ -9,25 +7,21 @@ const columns = [{
   editable: false
 }];
 
-const ProfessionsList = () => {
-  const dispatch = useDispatch();
+const ProfessionsList = (props) => {
   const { 
     professions, 
-    error, 
-    loading, 
+    error,
     pagination,
-  } = useSelector(state => state.professions);
-
-  const onProfessionGet = (payload) => dispatch(actions.getProfessions(payload));
-  const onProfessionDelete = (records) => dispatch(actions.deleteProfessions(records))
+    onProfessionGet,
+    onProfessionDelete
+  } = props;
 
   return (
     <DataGrid
       tableName="profession"
       data={professions} 
       columns={columns} 
-      error={error} 
-      loading={loading} 
+      error={error}
       pagination={pagination}
       onItemsGet={onProfessionGet}
       onItemsDelete={onProfessionDelete}
