@@ -1,4 +1,5 @@
 const fs = require('fs');
+require('@google-cloud/debug-agent').start();
 const Logger = require('../logger');
 
 const dotEnvExists = fs.existsSync('.env');
