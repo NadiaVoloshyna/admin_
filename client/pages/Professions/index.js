@@ -103,11 +103,10 @@ const onProfessionGet = async (payload) => {
           </div>
         </Layout.Navbar>
 
-        <Layout.Content>
+        <Layout.Content loading={isLoading}>
           <ProfessionsList
           professions={professions}
           pagination={pagination}
-          loading={isLoading}
           onProfessionGet={onProfessionGet}
           onProfessionDelete={onProfessionDelete}
           />

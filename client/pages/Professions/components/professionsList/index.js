@@ -10,8 +10,7 @@ const columns = [{
 const ProfessionsList = (props) => {
   const { 
     professions, 
-    error, 
-    loading, 
+    error,
     pagination,
     onProfessionGet,
     onProfessionDelete
@@ -22,8 +21,7 @@ const ProfessionsList = (props) => {
       tableName="profession"
       data={professions} 
       columns={columns} 
-      error={error} 
-      loading={loading} 
+      error={error}
       pagination={pagination}
       onItemsGet={onProfessionGet}
       onItemsDelete={onProfessionDelete}
