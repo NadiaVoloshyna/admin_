@@ -42,7 +42,7 @@ const PersonsList = (props) => {
     error,
     loading
   } = props;
-
+ 
   const [ showModal, setShowModal ] = useState(false);
   const [ toDelete, setToDelete ] = useState([]);
 

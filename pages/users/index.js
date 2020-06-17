@@ -1,19 +1,33 @@
 import React  from 'react';
-import { connect } from 'react-redux';
-import { actions as pageActions } from 'pages/users/actions';
-import { initialState } from 'pages/users/reducers';
+import { paginationState } from 'shared/paginationState/index';
+import UserAPI from 'pages/Users/api'; 
 import UsersPage from '../../client/pages/users';
 
 const Users = (props) => <UsersPage {...props}/>
 
-Users.getInitialProps = (ctx) => {
-  const { store } = ctx;
+Users.getInitialProps = async (ctx) => {
 
-  // Set initial state
-  store.dispatch(pageActions.usersInitialState(initialState));
-  store.dispatch(pageActions.getUsers());
+  const { req } = ctx; 
+  const { offset, searchTerm, sort } = paginationState; 
+
+  try {
+    
+    const response =  await UserAPI
+    .setCookie(req)
+    .getUsers(offset, searchTerm, sort);
+ 
+    let { users, pagination } = await response.json(); 
+   
+    if (response.status !== 200) return { errorCode: response.status };
+    
+    pagination = { offset, searchTerm, sort, ...pagination };
+ 
+     return { users, pagination };
+  } catch (error) {
+    console.error(error); 
+  } finally {
+
+  }
 }
 
-const mapDispatchToProps = {};
-
-export default connect(null, mapDispatchToProps)(Users);
+export default Users; 
