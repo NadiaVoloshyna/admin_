@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { string, bool } from 'prop-types';
+import { string } from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LayoutContent from './content';
@@ -18,36 +17,36 @@ const Layout = (props) => {
   // const { isLoading } = useSelector(state => state.shared);
 
   // const contextValue = {
-  //   activePage, 
+  //   activePage,
   //   isLoading,
   //   user
   // }
 
   return (
     <div className={`${props.activePage.toLowerCase()}-page`}>
-      <div className='container-fluid'>
+      <div className="container-fluid">
         {/* <LayoutContext.Provider value={contextValue}> */}
-          <Row>
-            <LayoutSidebar />
-            <Col className="d-flex flex-column vh-100">
-              { props.children }
-            </Col>
-          </Row>
+        <Row>
+          <LayoutSidebar />
+          <Col className="d-flex flex-column vh-100">
+            { props.children }
+          </Col>
+        </Row>
         {/* </LayoutContext.Provider> */}
       </div>
     </div>
-  )
-}
+  );
+};
 
 Layout.Content = LayoutContent;
 Layout.Navbar = LayoutNavbar;
 
 Layout.propTypes = {
   activePage: string
-}
+};
 
 Layout.defaultProps = {
   activePage: ''
-}
+};
 
-export default Layout
+export default Layout;

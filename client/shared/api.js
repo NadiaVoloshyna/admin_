@@ -8,24 +8,24 @@ export default class ApiService {
   static cookie = undefined;
 
   static request = (url, method, body, headers) => {
-    let requestOptions = {
+    const requestOptions = {
       method,
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
         cookie: ApiService.cookie || undefined
       }
-    }
+    };
 
     if (headers) {
       requestOptions.headers = {
         ...requestOptions.headers,
         ...headers
-      }
+      };
     }
 
     if (body) {
-      requestOptions.body = typeof body === 'string' ? body : JSON.stringify(body)
+      requestOptions.body = typeof body === 'string' ? body : JSON.stringify(body);
     }
 
     const requestUrl = _startsWith(url, '/api') ? publicRuntimeConfig.baseUrl + url : url;
@@ -64,7 +64,7 @@ export default class ApiService {
     const body = new FormData();
     body.append('file', files[0]);
 
-    return fetch(baseUrl + url, {
+    return fetch(publicRuntimeConfig.baseUrl + url, {
       method: 'POST',
       body
     });

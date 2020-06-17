@@ -25,7 +25,7 @@ const RegisterPage = (props) => {
     <div className="register-page">
       <Head>
         <title>Register</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <FinalForm
@@ -120,12 +120,12 @@ const RegisterPage = (props) => {
                 <Field name="passwordConfirm">
                   {({ input, meta }) => (
                     <Form.Group as={Col} controlId="passwordConfirm">
-                        <Form.Control
-                          {...input}
-                          type="password"
-                          placeholder="Confirm password"
-                          isInvalid={meta.error && meta.touched}
-                        />
+                      <Form.Control
+                        {...input}
+                        type="password"
+                        placeholder="Confirm password"
+                        isInvalid={meta.error && meta.touched}
+                      />
                       <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>
                     </Form.Group>
                   )}
@@ -134,7 +134,7 @@ const RegisterPage = (props) => {
 
               <Button variant="primary" type="submit">Submit</Button>
             </Form>
-          )
+          );
         }}
       />
 
@@ -152,7 +152,7 @@ const RegisterPage = (props) => {
         }
       `}</style>
     </div>
-  )
+  );
 };
 
 export default RegisterPage;

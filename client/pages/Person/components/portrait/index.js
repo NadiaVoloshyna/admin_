@@ -1,11 +1,9 @@
 import React from 'react';
-import _unescape from 'lodash/unescape';
 import { Field } from 'react-final-form';
 import MediaLibraryModal from 'shared/components/mediaLibraryModal';
 import { Image } from 'cloudinary-react';
 
 const PersonPortrait = () => {
-
   return (
     <>
       <div className="card mb-3">
@@ -13,7 +11,7 @@ const PersonPortrait = () => {
           Portraits
         </div>
 
-        <div className="portrait card-body"> 
+        <div className="portrait card-body">
           <Field name="portrait">
             {props => {
               const { input: { onChange, value } } = props;
@@ -22,15 +20,17 @@ const PersonPortrait = () => {
               });
 
               if (value) {
-                return <Image
-                  cloudName="ukrainian" 
-                  publicId={value}
-                  height="235"
-                  crop="fill" 
-                />
+                return (
+                  <Image
+                    cloudName="ukrainian"
+                    publicId={value}
+                    height="235"
+                    crop="fill"
+                  />
+                );
               }
 
-              return <MediaLibraryModal onAssetSelect={onSelect} />
+              return <MediaLibraryModal onAssetSelect={onSelect} />;
             }}
           </Field>
         </div>
@@ -50,7 +50,7 @@ const PersonPortrait = () => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
 export default PersonPortrait;

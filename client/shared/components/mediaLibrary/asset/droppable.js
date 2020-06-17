@@ -17,25 +17,17 @@ const getAcceptedTypes = (type) => {
       return [];
     }
   }
-}
+};
 
 const DroppableAsset = (props) => {
-  const { 
-    item, 
+  const {
+    item,
     children,
     onDrop,
     isDragDrop = false
   } = props;
 
-  const isDroppable = isDragDrop 
-    || item.type === ASSET_TYPES.FOLDER
-    || item.type === ASSET_TYPES.ALBUM;
-
-  if (!isDroppable) {
-    return <div>{ children }</div>
-  }
-
-  const [{ isOver, canDrop }, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: getAcceptedTypes(item.type),
     // canDrop: (monitor) => console.log(monitor),
     drop: (draggable) => {
@@ -47,7 +39,15 @@ const DroppableAsset = (props) => {
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
     }),
-  })
+  });
+
+  const isDroppable = isDragDrop
+    || item.type === ASSET_TYPES.FOLDER
+    || item.type === ASSET_TYPES.ALBUM;
+
+  if (!isDroppable) {
+    return <div>{ children }</div>;
+  }
 
   const assetCX = cx(isOver && 'border border-success');
 
@@ -55,7 +55,7 @@ const DroppableAsset = (props) => {
     <div ref={drop} className={assetCX}>
       { children }
     </div>
-  )
-}
+  );
+};
 
 export default DroppableAsset;

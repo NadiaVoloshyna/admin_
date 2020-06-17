@@ -10,4 +10,4 @@ export default combineReducers({
   users,
   library,
   shared
-})
+});

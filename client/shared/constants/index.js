@@ -4,7 +4,7 @@ export const ASSET_TYPES = {
   IMAGE: 'IMAGE',
   VIDEO: 'VIDEO',
   SONG: 'SONG'
-}
+};
 
 export const PERSON_POST_STATUSES = {
   NEW: 'NEW',
@@ -13,4 +13,4 @@ export const PERSON_POST_STATUSES = {
   IN_REVIEW: 'IN_REVIEW',
   READY_TO_PUBLISH: 'READY_TO_PUBLISH',
   PUBLISHED: 'PUBLISHED'
-}
+};

@@ -17,12 +17,12 @@ const ChangeRoleModal = ({ show, toggleShow, userId, userRole }) => {
       .catch((error) => console.error(error));
 
     toggleShow();
-  }
+  };
 
   const roles = Object.values(USER_ROLES).filter(item => item !== userRole && item !== 'super');
 
   return (
-    <Modal 
+    <Modal
       show={show}
       onHide={toggleShow}
     >
@@ -36,8 +36,8 @@ const ChangeRoleModal = ({ show, toggleShow, userId, userRole }) => {
             return (
               <form onSubmit={handleSubmit} className="needs-validation" noValidate>
                 <div className="form-group">
-                  <Field 
-                    className="form-control" 
+                  <Field
+                    className="form-control"
                     name="role"
                     component="select"
                   >
@@ -45,22 +45,23 @@ const ChangeRoleModal = ({ show, toggleShow, userId, userRole }) => {
                     { roles.map(item => <option value={item} key={item}>{ _upperFirst(item) }</option>) }
                   </Field>
                 </div>
-                
+
                 <ButtonToolbar className="justify-content-end">
                   <ButtonGroup>
                     <Button variant="secondary" onClick={toggleShow}>Discard</Button>
-                    <Button 
-                      variant="primary" 
+                    <Button
+                      variant="primary"
                       type="submit"
                     >Submit</Button>
                   </ButtonGroup>
                 </ButtonToolbar>
               </form>
-          )}}
+            );
+          }}
         />
       </Modal.Body>
     </Modal>
-  )
-}
+  );
+};
 
 export default ChangeRoleModal;

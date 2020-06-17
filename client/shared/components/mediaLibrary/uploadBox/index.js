@@ -10,6 +10,6 @@ const UploadBox = ({ open }) => {
       </Jumbotron>
     </Collapse>
   );
-}
+};
 
 export default UploadBox;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import ProfessionModal from '../professionModal';
 import AssetsGrid from 'shared/components/mediaLibrary/assetsGrid';
+import ProfessionModal from '../professionModal';
 import Header from './header';
 
 const ProfessionSectionBody = ({ input, rootFolder }) => {
@@ -18,43 +18,43 @@ const ProfessionSectionBody = ({ input, rootFolder }) => {
   };
 
   const updateActive = () => {
-            
-  }
+
+  };
 
   return (
     <>
       <Card className="mb-3">
-        <Header 
-          name={name} 
+        <Header
+          name={name}
           active={active}
           onModalOpen={setIsOpen}
           updateActive={updateActive}
         />
 
         <Card.Body>
-          { hasMedia && 
-            <AssetsGrid 
+          { hasMedia
+            && (
+            <AssetsGrid
               assets={media}
               onSelect={() => {}}
               onDelete={() => {}}
               canDelete={false}
             />
-          }
+            )}
 
-          { !hasMedia && 
-            <p>No assets. Change text in the future</p>
-          }
+          { !hasMedia
+            && <p>No assets. Change text in the future</p>}
         </Card.Body>
       </Card>
 
-      <ProfessionModal 
-        rootFolder={rootFolder} 
-        onAssetSelect={onSelect} 
+      <ProfessionModal
+        rootFolder={rootFolder}
+        onAssetSelect={onSelect}
         onModalToggle={setIsOpen}
         isOpen={isOpen}
       />
     </>
-  )
-}
+  );
+};
 
 export default ProfessionSectionBody;

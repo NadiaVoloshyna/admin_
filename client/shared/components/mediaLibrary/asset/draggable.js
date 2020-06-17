@@ -1,19 +1,14 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { ASSET_TYPES } from 'shared/constants';
 
 const DraggableAsset = (props) => {
-  const { 
-    item, 
+  const {
+    item,
     children,
     isDragDrop = false
   } = props;
 
-  if (!isDragDrop) {
-    return <div>{ children }</div>
-  }
-
-  const [{ isDragging }, drag] = useDrag({
+  const [drag] = useDrag({
     item,
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
@@ -23,11 +18,15 @@ const DraggableAsset = (props) => {
     // }
   });
 
+  if (!isDragDrop) {
+    return <div>{ children }</div>;
+  }
+
   return (
     <div ref={drag}>
       { children }
     </div>
-  )
-}
+  );
+};
 
 export default DraggableAsset;

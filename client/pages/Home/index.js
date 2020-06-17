@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 
@@ -6,7 +6,7 @@ const HomePage = () => (
   <div>
     <Head>
       <title>Home</title>
-      <link rel='icon' href='/favicon.ico' />
+      <link rel="icon" href="/favicon.ico" />
     </Head>
 
     <Layout activePage="Home">
@@ -21,6 +21,6 @@ const HomePage = () => (
       </Layout.Content>
     </Layout>
   </div>
-)
+);
 
 export default HomePage;

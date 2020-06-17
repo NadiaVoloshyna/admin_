@@ -8,10 +8,10 @@ const FIELD_TYPES = {
 };
 
 const FormField = (props) => {
-  const { 
-    name, 
-    validate, 
-    placeholder, 
+  const {
+    name,
+    validate,
+    placeholder,
     type = FIELD_TYPES.TEXT,
     rows = 3
   } = props;
@@ -23,33 +23,34 @@ const FormField = (props) => {
 
         return (
           <>
-            { type !== FIELD_TYPES.TEXTAREA &&
-              <input 
-                {...input} 
-                type={type} 
-                placeholder={placeholder} 
-                className={inputClasses} 
-              />
-            }
-
-            { type === FIELD_TYPES.TEXTAREA &&
-              <textarea 
-                {...input} 
+            { type !== FIELD_TYPES.TEXTAREA
+              && (
+              <input
+                {...input}
                 type={type}
-                placeholder={placeholder} 
+                placeholder={placeholder}
+                className={inputClasses}
+              />
+              )}
+
+            { type === FIELD_TYPES.TEXTAREA
+              && (
+              <textarea
+                {...input}
+                type={type}
+                placeholder={placeholder}
                 className={inputClasses}
                 rows={rows}
               />
-            }
+              )}
 
-            { meta.error && meta.touched && 
-              <span className="invalid-feedback">{meta.error}</span>
-            }
+            { meta.error && meta.touched
+              && <span className="invalid-feedback">{meta.error}</span>}
           </>
-        )
+        );
       }}
     </Field>
-  )
-}
+  );
+};
 
 export default FormField;

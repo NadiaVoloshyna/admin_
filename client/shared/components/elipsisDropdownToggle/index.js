@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ElipsisDropdownToggle = forwardRef(({ onClick }, ref) => (
   <>
-    <span 
+    <span
       className="toggle px-2"
       ref={ref}
       onClick={e => {
@@ -12,7 +12,7 @@ const ElipsisDropdownToggle = forwardRef(({ onClick }, ref) => (
         onClick(e);
       }}
     >
-      <FontAwesomeIcon icon='ellipsis-v' />
+      <FontAwesomeIcon icon="ellipsis-v" />
     </span>
     <style jsx>{`
       .toggle {

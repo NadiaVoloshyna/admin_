@@ -47,7 +47,7 @@ const StatusBadge = ({ status, className }) => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
 export default StatusBadge;

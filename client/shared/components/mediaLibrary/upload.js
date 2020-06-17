@@ -9,7 +9,7 @@ const CloudinaryUpload = ({ onSuccess, onError, btnText = 'Open Assets', width, 
   const onImageUpload = (image) => {
     setImage(image);
     onSuccess(image);
-  }
+  };
 
   useEffect(() => {
     const uploadWidjet = createUploadWidget(onImageUpload, onError);
@@ -18,22 +18,23 @@ const CloudinaryUpload = ({ onSuccess, onError, btnText = 'Open Assets', width, 
 
   const onShow = () => {
     widget.open();
-  }
+  };
 
   return (
     <div className="cloudinary-upload img-thumbnail">
-      { !!image && <img src={image.url} /> }
-      <Button 
-        variant="outline-secondary" 
-        onClick={onShow}>
-          { btnText }
+      { !!image && <img src={image.url} alt={image.name} /> }
+      <Button
+        variant="outline-secondary"
+        onClick={onShow}
+      >
+        { btnText }
       </Button>
 
       <style global jsx>{`
         .cloudinary-upload {
           position: relative;
-          width: ${width = width || height || 200}px;
-          height: ${height = height || width || 200}px;
+          width: ${width || height || 200}px;
+          height: ${height || width || 200}px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -54,6 +55,6 @@ const CloudinaryUpload = ({ onSuccess, onError, btnText = 'Open Assets', width, 
       `}</style>
     </div>
   );
-}
+};
 
 export default CloudinaryUpload;

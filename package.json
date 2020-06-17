@@ -6,6 +6,7 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
+    "lint": "eslint ./client",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "gcp-build": "yarn build"
@@ -34,6 +35,13 @@
     "crypto-random-string": "^3.0.1",
     "date-fns": "^2.7.0",
     "dotenv": "^8.2.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.4",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6",
     "express-pino-logger": "^4.0.0",
@@ -92,6 +100,7 @@
     "@storybook/addon-links": "^5.3.9",
     "@storybook/addons": "^5.3.9",
     "@storybook/react": "^5.3.9",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
     "redux-devtools-extension": "^2.13.8"
   }

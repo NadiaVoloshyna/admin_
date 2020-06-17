@@ -11,11 +11,11 @@ const filters = Object.values(ASSET_TYPES).map(item => ({ value: item, label: it
 const ActionsPanel = () => {
   const onChange = (selected) => {
     console.log(selected);
-  }
+  };
 
   const onSearch = (term, location) => {
-    alert(`Search ${term} term in ${location} location`);
-  }
+    console.log(`Search ${term} term in ${location} location`);
+  };
 
   return (
     <Row className="actions-panel">
@@ -26,14 +26,14 @@ const ActionsPanel = () => {
               Filter
             </InputGroup.Text>
           </InputGroup.Prepend>
-          <Select 
-              className="w-100"
-              isMulti
-              options={filters} 
-              onChange={onChange}
-              styles={{
-                control: styles => ({ ...styles, borderRadius: '0 4px 4px 0' })
-              }}
+          <Select
+            className="w-100"
+            isMulti
+            options={filters}
+            onChange={onChange}
+            styles={{
+              control: styles => ({ ...styles, borderRadius: '0 4px 4px 0' })
+            }}
           />
         </InputGroup>
       </Col>
@@ -43,6 +43,6 @@ const ActionsPanel = () => {
       </Col>
     </Row>
   );
-}
+};
 
 export default ActionsPanel;

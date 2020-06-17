@@ -13,7 +13,7 @@ const ShouldDeletePersonsModal = ({ show, persons = [], onConfirm, onDiscard }) 
 
       <Modal.Body>
         <Alert variant="danger">
-          Warning! You are about to delete person posts in the list below. 
+          Warning! You are about to delete person posts in the list below.
           Be aware that by deleting these posts all media assets under corresponding media folders will be deleted too.
           Also, the corresponding google drive document will be deleted.
         </Alert>
@@ -30,7 +30,7 @@ const ShouldDeletePersonsModal = ({ show, persons = [], onConfirm, onDiscard }) 
         <Button variant="danger" onClick={onConfirm}>I know what I'm doing</Button>
       </Modal.Footer>
     </Modal>
-  )
-}
+  );
+};
 
 export default ShouldDeletePersonsModal;

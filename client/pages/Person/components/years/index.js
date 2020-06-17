@@ -18,11 +18,11 @@ const DateInput = ({ name, disabled }) => {
             placeholder="dd/MM/yyyy"
             autoComplete="off"
           />
-        ) 
+        );
       }}
     </Field>
-  )
-}
+  );
+};
 
 const PersonYears = ({ canEdit }) => {
   return (
@@ -40,7 +40,7 @@ const PersonYears = ({ canEdit }) => {
         </div>
       </Col>
     </Row>
-  )
-}
+  );
+};
 
 export default PersonYears;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import _unescape from 'lodash/unescape';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -23,19 +23,27 @@ const PersonPage = (props) => {
   const [ person, setPerson ] = useState(props.person);
   const [ usersForAssignment, setUsersForAssignment ] = useState([]);
   const [ disableActions, setActionsDisabled ] = useState(false);
-  const [ isLoading, setIsLoading ] = useState(false); 
+  const [ isLoading, setIsLoading ] = useState(false);
 
   if (props.errorCode) {
-    return <Error statusCode={errorCode} />; 
+    return <Error statusCode={props.errorCode} />;
   }
 
   const { user, professions } = props;
-  const { name, portrait, rootAssetId, professions: personsProfessions, status, biography, permissions } = person;
+  const {
+    name,
+    portrait,
+    rootAssetId,
+    professions: personsProfessions,
+    status,
+    biography,
+    permissions
+  } = person;
 
   const canEdit = (
-    user.isAdmin ||
-    user.isSuper ||
-    user.isAuthor && permissions.some(item => item.user._id === user._id )
+    user.isAdmin
+    || user.isSuper
+    || (user.isAuthor && permissions.some(item => item.user._id === user._id))
   );
 
   /**
@@ -48,13 +56,13 @@ const PersonPage = (props) => {
     PersonApi.update(person._id, values)
       .then(response => {
         // TODO: probably we need to show some kind of toast with update confirmation
-        console.log(response)
+        console.log(response);
       })
       .catch(error => {
         console.error(error);
       })
       .finally(() => setIsLoading(false));
-  }
+  };
 
   /**
    * Updates the status of the document
@@ -62,7 +70,7 @@ const PersonPage = (props) => {
    */
   const updateStatus = (newStatus) => {
     setIsLoading(true);
-    
+
     PersonApi.updateStatus(person._id, status)
       .then(() => setPerson({ ...person, newStatus }))
       .catch(error => {
@@ -70,7 +78,7 @@ const PersonPage = (props) => {
         console.error(error);
       })
       .finally(() => setIsLoading(false));
-  }
+  };
 
   /**
    * Assignes the user to be the author or reviewer for this post
@@ -90,7 +98,7 @@ const PersonPage = (props) => {
         console.error(error);
       })
       .finally(() => setIsLoading(false));
-  }
+  };
 
   /**
    * Gets the list of users by it's role
@@ -113,17 +121,17 @@ const PersonPage = (props) => {
   };
 
   const availableProfessions = () => {
-    return props.professions.filter(prof => 
+    return props.professions.filter(prof => (
       personsProfessions.every(item => item.profession._id !== prof._id)
-    );
-  }
-  
+    ));
+  };
+
   return (
     <div>
       <Head>
         <title>Post</title>
-        <link rel='icon' href='/favicon.ico' />
-        <script src="https://media-library.cloudinary.com/global/all.js" defer></script>
+        <link rel="icon" href="/favicon.ico" />
+        <script src="https://media-library.cloudinary.com/global/all.js" defer />
       </Head>
 
       <Layout activePage="Person">
@@ -132,8 +140,8 @@ const PersonPage = (props) => {
           mutators={{
             ...arrayMutators
           }}
-          initialValues={{ 
-            name, 
+          initialValues={{
+            name,
             portrait: _unescape(portrait).replace(/&#x2F;/g, '/'),
             professions: personsProfessions
           }}
@@ -141,11 +149,10 @@ const PersonPage = (props) => {
             form: {
               mutators: { push, pop }
             },
-            handleSubmit, 
-            form, 
-            submitting, 
-            pristine, 
-            values 
+            handleSubmit,
+            form,
+            submitting,
+            pristine,
           }) => {
             setActionsDisabled(submitting || pristine);
 
@@ -156,11 +163,12 @@ const PersonPage = (props) => {
                   <PersonActions disableActions={disableActions} />
                 </Layout.Navbar>
 
-                <Layout.Content className="py-3 pt-4" isLoading={isLoading} >
+                <Layout.Content className="py-3 pt-4" isLoading={isLoading}>
                   <div className="row">
                     <div className="col-9">
                       <PersonName canEdit={canEdit} />
-                      { user.userRoleUp('admin') && 
+                      { user.userRoleUp('admin')
+                        && (
                         <PersonUserList
                           onUsersGet={getUsersForAssignment}
                           users={permissions}
@@ -168,7 +176,7 @@ const PersonPage = (props) => {
                           userPermissions={user.permissions}
                           setPermission={setPermission}
                         />
-                      }
+                        )}
                       <ProfessionSection
                         professions={professions}
                         rootFolder={{
@@ -180,20 +188,20 @@ const PersonPage = (props) => {
                     </div>
                     <div className="col-3">
                       <div className="mb-4 d-flex">
-                        <StatusDropdown 
-                          status={status} 
+                        <StatusDropdown
+                          status={status}
                           user={user}
                           updateStatus={updateStatus}
                         />
-                        <DocumentAction 
-                          documentId={biography.documentId} 
+                        <DocumentAction
+                          documentId={biography.documentId}
                           me={user}
                           permissions={permissions}
                         />
                       </div>
                       <PersonPortrait />
                       <PersonYears canEdit={canEdit} />
-                      <PersonProfession 
+                      <PersonProfession
                         professions={availableProfessions()}
                         onAdd={push}
                         onRemove={pop}
@@ -202,11 +210,12 @@ const PersonPage = (props) => {
                   </div>
                 </Layout.Content>
               </form>
-          )}}
+            );
+          }}
         />
       </Layout>
     </div>
-  )
-}
+  );
+};
 
 export default PersonPage;
