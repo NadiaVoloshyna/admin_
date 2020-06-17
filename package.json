@@ -52,6 +52,7 @@
     "googleapis": "39",
     "graphql": "^14.5.8",
     "gridfs-stream": "^1.1.1",
+    "husky": "^4.2.5",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
     "mongoose": "^5.7.5",
@@ -103,5 +104,10 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
     "redux-devtools-extension": "^2.13.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
   }
 }
