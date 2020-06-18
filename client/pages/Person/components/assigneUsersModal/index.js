@@ -19,32 +19,34 @@ const AssigneUsersModal = ({ role, as, onUsersGet, users = [], setPermission }) 
   const assignUsers = () => {
     toggleIsOpen();
     setPermission(selected);
-  }
+  };
 
   const onUserSelect = ({ _id }) => {
     const selectedUser = users.find(item => item._id === _id);
     setSelected([...selected, selectedUser]);
-  }
+  };
 
   return (
     <>
-      { as &&
+      { as
+        && (
         <div onClick={toggleIsOpen}>
           { as }
         </div>
-      }
+        )}
 
-      { !as &&
-        <Button 
+      { !as
+        && (
+        <Button
           size="sm"
-          variant="outline-secondary" 
+          variant="outline-secondary"
           onClick={toggleIsOpen}
         >
           Assign { role }
         </Button>
-      }
-      
-      <Modal 
+        )}
+
+      <Modal
         show={isOpen}
         onHide={toggleIsOpen}
         onEntering={getUsers}
@@ -69,14 +71,14 @@ const AssigneUsersModal = ({ role, as, onUsersGet, users = [], setPermission }) 
           </ListGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button 
+          <Button
             variant="success"
             onClick={assignUsers}
           >Assign</Button>
         </Modal.Footer>
       </Modal>
     </>
-  )
-}
+  );
+};
 
 export default AssigneUsersModal;

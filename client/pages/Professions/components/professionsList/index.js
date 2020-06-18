@@ -8,8 +8,8 @@ const columns = [{
 }];
 
 const ProfessionsList = (props) => {
-  const { 
-    professions, 
+  const {
+    professions,
     error,
     pagination,
     onProfessionGet,
@@ -19,14 +19,14 @@ const ProfessionsList = (props) => {
   return (
     <DataGrid
       tableName="profession"
-      data={professions} 
-      columns={columns} 
+      data={professions}
+      columns={columns}
       error={error}
       pagination={pagination}
       onItemsGet={onProfessionGet}
       onItemsDelete={onProfessionDelete}
     />
-  )
-}
+  );
+};
 
 export default ProfessionsList;

@@ -4,19 +4,19 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import { ASSET_TYPES } from './index';
 
-const Folder = ({ onSubmit, onDismiss }) => {
+const Folder = ({ onSubmit }) => {
   const [value, setValue] = useState('');
 
   return (
     <InputGroup>
-      <FormControl 
-        autoFocus 
+      <FormControl
+        autoFocus
         placeholder="Folder's name"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       <InputGroup.Append>
-        <Button 
+        <Button
           variant="primary"
           onClick={() => {
             setValue('');
@@ -28,7 +28,7 @@ const Folder = ({ onSubmit, onDismiss }) => {
         >Create</Button>
       </InputGroup.Append>
     </InputGroup>
-  )
+  );
 };
 
 export default Folder;

@@ -7,7 +7,7 @@ const rootFolder = {
   parent: null,
   _id: null,
   type: 'FOLDER'
-}
+};
 
 const Breadcrumbs = ({ currentFolder, onCrumbClick, root = rootFolder }) => {
   const [ breadcrumbs, setBreadcrumbs ] = useState([]);
@@ -15,7 +15,7 @@ const Breadcrumbs = ({ currentFolder, onCrumbClick, root = rootFolder }) => {
   useEffect(() => {
     if (currentFolder) {
       const crumbs = applyBreadcrumbs(breadcrumbs, currentFolder);
-      setBreadcrumbs(crumbs)
+      setBreadcrumbs(crumbs);
     }
   }, [currentFolder]);
 
@@ -23,18 +23,18 @@ const Breadcrumbs = ({ currentFolder, onCrumbClick, root = rootFolder }) => {
     <Breadcrumb>
       { [root, ...breadcrumbs].map(folder => {
         const isActive = (!currentFolder || folder._id === currentFolder._id);
-        
+
         return (
-          <Breadcrumb.Item 
+          <Breadcrumb.Item
             href="#"
             onClick={() => onCrumbClick(folder)}
             key={folder._id}
             active={isActive}
           >{folder.name}</Breadcrumb.Item>
-        )
+        );
       }) }
     </Breadcrumb>
-  )
-}
+  );
+};
 
 export default Breadcrumbs;

@@ -1,20 +1,18 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import _lowerCase from 'lodash/lowerCase';
-import _startCase from 'lodash/startCase';
 import permissions from '../../../../permissions';
 
 const DocumentAction = ({ documentId, me }) => {
   const getDocumentMode = () => {
     if (permissions.can(me.role).readOwn('document').granted) return 'view';
     if (permissions.can(me.role).updateOwn('document').granted) return 'edit';
-  }
+  };
 
   const mode = getDocumentMode();
 
   return (
     <>
-      <Button 
+      <Button
         className="document-action"
         target="_blank"
         href={`https://docs.google.com/document/d/${documentId}/${mode}`}
@@ -30,7 +28,7 @@ const DocumentAction = ({ documentId, me }) => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
 export default DocumentAction;

@@ -29,30 +29,30 @@ const getColumns = (editable) => [{
 
 const UsersList = (props) => {
   const {
-   users,
-   pagination,
-   onUsersGet,
-   onEdit,
-   error,
-   loading,
-   isSuper
-  } = props; 
+    users,
+    pagination,
+    onUsersGet,
+    onEdit,
+    error,
+    loading,
+    isSuper
+  } = props;
 
   const columns = getColumns(isSuper);
 
   return (
     <DataGrid
       tableName="user"
-      data={users} 
-      columns={columns} 
-      error={error} 
-      loading={loading} 
+      data={users}
+      columns={columns}
+      error={error}
+      loading={loading}
       pagination={pagination}
       onItemsGet={onUsersGet}
       onEdit={onEdit}
       hideSelectColumn
     />
-  )
-}
+  );
+};
 
 export default UsersList;

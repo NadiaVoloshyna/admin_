@@ -13,7 +13,7 @@ class UserApi extends ApiService {
     return this.post('/api/users/invite', { email, role });
   }
 
-  update = ({id, ...body}) => {
+  update = ({ id, ...body }) => {
     return this.put(`/api/users/${id}`, body);
   }
 }

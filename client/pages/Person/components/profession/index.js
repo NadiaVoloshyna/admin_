@@ -3,11 +3,10 @@ import Select from 'react-select';
 import Card from 'react-bootstrap/Card';
 
 const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
-
   const onChange = (value, meta) => {
     if (meta.action === 'select-option') {
       onAdd('professions', {
-        profession: meta.option.value, 
+        profession: meta.option.value,
         active: false,
         media: []
       });
@@ -20,7 +19,7 @@ const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
     if (meta.action === 'clear') {
       console.log('Delete all professions');
     }
-  }
+  };
 
   return (
     <div className="persons-profession">
@@ -29,9 +28,9 @@ const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
           Profession
         </Card.Header>
         <Card.Body className="p-0">
-          <Select 
+          <Select
             isMulti
-            options={professions.map(item => ({value: item, label: item.name}))} 
+            options={professions.map(item => ({ value: item, label: item.name }))}
             onChange={onChange}
             styles={{
               control: styles => ({ ...styles, border: 'none' }),
@@ -40,7 +39,7 @@ const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
         </Card.Body>
       </Card>
     </div>
-  )
-}
+  );
+};
 
 export default PersonProfession;

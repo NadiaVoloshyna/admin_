@@ -16,14 +16,14 @@ const ActionsMenu = (props) => {
         <Dropdown.Menu>
           <Dropdown.Item>
             Move to
-          </Dropdown.Item> 
+          </Dropdown.Item>
 
           <Dropdown.Item>
             Copy
-          </Dropdown.Item> 
+          </Dropdown.Item>
 
-          <Dropdown.Item 
-            disabled={!canDelete} 
+          <Dropdown.Item
+            disabled={!canDelete}
             onClick={onDelete}
           >
             Delete
@@ -40,7 +40,7 @@ const ActionsMenu = (props) => {
         }
       `}</style>
     </span>
-  )
-}
+  );
+};
 
 export default ActionsMenu;

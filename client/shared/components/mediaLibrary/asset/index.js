@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import cx from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { applyTransformations, isOfType, getAssetMetadata } from '../helpers';
 import Draggable from './draggable';
@@ -8,9 +7,9 @@ import Droppable from './droppable';
 import Actions from '../actionsMenu';
 
 const Asset = (props) => {
-  const { 
-    item, 
-    onSelect, 
+  const {
+    item,
+    onSelect,
     onDelete,
     canDelete,
     onMove,
@@ -23,27 +22,28 @@ const Asset = (props) => {
   const onClick = (event) => {
     event.stopPropagation();
     onSelect && onSelect(item);
-  }
+  };
 
   const onDeleteClick = (event) => {
     event.stopPropagation();
     onDelete && onDelete(item);
-  }
+  };
 
   return (
     <Droppable item={item} onDrop={onMove} isDragDrop={isDragDrop}>
       <Draggable item={item} isDragDrop={isDragDrop}>
-        <Card 
+        <Card
           className={`asset asset-${type.toLowerCase()}`}
           onClick={onClick}
         >
 
-          { (isImage || isAlbum) &&
-            <Card.Img 
+          { (isImage || isAlbum)
+            && (
+            <Card.Img
               variant="top"
               src={applyTransformations(url, 'c_thumb,w_auto,c_scale')}
             />
-          }
+            )}
 
           <Card.Body>
             <div className="d-flex align-items-center">
@@ -112,7 +112,7 @@ const Asset = (props) => {
         }
       `}</style>
     </Droppable>
-  )
-}
+  );
+};
 
 export default Asset;

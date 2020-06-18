@@ -6,55 +6,53 @@ import Card from 'react-bootstrap/Card';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _debounce from 'lodash/debounce'
 import RemotePagination from 'shared/components/pagination';
 
 const DataGrid = (props) => {
-  const { 
+  const {
     data,
     tableName,
-    columns, 
-    error, 
-    loading, 
+    columns,
+    error,
+    loading,
     pagination,
     onItemsGet,
     onItemsDelete,
     onEdit,
     hideSelectColumn
   } = props;
-  
+
   const [ selectedRecords, setSelectedRecords ] = useState([]);
   const [ searchTerm, setSearchTerm ] = useState('');
 
   const hasData = !!data.length;
-  
+
   if (error) return null;
   if (loading) return null;
 
   const handleOnSelect = (row, isSelect) => {
     setSelectedRecords(records => {
       if (isSelect) {
-        return [...records, row]
-      } else {
-        return records.filter(record => record._id !== row._id)
+        return [...records, row];
       }
+      return records.filter(record => record._id !== row._id);
     });
-  }
+  };
 
   const handleOnSelectAll = (isSelect, rows) => {
     setSelectedRecords(isSelect ? rows : []);
-  }
+  };
 
   const onSearchChange = (event) => {
     setSearchTerm(event.target.value);
-  }
+  };
 
   const onTableChange = (type, args) => {
     const { page, searchTerm, cellEdit } = args;
 
     if (type === 'pagination') {
       onItemsGet({ offset: page - 1 });
-    } 
+    }
 
     if (type === 'search') {
       onItemsGet({ searchTerm });
@@ -66,18 +64,19 @@ const DataGrid = (props) => {
         [cellEdit.dataField]: cellEdit.newValue
       });
     }
-  }
+  };
 
   return (
     <>
       <Card>
-        { hasData && 
+        { hasData
+          && (
           <>
             <Card.Header>
               <Row>
                 <Col>
                   <InputGroup>
-                    <FormControl 
+                    <FormControl
                       placeholder={`Find ${tableName}`}
                       onChange={onSearchChange}
                       value={searchTerm}
@@ -97,10 +96,10 @@ const DataGrid = (props) => {
 
                 <Col>
                   <InputGroup>
-                    <FormControl 
+                    <FormControl
                       as="select"
                       value={pagination.sort}
-                      onChange={(e) => onItemsGet({ sort: e.target.value})}
+                      onChange={(e) => onItemsGet({ sort: e.target.value })}
                     >
                       <option value="ascending">A to Z</option>
                       <option value="descending">Z to A</option>
@@ -108,18 +107,19 @@ const DataGrid = (props) => {
                       <option value="older">Older</option>
                     </FormControl>
 
-                    { !hideSelectColumn && 
+                    { !hideSelectColumn
+                      && (
                       <InputGroup.Append>
-                        <Button 
-                          onClick={() => onItemsDelete(selectedRecords)} 
+                        <Button
+                          onClick={() => onItemsDelete(selectedRecords)}
                           size="sm"
                           variant="secondary"
                           disabled={!selectedRecords.length}
                         >
-                          <FontAwesomeIcon icon='trash-alt' /> &nbsp; Delete {tableName}s
+                          <FontAwesomeIcon icon="trash-alt" /> &nbsp; Delete {tableName}s
                         </Button>
                       </InputGroup.Append>
-                      }
+                      )}
                   </InputGroup>
                 </Col>
               </Row>
@@ -137,15 +137,16 @@ const DataGrid = (props) => {
               />
             </Card.Body>
           </>
-        }
+          )}
 
-        { !hasData && 
+        { !hasData
+          && (
           <Card.Body>
             <Card.Text className="text-center">
               There are no {tableName}s yet.
-            </Card.Text> 
+            </Card.Text>
           </Card.Body>
-        }
+          )}
       </Card>
 
       <style global jsx>{`
@@ -154,7 +155,7 @@ const DataGrid = (props) => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
 export default DataGrid;

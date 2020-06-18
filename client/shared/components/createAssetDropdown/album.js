@@ -22,19 +22,19 @@ const validation = values => {
     errors.year = 'Tear of the album is required';
   }
   return errors;
-}
+};
 
 const Album = ({ onSubmit, onDismiss }) => {
   const [image, setImage] = useState(false);
 
   const onImageUpload = (image) => {
     setImage(image);
-  }
+  };
 
   const onImageUploadError = (error) => {
     console.log(error);
     // TODO: log the error
-  }
+  };
 
   const onSubmitForm = ({ author, name, year, description }) => {
     console.log(author);
@@ -42,13 +42,13 @@ const Album = ({ onSubmit, onDismiss }) => {
 
     onSubmit({
       author,
-      name, 
+      name,
       year,
       description,
-      url: image.url, 
+      url: image.url,
       type: ASSET_TYPES.ALBUM
     });
-  }
+  };
 
   return (
     <FinalForm
@@ -56,11 +56,11 @@ const Album = ({ onSubmit, onDismiss }) => {
       validate={validation}
       render={({
         handleSubmit,
-        submitting, 
+        submitting,
         pristine
       }) => {
         return (
-          <Form 
+          <Form
             className="clearfix needs-validation"
             onSubmit={handleSubmit}
             noValidate
@@ -86,8 +86,8 @@ const Album = ({ onSubmit, onDismiss }) => {
                     <Form.Group as={Row}>
                       <Form.Label column sm="2">Year</Form.Label>
                       <Col sm="10">
-                        <FormField 
-                          name="year" 
+                        <FormField
+                          name="year"
                           type="number"
                         />
                       </Col>
@@ -96,7 +96,7 @@ const Album = ({ onSubmit, onDismiss }) => {
                     <Form.Group as={Row}>
                       <Form.Label column sm="2">Description</Form.Label>
                       <Col sm="10">
-                        <FormField 
+                        <FormField
                           name="description"
                           type="textarea"
                           rows={3}
@@ -108,7 +108,7 @@ const Album = ({ onSubmit, onDismiss }) => {
                   <Col md="auto" className="text-center">
                     <CloudinaryUpload
                       width={247}
-                      onSuccess={onImageUpload} 
+                      onSuccess={onImageUpload}
                       onError={onImageUploadError}
                     />
 
@@ -128,10 +128,10 @@ const Album = ({ onSubmit, onDismiss }) => {
               </Card.Body>
             </Card>
           </Form>
-        )
+        );
       }}
     />
-  )
+  );
 };
 
 export default Album;

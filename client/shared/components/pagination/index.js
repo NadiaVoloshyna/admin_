@@ -5,11 +5,11 @@ import paginationFactory, { PaginationProvider, PaginationListStandalone } from 
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 
 const RemotePagination = (props) => {
-  const { 
-    data, 
-    columns, 
-    onTableChange, 
-    handleOnSelect, 
+  const {
+    data,
+    columns,
+    onTableChange,
+    handleOnSelect,
     handleOnSelectAll,
     pagination,
     hideSelectColumn
@@ -62,7 +62,7 @@ const RemotePagination = (props) => {
                           remote
                           selectRow={ selectRow }
                           onTableChange={ onTableChange }
-                          cellEdit={ cellEditFactory({ 
+                          cellEdit={ cellEditFactory({
                             mode: 'dbclick',
                             blurToSave: true
                           }) }
@@ -74,15 +74,16 @@ const RemotePagination = (props) => {
                   }
                 </ToolkitProvider>
                 <div>
-                  { !!shouldShowPagination &&
+                  { !!shouldShowPagination
+                    && (
                     <PaginationListStandalone
                       { ...paginationProps }
                       dataSize={pagination.total}
                     />
-                  }
+                    )}
                 </div>
               </div>
-            )
+            );
           }
         }
       </PaginationProvider>
@@ -98,6 +99,6 @@ const RemotePagination = (props) => {
       `}</style>
     </>
   );
-}
+};
 
 export default RemotePagination;

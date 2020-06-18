@@ -8,7 +8,6 @@ module.exports = withCSS(withSass({
   webpack (config, options) {
     config.resolve.alias = {
       ...config.resolve.alias,
-      'api': path.join(__dirname, 'api/'),
       'pages': path.join(__dirname, 'client/pages'),
       'shared': path.join(__dirname, 'client/shared'),
       'assets': path.join(__dirname, 'assets'),

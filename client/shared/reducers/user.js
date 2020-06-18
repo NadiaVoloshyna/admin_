@@ -6,7 +6,7 @@ export const initialState = {
   isAdmin: false,
   isAuthor: false,
   isReviewer: false,
-}
+};
 
 const setUserState = (state, user) => {
   return {
@@ -16,17 +16,17 @@ const setUserState = (state, user) => {
     isAdmin: user.role === 'admin',
     isAuthor: user.role === 'author',
     isReviewer: user.role === 'reviewer',
-  }
-}
+  };
+};
 
 const userReducers = (state = initialState, { type, payload }) => {
   switch (type) {
-    case actionTypes.SET_USER: 
-      return setUserState(state, payload)
+    case actionTypes.SET_USER:
+      return setUserState(state, payload);
 
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default userReducers;

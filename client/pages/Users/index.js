@@ -1,116 +1,116 @@
 import React, { useState } from 'react';
-import Head from 'next/head'; 
+import Head from 'next/head';
 import Layout from 'shared/components/layout';
-import InviteUserModal from 'pages/users/components/inviteUserModal';
+import InviteUserModal from 'pages/Users/components/inviteUserModal';
 import Button from 'react-bootstrap/Button';
-import UsersList from 'pages/users/components/usersList';
-import UserAPI from 'pages/Users/api'; 
+import UsersList from 'pages/Users/components/usersList';
+import UserAPI from 'pages/Users/api';
 
 const UsersPage = (props) => {
-  const [isLoading, setIsLoading] = useState(false); 
-  const [isSuper, setIsSuper] = useState(false); 
+  const { user } = props;
+
+  const [isLoading, setIsLoading] = useState(false);
   const [showInviteUserModal, toggleShowInviteUserModal] = useState(false);
 
-  const [users, setUsers] = useState(props.users); 
-  const [pagination, setPagination] = useState(props.pagination); 
+  const [users, setUsers] = useState(props.users);
+  const [pagination, setPagination] = useState(props.pagination);
 
   const onUsersGet = async (payload) => {
     setIsLoading(true);
-    
+
     const newPagination = { ...pagination, ...payload };
-    const { offset, searchTerm, sort } = newPagination; 
-  
+    const { offset, searchTerm, sort } = newPagination;
+
     try {
       const response = await UserAPI.getUsers(offset, searchTerm, sort);
       const usersResponse = await response.json();
-      const { users, pagination } = usersResponse; 
+      const { users, pagination } = usersResponse;
 
       if (response.status === 200) {
-        setUsers( users);
-        setPagination(offset, searchTerm, sort, ...pagination); 
+        setUsers(users);
+        setPagination(offset, searchTerm, sort, ...pagination);
       }
 
       if (response.status === 500) {
         throw new Error(response.message);
       }
-
     } catch (error) {
-      console.error(error); 
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const inviteUser = async (payload) => {
     setIsLoading(true);
-     
+
     try {
       const { email, role } = payload;
       const response = await UserAPI.invite(email, role);
-      const data = await response.json();
-      if(response.status === 200){
-        console.log('User invitation successful'); 
+
+      if (response.status === 200) {
+        console.log('User invitation successful');
       } else {
         throw Error(response.message);
       }
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
-  }
-
+  };
 
   const onEdit = async (payload) => {
-    setIsLoading(true); 
+    setIsLoading(true);
 
     try {
-      const response = await UserAPI.update(payload); 
-      if(response.status === 200){
-        console.log(response); 
-      }else {
+      const response = await UserAPI.update(payload);
+      if (response.status === 200) {
+        console.log(response);
+      } else {
         throw Error(response.message);
       }
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
-  }
+  };
 
-  return(
+  return (
     <>
       <Head>
         <title>Users</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout activePage="Users" >
+      <Layout activePage="Users">
         <Layout.Navbar className="mb-3">
-          <Button 
+          <Button
             variant="primary"
             onClick={() => toggleShowInviteUserModal(true)}
           >Invite User</Button>
         </Layout.Navbar>
 
-        <Layout.Content>
-          <UsersList 
-            users={users} 
+        <Layout.Content isLoading={isLoading}>
+          <UsersList
+            users={users}
             onUsersGet={onUsersGet}
             onEdit={onEdit}
             pagination={pagination}
-            isSuper={isSuper}/>
+            isSuper={user.isSuper}
+          />
         </Layout.Content>
       </Layout>
-   
-      <InviteUserModal 
-        show={showInviteUserModal} 
+
+      <InviteUserModal
+        show={showInviteUserModal}
         onClose={() => toggleShowInviteUserModal(false)}
-        canInviteAdmin={isSuper}
-        inviteUser = {inviteUser}
+        canInviteAdmin={user.isSuper}
+        inviteUser={inviteUser}
       />
     </>
-  )
-}
+  );
+};
 
-export default UsersPage; 
+export default UsersPage;

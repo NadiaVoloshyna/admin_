@@ -7,24 +7,24 @@ import middlewares from './rootMiddleware';
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== 'production') {
-    const { composeWithDevTools } = require('redux-devtools-extension')
-    return composeWithDevTools(applyMiddleware(...middleware))
+    // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+    const { composeWithDevTools } = require('redux-devtools-extension');
+    return composeWithDevTools(applyMiddleware(...middleware));
   }
-  return applyMiddleware(...middleware)
-}
-
+  return applyMiddleware(...middleware);
+};
 
 const initializeStore = (preloadedState) => {
-  const sagaMiddleware = createSagaMiddleware()
+  const sagaMiddleware = createSagaMiddleware();
   const store = createStore(
     rootReducer,
     preloadedState,
     bindMiddleware([sagaMiddleware, ...middlewares])
-  )
+  );
 
-  store.sagaTask = sagaMiddleware.run(rootSaga)
+  store.sagaTask = sagaMiddleware.run(rootSaga);
 
-  return store
-}
+  return store;
+};
 
 export default initializeStore;

@@ -7,22 +7,19 @@ const ProfessionSection = ({ rootFolder }) => {
   return (
     <div className="profession-section">
       <FieldArray name="professions">
-        {({ fields }) =>
-          fields.map((name, index) => (
-            <Field key={name} name={name}>
-              { props => (
-                <Body 
-                  {...props}
-                  rootFolder={rootFolder}
-                />
-              )}
-            </Field>
-            )
-          )
-        }
+        {({ fields }) => fields.map((name) => (
+          <Field key={name} name={name}>
+            { props => (
+              <Body
+                {...props}
+                rootFolder={rootFolder}
+              />
+            )}
+          </Field>
+        ))}
       </FieldArray>
     </div>
-  )
-}
+  );
+};
 
 export default ProfessionSection;

@@ -13,20 +13,20 @@ const PersonName = ({ canEdit }) => {
 
           return (
             <div>
-              <input 
-                {...input} 
-                type="text" 
-                placeholder="Name" 
-                className={inputClasses} 
+              <input
+                {...input}
+                type="text"
+                placeholder="Name"
+                className={inputClasses}
                 disabled={!canEdit}
               />
               {meta.error && meta.touched && <span className="invalid-feedback">{meta.error}</span>}
             </div>
-          )
+          );
         }}
       </Field>
     </div>
-  )
-}
+  );
+};
 
 export default PersonName;

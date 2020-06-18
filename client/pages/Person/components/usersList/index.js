@@ -7,25 +7,32 @@ import _upperFirst from 'lodash/upperFirst';
 import ElipsisDropdownToggle from 'shared/components/elipsisDropdownToggle';
 import AssigneUsersModal from 'pages/Person/components/assigneUsersModal';
 
-const PersonUserList = ({ onUsersGet, users, usersForAssignment, userPermissions, setPermission }) => {
+const PersonUserList = ({
+  onUsersGet,
+  users,
+  usersForAssignment,
+  userPermissions,
+  setPermission
+}) => {
   return (
     <Card className="person-user-list mb-4">
       <Card.Header className="border-bottom-0 d-flex justify-content-between">
         Users
 
-        { userPermissions.createAny('person-assignUser').granted &&
+        { userPermissions.createAny('person-assignUser').granted
+          && (
           <Dropdown>
             <Dropdown.Toggle as={ElipsisDropdownToggle} />
 
             <Dropdown.Menu>
-              <AssigneUsersModal 
+              <AssigneUsersModal
                 as={<Dropdown.Item>Invite Author</Dropdown.Item>}
                 users={usersForAssignment}
                 setPermission={setPermission}
                 onUsersGet={onUsersGet}
                 role="author"
               />
-              <AssigneUsersModal 
+              <AssigneUsersModal
                 as={<Dropdown.Item>Invite Reviewer</Dropdown.Item>}
                 users={usersForAssignment}
                 setPermission={setPermission}
@@ -34,10 +41,11 @@ const PersonUserList = ({ onUsersGet, users, usersForAssignment, userPermissions
               />
             </Dropdown.Menu>
           </Dropdown>
-        }
+          )}
       </Card.Header>
-      
-      { !!users.length &&
+
+      { !!users.length
+        && (
         <Table className="m-0">
           <tbody>
             { users.map(item => {
@@ -48,7 +56,8 @@ const PersonUserList = ({ onUsersGet, users, usersForAssignment, userPermissions
                   <td>{ user.firstName } { user.lastName }</td>
                   <td>{ _upperFirst(role) }</td>
                   <td className="text-right"><Badge variant="success">Active</Badge></td>
-                  { userPermissions.createAny('person-canDeactivate').granted && 
+                  { userPermissions.createAny('person-canDeactivate').granted
+                    && (
                     <td className="text-right">
                       <Dropdown>
                         <Dropdown.Toggle as={ElipsisDropdownToggle} />
@@ -58,13 +67,13 @@ const PersonUserList = ({ onUsersGet, users, usersForAssignment, userPermissions
                         </Dropdown.Menu>
                       </Dropdown>
                     </td>
-                  }
+                    )}
                 </tr>
-              )
+              );
             })}
           </tbody>
         </Table>
-      }
+        )}
 
       <style>{`
         .person-user-list .card-header {
@@ -73,7 +82,7 @@ const PersonUserList = ({ onUsersGet, users, usersForAssignment, userPermissions
         }
       `}</style>
     </Card>
-  )
-}
+  );
+};
 
 export default PersonUserList;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Popover from 'react-bootstrap/Popover';
 
-const PasswordRequirementsOverlay = (props) => {
+const PasswordRequirementsOverlay = () => {
   return (
     <Popover>
       <Popover.Content>
@@ -22,10 +22,11 @@ const PasswordRequirementsOverlay = (props) => {
         </ul>
         Allowed special characters are:
         {/* TODO: move to constants */}
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
         <p><b>@ % + ' ! # $ & * ^ ? : . ( ) { } ~ - _ .</b></p>
       </Popover.Content>
     </Popover>
   );
-}
+};
 
 export default PasswordRequirementsOverlay;

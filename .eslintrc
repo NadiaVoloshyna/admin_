@@ -1,0 +1,57 @@
+{
+  "extends": [
+    "airbnb", 
+    "airbnb/hooks"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["pages", "./client/pages"],
+          ["shared", "./client/shared"],
+          ["assets", "./assets"],
+          ["utils", "./client/utils"],
+          ["store", "./client/store"],
+          ["common", "./common"]
+        ],
+        "extensions": [".js", ".json"]
+      }
+    }
+  },
+  "rules": {
+    "comma-dangle": "off",
+    "object-curly-newline": "off",
+    "consistent-return": "off",
+    "import/prefer-default-export": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "arrow-body-style": "off",
+    "arrow-parens": "off",
+    "no-underscore-dangle": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-closing-tag-location": "off",
+    "react/jsx-curly-spacing": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/destructuring-assignment": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/aria-role": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "array-bracket-spacing": "off",
+    "no-unused-expressions": "off",
+    "no-shadow": "off",
+    "no-param-reassign": "off",
+    "no-console": "off",
+    "key-spacing": "off",
+    "max-len": ["error", 130, 2],
+    "import/no-cycle": "off"
+  }
+}

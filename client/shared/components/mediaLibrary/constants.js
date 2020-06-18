@@ -2,7 +2,7 @@ export const ASSETS_CONFIG = {
   FOLDER: {
     name: 'FOLDER',
     icon: 'folder',
-  }, 
+  },
   IMAGE: {
     name: 'IMAGE',
     icon: 'image',

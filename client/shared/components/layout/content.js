@@ -1,30 +1,30 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import cx from 'classnames';
-import _startsWith from 'lodash/startsWith';
-import { any, bool } from 'prop-types';
+import { string, bool } from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
 
 const LayoutContent = (props) => {
-  const { 
+  const {
     children,
     className
   } = props;
 
-  const isLoading = props.isLoading;
+  const { isLoading } = props;
   const contentCX = cx('row flex-grow-1 page-content', className && className);
-  
+
   return (
     <div className={contentCX}>
       <div className="col page-content-inner">
         { children }
 
-        { isLoading && 
+        { isLoading
+          && (
           <div className="content-loader shadow-lg text-primary">
             <Spinner animation="border" role="status">
               <span className="sr-only">Loading...</span>
             </Spinner>
           </div>
-        }
+          )}
       </div>
 
       <style global jsx>{`
@@ -54,18 +54,17 @@ const LayoutContent = (props) => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
 LayoutContent.propTypes = {
-  className: any,
-  children: any,
+  className: string,
   isLoading: bool,
-}
+};
 
 LayoutContent.defaultProps = {
   className: '',
   isLoading: false,
-}
+};
 
-export default LayoutContent
+export default LayoutContent;

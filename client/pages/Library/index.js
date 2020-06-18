@@ -33,7 +33,7 @@ const LibraryPage = () => {
       setSelectedAsset(asset);
       setIsShow(true);
     }
-  }
+  };
 
   const onAssetCreate = async (asset) => {
     if (currentFolder) {
@@ -44,32 +44,33 @@ const LibraryPage = () => {
     const newAsset = await response.json();
 
     setNewAsset(newAsset);
-  }
+  };
 
   const toggleUploadBox = () => {
     setIsUploadBoxOpen(!isUploadBoxOpen);
-  }
+  };
 
   return (
     <>
       <Head>
         <title>Media Library</title>
-        <link rel='icon' href='/favicon.ico' />
-        <script src="https://media-library.cloudinary.com/global/all.js" defer></script>
-        <script src="https://widget.cloudinary.com/v2.0/global/all.js" defer></script>
+        <link rel="icon" href="/favicon.ico" />
+        <script src="https://media-library.cloudinary.com/global/all.js" defer />
+        <script src="https://widget.cloudinary.com/v2.0/global/all.js" defer />
       </Head>
 
       <Layout activePage="Library">
         <Layout.Navbar className="mb-3">
-          { userRoleUp('admin') &&
+          { userRoleUp('admin')
+            && (
             <>
-              <CreateAssetDropdown 
-                onAssetCreate={onAssetCreate} 
+              <CreateAssetDropdown
+                onAssetCreate={onAssetCreate}
                 supportedTypes={supportedAssetTypes}
               />
               <Button onClick={toggleUploadBox}>Upload</Button>
             </>
-          }
+            )}
         </Layout.Navbar>
 
         <Layout.Content>
@@ -77,21 +78,22 @@ const LibraryPage = () => {
             canDelete={userRoleUp('admin')}
             onAssetSelect={onAssetSelect}
             newAsset={newAsset}
-            isDragDrop={true}
+            isDragDrop
             isUploadBoxOpen={isUploadBoxOpen}
           />
         </Layout.Content>
       </Layout>
 
-      { selectedAsset &&
-        <AssetDetailsModal 
+      { selectedAsset
+        && (
+        <AssetDetailsModal
           item={selectedAsset}
           show={isShow}
           setShow={setIsShow}
         />
-      }
+        )}
     </>
-  )
-}
+  );
+};
 
 export default LibraryPage;

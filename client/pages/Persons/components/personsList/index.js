@@ -5,14 +5,15 @@ import DataGrid from 'shared/components/dataGrid';
 import StatusBadge from 'shared/components/statusBadge';
 import ShouldDeletePersonsModal from 'pages/Persons/components/shouldDeletePersonsModal';
 
-function linkFormatter (cell, row) {
+function linkFormatter(cell, row) {
   return (
     <Link href={`/persons/${row._id}`}>
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a>{ cell }</a>
     </Link>
-  )
+  );
 }
- 
+
 const columns = [{
   dataField: 'name',
   text: 'Name',
@@ -42,7 +43,7 @@ const PersonsList = (props) => {
     error,
     loading
   } = props;
- 
+
   const [ showModal, setShowModal ] = useState(false);
   const [ toDelete, setToDelete ] = useState([]);
 
@@ -55,30 +56,30 @@ const PersonsList = (props) => {
     setShowModal(false);
     onDelete(toDelete);
   };
-  
+
   const onDiscard = () => setShowModal(false);
 
   return (
     <>
       <DataGrid
         tableName="person"
-        data={persons} 
-        columns={columns} 
-        error={error} 
-        loading={loading} 
+        data={persons}
+        columns={columns}
+        error={error}
+        loading={loading}
         pagination={pagination}
         onItemsGet={onPersonsGet}
         onItemsDelete={onPersonDelete}
         hideSelectColumn={hideSelectColumn}
       />
-      <ShouldDeletePersonsModal 
+      <ShouldDeletePersonsModal
         show={showModal}
         persons={toDelete}
         onConfirm={onConfirm}
         onDiscard={onDiscard}
       />
     </>
-  )
-}
+  );
+};
 
 export default PersonsList;

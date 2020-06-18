@@ -4,8 +4,7 @@ import cx from 'classnames';
 
 const LayoutNavbar = (props) => {
   const navBarCX = cx('layout-navbar shadow-sm w-100 justify-content-between',
-    props.className && props.className
-  )
+    props.className && props.className);
   return (
     <>
       <div className="row">
@@ -23,7 +22,7 @@ const LayoutNavbar = (props) => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
-export default LayoutNavbar
+export default LayoutNavbar;

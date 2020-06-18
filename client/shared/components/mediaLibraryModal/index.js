@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import MediaLibrary from 'shared/components/mediaLibrary';
@@ -15,23 +15,25 @@ const MediaLibraryModal = ({ triggerComponent, onAssetSelect }) => {
       setIsOpen(!isOpen);
       onAssetSelect(asset);
     }
-  }
+  };
 
   return (
     <>
-      { triggerComponent &&
+      { triggerComponent
+        && (
         <div onClick={toggleIsOpen}>
           { triggerComponent }
         </div>
-      }
+        )}
 
-      { !triggerComponent &&
+      { !triggerComponent
+        && (
         <Button variant="outline-secondary" onClick={toggleIsOpen}>
           Select Image
         </Button>
-      }
-      
-      <Modal 
+        )}
+
+      <Modal
         show={isOpen}
         onHide={toggleIsOpen}
         size="lg"
@@ -41,7 +43,7 @@ const MediaLibraryModal = ({ triggerComponent, onAssetSelect }) => {
         </Modal.Body>
       </Modal>
     </>
-  )
-}
+  );
+};
 
 export default MediaLibraryModal;

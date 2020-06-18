@@ -6,14 +6,16 @@ import { Form as FinalForm, Field } from 'react-final-form';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Alert from 'react-bootstrap/Alert';
-import UserAPI from 'pages/Users/api'; 
+import UserAPI from 'pages/Users/api';
 
-const LoginPage = (props) => {
-  const [isLoading, setIsLoading] = useState(false); 
-  const [showErrorMessage, setShowErrorMessage] = useState(false); 
- 
+const LoginPage = () => {
+  // TODO: add spinner to this page
+  // eslint-disable-next-line no-unused-vars
+  const [isLoading, setIsLoading] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+
   const loginUser = async (payload) => {
-    setIsLoading(true); 
+    setIsLoading(true);
     setShowErrorMessage(false);
     try {
       const response = await UserAPI.login(payload);
@@ -23,11 +25,11 @@ const LoginPage = (props) => {
         throw new Error(response.message);
       }
     } catch (error) {
-      setShowErrorMessage(true);  
+      setShowErrorMessage(true);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
-  }
+  };
 
   const onSubmit = ({ email, password }) => {
     loginUser && loginUser({
@@ -40,7 +42,7 @@ const LoginPage = (props) => {
     <div className="login-page">
       <Head>
         <title>Login</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <FinalForm
@@ -65,14 +67,13 @@ const LoginPage = (props) => {
                 </ButtonGroup>
               </div>
 
-              { showErrorMessage &&
-                <Alert className="mt-3" variant="danger">Your credentials are invalid. Please try again.</Alert>
-              }
+              { showErrorMessage
+                && <Alert className="mt-3" variant="danger">Your credentials are invalid. Please try again.</Alert>}
 
               <div className="border-top mb-3 mt-3" />
 
               <Field name="email">
-                {({ input, meta }) => (
+                {({ input }) => (
                   <Form.Group controlId="email">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -84,7 +85,7 @@ const LoginPage = (props) => {
               </Field>
 
               <Field name="password">
-                {({ input, meta }) => (
+                {({ input }) => (
                   <Form.Group controlId="password">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
@@ -96,8 +97,8 @@ const LoginPage = (props) => {
               </Field>
 
               <div className="checkbox mb-3">
-                <label>
-                  <input type="checkbox" value="remember-me"/> Remember me
+                <label htmlFor="keep-me-signed-in">
+                  <input type="checkbox" value="remember-me" name="keep-me-signed-in" /> Remember me
                 </label>
               </div>
 
@@ -105,7 +106,7 @@ const LoginPage = (props) => {
 
               <p className="mt-5 mb-3 text-muted">© 2019</p>
             </Form>
-          )
+          );
         }}
       />
 
@@ -143,7 +144,7 @@ const LoginPage = (props) => {
         }
       `}</style>
     </div>
-  )
+  );
 };
 
 export default LoginPage;

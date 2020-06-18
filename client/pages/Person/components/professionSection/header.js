@@ -7,7 +7,7 @@ const ProfessionSectionHeader = ({ name, active, updateActive, onModalOpen }) =>
   return (
     <Card.Header>
       { name }
-      {/* <Form.Check 
+      {/* <Form.Check
         type="switch"
         label="on"
         checked
@@ -30,7 +30,7 @@ const ProfessionSectionHeader = ({ name, active, updateActive, onModalOpen }) =>
         </Dropdown.Menu>
       </Dropdown>
     </Card.Header>
-  )
-}
+  );
+};
 
 export default ProfessionSectionHeader;
