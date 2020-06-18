@@ -1,7 +1,7 @@
 import React  from 'react';
 import { paginationState } from 'shared/paginationState/index';
 import UserAPI from 'pages/Users/api'; 
-import UsersPage from '../../client/pages/users';
+import UsersPage from 'pages/Users';
 
 const Users = (props) => <UsersPage {...props}/>
 
