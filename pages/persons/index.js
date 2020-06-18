@@ -1,5 +1,5 @@
 import React from 'react';
-import { paginationState } from 'shared/reducers/pagination';
+import { paginationState } from 'shared/paginationState/index';
 import PersonsApi from 'pages/Persons/api';
 import PersonsPage from 'pages/Persons';
 
@@ -7,7 +7,7 @@ const Persons = (props) => <PersonsPage {...props} />
 
 Persons.getInitialProps = async (ctx) => {
   const { req } = ctx;
-  const { offset, searchTerm, sort } = paginationState();
+  const { offset, searchTerm, sort } = paginationState;
 
   try {
     // sharedActions.toggleIsLoading();

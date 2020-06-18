@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { actions } from 'pages/users/actions';
 import DataGrid from 'shared/components/dataGrid';
 
 const getColumns = (editable) => [{
@@ -29,15 +27,18 @@ const getColumns = (editable) => [{
   }
 }];
 
-const UsersList = ({ users }) => {
-  const dispatch = useDispatch();
-  const { pagination, error, loading } = useSelector(state => state.users);
-  const { isSuper } = useSelector(state => state.user);
+const UsersList = (props) => {
+  const {
+    users,
+    pagination,
+    onUsersGet,
+    onEdit,
+    error,
+    loading,
+    isSuper
+  } = props;
 
   const columns = getColumns(isSuper);
-
-  const onUsersGet = () => dispatch(actions.getUsers());
-  const onEdit = (payload) => dispatch(actions.updateUser(payload));
 
   return (
     <DataGrid

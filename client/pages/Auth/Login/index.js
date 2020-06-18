@@ -1,5 +1,4 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Form from 'react-bootstrap/Form';
@@ -7,10 +6,30 @@ import { Form as FinalForm, Field } from 'react-final-form';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Alert from 'react-bootstrap/Alert';
+import UserAPI from 'pages/Users/api';
 
-const LoginPage = (props) => {
-  const { showErrorMessage } = useSelector(state => state.users);
-  const { loginUser } = props;
+const LoginPage = () => {
+  // TODO: add spinner to this page
+  // eslint-disable-next-line no-unused-vars
+  const [isLoading, setIsLoading] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+  const loginUser = async (payload) => {
+    setIsLoading(true);
+    setShowErrorMessage(false);
+    try {
+      const response = await UserAPI.login(payload);
+      if (response.status === 302) {
+        window.location = '/';
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      setShowErrorMessage(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const onSubmit = ({ email, password }) => {
     loginUser && loginUser({

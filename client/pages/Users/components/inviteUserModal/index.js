@@ -4,18 +4,12 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import { Form, Field } from 'react-final-form';
-import { useDispatch } from 'react-redux';
-import { actions } from 'pages/users/actions';
 
 const InviteUserModal = (props) => {
-  const dispatch = useDispatch();
-  const { canInviteAdmin, onClose, show } = props;
+  const { canInviteAdmin, onClose, show, inviteUser } = props;
 
   const onSubmit = ({ email, role }) => {
-    dispatch(actions.inviteUser({
-      email,
-      role
-    }));
+    inviteUser({ email, role });
 
     onClose && onClose();
   };
