@@ -1,8 +1,8 @@
-import { select, call, delay, put, take, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import API from './api';
 import { actionTypes, actions } from './actions';
 
-function * registerUser ({ payload }) {
+function* registerUser({ payload }) {
   try {
     const response = yield API.register(payload);
 
@@ -12,7 +12,7 @@ function * registerUser ({ payload }) {
       throw new Error(response.message);
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
     yield put(actions.registerUserFail(err));
   }
 }

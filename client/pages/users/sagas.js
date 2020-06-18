@@ -1,13 +1,13 @@
 import { select, put, takeLatest } from 'redux-saga/effects';
+import { actions as sharedActions } from 'shared/actions';
 import UserAPI from './api';
 
-import { 
+import {
   actionTypes,
   actions
 } from './actions';
-import { actions as sharedActions } from 'shared/actions';
 
-function * getUsers () {
+function* getUsers() {
   sharedActions.toggleIsLoading();
   const state = yield select(state => state.users);
   const { pagination: { offset, searchTerm, sort } } = state;
@@ -15,7 +15,7 @@ function * getUsers () {
   try {
     const response = yield UserAPI.getUsers(offset, searchTerm, sort);
     const users = yield response.json();
-    
+
     if (response.status === 200) {
       yield put(actions.getUsersSuccess(users));
     } else {
@@ -29,13 +29,13 @@ function * getUsers () {
   }
 }
 
-function * loginUser ({ payload }) {
+function* loginUser({ payload }) {
   sharedActions.toggleIsLoading();
   yield put(actions.showLoggingErrorMessage());
 
   try {
     const response = yield UserAPI.login(payload);
-    
+
     if (response.status === 302) {
       window.location = '/';
     } else {
@@ -48,8 +48,7 @@ function * loginUser ({ payload }) {
   }
 }
 
-
-function * inviteUser ({ payload }) {
+function* inviteUser({ payload }) {
   sharedActions.toggleIsLoading();
 
   try {
@@ -69,7 +68,7 @@ function * inviteUser ({ payload }) {
   }
 }
 
-function * updateUser ({ payload }) {
+function* updateUser({ payload }) {
   sharedActions.toggleIsLoading();
 
   try {

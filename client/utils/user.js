@@ -14,7 +14,7 @@ const userRoleUp = (role) => {
   if (role === 'admin') return isSuper || isAdmin;
   if (role === 'author') return isSuper || isAdmin || isAuthor;
   if (role === 'reviewer') return true;
-}
+};
 
 export const destructureUser = (user) => {
   if (!user) return null;
@@ -30,5 +30,5 @@ export const destructureUser = (user) => {
     isReviewer,
     userRoleUp,
     permissions: permissions.can(user.role)
-  }
-}
+  };
+};

@@ -64,7 +64,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
         window.location = `persons/${person.id}`;
         return;
       }
-      
+
       if (response.status === 409) {
         setDuplicate({
           id: person.id,
@@ -81,24 +81,25 @@ const PersonsPage = ({ user, persons, pagination }) => {
     } finally {
       dispatch(sharedActions.toggleIsLoading());
     }
-  }
+  };
 
   return (
     <div>
       <Head>
         <title>Persons</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Layout activePage="Persons">
         <Layout.Navbar className="mb-5">
-          { canCreatePerson.granted &&
+          { canCreatePerson.granted
+            && (
             <CreateDropdown
               buttonText="Create Person"
               placeholder="Person's name"
               onCreate={onPersonCreate}
             />
-          }
+            )}
         </Layout.Navbar>
 
         <Layout.Content>
@@ -112,13 +113,13 @@ const PersonsPage = ({ user, persons, pagination }) => {
         </Layout.Content>
       </Layout>
 
-      <DuplicateModal 
+      <DuplicateModal
         show={isPersonExist}
         onClose={setIsPersonExist}
         duplicate={duplicate}
       />
     </div>
-  )
-}
+  );
+};
 
 export default PersonsPage;

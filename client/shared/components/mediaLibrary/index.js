@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import _remove from 'lodash/remove';
+import api from 'shared/api/assets';
+import { isOfType } from 'shared/helpers';
 import Breadcrumbs from './breadcrumbs';
 import FileSystem from './fileSystem';
 import UploadBox from './uploadBox';
 import ActionsPanel from './actionsPanel';
-import api from 'shared/api/assets';
-import { isOfType } from 'shared/helpers';
-import { ASSET_TYPES } from 'shared/constants';
 
 const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUploadBoxOpen, root }) => {
   const [ currentFolder, setCurrentFolder ] = useState(null);
@@ -15,9 +13,9 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
   const getAssets = async (id) => {
     const response = await api.getAssets(id);
     const assets = await response.json();
-    
+
     setAssets(assets);
-  }
+  };
 
   useEffect(() => {
     getAssets(root ? root._id : null);
@@ -31,14 +29,14 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
 
   const onSelect = (asset) => {
     const { isFolder } = isOfType(asset.type);
-    
+
     if (isFolder) {
       getAssets(asset._id);
       setCurrentFolder(asset);
     }
 
     onAssetSelect(asset);
-  }
+  };
 
   const onDelete = async (asset) => {
     const response = await api.deleteAsset(asset._id);
@@ -50,7 +48,7 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
       // TODO: log and show error message
       console.error(response.statusText);
     }
-  }
+  };
 
   const onMove = async (asset, parent) => {
     const response = await api.moveAsset(asset._id, parent._id);
@@ -63,13 +61,13 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
       // TODO: log and show error message
       console.error(response.statusText);
     }
-  }
+  };
 
   return (
     <>
       <UploadBox open={isUploadBoxOpen} />
 
-      <Breadcrumbs 
+      <Breadcrumbs
         currentFolder={currentFolder}
         onCrumbClick={onSelect}
         root={root}
@@ -77,7 +75,7 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
 
       <ActionsPanel />
 
-      <FileSystem 
+      <FileSystem
         assets={assets}
         onSelect={onSelect}
         onDelete={onDelete}
@@ -87,6 +85,6 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
       />
     </>
   );
-}
+};
 
 export default MediaLibrary;

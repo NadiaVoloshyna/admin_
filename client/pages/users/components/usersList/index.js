@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Link from 'next/link';
 import { actions } from 'pages/users/actions';
 import DataGrid from 'shared/components/dataGrid';
 
@@ -43,16 +42,16 @@ const UsersList = ({ users }) => {
   return (
     <DataGrid
       tableName="user"
-      data={users} 
-      columns={columns} 
-      error={error} 
-      loading={loading} 
+      data={users}
+      columns={columns}
+      error={error}
+      loading={loading}
       pagination={pagination}
       onItemsGet={onUsersGet}
       onEdit={onEdit}
       hideSelectColumn
     />
-  )
-}
+  );
+};
 
 export default UsersList;

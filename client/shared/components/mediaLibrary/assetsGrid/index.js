@@ -5,11 +5,11 @@ const AssetsGrid = ({ assets, onSelect, onDelete, onMove, canDelete = false, isD
   return (
     <div className="asset-grid">
       { assets.map(item => (
-        <div 
-          key={item._id} 
+        <div
+          key={item._id}
           className="asset-wrapper"
         >
-          <Asset 
+          <Asset
             item={item}
             onSelect={onSelect}
             onDelete={onDelete}
@@ -32,7 +32,7 @@ const AssetsGrid = ({ assets, onSelect, onDelete, onMove, canDelete = false, isD
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
 export default AssetsGrid;

@@ -6,66 +6,66 @@ import ProfessionsList from 'pages/Professions/components/professionsList';
 import ProfessionsAPI from 'pages/Professions/api';
 
 const ProfessionsPage = (props) => {
-  const [ isLoading, setIsLoading ] = useState(false); 
+  const [ isLoading, setIsLoading ] = useState(false);
   const [ professions, setProfessions ] = useState(props.professions);
   const [ pagination, setPagination ] = useState(props.pagination);
 
-const createProfession = async (payload) => {
-  setIsLoading(true);
-  const { value: name } = payload;
+  const createProfession = async (payload) => {
+    setIsLoading(true);
+    const { value: name } = payload;
 
-  try {
-    const response = await ProfessionsAPI.create({ name });
-    const profession = await response.json();
-    
-    if (response.status === 201) {
-      setProfessions([ ...professions, profession ]);
-    }
+    try {
+      const response = await ProfessionsAPI.create({ name });
+      const profession = await response.json();
 
-    if (response.status === 409) {
-      console.log('Duplicate profession');
-    }
-    
-    if (response.status === 500) {
-      throw new Error(response.message);
-    }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setIsLoading(false);
-  }
-}
+      if (response.status === 201) {
+        setProfessions([ ...professions, profession ]);
+      }
 
-const onProfessionGet = async (payload) => {
-  setIsLoading(true);
+      if (response.status === 409) {
+        console.log('Duplicate profession');
+      }
 
-  const newPagination = { ...pagination, ...payload };
-  const { offset, searchTerm, sort } = newPagination;
-  
-  try {
-    const response = await ProfessionsAPI.getProfessions(offset, searchTerm, sort);
-    const professionsResponse = await response.json();
-    
-    if (response.status === 200) {
-      setProfessions(professionsResponse.professions);
-      setPagination(newPagination);
+      if (response.status === 500) {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    if (response.status === 500) {
-      throw new Error(response.message);
+  const onProfessionGet = async (payload) => {
+    setIsLoading(true);
+
+    const newPagination = { ...pagination, ...payload };
+    const { offset, searchTerm, sort } = newPagination;
+
+    try {
+      const response = await ProfessionsAPI.getProfessions(offset, searchTerm, sort);
+      const professionsResponse = await response.json();
+
+      if (response.status === 200) {
+        setProfessions(professionsResponse.professions);
+        setPagination(newPagination);
+      }
+
+      if (response.status === 500) {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   const onProfessionDelete = async (records) => {
     const { professionsToDelete } = records;
     setIsLoading(true);
     const ids = professionsToDelete.map(id => id._id);
-  
+
     try {
       const response = await ProfessionsAPI.deleteProfessions(ids);
 
@@ -76,7 +76,7 @@ const onProfessionGet = async (payload) => {
       if (response.status !== 200) {
         throw new Error(response.message);
       }
-    } catch (err) {
+    } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -87,7 +87,7 @@ const onProfessionGet = async (payload) => {
     <div>
       <Head>
         <title>Professions</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Layout activePage="Professions">
@@ -105,15 +105,15 @@ const onProfessionGet = async (payload) => {
 
         <Layout.Content loading={isLoading}>
           <ProfessionsList
-          professions={professions}
-          pagination={pagination}
-          onProfessionGet={onProfessionGet}
-          onProfessionDelete={onProfessionDelete}
+            professions={professions}
+            pagination={pagination}
+            onProfessionGet={onProfessionGet}
+            onProfessionDelete={onProfessionDelete}
           />
         </Layout.Content>
       </Layout>
     </div>
-  )
-}
+  );
+};
 
 export default ProfessionsPage;

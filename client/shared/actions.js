@@ -2,7 +2,7 @@ import actionCreator from 'utils/actionCreator';
 
 export const actionTypes = {
   SET_USER: 'SET_USER',
-  
+
   UPDATE_PAGINATION: 'UPDATE_PAGINATION',
   UPDATE_SEARCH_TERM: 'UPDATE_SEARCH_TERM',
   UPDATE_SORT: 'UPDATE_SORT',
@@ -16,6 +16,6 @@ export const actionTypes = {
   GET_ASSETS: 'GET_ASSETS',
   GET_ASSETS_SUCCESS: 'GET_ASSETS_SUCCESS',
   GET_ASSETS_FAIL: 'GET_ASSETS_FAIL',
-}
+};
 
 export const actions = actionCreator(actionTypes);

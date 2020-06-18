@@ -1,15 +1,12 @@
-import _random from 'lodash/random';
-
 export const initialState = {
   pageConfig: {}
-}
+};
 
-const reducer = (state = {}, { type, payload }) => {
+const reducer = (state = {}, { type }) => {
   switch (type) {
-  
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default reducer;

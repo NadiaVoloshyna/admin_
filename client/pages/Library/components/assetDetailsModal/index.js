@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 
 const AssetDetailsModal = ({ show, item, setShow }) => {
   return (
-    <Modal 
+    <Modal
       show={show}
       onHide={() => setShow(false)}
       size="lg"
@@ -15,8 +15,8 @@ const AssetDetailsModal = ({ show, item, setShow }) => {
         <Container>
           <Row>
             <Col md={4}>
-              <img 
-                src={item.url} 
+              <img
+                src={item.url}
                 alt={item.name}
                 className="img-thumbnail"
               />
@@ -32,7 +32,7 @@ const AssetDetailsModal = ({ show, item, setShow }) => {
         </Container>
       </Modal.Body>
     </Modal>
-  )
-}
+  );
+};
 
 export default AssetDetailsModal;

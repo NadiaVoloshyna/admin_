@@ -16,11 +16,11 @@ const Audio = ({ onDismiss, onSubmit }) => {
   const onImageUpload = (image) => {
     setImage(image);
     setValue(image.original_filename);
-  }
+  };
 
   const onImageUploadError = (error) => {
     console.log(error);
-  }
+  };
 
   const onAssetAdd = () => {
     setValue('');
@@ -29,7 +29,7 @@ const Audio = ({ onDismiss, onSubmit }) => {
       url: image.url,
       type: ASSET_TYPES.IMAGE
     });
-  }
+  };
 
   return (
     <Card>
@@ -38,21 +38,22 @@ const Audio = ({ onDismiss, onSubmit }) => {
           <Col>
             <Form className="clearfix">
               <Form.Group>
-                <Form.Control 
-                  autoFocus 
+                <Form.Control
+                  autoFocus
                   placeholder="File name"
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                 />
               </Form.Group>
 
-              { !!image &&
+              { !!image
+                && (
                 <ReactAudioPlayer
                   src={image.url}
                   controls
                 />
-              }
-              
+                )}
+
               <ButtonGroup className="float-right">
                 <Button
                   variant="secondary"
@@ -69,14 +70,14 @@ const Audio = ({ onDismiss, onSubmit }) => {
           <Col md="auto" className="text-center">
             <CloudinaryUpload
               width={240}
-              onSuccess={onImageUpload} 
+              onSuccess={onImageUpload}
               onError={onImageUploadError}
             />
           </Col>
         </Row>
       </Card.Body>
     </Card>
-  )
+  );
 };
 
 export default Audio;

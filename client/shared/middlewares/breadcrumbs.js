@@ -11,13 +11,13 @@ const selectFolderMiddleware = store => next => action => {
     } else {
       breadcrumbs = breadcrumbs.splice(0, index + 1);
     }
-    
+
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set('path', breadcrumbs.join('/'));
-    const newQuery = window.location.pathname + '?' + searchParams.toString();
+    const newQuery = `${window.location.pathname}?${searchParams.toString()}`;
     window.history.pushState(null, '', newQuery);
   }
   next(action);
-}
+};
 
 export default selectFolderMiddleware;

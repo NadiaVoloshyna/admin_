@@ -31,30 +31,31 @@ const NAV_LINKS = [{
 }];
 
 const renderLinks = (active, { role }) => {
-  let linksToRender = NAV_LINKS.reduce((acc, next) => {
+  const linksToRender = NAV_LINKS.reduce((acc, next) => {
     if (typeof next.visibleTo === 'undefined' || next.visibleTo.indexOf(role) !== -1) {
       acc.push(next);
     }
 
     return acc;
   }, []);
-  
+
   return linksToRender.map(link => {
     const linkClassName = cx(
-      'nav-link', 
+      'nav-link',
       link.name === active && 'active'
     );
-    
+
     return (
       <Link key={link.name} href={link.url}>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a className={linkClassName}>
           <FontAwesomeIcon icon={link.icon} title={link.name} />
           <span className="d-none d-lg-inline ml-2">{ link.name }</span>
         </a>
       </Link>
-    )
+    );
   });
-}
+};
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <>
@@ -76,7 +77,8 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </>
 ));
 
-const renderUserDropdown = (user) => {
+const RenderUserDropdown = (props) => {
+  const { user } = props;
   const [isChangeRoleModalOpen, setIsOpen] = useState(false);
   const toggleIsModalOpen = () => setIsOpen(!isChangeRoleModalOpen);
 
@@ -92,29 +94,32 @@ const renderUserDropdown = (user) => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <a 
-            onClick={toggleIsModalOpen} 
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a
+            onClick={toggleIsModalOpen}
             className="dropdown-item"
           >
             Change role
           </a>
           <Link href={`/users/${user.id}`}>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="dropdown-item">
-                Profile
+              Profile
             </a>
           </Link>
           <Link href="/auth/logout">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a className="dropdown-item">
-                Logout
+              Logout
             </a>
           </Link>
         </Dropdown.Menu>
       </Dropdown>
 
-      <ChangeRoleModal 
+      <ChangeRoleModal
         show={isChangeRoleModalOpen}
         toggleShow={toggleIsModalOpen}
-        userId={user._id} 
+        userId={user._id}
         userRole={user.role}
       />
 
@@ -129,8 +134,8 @@ const renderUserDropdown = (user) => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
 const LayoutSidebar = () => {
   const { activePage, user } = useContext(UserContext);
@@ -148,7 +153,7 @@ const LayoutSidebar = () => {
           { renderLinks(activePage, user) }
         </nav>
 
-        { renderUserDropdown(user) }
+        <RenderUserDropdown user={user} />
       </div>
 
       <style global jsx>{`
@@ -188,7 +193,7 @@ const LayoutSidebar = () => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
-export default LayoutSidebar
+export default LayoutSidebar;

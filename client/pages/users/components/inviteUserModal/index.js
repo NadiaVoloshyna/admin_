@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import { Form, Field } from 'react-final-form'
+import { Form, Field } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import { actions } from 'pages/users/actions';
 
@@ -18,7 +18,7 @@ const InviteUserModal = (props) => {
     }));
 
     onClose && onClose();
-  }
+  };
 
   return (
     <Modal show={show} onHide={onClose}>
@@ -47,8 +47,8 @@ const InviteUserModal = (props) => {
                 <div className="form-group row">
                   <label className="col-sm-2 col-form-label">Role</label>
                   <div className="col-sm-10">
-                    <Field 
-                      className="form-control" 
+                    <Field
+                      className="form-control"
                       name="role"
                       component="select"
                     >
@@ -59,7 +59,7 @@ const InviteUserModal = (props) => {
                     </Field>
                   </div>
                 </div>
-                
+
                 <ButtonToolbar className="justify-content-end">
                   <ButtonGroup>
                     <Button variant="secondary" onClick={onClose}>Discard</Button>
@@ -67,11 +67,12 @@ const InviteUserModal = (props) => {
                   </ButtonGroup>
                 </ButtonToolbar>
               </form>
-          )}}
+            );
+          }}
         />
       </Modal.Body>
     </Modal>
-  )
-}
+  );
+};
 
 export default InviteUserModal;

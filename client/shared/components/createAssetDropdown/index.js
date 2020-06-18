@@ -15,14 +15,14 @@ export const ASSET_TYPES = {
   ALBUM: 'ALBUM',
   VIDEO: 'VIDEO',
   AUDIO: 'AUDIO'
-}
+};
 
 const availableAssets = {
   FOLDER: {
     name: 'FOLDER',
     icon: 'folder',
     component: Folder
-  }, 
+  },
   IMAGE: {
     name: 'IMAGE',
     icon: 'image',
@@ -49,7 +49,7 @@ const createAssetShape = (props) => {
         type,
         name,
         url
-      }
+      };
     case ASSET_TYPES.ALBUM:
       return {
         type,
@@ -58,14 +58,14 @@ const createAssetShape = (props) => {
         year,
         description,
         author
-      }
+      };
     default:
       return {
         type,
         name
-      }
+      };
   }
-}
+};
 
 const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
   const [ isOpen, setIsOpen ] = useState(false);
@@ -74,49 +74,50 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
   const onDropdownToggle = (isOpen = false, form = null) => {
     setIsOpen(isOpen);
     setFormToShow(form);
-  }
+  };
 
   const onCreate = (item) => {
     onDropdownToggle();
 
     const asset = createAssetShape(item);
     onAssetCreate(asset);
-  }
+  };
   console.log(supportedTypes);
   return (
     <>
       <Dropdown
         className="create-dropdown w-100"
-        show={isOpen} 
+        show={isOpen}
         focusFirstItemOnShow={false}
         onToggle={(isOpen) => onDropdownToggle(isOpen)}
       >
         <Dropdown.Toggle>New Asset</Dropdown.Toggle>
-        <Dropdown.Menu 
-          className={cx(formToShow && 'w-100 p-2 bg-light')} 
+        <Dropdown.Menu
+          className={cx(formToShow && 'w-100 p-2 bg-light')}
           rootCloseEvent="click"
         >
           { !formToShow && supportedTypes.map(item => {
             return (
               <Dropdown.Item
                 key={item}
-                eventKey={item} 
+                eventKey={item}
                 onSelect={(form) => onDropdownToggle(true, form)}
               >
                 <FontAwesomeIcon icon={availableAssets[item].icon} className="mr-2" />
                 { _upperFirst(_toLower(item)) }
               </Dropdown.Item>
-            )
+            );
           })}
 
-          { formToShow && 
-            <Dropdown.Item 
+          { formToShow
+            && (
+            <Dropdown.Item
               className="min-w-50"
-              as={availableAssets[formToShow].component} 
+              as={availableAssets[formToShow].component}
               onSubmit={onCreate}
               onDismiss={onDropdownToggle}
-            /> 
-          }
+            />
+            )}
         </Dropdown.Menu>
       </Dropdown>
 
@@ -126,7 +127,7 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
 export default CreateAssetDropdown;

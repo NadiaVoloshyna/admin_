@@ -2,7 +2,7 @@ import actionCreator from 'utils/actionCreator';
 
 export const actionTypes = {
   USERS_INITIAL_STATE: 'USERS_INITIAL_STATE',
-  
+
   INVITE_USER: 'INVITE_USER',
   INVITE_USER_SUCCESS: 'INVITE_USER_SUCCESS',
   INVITE_USER_FAIL: 'INVITE_USER_FAIL',
@@ -18,9 +18,9 @@ export const actionTypes = {
   UPDATE_USER: 'UPDATE_USER',
   UPDATE_USER_SUCCESS: 'UPDATE_USER_SUCCESS',
   UPDATE_USER_FAIL: 'UPDATE_USER_FAIL',
-  
+
   SHOW_LOGGING_ERROR_MESSAGE: 'SHOW_LOGGING_ERROR_MESSAGE',
   HIDE_LOGGING_ERROR_MESSAGE: 'HIDE_LOGGING_ERROR_MESSAGE'
-}
+};
 
 export const actions = actionCreator(actionTypes);

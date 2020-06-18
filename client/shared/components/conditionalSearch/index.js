@@ -19,12 +19,12 @@ const ConditionalSearch = (props) => {
   const onSearch = (key) => {
     props.onSearch(query, key);
     setQuery('');
-  }
+  };
 
   const onChange = (e) => {
     e.preventDefault();
     setQuery(e.target.value);
-  }
+  };
 
   return (
     <>
@@ -38,12 +38,12 @@ const ConditionalSearch = (props) => {
           <Dropdown.Toggle as={CustomToggle} onChange={onChange} value={query} />
 
           <Dropdown.Menu>
-            <Dropdown.Item 
+            <Dropdown.Item
               eventKey="1"
               disabled={!query}
               onSelect={onSearch}
             >Search in currect folder</Dropdown.Item>
-            <Dropdown.Item 
+            <Dropdown.Item
               eventKey="2"
               disabled={!query}
               onSelect={onSearch}
@@ -70,6 +70,6 @@ const ConditionalSearch = (props) => {
       `}</style>
     </>
   );
-}
+};
 
 export default ConditionalSearch;

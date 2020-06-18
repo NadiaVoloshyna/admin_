@@ -47,11 +47,11 @@ const PERMISSIONS = {
     roles: [],
     variant: 'success'
   }
-}
+};
 
 const getStatusActions = (status) => {
   return PERMISSIONS[status];
-}
+};
 
 const StatusDropdown = ({ status, user, updateStatus }) => {
   const canChangeStatus = permissions.can(user.role).createAny('changeStatus');
@@ -60,13 +60,13 @@ const StatusDropdown = ({ status, user, updateStatus }) => {
 
   if (canChangeStatus.granted === false || !hasPriviladge) {
     return (
-      <Button 
+      <Button
         variant={statusConfig.variant}
         className="status-dropdown"
       >{ _startCase(_lowerCase(status)) }</Button>
-    )
+    );
   }
-  
+
   return (
     <>
       <Dropdown as={ButtonGroup} className="status-dropdown" alignRight>
@@ -75,13 +75,14 @@ const StatusDropdown = ({ status, user, updateStatus }) => {
         <Dropdown.Toggle split variant={statusConfig.variant} id="dropdown-split-basic" />
 
         <Dropdown.Menu>
-          { statusConfig.actions.map((item, index) => {
+          { statusConfig.actions.map((item) => {
             return (
-              <Dropdown.Item 
-                key={item.name + index}
-                onClick={() => updateStatus(item.status)}>{ item.name }
+              <Dropdown.Item
+                key={item.name}
+                onClick={() => updateStatus(item.status)}
+              >{ item.name }
               </Dropdown.Item>
-            )
+            );
           })}
         </Dropdown.Menu>
       </Dropdown>
@@ -94,7 +95,7 @@ const StatusDropdown = ({ status, user, updateStatus }) => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
 export default StatusDropdown;

@@ -16,13 +16,14 @@ const DuplicateModal = ({ show = false, onClose, duplicate = {} }) => {
 
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>I'll change the name</Button>
-        
+
         <Link href={`/persons/${duplicate.id}`}>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a href="#" className="btn btn-primary">Open existing post</a>
         </Link>
       </Modal.Footer>
     </Modal>
-  )
-}
+  );
+};
 
 export default DuplicateModal;

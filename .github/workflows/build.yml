@@ -21,6 +21,10 @@ jobs:
     - name: Install all dependancies
       run: |-
         yarn install
+
+    - name: Run linter
+      run: |-
+        yarn lint
         
     - name: Build the project
       run: |-

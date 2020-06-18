@@ -1,6 +1,6 @@
 import AccessControl from 'accesscontrol';
 
-let GrantList = {
+const GrantList = {
   super: {
     person: {
       'create:own': ['*'],

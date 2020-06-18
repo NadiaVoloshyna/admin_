@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import Head from 'next/head'; 
+import Head from 'next/head';
 import Layout from 'shared/components/layout';
 import InviteUserModal from 'pages/users/components/inviteUserModal';
 import Button from 'react-bootstrap/Button';
@@ -11,16 +11,16 @@ const UsersPage = () => {
   const { isSuper } = useSelector(state => state.user);
   const [showInviteUserModal, toggleShowInviteUserModal] = useState(false);
 
-  return(
+  return (
     <>
       <Head>
         <title>Users</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout activePage="Users" >
+      <Layout activePage="Users">
         <Layout.Navbar className="mb-3">
-          <Button 
+          <Button
             variant="primary"
             onClick={() => toggleShowInviteUserModal(true)}
           >Invite User</Button>
@@ -30,14 +30,14 @@ const UsersPage = () => {
           <UsersList users={users} />
         </Layout.Content>
       </Layout>
-   
-      <InviteUserModal 
-        show={showInviteUserModal} 
+
+      <InviteUserModal
+        show={showInviteUserModal}
         onClose={() => toggleShowInviteUserModal(false)}
         canInviteAdmin={isSuper}
       />
     </>
-  )
-}
+  );
+};
 
-export default UsersPage; 
+export default UsersPage;

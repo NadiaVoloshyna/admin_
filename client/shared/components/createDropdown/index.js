@@ -10,17 +10,17 @@ const CreateDropdown = ({ onCreate, buttonText = 'Create', placeholder = '' }) =
 
   const InputControl = () => (
     <InputGroup>
-      <FormControl 
-        autoFocus 
+      <FormControl
+        autoFocus
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       <InputGroup.Append>
-        <Button 
+        <Button
           variant="primary"
           onClick={() => {
-            onCreate({value});
+            onCreate({ value });
             setValue('');
             setIsOpen(false);
           }}
@@ -33,7 +33,7 @@ const CreateDropdown = ({ onCreate, buttonText = 'Create', placeholder = '' }) =
     <>
       <Dropdown
         className="create-dropdown"
-        show={isOpen} 
+        show={isOpen}
         focusFirstItemOnShow={false}
         onToggle={(isOpen) => setIsOpen(isOpen)}
       >
@@ -53,7 +53,7 @@ const CreateDropdown = ({ onCreate, buttonText = 'Create', placeholder = '' }) =
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
 export default CreateDropdown;
