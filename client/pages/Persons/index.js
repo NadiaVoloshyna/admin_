@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 import PersonsList from 'pages/Persons/components/personsList';
 import DuplicateModal from 'pages/Persons/components/duplicateModal';
 import CreateDropdown from 'shared/components/createDropdown';
 import PersonsApi from 'pages/Persons/api';
-import { actions as sharedActions } from 'shared/actions';
 
 const PersonsPage = ({ user, persons, pagination }) => {
+  const [ isLoading, setIsLoading ] = useState(false);
   const [ isPersonExist, setIsPersonExist ] = useState(false);
   const [ duplicate, setDuplicate ] = useState({});
-
-  const dispatch = useDispatch();
   const [personsState, setPersons] = useState(persons);
   const [paginationState, setPaginationState] = useState(pagination);
 
@@ -20,7 +17,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
   const canDeletePerson = user.permissions.deleteAny('person');
 
   const onPersonsGet = async (payload) => {
-    dispatch(sharedActions.toggleIsLoading());
+    setIsLoading(true);
 
     const { offset, searchTerm, sort } = { ...paginationState, ...payload };
 
@@ -31,12 +28,12 @@ const PersonsPage = ({ user, persons, pagination }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      dispatch(sharedActions.toggleIsLoading());
+      setIsLoading(false);
     }
   };
 
   const onDelete = async (persons) => {
-    dispatch(sharedActions.toggleIsLoading());
+    setIsLoading(true);
 
     const ids = persons.map(id => id._id);
 
@@ -47,12 +44,12 @@ const PersonsPage = ({ user, persons, pagination }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      dispatch(sharedActions.toggleIsLoading());
+      setIsLoading(false);
     }
   };
 
   const onPersonCreate = async (data) => {
-    dispatch(sharedActions.toggleIsLoading());
+    setIsLoading(true);
 
     const { value: name } = data;
 
@@ -79,7 +76,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      dispatch(sharedActions.toggleIsLoading());
+      setIsLoading(false);
     }
   };
 
@@ -102,7 +99,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
             )}
         </Layout.Navbar>
 
-        <Layout.Content>
+        <Layout.Content isLoading={isLoading}>
           <PersonsList
             onPersonsGet={onPersonsGet}
             onDelete={onDelete}

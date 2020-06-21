@@ -1,6 +1,6 @@
 import ApiService from 'shared/api';
 
-class UserApi extends ApiService {
+class AuthApi extends ApiService {
   login = (payload) => {
     return this.post('/auth/login', payload);
   }
@@ -8,10 +8,6 @@ class UserApi extends ApiService {
   register = (payload) => {
     return this.post('/auth/register', payload);
   }
-
-  invite = (email = '', role = '') => {
-    return this.post('/api/users/invite', { email, role });
-  }
 }
 
-export default new UserApi();
+export default new AuthApi();

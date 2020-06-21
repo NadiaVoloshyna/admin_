@@ -1,12 +1,8 @@
 import ApiService from 'shared/api';
 
-class UserApi extends ApiService {
+class UsersApi extends ApiService {
   getUsers = (offset, searchTerm, sort) => {
     return this.get(`/api/users?offset=${offset}&searchTerm=${searchTerm}&sort=${sort}`);
-  }
-
-  login = (payload) => {
-    return this.post('/auth/login', payload);
   }
 
   invite = (email = '', role = '') => {
@@ -18,4 +14,4 @@ class UserApi extends ApiService {
   }
 }
 
-export default new UserApi();
+export default new UsersApi();

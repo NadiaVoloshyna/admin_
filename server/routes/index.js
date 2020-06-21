@@ -16,6 +16,7 @@ module.exports = (app, logger) => {
 
   // Page routes
   app.use('/persons', restrictAccess);
+  app.use('/library', restrictAccess);
   app.get('/', restrictAccess);
   app.use('/auth', authRoutes);
 }

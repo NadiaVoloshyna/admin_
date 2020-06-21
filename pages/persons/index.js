@@ -1,5 +1,5 @@
 import React from 'react';
-import { paginationState } from 'shared/paginationState/index';
+import { paginationState } from 'shared/state';
 import PersonsApi from 'pages/Persons/api';
 import PersonsPage from 'pages/Persons';
 

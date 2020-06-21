@@ -5,20 +5,31 @@ import { Form as FinalForm, Field } from 'react-final-form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import AuthApi from 'pages/Auth/api';
 import PasswordRequirementsOverlay from './components/passwordRequirementsOverlay';
 import validator from './validator';
 
 const RegisterPage = (props) => {
-  const { registerUser } = props;
+  const { token } = props;
 
-  const onSubmit = ({ firstName, lastName, email, password }) => {
-    registerUser && registerUser({
-      firstName,
-      lastName,
-      email,
-      password,
-      token: props.token
-    });
+  const onSubmit = async ({ firstName, lastName, email, password }) => {
+    try {
+      const response = await AuthApi.register({
+        firstName,
+        lastName,
+        email,
+        password,
+        token
+      });
+
+      if (response.status === 302) {
+        window.location = 'login';
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

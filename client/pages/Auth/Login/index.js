@@ -6,7 +6,7 @@ import { Form as FinalForm, Field } from 'react-final-form';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Alert from 'react-bootstrap/Alert';
-import UserAPI from 'pages/Users/api';
+import AuthApi from 'pages/Auth/api';
 
 const LoginPage = () => {
   // TODO: add spinner to this page
@@ -18,7 +18,7 @@ const LoginPage = () => {
     setIsLoading(true);
     setShowErrorMessage(false);
     try {
-      const response = await UserAPI.login(payload);
+      const response = await AuthApi.login(payload);
       if (response.status === 302) {
         window.location = '/';
       } else {

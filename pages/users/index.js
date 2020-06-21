@@ -1,12 +1,11 @@
 import React  from 'react';
-import { paginationState } from 'shared/paginationState/index';
+import { paginationState } from 'shared/state';
 import UserAPI from 'pages/Users/api'; 
 import UsersPage from 'pages/Users';
 
 const Users = (props) => <UsersPage {...props}/>
 
 Users.getInitialProps = async (ctx) => {
-
   const { req } = ctx; 
   const { offset, searchTerm, sort } = paginationState; 
 
