@@ -1,9 +1,6 @@
-import App from 'next/app'
-import React from 'react'
-import { Provider } from 'react-redux'
+import App from 'next/app';
+import React from 'react';
 import { UserContext } from 'shared/context';
-import withRedux from 'next-redux-wrapper'
-import withReduxSaga from 'next-redux-saga'
 import { library } from '@fortawesome/fontawesome-svg-core';
 //import { fab } from '@fortawesome/free-brands-svg-icons'
 import { 
@@ -22,7 +19,6 @@ import {
   faFileAudio
 } from '@fortawesome/free-solid-svg-icons';
 
-import initializeStore from '../client/store';
 import { destructureUser } from 'utils/user';
 
 import 'assets/styles/styles.scss';
@@ -43,7 +39,7 @@ library.add(
   faFileAudio
 );
 
-class MyApp extends App {
+class UkrainianAdminApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
     if (Component.getInitialProps) {
@@ -51,6 +47,7 @@ class MyApp extends App {
     }
     if (ctx.req && ctx.req.session.passport) {
       pageProps.user = ctx.req.session.passport.user;
+      pageProps.user = pageProps.user;
     }
     return { pageProps };
   }
@@ -63,7 +60,7 @@ class MyApp extends App {
   }
 
   render () {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps } = this.props;
 
     const context = {
       user: this.state.user,
@@ -76,15 +73,13 @@ class MyApp extends App {
     };
 
     return (
-      <Provider store={store}>
-        <div className="bg-light">
-          <UserContext.Provider value={context}>
-            <Component {...props} />
-          </UserContext.Provider>
-        </div>
-      </Provider>
+      <div className="bg-light">
+        <UserContext.Provider value={context}>
+          <Component {...props} />
+        </UserContext.Provider>
+      </div>
     )
   }
 }
 
-export default withRedux(initializeStore)(withReduxSaga(MyApp))
+export default UkrainianAdminApp;

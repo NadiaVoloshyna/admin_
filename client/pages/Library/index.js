@@ -17,7 +17,9 @@ const supportedAssetTypes = [
 ];
 
 const LibraryPage = () => {
-  const { user: { userRoleUp } } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+  const { userRoleUp } = user;
+
   const [ selectedAsset, setSelectedAsset ] = useState(null);
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ newAsset, setNewAsset ] = useState(null);

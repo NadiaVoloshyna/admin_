@@ -4,7 +4,7 @@ import Layout from 'shared/components/layout';
 import InviteUserModal from 'pages/Users/components/inviteUserModal';
 import Button from 'react-bootstrap/Button';
 import UsersList from 'pages/Users/components/usersList';
-import UserAPI from 'pages/Users/api';
+import UsersAPI from 'pages/Users/api';
 
 const UsersPage = (props) => {
   const { user } = props;
@@ -22,7 +22,7 @@ const UsersPage = (props) => {
     const { offset, searchTerm, sort } = newPagination;
 
     try {
-      const response = await UserAPI.getUsers(offset, searchTerm, sort);
+      const response = await UsersAPI.getUsers(offset, searchTerm, sort);
       const usersResponse = await response.json();
       const { users, pagination } = usersResponse;
 
@@ -46,7 +46,7 @@ const UsersPage = (props) => {
 
     try {
       const { email, role } = payload;
-      const response = await UserAPI.invite(email, role);
+      const response = await UsersAPI.invite(email, role);
 
       if (response.status === 200) {
         console.log('User invitation successful');
@@ -64,7 +64,7 @@ const UsersPage = (props) => {
     setIsLoading(true);
 
     try {
-      const response = await UserAPI.update(payload);
+      const response = await UsersAPI.update(payload);
       if (response.status === 200) {
         console.log(response);
       } else {

@@ -1,8 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
-import { connect } from 'react-redux';
-
 
 function UserProfile ({ id }) {
   return (
@@ -33,6 +31,4 @@ UserProfile.getInitialProps = (ctx) => {
   }
 }
 
-const mapDispatchToProps = {};
-
-export default connect(null, mapDispatchToProps)(UserProfile);
+export default UserProfile;
