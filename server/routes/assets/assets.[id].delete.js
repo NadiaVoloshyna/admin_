@@ -1,7 +1,9 @@
 const Asset = require('../../models/asset');
+const User = require ('../../models/user');
 const { check } = require('express-validator');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
+const ac = require('../../../accesscontrol.config');
 
 module.exports = (router) => {
   /**
@@ -18,6 +20,13 @@ router.delete('/:id', [
 
     try {
       // 1. Delete assert
+      const user = await User.findOne({_id: id}); 
+      let permission = ac.can(user.role).deleteAny('person');
+      
+       if (permission.granted === false) {  
+        return res.status(403).end();  
+      }
+
       const asset = await Asset.findOne({ _id: id });
       await asset.remove();
 
