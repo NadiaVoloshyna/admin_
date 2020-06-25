@@ -1,5 +1,5 @@
-const Asset = require('../../models/asset');
 const { check } = require('express-validator');
+const Asset = require('../../models/asset');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
 
@@ -11,7 +11,7 @@ module.exports = (router) => {
  *   b. otherwise mark as deleted
  * 2. Delete cloudinary asset
  */
-router.delete('/:id', [
+  router.delete('/:id', [
     check('id').exists().isMongoId(),
   ], errorHandler, async (req, res) => {
     const { id } = req.params;
@@ -28,4 +28,4 @@ router.delete('/:id', [
       return handleError.custom(res, 500, error);
     }
   });
-}
+};

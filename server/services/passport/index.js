@@ -10,14 +10,13 @@ passport.use(
     clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
     clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET
   }, async (accessToken, refreshToken, profile, done) => {
-    
     try {
       const currentUser = await User.findOne({ 'google.id': profile.id });
       if (currentUser) {
         done(null, currentUser.toJson());
       } else {
         done(
-          `Unfortunatelly you don\'t have access to this site. 
+          `Unfortunatelly you don't have access to this site. 
           If you beleave you should have access contact your administrator.`
         );
       }
@@ -25,33 +24,32 @@ passport.use(
       done('Something unexpected has happened');
     }
   })
-)
+);
 
-async function verifyPassword (userPassword, password) {
-  return await bcrypt.compare(password, userPassword);
+async function verifyPassword(userPassword, password) {
+  return bcrypt.compare(password, userPassword);
 }
 
 passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-  },
-  async (email, password, done) => {
-    try {
-      const currentUser = await User.findOne({ email, active: true });
+  usernameField: 'email',
+  passwordField: 'password'
+},
+async (email, password, done) => {
+  try {
+    const currentUser = await User.findOne({ email, active: true });
 
-      if (currentUser && await verifyPassword(currentUser.password, password)) {
-        done(null, currentUser.toJSON());
-      } else {
-        done(
-          `Unfortunatelly you don\'t have access to this site. 
+    if (currentUser && await verifyPassword(currentUser.password, password)) {
+      done(null, currentUser.toJSON());
+    } else {
+      done(
+        `Unfortunatelly you don't have access to this site. 
           If you beleave you should have access contact your administrator.`
-        );
-      }
-    } catch (error) {
-      done('Something unexpected has happened');
+      );
     }
+  } catch (error) {
+    done('Something unexpected has happened');
   }
-));
+}));
 
 passport.serializeUser((user, done) => {
   done(null, user);

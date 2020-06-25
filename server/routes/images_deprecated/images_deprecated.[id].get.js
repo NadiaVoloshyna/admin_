@@ -11,10 +11,9 @@ module.exports = (router) => {
     mongoose.gridfs.exist({ _id }, (error, file) => {
       if (error || !file) {
         return handleError.custom(res, 404, error);
-      } else {
-        const readstream = mongoose.gridfs.createReadStream({ _id});
-        readstream.pipe(res);
       }
+      const readstream = mongoose.gridfs.createReadStream({ _id });
+      readstream.pipe(res);
     });
   });
-}
+};

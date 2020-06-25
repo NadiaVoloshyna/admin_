@@ -1,11 +1,10 @@
-const Asset = require('../../models/asset');
-const Cloudinary = require('../../services/cloudinary');
 const { body, check } = require('express-validator');
+const Asset = require('../../models/asset');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
 
 module.exports = (router) => {
-    /**
+  /**
    * Update asset
    * @param action String
    * @param payload Object
@@ -23,11 +22,10 @@ module.exports = (router) => {
         await Asset.findOneAndUpdate({ _id: id }, { parent: payload.parentId });
 
         return res.status(200).end();
-      } else {
-        return handleError.custom(res, 400, new Error('Bad request'));
       }
+      return handleError.custom(res, 400, new Error('Bad request'));
     } catch (error) {
       return handleError.custom(res, 500, error);
     }
-  })
-}
+  });
+};

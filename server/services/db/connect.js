@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const Grid = require('gridfs-stream');
 
-const CONNECTION_URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-yr0be.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const CONNECTION_URL = `
+  mongodb+srv://${process.env.DB_USERNAME}:
+  ${process.env.DB_PASSWORD}@cluster0-yr0be.mongodb.net/
+  ${process.env.DB_NAME}?retryWrites=true&w=majority
+  `;
 
-mongoose.connection.on('open', function () {
+mongoose.connection.on('open', () => {
   const gfs = Grid(mongoose.connection.db, mongoose.mongo);
   mongoose.gridfs = gfs;
 
@@ -18,4 +22,4 @@ module.exports = async (logger) => {
     logger.error(error);
     throw error;
   }
-}
+};

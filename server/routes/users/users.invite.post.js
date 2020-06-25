@@ -1,15 +1,15 @@
+const { body } = require('express-validator');
+const cryptoRandomString = require('crypto-random-string');
 const User = require('../../models/user');
 const Invite = require('../../models/invite');
-const { body } = require('express-validator');
 const errorHandler = require('../../middlewares/errorHandler');
 const mailer = require('../../services/mailer');
-const cryptoRandomString = require('crypto-random-string');
 const handleError = require('../../helpers/handleError');
 const { USER_ROLES } = require('../../constants');
 const { template, subject } = require('../../services/mailer/templates/inviteUser');
 
 module.exports = (router) => {
-    /**
+  /**
    * Invite user
    * 1. Check if this email already exist
    * 2. Generate token
@@ -19,7 +19,7 @@ module.exports = (router) => {
   router.post('/invite', [
     body('email').escape().isEmail(),
     // TODO: uncomment in prod
-    //body('email').escape().isEmail().normalizeEmail(),
+    // body('email').escape().isEmail().normalizeEmail(),
     body('role').escape().isIn([
       USER_ROLES.ADMIN,
       USER_ROLES.AUTHOR,
@@ -27,9 +27,9 @@ module.exports = (router) => {
     ])
   ], errorHandler, async (req, res) => {
     const { email, role } = req.body;
-    const token = cryptoRandomString({length: 32, type: 'url-safe'});
+    const token = cryptoRandomString({ length: 32, type: 'url-safe' });
     let user;
-    
+
     try {
       // Check if email exists
       user = await User.findOne({ email });
@@ -58,4 +58,4 @@ module.exports = (router) => {
 
     res.status(200).end();
   });
-}
+};

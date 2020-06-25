@@ -4,12 +4,12 @@ const isExpiredInvitation = require('../../helpers/isExpiredInvitation');
 
 module.exports = async (req, res, next) => {
   const errors = validationResult(req);
-  
+
   if (errors.array().length) {
     next(errors.array()[0].msg);
     return;
   }
-  
+
   const { token } = req.query;
   let invitation;
 
@@ -30,4 +30,4 @@ module.exports = async (req, res, next) => {
   }
 
   next();
-}
+};
