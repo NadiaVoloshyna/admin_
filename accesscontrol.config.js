@@ -22,7 +22,6 @@ ac.grant('author')
     .createOwn('person')
     .readAny(['person', 'persons'])
   .grant('reviewer')
-    .readAny(['person', 'persons'])
-    .deleteAny(['person', 'persons', 'asset']);
+    .readAny(['person', 'persons']);
 
 module.exports = ac;
