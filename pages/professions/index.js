@@ -2,7 +2,7 @@ import React from 'react';
 import ProfessionsPage from 'pages/Professions';
 import ProfessionsAPI from 'pages/Professions/api';
 import { professionsState } from 'pages/Professions/state';
-import { paginationState } from 'shared/paginationState/index';
+import { paginationState } from 'shared/state';
 
 const Professions = (props) => <ProfessionsPage {...props} />
 

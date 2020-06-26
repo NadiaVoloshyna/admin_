@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
@@ -6,8 +7,12 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CloudinaryUpload from 'shared/components/mediaLibrary/upload';
-import ReactAudioPlayer from 'react-audio-player';
 import { ASSET_TYPES } from './index';
+
+// Force only client rendering
+const AudioPlayer = dynamic(() => import('react-audio-player'), {
+  ssr: false
+});
 
 const Audio = ({ onDismiss, onSubmit }) => {
   const [value, setValue] = useState('');
@@ -45,10 +50,9 @@ const Audio = ({ onDismiss, onSubmit }) => {
                   onChange={(e) => setValue(e.target.value)}
                 />
               </Form.Group>
-
               { !!image
                 && (
-                <ReactAudioPlayer
+                <AudioPlayer
                   src={image.url}
                   controls
                 />

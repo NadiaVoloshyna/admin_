@@ -82,7 +82,7 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
     const asset = createAssetShape(item);
     onAssetCreate(asset);
   };
-  console.log(supportedTypes);
+
   return (
     <>
       <Dropdown

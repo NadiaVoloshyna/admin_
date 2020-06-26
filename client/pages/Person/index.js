@@ -30,6 +30,7 @@ const PersonPage = (props) => {
   }
 
   const { user, professions } = props;
+
   const {
     name,
     portrait,
@@ -121,7 +122,7 @@ const PersonPage = (props) => {
   };
 
   const availableProfessions = () => {
-    return props.professions.filter(prof => (
+    return professions.filter(prof => (
       personsProfessions.every(item => item.profession._id !== prof._id)
     ));
   };
