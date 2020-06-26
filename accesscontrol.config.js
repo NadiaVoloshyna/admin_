@@ -23,5 +23,6 @@ ac.grant('author')
     .readAny(['person', 'persons'])
   .grant('reviewer')
     .readAny(['person', 'persons'])
+    .deleteAny(['person', 'persons', 'asset']);
 
 module.exports = ac;
