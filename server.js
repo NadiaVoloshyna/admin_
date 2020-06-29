@@ -6,7 +6,6 @@ const next = require('next');
 const { logger } = require('./server/loggers');
 
 require('dotenv').config();
-require('./server/services/passport');
 
 const DB = require('./server/services/db');
 const routes = require('./server/routes');
@@ -37,6 +36,9 @@ app.prepare().then(() => {
   server.use(express.urlencoded({ extended: false }));
   server.use(password.initialize());
   server.use(password.session());
+
+  // eslint-disable-next-line global-require
+  require('./server/services/passport');
 
   // server.use(fileUpload());
 

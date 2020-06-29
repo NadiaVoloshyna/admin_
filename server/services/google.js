@@ -15,14 +15,14 @@ const drive = google.drive({ version: 'v3', auth });
 
 const GoogleApi = {
   createPermission: async (fileId, resource) => {
-    return drive.permissions.create({
+    return await drive.permissions.create({
       resource,
       fileId,
       fields: 'id',
     });
   },
   createDocument: async (title) => {
-    return drive.files.create({
+    return await drive.files.create({
       resource: {
         name : title,
         mimeType : 'application/vnd.google-apps.document',
@@ -33,14 +33,14 @@ const GoogleApi = {
   },
 
   getDocumentContent: async (documentId) => {
-    return drive.files.export({
+    return await drive.files.export({
       fileId: documentId,
       mimeType: 'text/html'
     });
   },
 
   getFileMeta: async (fileId, fields) => {
-    return drive.files.get({
+    return await drive.files.get({
       fileId,
       fields: fields || 'lastModifyingUser,modifiedTime'
     });

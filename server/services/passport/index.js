@@ -27,7 +27,7 @@ passport.use(
 );
 
 async function verifyPassword(userPassword, password) {
-  return bcrypt.compare(password, userPassword);
+  return await bcrypt.compare(password, userPassword);
 }
 
 passport.use(new LocalStrategy({
