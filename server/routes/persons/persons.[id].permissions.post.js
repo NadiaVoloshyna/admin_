@@ -36,15 +36,15 @@ module.exports = (router) => {
 
       await Person.update(
         { _id },
-        { 
-          '$push': { 
-            'permissions': { 
+        {
+          '$push': {
+            'permissions': {
               '$each': permissions.map(item => ({
                 ...item,
                 user: item.user._id
               }))
-            } 
-          } 
+            }
+          }
         },
       );
 
