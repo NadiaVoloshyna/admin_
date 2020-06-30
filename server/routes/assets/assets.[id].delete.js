@@ -1,5 +1,4 @@
 const Asset = require('../../models/asset');
-const User = require ('../../models/user');
 const { check } = require('express-validator');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
@@ -7,13 +6,11 @@ const ac = require('../../../accesscontrol.config');
 
 const checkPermissions = (req, res, next) => {
   const user = req.user;
-  let permission = ac.can(user.role).deleteAny('assets');
+  const canDelete = ac.can(user.role).deleteAny('assets').granted;
 
-  if (permission.granted === false) {
-   return res.status(403).end();
- }
+  if (!canDelete) return res.status(403).end();
 
- next();
+  next();
 
 }
 
