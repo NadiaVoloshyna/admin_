@@ -6,7 +6,7 @@ const CONNECTION_URL = `
   ${process.env.DB_NAME}?retryWrites=true&w=majority
   `;
 
-mongoose.connection.on('open', function () {
+mongoose.connection.on('open', () => {
   console.log('Connected to mongo server!');
 });
 
