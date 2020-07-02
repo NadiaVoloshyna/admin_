@@ -7,7 +7,7 @@ const ac = require('../../../accesscontrol.config');
 const checkPermissions = (req, res, next) => {
   const { user } = req;
   const canDelete = ac.can(user.role).deleteAny('assets').granted;
-  
+
   if (!canDelete) return res.status(403).end();
 
   next();
@@ -39,7 +39,7 @@ module.exports = (router) => {
   */
   router.delete('/:id', [
     check('id').exists().isMongoId(),
-  ], 
+  ],
   errorHandler,
   checkPermissions,
   deleteAssets);
