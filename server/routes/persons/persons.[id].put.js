@@ -1,5 +1,5 @@
-const Person = require('../../models/person');
 const { body, check } = require('express-validator');
+const Person = require('../../models/person');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
 
@@ -9,7 +9,8 @@ const errorHandler = require('../../middlewares/errorHandler');
 module.exports = (router) => {
   router.put('/:id', [
     check('id').isMongoId(),
-    body('name').isString().not().isEmpty().escape(),
+    body('name').isString().not().isEmpty()
+      .escape(),
     body('portrait').if(body('portrait').exists()).isString().escape(),
     body('born').if(body('born').exists()).isString().escape(),
     body('died').if(body('died').exists()).isString().escape(),
@@ -20,7 +21,7 @@ module.exports = (router) => {
     try {
       await Person.updateOne(
         { _id: id },
-        { 
+        {
           name,
           portrait,
           born,
@@ -34,4 +35,4 @@ module.exports = (router) => {
 
     res.status(200).end();
   });
-}
+};

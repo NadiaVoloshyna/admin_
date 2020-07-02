@@ -1,9 +1,8 @@
-const Person = require('../../models/person');
 const { query } = require('express-validator');
+const Person = require('../../models/person');
 const { createQueryForPagination } = require('../../helpers/resolvers');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
-
 
 module.exports = (router) => {
   /**
@@ -20,7 +19,7 @@ module.exports = (router) => {
     ]),
   ], errorHandler, async (req, res) => {
     try {
-      let { query, options } = createQueryForPagination({ ...req.query});
+      const { query, options } = createQueryForPagination({ ...req.query });
 
       const persons = await Person.paginate(query, options);
 
@@ -31,11 +30,11 @@ module.exports = (router) => {
           limit: persons.limit,
           offset: persons.offset
         }
-      }
+      };
 
       res.send(response);
     } catch (error) {
       handleError.custom(res, 500, error);
     }
   });
-}
+};

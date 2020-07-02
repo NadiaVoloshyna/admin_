@@ -2,17 +2,16 @@ import React from 'react';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 
-function UserProfile ({ id }) {
+function UserProfile({ id }) {
   return (
     <div className="users-page">
       <Head>
         <title>Users</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout activePage="UserProfile" >
-        <Layout.Navbar>
-        </Layout.Navbar>
+      <Layout activePage="UserProfile">
+        <Layout.Navbar />
 
         <Layout.Content>
           <div>
@@ -21,14 +20,14 @@ function UserProfile ({ id }) {
         </Layout.Content>
       </Layout>
     </div>
-  )
-};
+  );
+}
 
 UserProfile.getInitialProps = (ctx) => {
   const { query } = ctx;
-  return { 
+  return {
     id: query.id
-  }
-}
+  };
+};
 
 export default UserProfile;

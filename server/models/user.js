@@ -37,9 +37,9 @@ const schema = new mongoose.Schema({
   }
 });
 
-schema.methods.toJson = function () {
+schema.methods.toJson = function toJson() {
   const { _id, firstName, lastName, displayName, email, created, role, active } = this.toObject();
-  
+
   return {
     firstName,
     lastName,
@@ -51,7 +51,7 @@ schema.methods.toJson = function () {
     active,
     _id
   };
-}
+};
 
 schema.plugin(mongoosePaginate);
 

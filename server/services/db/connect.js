@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
-const CONNECTION_URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-yr0be.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const CONNECTION_URL = `
+  mongodb+srv://${process.env.DB_USERNAME}:
+  ${process.env.DB_PASSWORD}@cluster0-yr0be.mongodb.net/
+  ${process.env.DB_NAME}?retryWrites=true&w=majority
+  `;
 
 mongoose.connection.on('open', function () {
-
   console.log('Connected to mongo server!');
 });
 
@@ -15,4 +18,4 @@ module.exports = async (logger) => {
     logger.error(error);
     throw error;
   }
-}
+};

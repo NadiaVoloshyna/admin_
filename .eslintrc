@@ -15,7 +15,6 @@
           ["shared", "./client/shared"],
           ["assets", "./assets"],
           ["utils", "./client/utils"],
-          ["store", "./client/store"],
           ["common", "./common"]
         ],
         "extensions": [".js", ".json"]
@@ -52,6 +51,7 @@
     "no-console": "off",
     "key-spacing": "off",
     "max-len": ["error", 130, 2],
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "no-return-await": "off"
   }
 }

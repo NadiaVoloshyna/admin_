@@ -1,6 +1,6 @@
+const { body, check } = require('express-validator');
 const Person = require('../../models/person');
 const GoogleApi = require('../../services/google');
-const { body, check } = require('express-validator');
 const handleError = require('../../helpers/handleError');
 const helpers = require('../../helpers/permissions');
 const errorHandler = require('../../middlewares/errorHandler');
@@ -36,15 +36,15 @@ module.exports = (router) => {
 
       await Person.update(
         { _id },
-        { 
-          '$push': { 
-            'permissions': { 
-              '$each': permissions.map(item => ({
+        {
+          $push: {
+            permissions: {
+              $each: permissions.map(item => ({
                 ...item,
                 user: item.user._id
               }))
-            } 
-          } 
+            }
+          }
         },
       );
 
@@ -53,4 +53,4 @@ module.exports = (router) => {
       return handleError.custom(res, 500, error);
     }
   });
-}
+};

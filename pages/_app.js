@@ -2,10 +2,10 @@ import App from 'next/app';
 import React from 'react';
 import { UserContext } from 'shared/context';
 import { library } from '@fortawesome/fontawesome-svg-core';
-//import { fab } from '@fortawesome/free-brands-svg-icons'
-import { 
-  faTrashAlt, 
-  faUserTie, 
+// import { fab } from '@fortawesome/free-brands-svg-icons'
+import {
+  faTrashAlt,
+  faUserTie,
   faCalendarAlt,
   faEllipsisV,
   faHome,
@@ -24,12 +24,12 @@ import { destructureUser } from 'utils/user';
 import 'assets/styles/styles.scss';
 
 library.add(
-  faTrashAlt, 
-  faUserTie, 
-  faCalendarAlt, 
-  faEllipsisV, 
-  faHome, 
-  faPhotoVideo, 
+  faTrashAlt,
+  faUserTie,
+  faCalendarAlt,
+  faEllipsisV,
+  faHome,
+  faPhotoVideo,
   faUsers,
   faUserShield,
   faIdCard,
@@ -47,7 +47,6 @@ class UkrainianAdminApp extends App {
     }
     if (ctx.req && ctx.req.session.passport) {
       pageProps.user = ctx.req.session.passport.user;
-      pageProps.user = pageProps.user;
     }
     return { pageProps };
   }
@@ -59,7 +58,7 @@ class UkrainianAdminApp extends App {
     };
   }
 
-  render () {
+  render() {
     const { Component, pageProps } = this.props;
 
     const context = {
@@ -78,7 +77,7 @@ class UkrainianAdminApp extends App {
           <Component {...props} />
         </UserContext.Provider>
       </div>
-    )
+    );
   }
 }
 

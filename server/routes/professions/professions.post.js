@@ -1,13 +1,13 @@
-const Profession = require('../../models/profession');
 const { body } = require('express-validator');
+const Profession = require('../../models/profession');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
 
- // Check if profession exists
-const checkProfession = async(req, res, next) => {
+// Check if profession exists
+const checkProfession = async (req, res, next) => {
   const { name } = req.body;
   try {
-    const profession = await Profession.findOne({name});
+    const profession = await Profession.findOne({ name });
     if (profession) {
       // profession with this name is already exist
       res.status(409).send({
@@ -16,32 +16,32 @@ const checkProfession = async(req, res, next) => {
       });
       return;
     }
-    next(); 
+    next();
   } catch (error) {
     return handleError.custom(res, 500, error);
   }
-}
+};
 
-  // Create profession
+// Create profession
 const createProfession = async (req, res, next) => {
   const { name } = req.body;
   try {
-    newProfession = await new Profession({
+    const newProfession = await new Profession({
       name
     }).save();
     const response = {
       id: newProfession._id,
       name: newProfession.name
-    }
-    res.locals.response = response; 
-    next(); 
+    };
+    res.locals.response = response;
+    next();
   } catch (error) {
     return handleError.custom(res, 500, error);
   }
-}
+};
 
 module.exports = (router) => {
-    /**
+  /**
    * Create profession
    * 1. Find profession in DB
    * 2. If profession exists, exit
@@ -53,6 +53,5 @@ module.exports = (router) => {
   router.post('/', [
     body('name').isString().escape()
   ], errorHandler, checkProfession, createProfession,
-   (req, res) => res.status(201).send(res.locals.response)
-  )
-}
+  (req, res) => res.status(201).send(res.locals.response));
+};
