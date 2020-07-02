@@ -20,7 +20,7 @@ module.exports = (router) => {
         }
 
         if (!file) {
-          const writestream = mongoose.gridfs.createWriteStream({ filename });
+          const writestream = mongoose.createWriteStream({ filename });
           const bufferStream = new stream.PassThrough();
 
           bufferStream.end(Buffer.from(req.files.file.data));

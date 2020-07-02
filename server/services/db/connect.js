@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Grid = require('gridfs-stream');
 
 const CONNECTION_URL = `
   mongodb+srv://${process.env.DB_USERNAME}:
@@ -8,9 +7,6 @@ const CONNECTION_URL = `
   `;
 
 mongoose.connection.on('open', () => {
-  const gfs = Grid(mongoose.connection.db, mongoose.mongo);
-  mongoose.gridfs = gfs;
-
   console.log('Connected to mongo server!');
 });
 
