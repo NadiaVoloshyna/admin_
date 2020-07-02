@@ -2,25 +2,25 @@ const _snakeCase = require('lodash/snakeCase');
 const { logger } = require('../loggers');
 
 const statuses = {
-  '401': 'Unauthorized',
-  '403': 'Forbidden',
-  '500': 'Internal Server Error',
-}
+  401: 'Unauthorized',
+  403: 'Forbidden',
+  500: 'Internal Server Error',
+};
 
 const validation = (res, status, errors) => {
   res.status(status).send({
     error: {
       code: 'INVALID_REQUEST',
-      details: errors.array().map(item => ({ 
-        code: _snakeCase(item.msg).toUpperCase(), 
-        message: `${item.msg} ${item.param} in ${item.location}` 
+      details: errors.array().map(item => ({
+        code: _snakeCase(item.msg).toUpperCase(),
+        message: `${item.msg} ${item.param} in ${item.location}`
       }))
     }
   });
-}
+};
 
 const custom = (res, status, error) => {
-  const code = statuses[status + ''];
+  const code = statuses[`${status}`];
   let message = error;
 
   if (error instanceof Error) {
@@ -32,15 +32,15 @@ const custom = (res, status, error) => {
   res.status(status).send({
     error: {
       code: _snakeCase(code).toUpperCase(),
-      details: [{ 
-        code: _snakeCase(code).toUpperCase(), 
-        message 
+      details: [{
+        code: _snakeCase(code).toUpperCase(),
+        message
       }]
     }
   });
-}
+};
 
 module.exports = {
   validation,
   custom
-}
+};

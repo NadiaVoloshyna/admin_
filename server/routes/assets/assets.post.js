@@ -1,5 +1,5 @@
-const Asset = require('../../models/asset');
 const { body } = require('express-validator');
+const Asset = require('../../models/asset');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
 
@@ -9,7 +9,7 @@ module.exports = (router) => {
  * 1. Get current user
  * 2. Save asset to DB
  */
-router.post('/', [
+  router.post('/', [
     body('name').isString().escape(),
     body('type').isIn(['FOLDER', 'IMAGE', 'VIDEO', 'ALBUM']),
     body('parent').if(body('parent').exists()).isMongoId(),
@@ -18,10 +18,10 @@ router.post('/', [
     body('year').if(body('year').exists()).isNumeric(),
     body('description').if(body('description').exists()).isString(),
   ], errorHandler, async (req, res) => {
-    const { 
-      name, 
-      type, 
-      parent, 
+    const {
+      name,
+      type,
+      parent,
       url,
       author,
       year,
@@ -49,4 +49,4 @@ router.post('/', [
       return handleError.custom(res, 500, error);
     }
   });
-}
+};

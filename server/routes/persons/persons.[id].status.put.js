@@ -1,7 +1,7 @@
-const Person = require('../../models/person');
-const GoogleApi = require('../../services/google');
 const { body, check } = require('express-validator');
 const { each } = require('async');
+const Person = require('../../models/person');
+const GoogleApi = require('../../services/google');
 const handleError = require('../../helpers/handleError');
 const helpers = require('../../helpers/permissions');
 const errorHandler = require('../../middlewares/errorHandler');
@@ -26,13 +26,13 @@ module.exports = (router) => {
     const { id } = req.params;
 
     try {
-      const person = await Person.findById(_id);
+      const person = await Person.findById(id);
       const { biography: { documentId } } = person;
-      
+
       await each(person.permissions, async ({ role, permissionId }) => {
         await GoogleApi.updatePermissions(
-          documentId, 
-          permissionId, 
+          documentId,
+          permissionId,
           helpers.getRoleToUpdate(status, role)
         );
       });
@@ -47,4 +47,4 @@ module.exports = (router) => {
 
     res.status(200).end();
   });
-}
+};

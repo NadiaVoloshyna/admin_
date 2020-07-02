@@ -1,19 +1,19 @@
-const Profession = require('../../models/profession');
 const { body } = require('express-validator');
+const Profession = require('../../models/profession');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
 
 module.exports = (router) => {
-    /**
+  /**
    * Delete one or multiple professions
    */
   router.delete('/', [
-    body('ids').exists().isArray({min: 1}).withMessage('At least one id is required'),
+    body('ids').exists().isArray({ min: 1 }).withMessage('At least one id is required'),
   ], errorHandler, async (req, res) => {
     const { ids } = req.body;
 
     try {
-      await Profession.deleteMany({ 
+      await Profession.deleteMany({
         _id: ids
       });
 
@@ -23,4 +23,4 @@ module.exports = (router) => {
       return handleError.custom(res, 500, error);
     }
   });
-}
+};

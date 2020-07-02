@@ -1,11 +1,11 @@
-const Profession = require('../../models/profession');
 const { query, body } = require('express-validator');
+const Profession = require('../../models/profession');
 const { createQueryForPagination } = require('../../helpers/resolvers');
 const handleError = require('../../helpers/handleError');
 const errorHandler = require('../../middlewares/errorHandler');
 
 module.exports = (router) => {
-    /**
+  /**
    * Get subset of professions based of query parameters
    */
   router.get('/', [
@@ -20,7 +20,7 @@ module.exports = (router) => {
     ]),
   ], errorHandler, async (req, res) => {
     try {
-      const { query, options } = createQueryForPagination({ ...req.query});
+      const { query, options } = createQueryForPagination({ ...req.query });
       const professions = await Profession.paginate(query, options);
 
       const response = {
@@ -30,11 +30,11 @@ module.exports = (router) => {
           limit: professions.limit,
           offset: professions.offset
         }
-      }
+      };
 
       res.send(response);
     } catch (error) {
       handleError.custom(res, 500, error);
     }
   });
-}
+};
