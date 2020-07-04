@@ -7,7 +7,7 @@ const SCOPES = [
 
 const auth = new google.auth.JWT({
   email: process.env.GOOGLE_DOC_CLIENT_EMAIL,
-  key: process.env.GOOGLE_DOC_PRIVATE_KEY, 
+  key: process.env.GOOGLE_DOC_PRIVATE_KEY,
   scopes: SCOPES,
 });
 
@@ -17,18 +17,18 @@ const GoogleApi = {
   createPermission: async (fileId, resource) => {
     return await drive.permissions.create({
       resource,
-      fileId: fileId,
+      fileId,
       fields: 'id',
     });
   },
   createDocument: async (title) => {
     return await drive.files.create({
       resource: {
-        'name' : title,
-        'mimeType' : 'application/vnd.google-apps.document',
-        'parents':[process.env.GOOGLE_DOC_ROOT_FOLDER_ID]
+        name : title,
+        mimeType : 'application/vnd.google-apps.document',
+        parents:[process.env.GOOGLE_DOC_ROOT_FOLDER_ID]
       },
-      fields: 'id' 
+      fields: 'id'
     });
   },
 
@@ -40,14 +40,14 @@ const GoogleApi = {
   },
 
   getFileMeta: async (fileId, fields) => {
-    return await drive.files.get({ 
+    return await drive.files.get({
       fileId,
       fields: fields || 'lastModifyingUser,modifiedTime'
     });
   },
 
   delete: (id) => {
-    return drive.files.delete({ 
+    return drive.files.delete({
       fileId: id
     });
   },
@@ -68,7 +68,7 @@ const GoogleApi = {
     return drive.permissions.get({
       fileId,
       permissionId
-    })
+    });
   },
 
   /**
@@ -79,8 +79,8 @@ const GoogleApi = {
       fileId,
       permissionId,
       resource: { role }
-    })
+    });
   },
-}
+};
 
 module.exports = GoogleApi;

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
+const { Schema } = mongoose;
+const { ObjectId } = Schema;
 
 const schema = new Schema({
   id: String,
@@ -48,15 +48,15 @@ const schema = new Schema({
     type: String
   }
   // Recursive asset deletion
-}).pre('remove', { document: true }, async function(next) {
+}).pre('remove', { document: true }, async function removeHook(next) {
   try {
     const Asset = mongoose.model('Asset');
-    const children = await Asset.find({parent: this._id});
+    const children = await Asset.find({ parent: this._id });
 
     children.forEach(doc => {
       doc.remove();
     });
-    
+
     next();
   } catch (error) {
     next(error);

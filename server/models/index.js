@@ -10,4 +10,4 @@ module.exports = {
   Profession,
   User,
   Invite
-}
+};

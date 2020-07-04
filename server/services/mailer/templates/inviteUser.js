@@ -10,9 +10,9 @@ const template = (token, role) => `
 
 const subject = () => {
   return 'You were invited to be a part of Ukrainian.com';
-}
+};
 
 module.exports = {
   template,
   subject
-}
+};

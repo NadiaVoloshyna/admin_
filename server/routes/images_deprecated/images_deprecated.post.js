@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const handleError = require('../../helpers/handleError');
 const stream = require('stream');
+const handleError = require('../../helpers/handleError');
 
 module.exports = (router) => {
-    /**
+  /**
    * Upload an image
    */
   router.post('/', (req, res) => {
@@ -18,12 +18,12 @@ module.exports = (router) => {
         if (error) {
           return handleError.custom(res, 500, error);
         }
-        
+
         if (!file) {
-          const writestream = mongoose.gridfs.createWriteStream({ filename });
+          const writestream = mongoose.createWriteStream({ filename });
           const bufferStream = new stream.PassThrough();
 
-          bufferStream.end(new Buffer(req.files.file.data));
+          bufferStream.end(Buffer.from(req.files.file.data));
           bufferStream.pipe(writestream);
 
           writestream.on('close', (file) => {
@@ -36,7 +36,7 @@ module.exports = (router) => {
         } else {
           res.send(file._id);
         }
-      })
+      });
     });
   });
-}
+};

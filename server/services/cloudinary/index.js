@@ -4,8 +4,8 @@ const request = require('request');
 const config = {
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key:    process.env.CLOUDINARY_KEY,
-  api_secret: process.env. CLOUDINARY_SECRET
-}
+  api_secret: process.env.CLOUDINARY_SECRET
+};
 
 cloudinary.config(config);
 
@@ -27,7 +27,7 @@ module.exports = {
       };
 
       request(options, (error, response, body) => {
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode === 200) {
           resolve(JSON.parse(body));
         } else {
           reject();
@@ -35,4 +35,4 @@ module.exports = {
       });
     });
   }
-}
+};

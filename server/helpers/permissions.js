@@ -5,24 +5,30 @@ const getRoleToUpdate = (status, role) => {
     case PERSON_POST_STATUSES.IN_PROGRESS:
       if (role === 'author') return GOOGLE_USER_ROLES.AUTHOR;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
+      break;
     case PERSON_POST_STATUSES.AWAITS_REVIEW:
       if (role === 'author') return GOOGLE_USER_ROLES.READER;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
+      break;
     case PERSON_POST_STATUSES.IN_REVIEW:
       if (role === 'author') return GOOGLE_USER_ROLES.READER;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.REVIEWER;
+      break;
     case PERSON_POST_STATUSES.READY_TO_PUBLISH:
       if (role === 'author') return GOOGLE_USER_ROLES.READER;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
+      break;
     case PERSON_POST_STATUSES.PUBLISHED:
       if (role === 'author') return GOOGLE_USER_ROLES.READER;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
+      break;
     default:
       if (role === 'author') return GOOGLE_USER_ROLES.READER;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
+      break;
   }
-}
+};
 
 module.exports = {
   getRoleToUpdate
-}
+};

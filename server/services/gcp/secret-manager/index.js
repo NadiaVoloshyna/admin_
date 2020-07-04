@@ -1,13 +1,13 @@
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
 
 class SecretManager {
-  constructor () {
+  constructor() {
     this.secretManagerServiceClient = new SecretManagerServiceClient();
 
     this.GOOGLE_CLOUD_PROJECT = process.env.GOOGLE_CLOUD_PROJECT;
   }
 
-  async getSecret (secret, version = 'latest') {
+  async getSecret(secret, version = 'latest') {
     const [vs] = await this.secretManagerServiceClient.accessSecretVersion({
       name: `project/${this.GOOGLE_CLOUD_PROJECT}/secrets/${secret}/versions/${version}`
     });

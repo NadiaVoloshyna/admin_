@@ -1,5 +1,5 @@
-const User = require('../../models/user');
 const { check, body } = require('express-validator');
+const User = require('../../models/user');
 const errorHandler = require('../../middlewares/errorHandler');
 const handleError = require('../../helpers/handleError');
 const { USER_ROLES } = require('../../constants');
@@ -15,7 +15,7 @@ module.exports = (router) => {
   ], errorHandler, async (req, res) => {
     const { role } = req.body;
     const { id } = req.params;
-  
+
     try {
       await User.updateOne(
         { _id: id },
@@ -27,4 +27,4 @@ module.exports = (router) => {
 
     res.status(200).end();
   });
-}
+};
