@@ -1,4 +1,3 @@
-// const imagesRoutes = require('./images');
 const authRoutes = require('./auth');
 const personsRoutes = require('./persons');
 const usersRoutes = require('./users');
@@ -8,7 +7,6 @@ const restrictAccess = require('../middlewares/guards/restrictAccess');
 
 module.exports = (app) => {
   // API routes
-  // app.use('/api/images', imagesRoutes);
   app.use('/api/persons', personsRoutes);
   app.use('/api/users', usersRoutes);
   app.use('/api/professions', professionsRoutes);
