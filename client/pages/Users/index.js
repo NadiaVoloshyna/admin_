@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
+import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from 'shared/constants';
 import InviteUserModal from 'pages/Users/components/inviteUserModal';
 import Button from 'react-bootstrap/Button';
 import UsersList from 'pages/Users/components/usersList';
@@ -9,6 +12,8 @@ import UsersAPI from 'pages/Users/api';
 const UsersPage = (props) => {
   const { user } = props;
 
+  const alert = useAlert();
+  const handleError = useErrorHandler();
   const [isLoading, setIsLoading] = useState(false);
   const [showInviteUserModal, toggleShowInviteUserModal] = useState(false);
 
@@ -22,20 +27,12 @@ const UsersPage = (props) => {
     const { offset, searchTerm, sort } = newPagination;
 
     try {
-      const response = await UsersAPI.getUsers(offset, searchTerm, sort);
-      const usersResponse = await response.json();
-      const { users, pagination } = usersResponse;
+      const { data: { users, pagination } } = await UsersAPI.getUsers(offset, searchTerm, sort);
 
-      if (response.status === 200) {
-        setUsers(users);
-        setPagination(offset, searchTerm, sort, ...pagination);
-      }
-
-      if (response.status === 500) {
-        throw new Error(response.message);
-      }
+      setUsers(users);
+      setPagination(offset, searchTerm, sort, ...pagination);
     } catch (error) {
-      console.error(error);
+      handleError(error, ERROR_MESSAGES.USERS_GET_USERS);
     } finally {
       setIsLoading(false);
     }
@@ -49,12 +46,12 @@ const UsersPage = (props) => {
       const response = await UsersAPI.invite(email, role);
 
       if (response.status === 200) {
-        console.log('User invitation successful');
+        alert.success(SUCCESS_MESSAGES.USERS_INVITE_USER);
       } else {
         throw Error(response.message);
       }
     } catch (error) {
-      console.error(error);
+      handleError(error, ERROR_MESSAGES.USERS_INVITE_USER);
     } finally {
       setIsLoading(false);
     }
@@ -66,12 +63,12 @@ const UsersPage = (props) => {
     try {
       const response = await UsersAPI.update(payload);
       if (response.status === 200) {
-        console.log(response);
+        alert.success(SUCCESS_MESSAGES.USERS_EDIT_USER);
       } else {
         throw Error(response.message);
       }
     } catch (error) {
-      console.error(error);
+      handleError(error, ERROR_MESSAGES.USERS_EDIT_USER);
     } finally {
       setIsLoading(false);
     }

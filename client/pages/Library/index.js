@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
 import Head from 'next/head';
 import { UserContext } from 'shared/context';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
 import CreateAssetDropdown, { ASSET_TYPES } from 'shared/components/createAssetDropdown';
+import { ERROR_MESSAGES } from 'shared/constants';
 import AssetDetailsModal from 'pages/Library/components/assetDetailsModal';
 import MediaLibrary from 'shared/components/mediaLibrary';
 import Button from 'react-bootstrap/Button';
@@ -17,9 +19,11 @@ const supportedAssetTypes = [
 ];
 
 const LibraryPage = () => {
+  const handleError = useErrorHandler();
   const { user } = useContext(UserContext);
   const { userRoleUp } = user;
 
+  const [isLoading, setIsLoading] = useState(false);
   const [ selectedAsset, setSelectedAsset ] = useState(null);
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ newAsset, setNewAsset ] = useState(null);
@@ -38,14 +42,21 @@ const LibraryPage = () => {
   };
 
   const onAssetCreate = async (asset) => {
-    if (currentFolder) {
-      asset.parent = currentFolder._id;
+    setIsLoading(true);
+
+    try {
+      if (currentFolder) {
+        asset.parent = currentFolder._id;
+      }
+
+      const { data: newAsset } = await api.createAsset(asset);
+
+      setNewAsset(newAsset);
+    } catch (error) {
+      handleError(error, ERROR_MESSAGES.LIBRARY_CREATE_ASSET);
+    } finally {
+      setIsLoading(false);
     }
-
-    const response = await api.createAsset(asset);
-    const newAsset = await response.json();
-
-    setNewAsset(newAsset);
   };
 
   const toggleUploadBox = () => {
@@ -75,7 +86,7 @@ const LibraryPage = () => {
             )}
         </Layout.Navbar>
 
-        <Layout.Content>
+        <Layout.Content isLoading={isLoading}>
           <MediaLibrary
             canDelete={userRoleUp('admin')}
             onAssetSelect={onAssetSelect}

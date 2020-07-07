@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Alert from 'react-bootstrap/Alert';
 import AuthApi from 'pages/Auth/api';
+import logger from 'utils/logger';
 
 const LoginPage = () => {
   // TODO: add spinner to this page
@@ -17,14 +18,17 @@ const LoginPage = () => {
   const loginUser = async (payload) => {
     setIsLoading(true);
     setShowErrorMessage(false);
+
     try {
       const response = await AuthApi.login(payload);
+
       if (response.status === 302) {
         window.location = '/';
       } else {
         throw new Error(response.message);
       }
     } catch (error) {
+      logger.error(error);
       setShowErrorMessage(true);
     } finally {
       setIsLoading(false);

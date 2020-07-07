@@ -1,15 +1,14 @@
 const { query } = require('express-validator');
 const Asset = require('../../models/asset');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
   /**
- * Get assets
- */
+  * Get assets
+  */
   router.get('/', [
     query('parent').if(query('parent').exists()).isMongoId()
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const { parent } = req.query;
     const query = parent
       ? { parent }
@@ -21,7 +20,7 @@ module.exports = (router) => {
 
       res.status(200).send(asset);
     } catch (error) {
-      return handleError.custom(res, 500, error);
+      req.handle500(error);
     }
   });
 };

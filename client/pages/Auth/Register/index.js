@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import AuthApi from 'pages/Auth/api';
+import logger from 'utils/logger';
 import PasswordRequirementsOverlay from './components/passwordRequirementsOverlay';
 import validator from './validator';
 
@@ -28,7 +29,7 @@ const RegisterPage = (props) => {
         throw new Error(response.message);
       }
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   };
 

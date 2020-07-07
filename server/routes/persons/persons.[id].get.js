@@ -1,9 +1,8 @@
 const { check } = require('express-validator');
 const Person = require('../../models/person');
 const GoogleApi = require('../../services/google');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
 const ac = require('../../../accesscontrol.config');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 const getResource = async (req, res, next) => {
   const _id = req.params.id;
@@ -17,14 +16,14 @@ const getResource = async (req, res, next) => {
       .populate('permissions.user', '-password');
 
     if (!document) {
-      return handleError.custom(res, 404);
+      return req.handle404(`Document ${_id} was not found`);
     }
 
     res.locals.person = document.toJSON();
 
     next();
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    return req.handle500(error);
   }
 };
 
@@ -51,13 +50,13 @@ const getGoogleDocument = async (req, res, next) => {
       const { modifiedTime, lastModifyingUser } = response.data;
       documentMeta = {
         modifiedTime,
-        lastModifiedBy: ((lastModifyingUser && lastModifyingUser.displayName) || null)
+        lastModifiedBy: (lastModifyingUser && lastModifyingUser.displayName) || null
       };
     } else {
       throw new Error("Couldn't fetch file's metadata");
     }
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    return req.handle500(error);
   }
 
   const responseBody = {
@@ -79,7 +78,7 @@ module.exports = (router) => {
   router.get('/:id', [
     check('id').isMongoId()
   ],
-  errorHandler,
+  handle400,
   getResource,
   checkPermissions,
   getGoogleDocument,

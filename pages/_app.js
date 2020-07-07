@@ -2,6 +2,8 @@ import App from 'next/app';
 import React from 'react';
 import { UserContext } from 'shared/context';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import AlertProvider from 'shared/components/alertProvider';
+
 // import { fab } from '@fortawesome/free-brands-svg-icons'
 import {
   faTrashAlt,
@@ -73,9 +75,11 @@ class UkrainianAdminApp extends App {
 
     return (
       <div className="bg-light">
-        <UserContext.Provider value={context}>
-          <Component {...props} />
-        </UserContext.Provider>
+        <AlertProvider>
+          <UserContext.Provider value={context}>
+            <Component {...props} />
+          </UserContext.Provider>
+        </AlertProvider>
       </div>
     );
   }

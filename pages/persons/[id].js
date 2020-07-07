@@ -1,30 +1,35 @@
 import React from 'react';
-
 import PersonAPI from 'pages/Person/api';
 import ProfessionsAPI from 'pages/Professions/api';
 import PersonPage from 'pages/Person';
-import { personState } from 'pages/Person/state';
+import WithError from 'shared/components/withError';
+import logger from 'utils/logger';
 
-const Person = (props) => <PersonPage {...props} />;
+const Person = (props) => (
+  <WithError statusCode={props.statusCode}>
+    <PersonPage {...props} />
+  </WithError>
+);
 
 Person.getInitialProps = async (ctx) => {
   const { query, req } = ctx;
 
-  const personReq = PersonAPI.setCookie(req).getPerson(query.id);
-  const professionsReq = ProfessionsAPI.getAllProfessions();
-  const personRes = await personReq;
-  const professionsRes = await professionsReq;
+  try {
+    const personReq = PersonAPI.setCookie(req).getPerson(query.id);
+    const professionsReq = ProfessionsAPI.getAllProfessions();
+    const { data: person } = await personReq;
+    const { data: { professions } } = await professionsReq;
 
-  if (personRes.status !== 200) return { errorCode: personRes.status };
-  if (professionsRes.status !== 200) return { errorCode: professionsRes.status };
-
-  const person = await personRes.json() || personState;
-  const professions = await professionsRes.json() || {};
-
-  return {
-    person,
-    professions: professions.professions
-  };
+    return {
+      person,
+      professions
+    };
+  } catch (error) {
+    logger.error(error);
+    return {
+      statusCode: (error.response && error.response.status) || 500
+    };
+  }
 };
 
 export default Person;

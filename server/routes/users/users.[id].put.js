@@ -1,13 +1,12 @@
 const { body, param } = require('express-validator');
 const User = require('../../models/user');
-const errorHandler = require('../../middlewares/errorHandler');
-const handleError = require('../../helpers/handleError');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
   router.put('/:id', [
     param('id').isMongoId(),
     body('active').if(body('active').exists()).isBoolean()
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const query = {
       _id: req.params.id
     };
@@ -31,7 +30,7 @@ module.exports = (router) => {
       const user = await User.findByIdAndUpdate(query, updateBody);
       res.status(200).send(user);
     } catch (error) {
-      handleError.custom(res, 500, error);
+      req.handle500(error);
     }
   });
 };

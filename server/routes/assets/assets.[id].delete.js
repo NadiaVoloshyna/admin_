@@ -1,7 +1,6 @@
 const { check } = require('express-validator');
 const Asset = require('../../models/asset');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 const ac = require('../../../accesscontrol.config');
 
 const checkPermissions = (req, res, next) => {
@@ -25,7 +24,7 @@ const deleteAssets = async (req, res) => {
     // TODO
     return res.status(200).end();
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    req.handle500(error);
   }
 };
 
@@ -40,7 +39,7 @@ module.exports = (router) => {
   router.delete('/:id', [
     check('id').exists().isMongoId(),
   ],
-  errorHandler,
+  handle400,
   checkPermissions,
   deleteAssets);
 };

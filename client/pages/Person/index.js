@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import _unescape from 'lodash/unescape';
 import { Form } from 'react-final-form';
+import { useAlert } from 'react-alert';
 import arrayMutators from 'final-form-arrays';
 import Head from 'next/head';
-import Error from 'next/error';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from 'shared/constants';
 
 import PersonApi from 'pages/Person/api';
 import UsersApi from 'shared/api/users';
@@ -20,14 +22,12 @@ import DocumentAction from 'pages/Person/components/documentAction';
 import PersonUserList from 'pages/Person/components/usersList';
 
 const PersonPage = (props) => {
+  const handleError = useErrorHandler();
+  const alert = useAlert();
   const [ person, setPerson ] = useState(props.person);
   const [ usersForAssignment, setUsersForAssignment ] = useState([]);
   const [ disableActions, setActionsDisabled ] = useState(false);
   const [ isLoading, setIsLoading ] = useState(false);
-
-  if (props.errorCode) {
-    return <Error statusCode={props.errorCode} />;
-  }
 
   const { user, professions } = props;
 
@@ -55,13 +55,8 @@ const PersonPage = (props) => {
     setIsLoading(true);
 
     PersonApi.update(person._id, values)
-      .then(response => {
-        // TODO: probably we need to show some kind of toast with update confirmation
-        console.log(response);
-      })
-      .catch(error => {
-        console.error(error);
-      })
+      .then(() => alert.success(SUCCESS_MESSAGES.PERSON_SAVE))
+      .catch(error => handleError(error, ERROR_MESSAGES.PERSON_SAVE))
       .finally(() => setIsLoading(false));
   };
 
@@ -74,10 +69,7 @@ const PersonPage = (props) => {
 
     PersonApi.updateStatus(person._id, status)
       .then(() => setPerson({ ...person, newStatus }))
-      .catch(error => {
-        // TODO: log error
-        console.error(error);
-      })
+      .catch(error => handleError(error, ERROR_MESSAGES.PERSON_UPDATE_STATUS))
       .finally(() => setIsLoading(false));
   };
 
@@ -89,15 +81,11 @@ const PersonPage = (props) => {
     setIsLoading(true);
 
     PersonApi.updatePermissions(person._id, selectedUserId)
-      .then(response => response.json())
       .then(permissions => setPerson({
         ...person,
         permissions: [...person.permissions, ...permissions]
       }))
-      .catch(error => {
-        // TODO: handle error
-        console.error(error);
-      })
+      .catch(error => handleError(error, ERROR_MESSAGES.PERSON_ASSIGN_USER))
       .finally(() => setIsLoading(false));
   };
 
@@ -109,14 +97,12 @@ const PersonPage = (props) => {
     setIsLoading(true);
 
     UsersApi.getUsersByRole(role)
-      .then(response => response.json())
-      .then(users => {
+      .then(({ data: users }) => {
         const filtered = users.filter(user => !permissions.find(item => item.user._id === user._id));
         setUsersForAssignment(filtered);
       })
-      .catch(error => {
-        // TODO: handle error
-        console.error(error);
+      .catch((error) => {
+        handleError(error, ERROR_MESSAGES.PERSON_GET_USERS_FOR_ASSIGNMENT);
       })
       .finally(() => setIsLoading(false));
   };
