@@ -1,7 +1,6 @@
 const { body, check } = require('express-validator');
 const Person = require('../../models/person');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 /**
  * Update single person
@@ -14,7 +13,7 @@ module.exports = (router) => {
     body('portrait').if(body('portrait').exists()).isString().escape(),
     body('born').if(body('born').exists()).isString().escape(),
     body('died').if(body('died').exists()).isString().escape(),
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const { name, portrait, born, died, professions } = req.body;
     const { id } = req.params;
 
@@ -30,7 +29,7 @@ module.exports = (router) => {
         }
       );
     } catch (error) {
-      return handleError.custom(res, 500, error);
+      return req.handle500(error);
     }
 
     res.status(200).end();

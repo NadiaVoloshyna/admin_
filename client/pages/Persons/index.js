@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
+import { ERROR_MESSAGES } from 'shared/constants';
 import PersonsList from 'pages/Persons/components/personsList';
 import DuplicateModal from 'pages/Persons/components/duplicateModal';
 import CreateDropdown from 'shared/components/createDropdown';
 import PersonsApi from 'pages/Persons/api';
 
 const PersonsPage = ({ user, persons, pagination }) => {
+  const handleError = useErrorHandler();
   const [ isLoading, setIsLoading ] = useState(false);
   const [ isPersonExist, setIsPersonExist ] = useState(false);
   const [ duplicate, setDuplicate ] = useState({});
-  const [personsState, setPersons] = useState(persons);
-  const [paginationState, setPaginationState] = useState(pagination);
+  const [ personsState, setPersons ] = useState(persons);
+  const [ paginationState, setPaginationState ] = useState(pagination);
 
-  const canCreatePerson = user.permissions.createOwn('person');
-  const canDeletePerson = user.permissions.deleteAny('person');
+  const canCreatePerson = user.permissions.createOwn('person').granted;
+  const canDeletePerson = user.permissions.deleteAny('person').granted;
 
   const onPersonsGet = async (payload) => {
     setIsLoading(true);
@@ -26,7 +29,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
       setPersons(persons);
       setPaginationState({ offset, searchTerm, sort, ...pagination });
     } catch (error) {
-      console.error(error);
+      handleError(error, ERROR_MESSAGES.PERSONS_GET_PERSONS);
     } finally {
       setIsLoading(false);
     }
@@ -42,7 +45,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
       persons = persons.filter(person => ids.find(id => id === person._id));
       setPersons(persons);
     } catch (error) {
-      console.error(error);
+      handleError(error, ERROR_MESSAGES.PERSONS_DELETE_PERSONS);
     } finally {
       setIsLoading(false);
     }
@@ -54,27 +57,22 @@ const PersonsPage = ({ user, persons, pagination }) => {
     const { value: name } = data;
 
     try {
-      const response = await PersonsApi.create({ name });
-      const person = await response.json();
+      const { data: person, status } = await PersonsApi.create({ name });
 
-      if (response.status === 301 || response.status === 302) {
+      if (status === 301 || status === 302) {
         window.location = `persons/${person.id}`;
         return;
       }
 
-      if (response.status === 409) {
+      if (status === 409) {
         setDuplicate({
           id: person.id,
           name: person.name
         });
         setIsPersonExist(true);
       }
-
-      if (response.status === 500) {
-        throw Error(response.message);
-      }
     } catch (error) {
-      console.error(error);
+      handleError(error, ERROR_MESSAGES.PERSONS_CREATE_PERSON);
     } finally {
       setIsLoading(false);
     }
@@ -89,7 +87,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
 
       <Layout activePage="Persons">
         <Layout.Navbar className="mb-5">
-          { canCreatePerson.granted
+          { canCreatePerson
             && (
             <CreateDropdown
               buttonText="Create Person"
@@ -103,7 +101,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
           <PersonsList
             onPersonsGet={onPersonsGet}
             onDelete={onDelete}
-            hideSelectColumn={!canDeletePerson.granted}
+            hideSelectColumn={!canDeletePerson}
             persons={personsState}
             pagination={paginationState}
           />

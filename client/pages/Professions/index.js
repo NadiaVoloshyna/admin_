@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
+import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
+import { ERROR_MESSAGES, WARNING_MESSAGES } from 'shared/constants';
 import CreateDropdown from 'shared/components/createDropdown';
 import ProfessionsList from 'pages/Professions/components/professionsList';
 import ProfessionsAPI from 'pages/Professions/api';
 
 const ProfessionsPage = (props) => {
+  const handleError = useErrorHandler();
+  const alert = useAlert();
   const [ isLoading, setIsLoading ] = useState(false);
   const [ professions, setProfessions ] = useState(props.professions);
   const [ pagination, setPagination ] = useState(props.pagination);
@@ -15,22 +20,17 @@ const ProfessionsPage = (props) => {
     const { value: name } = payload;
 
     try {
-      const response = await ProfessionsAPI.create({ name });
-      const profession = await response.json();
+      const { data: profession, status } = await ProfessionsAPI.create({ name });
 
-      if (response.status === 201) {
+      if (status === 201) {
         setProfessions([ ...professions, profession ]);
       }
 
-      if (response.status === 409) {
-        console.log('Duplicate profession');
-      }
-
-      if (response.status === 500) {
-        throw new Error(response.message);
+      if (status === 409) {
+        alert.warning(WARNING_MESSAGES.PROFESSIONS_DUPLICATE_PROFESSION);
       }
     } catch (error) {
-      console.error(error);
+      handleError(error, ERROR_MESSAGES.PROFESSIONS_CREATE_PROFESSION);
     } finally {
       setIsLoading(false);
     }
@@ -43,19 +43,14 @@ const ProfessionsPage = (props) => {
     const { offset, searchTerm, sort } = newPagination;
 
     try {
-      const response = await ProfessionsAPI.getProfessions(offset, searchTerm, sort);
-      const professionsResponse = await response.json();
+      const { data: { professions }, status } = await ProfessionsAPI.getProfessions(offset, searchTerm, sort);
 
-      if (response.status === 200) {
-        setProfessions(professionsResponse.professions);
+      if (status === 200) {
+        setProfessions(professions);
         setPagination(newPagination);
       }
-
-      if (response.status === 500) {
-        throw new Error(response.message);
-      }
     } catch (error) {
-      console.error(error);
+      handleError(error, ERROR_MESSAGES.PROFESSIONS_GET_PROFESSIONS);
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +72,7 @@ const ProfessionsPage = (props) => {
         throw new Error(response.message);
       }
     } catch (error) {
-      console.error(error);
+      handleError(error, ERROR_MESSAGES.PROFESSIONS_DELETE_PROFESSIONS);
     } finally {
       setIsLoading(false);
     }

@@ -1,5 +1,3 @@
-const { ApolloError } = require('apollo-server');
-
 const createQueryForPagination = (args) => {
   // No queries -> return all records
   if (!args || !Object.keys(args).length) {
@@ -43,16 +41,6 @@ const createQueryForPagination = (args) => {
   };
 };
 
-const handleError = (error) => {
-  console.error(error);
-  const message = error.errmsg || 'Internal error happened';
-  const code = error.code || 500;
-  const additionalProperties = error.additionalProperties || null;
-
-  throw new ApolloError(message, code, additionalProperties);
-};
-
 module.exports = {
-  createQueryForPagination,
-  handleError
+  createQueryForPagination
 };

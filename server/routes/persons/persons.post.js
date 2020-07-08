@@ -2,9 +2,8 @@ const { body } = require('express-validator');
 const Person = require('../../models/person');
 const Asset = require('../../models/asset');
 const GoogleApi = require('../../services/google');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
 const ac = require('../../../accesscontrol.config');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 // 1. Check if user has permissions to create a person
 const checkPermissions = (req, res, next) => {
@@ -34,7 +33,7 @@ const findResource = async (req, res, next) => {
       });
     }
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    return req.handle500(error);
   }
 
   next();
@@ -55,7 +54,7 @@ const createGoogleDoc = async (req, res, next) => {
       next();
     }
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    req.handle500(error);
   }
 };
 
@@ -74,7 +73,7 @@ const createAsset = async (req, res, next) => {
     res.locals.rootAssetId = rootAsset._id;
     next();
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    req.handle500(error);
   }
 };
 
@@ -96,7 +95,7 @@ const createPerson = async (req, res) => {
       }
     }).save();
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    return req.handle500(error);
   }
 
   res.status(302).send({
@@ -106,13 +105,14 @@ const createPerson = async (req, res) => {
 };
 
 module.exports = (router) => {
-  router.post('/', [
-    body('name').isString().escape(),
-  ],
-  errorHandler,
-  checkPermissions,
-  findResource,
-  createGoogleDoc,
-  createAsset,
-  createPerson);
+  router.post('/',
+    [
+      body('name').isString().escape(),
+    ],
+    handle400,
+    checkPermissions,
+    findResource,
+    createGoogleDoc,
+    createAsset,
+    createPerson);
 };

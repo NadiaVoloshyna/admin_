@@ -1,7 +1,6 @@
 const { body } = require('express-validator');
 const Profession = require('../../models/profession');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
   /**
@@ -9,7 +8,7 @@ module.exports = (router) => {
    */
   router.delete('/', [
     body('ids').exists().isArray({ min: 1 }).withMessage('At least one id is required'),
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const { ids } = req.body;
 
     try {
@@ -20,7 +19,7 @@ module.exports = (router) => {
       res.status(200).end();
       return;
     } catch (error) {
-      return handleError.custom(res, 500, error);
+      req.handle500(error);
     }
   });
 };

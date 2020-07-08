@@ -3,15 +3,15 @@ import ApiService from 'shared/api';
 class MediaApi extends ApiService {
   getAssets = (id = '') => {
     const query = id ? `?parent=${id}` : '';
-    return this.get(`/api/assets${query}`);
+    return this.$http.get(`/api/assets${query}`);
   }
 
   createAsset = (params) => {
-    return this.post('/api/assets', params);
+    return this.$http.post('/api/assets', params);
   }
 
   deleteAsset = (id) => {
-    return this.delete(`/api/assets/${id}`);
+    return this.$http.delete(`/api/assets/${id}`);
   }
 }
 
