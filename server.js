@@ -3,7 +3,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const password = require('passport');
 const next = require('next');
-const { logger } = require('./server/loggers');
+const { logger, auditLogger } = require('./server/services/gcp/logger');
 
 require('dotenv').config();
 
@@ -36,20 +36,17 @@ app.prepare().then(() => {
   server.use(express.urlencoded({ extended: false }));
   server.use(password.initialize());
   server.use(password.session());
+  server.use(auditLogger);
 
   // eslint-disable-next-line global-require
   require('./server/services/passport');
 
-  // server.use(fileUpload());
+  routes(server);
 
-  routes(server, logger);
-
-  server.all('*', (req, res) => {
-    return handle(req, res);
-  });
+  server.all('*', handle);
 
   const PORT = process.env.PORT || 8080;
-  server.listen(PORT, err => {
+  server.listen(PORT, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${PORT}`);
   });

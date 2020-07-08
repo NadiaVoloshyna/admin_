@@ -1,7 +1,6 @@
 const { body, check } = require('express-validator');
 const Asset = require('../../models/asset');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
   /**
@@ -13,7 +12,7 @@ module.exports = (router) => {
     check('id').exists().isMongoId(),
     body('action').exists().isIn(['move']),
     body('payload').exists(),
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const { id } = req.params;
     const { action, payload } = req.body;
 
@@ -23,9 +22,10 @@ module.exports = (router) => {
 
         return res.status(200).end();
       }
-      return handleError.custom(res, 400, new Error('Bad request'));
+
+      return req.handle400('Invalid action.');
     } catch (error) {
-      return handleError.custom(res, 500, error);
+      req.handle500(error);
     }
   });
 };

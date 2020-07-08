@@ -2,24 +2,30 @@ import React from 'react';
 import { paginationState } from 'shared/state';
 import PersonsApi from 'pages/Persons/api';
 import PersonsPage from 'pages/Persons';
+import WithError from 'shared/components/withError';
+import logger from 'utils/logger';
 
-const Persons = (props) => <PersonsPage {...props} />;
+const Persons = (props) => (
+  <WithError statusCode={props.statusCode}>
+    <PersonsPage {...props} />
+  </WithError>
+);
 
 Persons.getInitialProps = async (ctx) => {
   const { req } = ctx;
   const { offset, searchTerm, sort } = paginationState;
 
   try {
-    // sharedActions.toggleIsLoading();
-    const { persons, pagination } = await PersonsApi
+    const { data: { persons, pagination } } = await PersonsApi
       .setCookie(req)
       .getPersons(offset, searchTerm, sort);
 
     return { persons, pagination: { offset, searchTerm, sort, ...pagination } };
   } catch (error) {
-    console.error(error);
-  } finally {
-    // sharedActions.toggleIsLoading();
+    logger.error(error);
+    return {
+      statusCode: (error.response && error.response.status) || 500
+    };
   }
 };
 

@@ -2,10 +2,9 @@ const { body, check } = require('express-validator');
 const { each } = require('async');
 const Person = require('../../models/person');
 const GoogleApi = require('../../services/google');
-const handleError = require('../../helpers/handleError');
 const helpers = require('../../helpers/permissions');
-const errorHandler = require('../../middlewares/errorHandler');
 const { PERSON_POST_STATUSES } = require('../../constants');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 /**
  * Sets document status
@@ -21,7 +20,7 @@ module.exports = (router) => {
       PERSON_POST_STATUSES.READY_TO_PUBLISH,
       PERSON_POST_STATUSES.PUBLISHED
     ]),
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const { status } = req.body;
     const { id } = req.params;
 
@@ -42,7 +41,7 @@ module.exports = (router) => {
         { status }
       );
     } catch (error) {
-      return handleError.custom(res, 500, error);
+      return req.handle500(error);
     }
 
     res.status(200).end();

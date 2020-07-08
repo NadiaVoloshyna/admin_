@@ -1,8 +1,7 @@
 const { query, body } = require('express-validator');
 const Profession = require('../../models/profession');
 const { createQueryForPagination } = require('../../helpers/resolvers');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
   /**
@@ -18,7 +17,7 @@ module.exports = (router) => {
       'newest',
       'older'
     ]),
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     try {
       const { query, options } = createQueryForPagination({ ...req.query });
       const professions = await Profession.paginate(query, options);
@@ -34,7 +33,7 @@ module.exports = (router) => {
 
       res.send(response);
     } catch (error) {
-      handleError.custom(res, 500, error);
+      req.handle500(error);
     }
   });
 };

@@ -1,10 +1,9 @@
 const { body, check } = require('express-validator');
 const Person = require('../../models/person');
 const GoogleApi = require('../../services/google');
-const handleError = require('../../helpers/handleError');
 const helpers = require('../../helpers/permissions');
-const errorHandler = require('../../middlewares/errorHandler');
 const { FROM_GOOGLE_ROLES } = require('../../constants');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
   router.post('/:id/permissions', [
@@ -13,7 +12,7 @@ module.exports = (router) => {
       min: 1,
       max: 3
     })
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const { id: _id } = req.params;
     const { users } = req.body;
 
@@ -50,7 +49,7 @@ module.exports = (router) => {
 
       res.status(201).send(permissions);
     } catch (error) {
-      return handleError.custom(res, 500, error);
+      return req.handle500(error);
     }
   });
 };

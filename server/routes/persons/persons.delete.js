@@ -1,10 +1,9 @@
 const { body } = require('express-validator');
 const { each } = require('async');
 const Person = require('../../models/person');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
 const { PERSON_POST_STATUSES } = require('../../constants');
 const ac = require('../../../accesscontrol.config');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 // 1. Get resources from database
 const getResources = async (req, res, next) => {
@@ -20,32 +19,38 @@ const getResources = async (req, res, next) => {
     res.locals.persons = persons;
     next();
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    return req.handle500(error);
   }
 };
 
 // 2. Check if user has permissions to delete a person
 const checkPermissions = (req, res, next) => {
-  const { user } = req;
+  try {
+    const { user } = req;
 
-  let { persons } = res.locals;
-  let permission = ac.can(user.role).deleteAny('person');
-
-  if (permission.granted === false) {
-    permission = ac.can(user.role).deleteOwn('person');
+    let { persons } = res.locals;
+    let permission = ac.can(user.role).deleteAny('person');
 
     if (permission.granted === false) {
-      return res.status(403).end();
-    }
+      permission = ac.can(user.role).deleteOwn('person');
 
-    // Filter out persons not created by user and not in in_progress status
-    persons = persons.filter(person => person.createdBy._id.equals(user._id)
-      && person.status === PERSON_POST_STATUSES.IN_PROGRESS);
-    res.locals.persons = persons;
+      if (permission.granted === false) {
+        return res.status(403).end();
+      }
 
-    if (!persons || !persons.length) {
-      return res.status(403).end();
+      // Filter out persons not created by user and not in in_progress status
+      persons = persons.filter(person => (
+        person.createdBy._id.equals(user._id)
+        && person.status === PERSON_POST_STATUSES.IN_PROGRESS
+      ));
+      res.locals.persons = persons;
+
+      if (!persons || !persons.length) {
+        return res.status(403).end();
+      }
     }
+  } catch (error) {
+    return req.handle500(error);
   }
 
   next();
@@ -60,7 +65,7 @@ const deletePersons = async (req, res) => {
 
     return res.status(200).end();
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    return req.handle500(error);
   }
 };
 
@@ -74,7 +79,7 @@ module.exports = (router) => {
   router.delete('/', [
     body('ids').exists().isArray({ min: 1 }).withMessage('At least one id is required')
   ],
-  errorHandler,
+  handle400,
   getResources,
   checkPermissions,
   deletePersons);

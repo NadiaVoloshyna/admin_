@@ -31,6 +31,7 @@ const NAV_LINKS = [{
 }];
 
 const renderLinks = (active, { role }) => {
+  // TODO: change to filter
   const linksToRender = NAV_LINKS.reduce((acc, next) => {
     if (typeof next.visibleTo === 'undefined' || next.visibleTo.indexOf(role) !== -1) {
       acc.push(next);

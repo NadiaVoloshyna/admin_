@@ -1,10 +1,10 @@
-const { body } = require('express-validator');
 const bcrypt = require('bcrypt');
-const errorHandler = require('../../middlewares/errorHandler');
+const { body } = require('express-validator');
 const Invite = require('../../models/invite');
 const User = require('../../models/user');
-const handleError = require('../../helpers/handleError');
 const isExpiredInvitation = require('../../helpers/isExpiredInvitation');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
+const { logger } = require('../../services/gcp/logger');
 
 module.exports = (router) => {
   // Register user
@@ -14,25 +14,25 @@ module.exports = (router) => {
     body('email').exists().isEmail().escape(),
     body('password').exists().escape(),
     body('token').exists().escape()
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const { firstName, lastName, email, password, token } = req.body;
-    let invitation; let
-      newUser;
+    let invitation;
+    let newUser;
 
     // 1. Find invitation by token and email
     try {
       invitation = await Invite.findOne({ token, email });
 
       if (!invitation) {
-        return handleError.custom(res, 403, 'Invalid invitation');
+        return req.handle403('Invalid invitation.');
       }
     } catch (error) {
-      return handleError.custom(res, 403, error);
+      return req.handle403(error);
     }
 
     // 2. Check token expiration
     if (isExpiredInvitation(invitation.created)) {
-      return handleError.custom(res, 403, 'Invitation is expired');
+      return req.handle403('Invitation is expired.');
     }
 
     // 3. Create user
@@ -48,18 +48,17 @@ module.exports = (router) => {
       newUser.password = await bcrypt.hash(password, 13);
       await newUser.save();
     } catch (error) {
-      return handleError.custom(res, 403, error);
+      return req.handle403(error);
     }
 
     // 4. Remove invitation
     try {
       await invitation.remove();
     } catch (error) {
-      // log
+      logger.error(error);
     }
 
     // 5. Redirect to home page
-    // res.redirect('/auth/login');
     res.status(302).end();
   });
 };

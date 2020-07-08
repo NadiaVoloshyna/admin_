@@ -1,8 +1,7 @@
 const { check, body } = require('express-validator');
 const User = require('../../models/user');
-const errorHandler = require('../../middlewares/errorHandler');
-const handleError = require('../../helpers/handleError');
 const { USER_ROLES } = require('../../constants');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
   router.patch('/:id/role', [
@@ -12,7 +11,7 @@ module.exports = (router) => {
       USER_ROLES.AUTHOR,
       USER_ROLES.REVIEWER
     ])
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const { role } = req.body;
     const { id } = req.params;
 
@@ -22,7 +21,7 @@ module.exports = (router) => {
         { role }
       );
     } catch (error) {
-      return handleError.custom(res, 500, error);
+      return req.handle500(error);
     }
 
     res.status(200).end();

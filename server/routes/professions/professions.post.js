@@ -1,7 +1,6 @@
 const { body } = require('express-validator');
 const Profession = require('../../models/profession');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 // Check if profession exists
 const checkProfession = async (req, res, next) => {
@@ -18,7 +17,7 @@ const checkProfession = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    return req.handle500(error);
   }
 };
 
@@ -36,7 +35,7 @@ const createProfession = async (req, res, next) => {
     res.locals.response = response;
     next();
   } catch (error) {
-    return handleError.custom(res, 500, error);
+    return req.handle500(error);
   }
 };
 
@@ -52,6 +51,6 @@ module.exports = (router) => {
    */
   router.post('/', [
     body('name').isString().escape()
-  ], errorHandler, checkProfession, createProfession,
+  ], handle400, checkProfession, createProfession,
   (req, res) => res.status(201).send(res.locals.response));
 };

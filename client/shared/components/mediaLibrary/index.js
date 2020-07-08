@@ -11,8 +11,7 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
   const [ assets, setAssets ] = useState([]);
 
   const getAssets = async (id) => {
-    const response = await api.getAssets(id);
-    const assets = await response.json();
+    const { data: assets } = await api.getAssets(id);
 
     setAssets(assets);
   };

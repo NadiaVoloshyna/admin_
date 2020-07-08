@@ -15,6 +15,7 @@
           ["shared", "./client/shared"],
           ["assets", "./assets"],
           ["utils", "./client/utils"],
+          ["store", "./client/store"],
           ["common", "./common"]
         ],
         "extensions": [".js", ".json"]

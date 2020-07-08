@@ -1,7 +1,6 @@
 const { body } = require('express-validator');
 const Asset = require('../../models/asset');
-const handleError = require('../../helpers/handleError');
-const errorHandler = require('../../middlewares/errorHandler');
+const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
   /**
@@ -17,7 +16,7 @@ module.exports = (router) => {
     body('author').if(body('author').exists()).isString(),
     body('year').if(body('year').exists()).isNumeric(),
     body('description').if(body('description').exists()).isString(),
-  ], errorHandler, async (req, res) => {
+  ], handle400, async (req, res) => {
     const {
       name,
       type,
@@ -46,7 +45,7 @@ module.exports = (router) => {
 
       res.status(302).send(asset);
     } catch (error) {
-      return handleError.custom(res, 500, error);
+      req.handle500(error);
     }
   });
 };
