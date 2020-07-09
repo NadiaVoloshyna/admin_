@@ -1,4 +1,4 @@
-import ApiService from './api';
+import ApiService from './index';
 
 class MediaApi extends ApiService {
   getAssets = (id = '') => {
