@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 /* eslint-disable */
-const CONNECTION_URL = 'mongodb+srv://' + process.env.DB_USERNAME + ':' + process.env.DB_PASSWORD 
+const CONNECTION_URL = 'mongodb+srv://' + process.env.DB_USERNAME + ':' + process.env.DB_PASSWORD
   + '@cluster0-yr0be.mongodb.net/' + process.env.DB_NAME + '?retryWrites=true&w=majority';
 /* eslint-enable */
 

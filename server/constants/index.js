@@ -26,9 +26,16 @@ const FROM_GOOGLE_ROLES = {
   READER: 'reader'
 };
 
+const ASSET_ACTIONS = {
+  MOVE: 'move',
+  COPY: 'copy',
+  DELETE: 'delete'
+};
+
 module.exports = {
   PERSON_POST_STATUSES,
   USER_ROLES,
   GOOGLE_USER_ROLES,
-  FROM_GOOGLE_ROLES
+  FROM_GOOGLE_ROLES,
+  ASSET_ACTIONS,
 };
