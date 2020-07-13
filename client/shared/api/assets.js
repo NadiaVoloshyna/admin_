@@ -1,4 +1,4 @@
-import ApiService from 'shared/api';
+import ApiService from './index';
 
 class MediaApi extends ApiService {
   getAssets = (id = '') => {
@@ -17,9 +17,7 @@ class MediaApi extends ApiService {
   moveAsset = (assetId, parentId) => {
     return this.$http.put(`/api/assets/${assetId}`, {
       action: 'move',
-      payload: {
-        parentId
-      }
+      parentId
     });
   }
 }
