@@ -11,7 +11,7 @@ module.exports = (router) => {
   router.put('/:id', [
     check('id').exists().isMongoId(),
     body('action').exists().isIn([ASSET_ACTIONS.MOVE]),
-    body('parentId').exists(),
+    body('parentId').if(body('parentId').exists()).isMongoId()
   ], handle400, async (req, res) => {
     const { id } = req.params;
     const { action, parentId } = req.body;
