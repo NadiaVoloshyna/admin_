@@ -17,9 +17,7 @@ class MediaApi extends ApiService {
   moveAsset = (assetId, parentId) => {
     return this.$http.put(`/api/assets/${assetId}`, {
       action: 'move',
-      payload: {
-        parentId
-      }
+      parentId
     });
   }
 }

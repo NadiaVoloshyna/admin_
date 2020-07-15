@@ -1,24 +1,23 @@
 const { body, check } = require('express-validator');
 const Asset = require('../../models/asset');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
+const { ASSET_ACTIONS } = require('../../constants');
 
 module.exports = (router) => {
   /**
    * Update asset
    * @param action String
-   * @param payload Object
    */
   router.put('/:id', [
     check('id').exists().isMongoId(),
-    body('action').exists().isIn(['move']),
-    body('payload').exists(),
+    body('action').exists().isIn([ASSET_ACTIONS.MOVE]),
+    body('parentId').if(body('parentId').exists()).isMongoId()
   ], handle400, async (req, res) => {
     const { id } = req.params;
-    const { action, payload } = req.body;
-
+    const { action, parentId } = req.body;
     try {
-      if (action === 'move') {
-        await Asset.findOneAndUpdate({ _id: id }, { parent: payload.parentId });
+      if (action === ASSET_ACTIONS.MOVE) {
+        await Asset.findOneAndUpdate({ _id: id }, { parent: parentId });
 
         return res.status(200).end();
       }
