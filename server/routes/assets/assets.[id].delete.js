@@ -18,6 +18,11 @@ const deleteAssets = async (req, res) => {
   try {
     // 1. Delete assert
     const asset = await Asset.findOne({ _id: id });
+
+    if (asset.references) {
+      return res.status(403).end();
+    }
+
     await asset.remove();
 
     // 2. Delete cloudinary asset
