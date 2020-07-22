@@ -1,4 +1,5 @@
 import React from 'react';
+import { func, bool } from 'prop-types';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ElipsisToggle from 'shared/components/elipsisDropdownToggle';
 
@@ -41,6 +42,16 @@ const ActionsMenu = (props) => {
       `}</style>
     </span>
   );
+};
+
+ActionsMenu.propTypes = {
+  onDelete: func,
+  canDelete: bool
+};
+
+ActionsMenu.defaultProps = {
+  onDelete: () => {},
+  canDelete: false
 };
 
 export default ActionsMenu;

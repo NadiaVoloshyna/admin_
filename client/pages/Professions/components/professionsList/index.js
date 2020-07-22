@@ -1,5 +1,7 @@
 import React from 'react';
+import { shape, arrayOf, bool, func } from 'prop-types';
 import DataGrid from 'shared/components/dataGrid';
+import { PaginationType, ProfessionType } from 'shared/prop-types';
 
 const columns = [{
   dataField: 'name',
@@ -27,6 +29,20 @@ const ProfessionsList = (props) => {
       onItemsDelete={onProfessionDelete}
     />
   );
+};
+
+ProfessionsList.propTypes = {
+  professions: arrayOf(ProfessionType).isRequired,
+  error: bool,
+  pagination: shape(PaginationType).isRequired,
+  onProfessionGet: func,
+  onProfessionDelete: func
+};
+
+ProfessionsList.defaultProps = {
+  onProfessionGet: () => {},
+  onProfessionDelete: () => {},
+  error: false
 };
 
 export default ProfessionsList;

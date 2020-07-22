@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { shape } from 'prop-types';
 import Card from 'react-bootstrap/Card';
+import { FieldRenderProps } from 'react-final-form';
 import AssetsGrid from 'shared/components/mediaLibrary/assetsGrid';
+import { AssetType } from 'shared/prop-types';
 import ProfessionModal from '../professionModal';
 import Header from './header';
 
@@ -55,6 +58,15 @@ const ProfessionSectionBody = ({ input, rootFolder }) => {
       />
     </>
   );
+};
+
+ProfessionSectionBody.propTypes = {
+  input: shape(FieldRenderProps).isRequired,
+  rootFolder: shape(AssetType)
+};
+
+ProfessionSectionBody.defaultProps = {
+  rootFolder: null
 };
 
 export default ProfessionSectionBody;

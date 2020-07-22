@@ -1,8 +1,10 @@
 import React from 'react';
+import { func, arrayOf } from 'prop-types';
 import Select from 'react-select';
 import Card from 'react-bootstrap/Card';
+import { ProfessionType } from 'shared/prop-types';
 
-const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
+const PersonProfession = ({ professions, onAdd, onRemove }) => {
   const onChange = (value, meta) => {
     if (meta.action === 'select-option') {
       onAdd('professions', {
@@ -40,6 +42,18 @@ const PersonProfession = ({ professions = [], onAdd, onRemove }) => {
       </Card>
     </div>
   );
+};
+
+PersonProfession.propTypes = {
+  professions: arrayOf(ProfessionType),
+  onAdd: func,
+  onRemove: func
+};
+
+PersonProfession.defaultProps = {
+  professions: [],
+  onAdd: () => {},
+  onRemove: () => {}
 };
 
 export default PersonProfession;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { number } from 'prop-types';
 import ProfessionsPage from 'pages/Professions';
 import ProfessionsAPI from 'pages/Professions/api';
 import { professionsState } from 'pages/Professions/state';
@@ -30,6 +31,14 @@ Professions.getInitialProps = async (ctx) => {
       statusCode: (error.response && error.response.status) || 500
     };
   }
+};
+
+Professions.propTypes = {
+  statusCode: number
+};
+
+Professions.defaultProps = {
+  statusCode: null
 };
 
 export default Professions;

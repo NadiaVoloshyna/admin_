@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { shape, arrayOf } from 'prop-types';
 import Head from 'next/head';
 import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
@@ -8,6 +9,8 @@ import InviteUserModal from 'pages/Users/components/inviteUserModal';
 import Button from 'react-bootstrap/Button';
 import UsersList from 'pages/Users/components/usersList';
 import UsersAPI from 'pages/Users/api';
+import { UserType } from 'common/prop-types/authorization/user';
+import { PaginationType, UsersType } from 'shared/prop-types';
 
 const UsersPage = (props) => {
   const { user } = props;
@@ -108,6 +111,12 @@ const UsersPage = (props) => {
       />
     </>
   );
+};
+
+UsersPage.propTypes = {
+  user: shape(UserType).isRequired,
+  users: arrayOf(UsersType).isRequired,
+  pagination: shape(PaginationType).isRequired
 };
 
 export default UsersPage;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { bool, func, string } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ElipsisToggle from 'shared/components/elipsisDropdownToggle';
@@ -31,6 +32,19 @@ const ProfessionSectionHeader = ({ name, active, updateActive, onModalOpen }) =>
       </Dropdown>
     </Card.Header>
   );
+};
+
+ProfessionSectionHeader.propTypes = {
+  name: string.isRequired,
+  active: bool,
+  updateActive: func,
+  onModalOpen: func
+};
+
+ProfessionSectionHeader.defaultProps = {
+  active: false,
+  updateActive: () => {},
+  onModalOpen: () => {}
 };
 
 export default ProfessionSectionHeader;

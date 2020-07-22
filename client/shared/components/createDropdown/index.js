@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { func, string } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const CreateDropdown = ({ onCreate, buttonText = 'Create', placeholder = '' }) => {
+const CreateDropdown = ({ onCreate, buttonText, placeholder }) => {
   const [value, setValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
@@ -54,6 +55,17 @@ const CreateDropdown = ({ onCreate, buttonText = 'Create', placeholder = '' }) =
       `}</style>
     </>
   );
+};
+
+CreateDropdown.propTypes = {
+  onCreate: func.isRequired,
+  buttonText: string,
+  placeholder: string
+};
+
+CreateDropdown.defaultProps = {
+  buttonText: 'Create',
+  placeholder: ''
 };
 
 export default CreateDropdown;

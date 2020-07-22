@@ -1,4 +1,5 @@
 import React from 'react';
+import { string } from 'prop-types';
 import Head from 'next/head';
 import Form from 'react-bootstrap/Form';
 import { Form as FinalForm, Field } from 'react-final-form';
@@ -165,6 +166,10 @@ const RegisterPage = (props) => {
       `}</style>
     </div>
   );
+};
+
+RegisterPage.propTypes = {
+  token: string.isRequired
 };
 
 export default RegisterPage;

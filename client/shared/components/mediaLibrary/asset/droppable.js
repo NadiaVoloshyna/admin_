@@ -1,7 +1,9 @@
 import React from 'react';
+import { shape, element, func, bool } from 'prop-types';
 import { useDrop } from 'react-dnd';
 import { ASSET_TYPES } from 'shared/constants';
 import cx from 'classnames';
+import { AssetType } from '../../../prop-types';
 
 const getAcceptedTypes = (type) => {
   switch (type) {
@@ -24,7 +26,7 @@ const DroppableAsset = (props) => {
     item,
     children,
     onDrop,
-    isDragDrop = false
+    isDragDrop
   } = props;
 
   const [{ isOver }, drop] = useDrop({
@@ -56,6 +58,17 @@ const DroppableAsset = (props) => {
       { children }
     </div>
   );
+};
+
+DroppableAsset.propTypes = {
+  item: shape(AssetType).isRequired,
+  children: element.isRequired,
+  onDrop: func.isRequired,
+  isDragDrop: bool
+};
+
+DroppableAsset.defaultProps = {
+  isDragDrop: false
 };
 
 export default DroppableAsset;

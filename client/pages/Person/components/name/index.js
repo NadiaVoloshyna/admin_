@@ -1,4 +1,5 @@
 import React from 'react';
+import { bool } from 'prop-types';
 import cx from 'classnames';
 import { Field } from 'react-final-form';
 
@@ -27,6 +28,14 @@ const PersonName = ({ canEdit }) => {
       </Field>
     </div>
   );
+};
+
+PersonName.propTypes = {
+  canEdit: bool
+};
+
+PersonName.defaultProps = {
+  canEdit: false
 };
 
 export default PersonName;

@@ -1,7 +1,9 @@
 import React from 'react';
+import { arrayOf, func, bool } from 'prop-types';
 import Asset from '../asset';
+import { AssetType } from '../../../prop-types';
 
-const AssetsGrid = ({ assets, onSelect, onDelete, onMove, canDelete = false, isDragDrop }) => {
+const AssetsGrid = ({ assets, onSelect, onDelete, onMove, canDelete, isDragDrop }) => {
   return (
     <div className="asset-grid">
       { assets.map(item => (
@@ -33,6 +35,23 @@ const AssetsGrid = ({ assets, onSelect, onDelete, onMove, canDelete = false, isD
       `}</style>
     </div>
   );
+};
+
+AssetsGrid.propTypes = {
+  assets: arrayOf(AssetType).isRequired,
+  onSelect: func,
+  onDelete: func,
+  onMove: func,
+  canDelete: bool,
+  isDragDrop: bool
+};
+
+AssetsGrid.defaultProps = {
+  onSelect: () => {},
+  onDelete: () => {},
+  onMove: () => {},
+  canDelete: false,
+  isDragDrop: false
 };
 
 export default AssetsGrid;

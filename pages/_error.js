@@ -1,4 +1,5 @@
 import React from 'react';
+import { number } from 'prop-types';
 import logger from 'utils/logger';
 
 function Error({ statusCode }) {
@@ -18,6 +19,14 @@ Error.getInitialProps = ({ res, err }) => {
   }
 
   return { statusCode };
+};
+
+Error.propTypes = {
+  statusCode: number
+};
+
+Error.defaultProps = {
+  statusCode: null
 };
 
 export default Error;

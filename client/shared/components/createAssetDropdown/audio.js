@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { func } from 'prop-types';
 import dynamic from 'next/dynamic';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -82,6 +83,11 @@ const Audio = ({ onDismiss, onSubmit }) => {
       </Card.Body>
     </Card>
   );
+};
+
+Audio.propTypes = {
+  onDismiss: func.isRequired,
+  onSubmit: func.isRequired
 };
 
 export default Audio;

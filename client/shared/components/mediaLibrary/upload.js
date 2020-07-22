@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { func, string, number } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import { createUploadWidget } from 'shared/third-party/upload';
 
-const CloudinaryUpload = ({ onSuccess, onError, btnText = 'Open Assets', width, height }) => {
+const CloudinaryUpload = ({ onSuccess, onError, btnText, width, height }) => {
   const [widget, setWidget] = useState(null);
   const [image, setImage] = useState(null);
 
@@ -55,6 +56,22 @@ const CloudinaryUpload = ({ onSuccess, onError, btnText = 'Open Assets', width, 
       `}</style>
     </div>
   );
+};
+
+CloudinaryUpload.propTypes = {
+  onSuccess: func,
+  onError: func,
+  btnText: string,
+  width: number,
+  height: number
+};
+
+CloudinaryUpload.defaultProps = {
+  onSuccess: () => {},
+  onError: () => {},
+  btnText: 'Open Assets',
+  width: 0,
+  height: 0
 };
 
 export default CloudinaryUpload;

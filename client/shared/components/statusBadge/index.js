@@ -1,4 +1,5 @@
 import React from 'react';
+import { string } from 'prop-types';
 import Badge from 'react-bootstrap/Badge';
 import _kebabCase from 'lodash/kebabCase';
 import cx from 'classnames';
@@ -48,6 +49,15 @@ const StatusBadge = ({ status, className }) => {
       `}</style>
     </>
   );
+};
+
+StatusBadge.propTypes = {
+  status: string.isRequired,
+  className: string
+};
+
+StatusBadge.defaultProps = {
+  className: ''
 };
 
 export default StatusBadge;

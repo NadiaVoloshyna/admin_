@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { shape, arrayOf } from 'prop-types';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
@@ -7,6 +8,8 @@ import PersonsList from 'pages/Persons/components/personsList';
 import DuplicateModal from 'pages/Persons/components/duplicateModal';
 import CreateDropdown from 'shared/components/createDropdown';
 import PersonsApi from 'pages/Persons/api';
+import { PaginationType, Person } from 'shared/prop-types';
+import { UserType } from 'common/prop-types/authorization/user';
 
 const PersonsPage = ({ user, persons, pagination }) => {
   const handleError = useErrorHandler();
@@ -115,6 +118,12 @@ const PersonsPage = ({ user, persons, pagination }) => {
       />
     </div>
   );
+};
+
+PersonsPage.propTypes = {
+  user: shape(UserType).isRequired,
+  persons: arrayOf(Person).isRequired,
+  pagination: shape(PaginationType).isRequired
 };
 
 export default PersonsPage;

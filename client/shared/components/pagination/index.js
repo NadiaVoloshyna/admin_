@@ -1,8 +1,10 @@
 import React from 'react';
+import { arrayOf, object, func, shape, bool } from 'prop-types';
 import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
+import { PaginationType, TableColumnType } from '../../prop-types';
 
 const RemotePagination = (props) => {
   const {
@@ -99,6 +101,23 @@ const RemotePagination = (props) => {
       `}</style>
     </>
   );
+};
+
+RemotePagination.propTypes = {
+  data: arrayOf(object).isRequired,
+  columns: arrayOf(TableColumnType).isRequired,
+  onTableChange: func,
+  handleOnSelect: func,
+  handleOnSelectAll: func,
+  pagination: shape(PaginationType).isRequired,
+  hideSelectColumn: bool
+};
+
+RemotePagination.defaultProps = {
+  onTableChange: () => {},
+  handleOnSelect: () => {},
+  handleOnSelectAll: () => {},
+  hideSelectColumn: false
 };
 
 export default RemotePagination;

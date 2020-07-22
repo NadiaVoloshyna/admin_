@@ -1,5 +1,5 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, element } from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LayoutContent from './content';
@@ -42,7 +42,8 @@ Layout.Content = LayoutContent;
 Layout.Navbar = LayoutNavbar;
 
 Layout.propTypes = {
-  activePage: string
+  activePage: string,
+  children: element.isRequired
 };
 
 Layout.defaultProps = {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { arrayOf, shape, func, object } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Badge from 'react-bootstrap/Badge';
@@ -6,6 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import _upperFirst from 'lodash/upperFirst';
 import ElipsisDropdownToggle from 'shared/components/elipsisDropdownToggle';
 import AssigneUsersModal from 'pages/Person/components/assigneUsersModal';
+import { UsersType } from 'shared/prop-types/';
 
 const PersonUserList = ({
   onUsersGet,
@@ -83,6 +85,21 @@ const PersonUserList = ({
       `}</style>
     </Card>
   );
+};
+
+PersonUserList.propTypes = {
+  onUsersGet: func,
+  users: arrayOf(UsersType),
+  usersForAssignment: arrayOf(UsersType),
+  userPermissions: shape(object).isRequired,
+  setPermission: func
+};
+
+PersonUserList.defaultProps = {
+  onUsersGet: () => {},
+  users: [],
+  usersForAssignment: [],
+  setPermission: () => {}
 };
 
 export default PersonUserList;

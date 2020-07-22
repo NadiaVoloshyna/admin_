@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { func } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
@@ -69,6 +70,11 @@ const Image = ({ onDismiss, onSubmit }) => {
       </Card.Body>
     </Card>
   );
+};
+
+Image.propTypes = {
+  onDismiss: func.isRequired,
+  onSubmit: func.isRequired
 };
 
 export default Image;

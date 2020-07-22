@@ -1,8 +1,9 @@
 import React from 'react';
+import { bool, string, shape } from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormControl from 'react-bootstrap/FormControl';
-import { Field } from 'react-final-form';
+import { Field, FieldRenderProps } from 'react-final-form';
 
 const DateInput = ({ name, disabled }) => {
   return (
@@ -24,6 +25,16 @@ const DateInput = ({ name, disabled }) => {
   );
 };
 
+DateInput.propTypes = {
+  name: string.isRequired,
+  disabled: bool,
+  input: shape(FieldRenderProps).isRequired
+};
+
+DateInput.defaultProps = {
+  disabled: false
+};
+
 const PersonYears = ({ canEdit }) => {
   return (
     <Row>
@@ -41,6 +52,14 @@ const PersonYears = ({ canEdit }) => {
       </Col>
     </Row>
   );
+};
+
+PersonYears.propTypes = {
+  canEdit: bool
+};
+
+PersonYears.defaultProps = {
+  canEdit: false
 };
 
 export default PersonYears;

@@ -1,5 +1,7 @@
 import React from 'react';
+import { shape, string } from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import { UserType } from 'common/prop-types/authorization/user';
 import permissions from '../../../../permissions';
 
 const DocumentAction = ({ documentId, me }) => {
@@ -29,6 +31,11 @@ const DocumentAction = ({ documentId, me }) => {
       `}</style>
     </>
   );
+};
+
+DocumentAction.propTypes = {
+  documentId: string.isRequired,
+  me: shape(UserType).isRequired
 };
 
 export default DocumentAction;

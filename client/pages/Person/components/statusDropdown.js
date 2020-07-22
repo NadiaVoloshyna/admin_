@@ -1,6 +1,9 @@
 import React from 'react';
+import { shape, oneOf, func } from 'prop-types';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
+import { PERSON_POST_STATUSES } from 'shared/constants/index';
+import { UserType } from 'common/prop-types/authorization/user';
 
 const config = {
   NEW: {
@@ -52,6 +55,16 @@ const StatusDropdown = ({ status, user, updateStatus }) => {
       `}</style>
     </>
   );
+};
+
+StatusDropdown.propTypes = {
+  status: oneOf(PERSON_POST_STATUSES).isRequired,
+  user: shape(UserType).isRequired,
+  updateStatus: func
+};
+
+StatusDropdown.defaultProps = {
+  updateStatus: () => {}
 };
 
 export default StatusDropdown;
