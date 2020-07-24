@@ -20,7 +20,7 @@ const deleteAssets = async (req, res) => {
     const asset = await Asset.findOne({ _id: id });
 
     if (asset.references) {
-      return res.status(403).end();
+      return res.status(409).end();
     }
 
     await asset.remove();

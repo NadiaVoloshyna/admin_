@@ -48,21 +48,15 @@ const schema = new Schema({
     type: String
   },
   references: [
-    {
-      personId: {
-        type: ObjectId,
-        ref: 'Person'
-      },
-      userId: {
-        type: ObjectId,
-        ref: 'User'
-      }
-    }
+    {  personId: ObjectId, type: mongoose.type.Mixed },
+    {  userId: ObjectId, type: mongoose.type.Mixed }
   ]
 
   // Recursive asset deletion
 }).pre('remove', { document: true }, async function removeHook(next) {
   try {
+    const {references: [{personId}, {userId}]} = this;
+
     const Asset = mongoose.model('Asset');
     const children = await Asset.find({ parent: this._id });
 
