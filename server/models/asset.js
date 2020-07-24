@@ -48,8 +48,8 @@ const schema = new Schema({
     type: String
   },
   references: [
-    { personId: ObjectId, type: mongoose.type.Mixed },
-    { userId: ObjectId, type: mongoose.type.Mixed }
+    { personId: ObjectId, type: mongoose.Mixed },
+    { userId: ObjectId, type: mongoose.Mixed }
   ]
 
   // Recursive asset deletion
