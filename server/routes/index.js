@@ -8,6 +8,7 @@ const logsRoutes = require('./_log');
 // Middlewares
 const errorHandlers = require('../middlewares/errorHandlers');
 const restrictAccess = require('../middlewares/guards/restrictAccess');
+const restrictAccessForAuthenticated = require('../middlewares/guards/restrictAccessForAuthenticated');
 
 module.exports = (app) => {
   // API routes
@@ -24,5 +25,7 @@ module.exports = (app) => {
   app.use('/library', restrictAccess);
   app.use('/professions', restrictAccess);
   app.get('/', restrictAccess);
+  app.use('/auth/login', restrictAccessForAuthenticated);
+  app.use('/auth/register', restrictAccessForAuthenticated);
   app.use('/auth', errorHandlers, authRoutes);
 };
