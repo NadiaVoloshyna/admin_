@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { arrayOf, object, string, shape, bool, func } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,6 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RemotePagination from 'shared/components/pagination';
+import { PaginationType, TableColumnType } from '../../prop-types';
 
 const DataGrid = (props) => {
   const {
@@ -156,6 +158,28 @@ const DataGrid = (props) => {
       `}</style>
     </>
   );
+};
+
+DataGrid.propTypes = {
+  data: arrayOf(object),
+  tableName: string.isRequired,
+  columns: shape(TableColumnType).isRequired,
+  error: bool,
+  loading: bool,
+  pagination: shape(PaginationType).isRequired,
+  onItemsGet: func.isRequired,
+  onItemsDelete: func,
+  onEdit: func,
+  hideSelectColumn: bool
+};
+
+DataGrid.defaultProps = {
+  data: [],
+  error: false,
+  loading: false,
+  onItemsDelete: () => {},
+  onEdit: () => {},
+  hideSelectColumn: false
 };
 
 export default DataGrid;

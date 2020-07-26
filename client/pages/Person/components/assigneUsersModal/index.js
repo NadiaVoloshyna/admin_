@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { oneOf, elementType, func, arrayOf } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import { USER_ROLES } from 'common/constants/index';
+import { UsersType } from 'shared/prop-types/';
 
-const AssigneUsersModal = ({ role, as, onUsersGet, users = [], setPermission }) => {
+const AssigneUsersModal = ({ role, as, onUsersGet, users, setPermission }) => {
   const [ isOpen, setIsOpen ] = useState(false);
   const [ selected, setSelected ] = useState([]);
 
@@ -79,6 +82,19 @@ const AssigneUsersModal = ({ role, as, onUsersGet, users = [], setPermission }) 
       </Modal>
     </>
   );
+};
+
+AssigneUsersModal.propTypes = {
+  role: oneOf(USER_ROLES).isRequired,
+  as: elementType,
+  onUsersGet: func.isRequired,
+  users: arrayOf(UsersType),
+  setPermission: func.isRequired
+};
+
+AssigneUsersModal.defaultProps = {
+  as: null,
+  users: []
 };
 
 export default AssigneUsersModal;

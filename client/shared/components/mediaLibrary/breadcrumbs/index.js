@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { shape, func } from 'prop-types';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { applyBreadcrumbs } from 'shared/helpers';
+import { AssetType } from '../../../prop-types';
 
 const rootFolder = {
   name: 'Root',
@@ -9,7 +11,7 @@ const rootFolder = {
   type: 'FOLDER'
 };
 
-const Breadcrumbs = ({ currentFolder, onCrumbClick, root = rootFolder }) => {
+const Breadcrumbs = ({ currentFolder, onCrumbClick, root }) => {
   const [ breadcrumbs, setBreadcrumbs ] = useState([]);
 
   useEffect(() => {
@@ -35,6 +37,18 @@ const Breadcrumbs = ({ currentFolder, onCrumbClick, root = rootFolder }) => {
       }) }
     </Breadcrumb>
   );
+};
+
+Breadcrumbs.propTypes = {
+  currentFolder: shape(AssetType),
+  onCrumbClick: func,
+  root: shape(AssetType)
+};
+
+Breadcrumbs.defaultProps = {
+  currentFolder: null,
+  onCrumbClick: () => {},
+  root: rootFolder
 };
 
 export default Breadcrumbs;

@@ -1,9 +1,11 @@
 import React from 'react';
+import { arrayOf, func, bool } from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import _groupBy from 'lodash/groupBy';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import AssetsGrid from '../assetsGrid';
+import { AssetType } from '../../../prop-types';
 
 const FileSystem = ({ assets, onSelect, onDelete, onMove, canDelete, isDragDrop }) => {
   assets = _groupBy(assets, (item) => item.type);
@@ -29,6 +31,23 @@ const FileSystem = ({ assets, onSelect, onDelete, onMove, canDelete, isDragDrop 
       </Row>
     </DndProvider>
   );
+};
+
+FileSystem.propTypes = {
+  assets: arrayOf(AssetType).isRequired,
+  onSelect: func,
+  onDelete: func,
+  onMove: func,
+  canDelete: bool,
+  isDragDrop: bool
+};
+
+FileSystem.defaultProps = {
+  onSelect: () => {},
+  onDelete: () => {},
+  onMove: () => {},
+  canDelete: false,
+  isDragDrop: false
 };
 
 export default FileSystem;

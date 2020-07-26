@@ -1,5 +1,7 @@
 import React from 'react';
+import { shape, arrayOf, func, bool } from 'prop-types';
 import DataGrid from 'shared/components/dataGrid';
+import { PaginationType, UsersType } from 'shared/prop-types';
 
 const getColumns = (editable) => [{
   dataField: 'fullName',
@@ -53,6 +55,23 @@ const UsersList = (props) => {
       hideSelectColumn
     />
   );
+};
+
+UsersList.propTypes = {
+  users: arrayOf(UsersType).isRequired,
+  pagination: shape(PaginationType).isRequired,
+  onUsersGet: func,
+  onEdit: func,
+  error: bool,
+  loading: bool,
+  isSuper: bool.isRequired
+};
+
+UsersList.defaultProps = {
+  onUsersGet: () => {},
+  onEdit: () => {},
+  error: false,
+  loading: false,
 };
 
 export default UsersList;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { bool, func } from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -67,6 +68,18 @@ const InviteUserModal = (props) => {
       </Modal.Body>
     </Modal>
   );
+};
+
+InviteUserModal.propTypes = {
+  canInviteAdmin: bool,
+  onClose: func,
+  show: bool.isRequired,
+  inviteUser: func.isRequired
+};
+
+InviteUserModal.defaultProps = {
+  canInviteAdmin: false,
+  onClose: null
 };
 
 export default InviteUserModal;

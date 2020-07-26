@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { func, string } from 'prop-types';
 import Dropdown from 'react-bootstrap/Dropdown';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -12,6 +13,17 @@ const CustomToggle = React.forwardRef(({ onChange, onClick, value }, ref) => (
     onChange={onChange}
   />
 ));
+
+CustomToggle.propTypes = {
+  onChange: func.isRequired,
+  onClick: func,
+  value: string
+};
+
+CustomToggle.defaultProps = {
+  onClick: () => {},
+  value: ''
+};
 
 const ConditionalSearch = (props) => {
   const [ query, setQuery ] = useState('');
@@ -70,6 +82,10 @@ const ConditionalSearch = (props) => {
       `}</style>
     </>
   );
+};
+
+ConditionalSearch.propTypes = {
+  onSearch: func.isRequired
 };
 
 export default ConditionalSearch;

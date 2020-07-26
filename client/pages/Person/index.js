@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { shape } from 'prop-types';
 import _unescape from 'lodash/unescape';
 import { Form } from 'react-final-form';
 import { useAlert } from 'react-alert';
@@ -7,6 +8,8 @@ import Head from 'next/head';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from 'shared/constants';
+import { ProfessionType, Person } from 'shared/prop-types';
+import { UserType } from 'common/prop-types/authorization/user';
 
 import PersonApi from 'pages/Person/api';
 import UsersApi from 'shared/api/users';
@@ -203,6 +206,12 @@ const PersonPage = (props) => {
       </Layout>
     </div>
   );
+};
+
+PersonPage.propTypes = {
+  person: shape(Person).isRequired,
+  user: shape(UserType).isRequired,
+  professions: shape(ProfessionType).isRequired
 };
 
 export default PersonPage;

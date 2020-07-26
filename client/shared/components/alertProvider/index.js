@@ -1,5 +1,6 @@
 import React from 'react';
-import { transitions, positions, Provider } from 'react-alert';
+import { exac, string, oneOf, number, object, oneOfType, func, element, elementType } from 'prop-types';
+import { transitions, positions, types, Provider } from 'react-alert';
 import AlertBootstrap from 'react-bootstrap/Alert';
 
 const config = {
@@ -34,10 +35,27 @@ const AlertTemplate = ({ options, message }) => {
   );
 };
 
+AlertTemplate.propTypes = {
+  options: exac({
+    offset: string,
+    position: oneOf(Object.values(positions)),
+    timeout: number,
+    type: oneOf(Object.values(types)),
+    transition: oneOf(Object.values(transitions)),
+    containerStyle: object,
+    template: oneOfType([element, func]).isRequired
+  }).isRequired,
+  message: string.isRequired
+};
+
 const AlertProvider = (props) => (
   <Provider template={AlertTemplate} {...config}>
     { props.children }
   </Provider>
 );
+
+AlertProvider.propTypes = {
+  children: oneOfType([element, elementType]).isRequired
+};
 
 export default AlertProvider;

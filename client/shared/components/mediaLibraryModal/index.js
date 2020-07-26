@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { elementType, func } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import MediaLibrary from 'shared/components/mediaLibrary';
@@ -44,6 +45,15 @@ const MediaLibraryModal = ({ triggerComponent, onAssetSelect }) => {
       </Modal>
     </>
   );
+};
+
+MediaLibraryModal.propTypes = {
+  triggerComponent: elementType,
+  onAssetSelect: func.isRequired
+};
+
+MediaLibraryModal.defaultProps = {
+  triggerComponent: null
 };
 
 export default MediaLibraryModal;

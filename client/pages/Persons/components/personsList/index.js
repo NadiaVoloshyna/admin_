@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { shape, arrayOf, func, bool } from 'prop-types';
 import Link from 'next/link';
 import format from 'date-fns/format';
 import DataGrid from 'shared/components/dataGrid';
 import StatusBadge from 'shared/components/statusBadge';
 import ShouldDeletePersonsModal from 'pages/Persons/components/shouldDeletePersonsModal';
+import { PaginationType, Person } from 'shared/prop-types';
 
 function linkFormatter(cell, row) {
   return (
@@ -80,6 +82,24 @@ const PersonsList = (props) => {
       />
     </>
   );
+};
+
+PersonsList.propTypes = {
+  hideSelectColumn: bool,
+  persons: arrayOf(Person).isRequired,
+  pagination: shape(PaginationType).isRequired,
+  onPersonsGet: func,
+  onDelete: func,
+  error: bool,
+  loading: bool
+};
+
+PersonsList.defaultProps = {
+  hideSelectColumn: false,
+  onPersonsGet: () => {},
+  onDelete: () => {},
+  error: false,
+  loading: false
 };
 
 export default PersonsList;

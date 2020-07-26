@@ -1,9 +1,11 @@
 import React from 'react';
+import { shape, bool, func } from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
+import { Person } from 'shared/prop-types';
 
-const DuplicateModal = ({ show = false, onClose, duplicate = {} }) => {
+const DuplicateModal = ({ show, onClose, duplicate }) => {
   return (
     <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
@@ -24,6 +26,17 @@ const DuplicateModal = ({ show = false, onClose, duplicate = {} }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+DuplicateModal.propTypes = {
+  show: bool,
+  onClose: func.isRequired,
+  duplicate: shape(Person)
+};
+
+DuplicateModal.defaultProps = {
+  show: false,
+  duplicate: {}
 };
 
 export default DuplicateModal;

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { func, shape, bool } from 'prop-types';
 import api from 'shared/api/assets';
 import { isOfType } from 'shared/helpers';
+import { AssetType } from 'shared/prop-types';
 import Breadcrumbs from './breadcrumbs';
 import FileSystem from './fileSystem';
 import UploadBox from './uploadBox';
@@ -84,6 +86,24 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
       />
     </>
   );
+};
+
+MediaLibrary.propTypes = {
+  onAssetSelect: func,
+  newAsset: shape(AssetType),
+  canDelete: bool,
+  isDragDrop: bool,
+  isUploadBoxOpen: bool,
+  root: shape(AssetType)
+};
+
+MediaLibrary.defaultProps = {
+  onAssetSelect: () => {},
+  newAsset: null,
+  canDelete: false,
+  isDragDrop: false,
+  isUploadBoxOpen: false,
+  root: null
 };
 
 export default MediaLibrary;

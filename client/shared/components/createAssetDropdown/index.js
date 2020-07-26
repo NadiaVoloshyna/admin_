@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { func, arrayOf, string } from 'prop-types';
 import cx from 'classnames';
 import _upperFirst from 'lodash/upperFirst';
 import _toLower from 'lodash/toLower';
@@ -67,7 +68,7 @@ const createAssetShape = (props) => {
   }
 };
 
-const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
+const CreateAssetDropdown = ({ onAssetCreate, supportedTypes }) => {
   const [ isOpen, setIsOpen ] = useState(false);
   const [ formToShow, setFormToShow ] = useState(null);
 
@@ -128,6 +129,15 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes = [] }) => {
       `}</style>
     </>
   );
+};
+
+CreateAssetDropdown.propTypes = {
+  onAssetCreate: func.isRequired,
+  supportedTypes: arrayOf(string)
+};
+
+CreateAssetDropdown.defaultProps = {
+  supportedTypes: []
 };
 
 export default CreateAssetDropdown;

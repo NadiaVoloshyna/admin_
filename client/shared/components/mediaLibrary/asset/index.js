@@ -1,10 +1,12 @@
 import React from 'react';
+import { shape, func, bool } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { applyTransformations, isOfType, getAssetMetadata } from '../helpers';
 import Draggable from './draggable';
 import Droppable from './droppable';
 import Actions from '../actionsMenu';
+import { AssetType } from '../../../prop-types';
 
 const Asset = (props) => {
   const {
@@ -113,6 +115,23 @@ const Asset = (props) => {
       `}</style>
     </Droppable>
   );
+};
+
+Asset.propTypes = {
+  item: shape(AssetType).isRequired,
+  onSelect: func,
+  onDelete: func,
+  canDelete: bool,
+  onMove: func,
+  isDragDrop: bool
+};
+
+Asset.defaultProps = {
+  onSelect: () => {},
+  onDelete: () => {},
+  canDelete: false,
+  onMove: () => {},
+  isDragDrop: false
 };
 
 export default Asset;

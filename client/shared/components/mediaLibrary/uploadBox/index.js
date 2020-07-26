@@ -1,4 +1,5 @@
 import React from 'react';
+import { bool } from 'prop-types';
 import Collapse from 'react-bootstrap/Collapse';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 
@@ -10,6 +11,10 @@ const UploadBox = ({ open }) => {
       </Jumbotron>
     </Collapse>
   );
+};
+
+UploadBox.propTypes = {
+  open: bool.isRequired
 };
 
 export default UploadBox;

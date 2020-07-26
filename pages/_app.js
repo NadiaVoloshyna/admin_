@@ -1,5 +1,6 @@
 import App from 'next/app';
 import React from 'react';
+import { elementType, shape, number } from 'prop-types';
 import { UserContext } from 'shared/context';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import AlertProvider from 'shared/components/alertProvider';
@@ -22,6 +23,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { destructureUser } from 'utils/user';
+import { UserType } from '../common/prop-types/authorization/user';
 
 import 'assets/styles/styles.scss';
 
@@ -84,5 +86,13 @@ class UkrainianAdminApp extends App {
     );
   }
 }
+
+UkrainianAdminApp.propTypes = {
+  Component: elementType.isRequired,
+  pageProps: shape({
+    user: shape(UserType),
+    statusCode: number
+  })
+};
 
 export default UkrainianAdminApp;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { shape, arrayOf } from 'prop-types';
 import Head from 'next/head';
 import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
@@ -7,6 +8,7 @@ import { ERROR_MESSAGES, WARNING_MESSAGES } from 'shared/constants';
 import CreateDropdown from 'shared/components/createDropdown';
 import ProfessionsList from 'pages/Professions/components/professionsList';
 import ProfessionsAPI from 'pages/Professions/api';
+import { PaginationType, ProfessionType } from 'shared/prop-types';
 
 const ProfessionsPage = (props) => {
   const handleError = useErrorHandler();
@@ -109,6 +111,11 @@ const ProfessionsPage = (props) => {
       </Layout>
     </div>
   );
+};
+
+ProfessionsPage.propTypes = {
+  professions: arrayOf(ProfessionType).isRequired,
+  pagination: shape(PaginationType).isRequired
 };
 
 export default ProfessionsPage;

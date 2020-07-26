@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, func, oneOf, number } from 'prop-types';
 import cx from 'classnames';
 import { Field } from 'react-final-form';
 
@@ -12,8 +13,8 @@ const FormField = (props) => {
     name,
     validate,
     placeholder,
-    type = FIELD_TYPES.TEXT,
-    rows = 3
+    type,
+    rows
   } = props;
 
   return (
@@ -51,6 +52,21 @@ const FormField = (props) => {
       }}
     </Field>
   );
+};
+
+FormField.propTypes = {
+  name: string.isRequired,
+  validate: func,
+  placeholder: string,
+  type: oneOf(Object.values(FIELD_TYPES)),
+  rows: number
+};
+
+FormField.defaultProps = {
+  validate: null,
+  placeholder: '',
+  type: FIELD_TYPES.TEXT,
+  rows: 3
 };
 
 export default FormField;

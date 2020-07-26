@@ -1,4 +1,5 @@
 import React from 'react';
+import { number } from 'prop-types';
 import { paginationState } from 'shared/state';
 import UserAPI from 'pages/Users/api';
 import UsersPage from 'pages/Users';
@@ -30,6 +31,14 @@ Users.getInitialProps = async (ctx) => {
       statusCode: (error.response && error.response.status) || 500
     };
   }
+};
+
+Users.propTypes = {
+  statusCode: number
+};
+
+Users.defaultProps = {
+  statusCode: null
 };
 
 export default Users;

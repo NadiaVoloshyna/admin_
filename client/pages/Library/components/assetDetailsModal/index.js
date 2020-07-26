@@ -1,8 +1,10 @@
 import React from 'react';
+import { shape, bool, func } from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { AssetType } from 'shared/prop-types/asset';
 
 const AssetDetailsModal = ({ show, item, setShow }) => {
   return (
@@ -33,6 +35,12 @@ const AssetDetailsModal = ({ show, item, setShow }) => {
       </Modal.Body>
     </Modal>
   );
+};
+
+AssetDetailsModal.propTypes = {
+  show: bool.isRequired,
+  item: shape(AssetType).isRequired,
+  setShow: func.isRequired
 };
 
 export default AssetDetailsModal;

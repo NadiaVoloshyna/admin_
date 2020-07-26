@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { func } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
@@ -132,6 +133,11 @@ const Album = ({ onSubmit, onDismiss }) => {
       }}
     />
   );
+};
+
+Album.propTypes = {
+  onSubmit: func.isRequired,
+  onDismiss: func.isRequired
 };
 
 export default Album;

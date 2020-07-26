@@ -1,4 +1,5 @@
 import React from 'react';
+import { string } from 'prop-types';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 
@@ -28,6 +29,10 @@ UserProfile.getInitialProps = (ctx) => {
   return {
     id: query.id
   };
+};
+
+UserProfile.propTypes = {
+  id: string.isRequired
 };
 
 export default UserProfile;

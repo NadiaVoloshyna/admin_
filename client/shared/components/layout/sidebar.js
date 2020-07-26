@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
+import { element, func, shape } from 'prop-types';
 import cx from 'classnames';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { UserContext } from 'shared/context';
+import { UserType } from 'common/prop-types/authorization/user';
 import ChangeRoleModal from '../changeRoleModal';
 
 const NAV_LINKS = [{
@@ -195,6 +197,15 @@ const LayoutSidebar = () => {
       `}</style>
     </>
   );
+};
+
+CustomToggle.propTypes = {
+  children: element.isRequired,
+  onClick: func.isRequired
+};
+
+RenderUserDropdown.propTypes = {
+  user: shape(UserType).isRequired
 };
 
 export default LayoutSidebar;

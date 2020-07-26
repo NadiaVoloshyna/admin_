@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { bool, func, shape } from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import MediaLibrary from 'shared/components/mediaLibrary';
 import FileSystem from 'shared/components/mediaLibrary/fileSystem';
+import { AssetType } from 'shared/prop-types';
 import Breadcrumbs from 'shared/components/mediaLibrary/breadcrumbs';
 import { isOfType } from 'shared/helpers';
 
@@ -83,6 +85,19 @@ const ProfessionModal = ({ rootFolder, onAssetSelect, isOpen, onModalToggle }) =
       </Modal.Footer>
     </Modal>
   );
+};
+
+ProfessionModal.propTypes = {
+  rootFolder: shape(AssetType),
+  onAssetSelect: func,
+  isOpen: bool,
+  onModalToggle: func.isRequired
+};
+
+ProfessionModal.defaultProps = {
+  rootFolder: null,
+  onAssetSelect: () => {},
+  isOpen: false
 };
 
 export default ProfessionModal;

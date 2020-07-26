@@ -1,4 +1,5 @@
 import React from 'react';
+import { bool } from 'prop-types';
 
 const PersonActions = ({ disableActions }) => (
   <div className="btn-group" role="group">
@@ -14,5 +15,13 @@ const PersonActions = ({ disableActions }) => (
     >Discard</button>
   </div>
 );
+
+PersonActions.propTypes = {
+  disableActions: bool
+};
+
+PersonActions.defaultProps = {
+  disableActions: false
+};
 
 export default PersonActions;

@@ -1,10 +1,11 @@
 import React from 'react';
+import { string, element } from 'prop-types';
 import Navbar from 'react-bootstrap/Navbar';
 import cx from 'classnames';
 
 const LayoutNavbar = (props) => {
   const navBarCX = cx('layout-navbar shadow-sm w-100 justify-content-between',
-    props.className && props.className);
+    props.className);
   return (
     <>
       <div className="row">
@@ -23,6 +24,15 @@ const LayoutNavbar = (props) => {
       `}</style>
     </>
   );
+};
+
+LayoutNavbar.propTypes = {
+  className: string,
+  children: element.isRequired
+};
+
+LayoutNavbar.defaultProps = {
+  className: ''
 };
 
 export default LayoutNavbar;

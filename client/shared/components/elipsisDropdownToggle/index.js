@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { func } from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ElipsisDropdownToggle = forwardRef(({ onClick }, ref) => (
@@ -26,5 +27,9 @@ const ElipsisDropdownToggle = forwardRef(({ onClick }, ref) => (
     `}</style>
   </>
 ));
+
+ElipsisDropdownToggle.propTypes = {
+  onClick: func.isRequired
+};
 
 export default ElipsisDropdownToggle;

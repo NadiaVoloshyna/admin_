@@ -1,4 +1,5 @@
 import React from 'react';
+import { bool, func, string, oneOf } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import UsersApi from 'shared/api/users';
@@ -62,6 +63,13 @@ const ChangeRoleModal = ({ show, toggleShow, userId, userRole }) => {
       </Modal.Body>
     </Modal>
   );
+};
+
+ChangeRoleModal.propTypes = {
+  show: bool.isRequired,
+  toggleShow: func.isRequired,
+  userId: string.isRequired,
+  userRole: oneOf(Object.values(USER_ROLES)).isRequired
 };
 
 export default ChangeRoleModal;

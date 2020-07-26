@@ -1,4 +1,5 @@
 import React from 'react';
+import { number } from 'prop-types';
 import PersonAPI from 'pages/Person/api';
 import ProfessionsAPI from 'pages/Professions/api';
 import PersonPage from 'pages/Person';
@@ -30,6 +31,14 @@ Person.getInitialProps = async (ctx) => {
       statusCode: (error.response && error.response.status) || 500
     };
   }
+};
+
+Person.propTypes = {
+  statusCode: number
+};
+
+Person.defaultProps = {
+  statusCode: null
 };
 
 export default Person;

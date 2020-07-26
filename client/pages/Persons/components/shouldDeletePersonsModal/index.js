@@ -1,8 +1,10 @@
 import React from 'react';
+import { bool, arrayOf, func } from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { Person } from 'shared/prop-types';
 
 const ShouldDeletePersonsModal = ({ show, persons = [], onConfirm, onDiscard }) => {
   return (
@@ -31,6 +33,17 @@ const ShouldDeletePersonsModal = ({ show, persons = [], onConfirm, onDiscard }) 
       </Modal.Footer>
     </Modal>
   );
+};
+
+ShouldDeletePersonsModal.propTypes = {
+  show: bool.isRequired,
+  persons: arrayOf(Person),
+  onConfirm: func.isRequired,
+  onDiscard: func.isRequired
+};
+
+ShouldDeletePersonsModal.defaultProps = {
+  persons: []
 };
 
 export default ShouldDeletePersonsModal;
