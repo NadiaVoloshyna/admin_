@@ -19,7 +19,7 @@ const deleteAssets = async (req, res) => {
     // 1. Delete assert
     const asset = await Asset.findOne({ _id: id });
 
-    if (asset.references) {
+    if (asset.references.length) {
       return res.status(409).end();
     }
 

@@ -47,10 +47,7 @@ const schema = new Schema({
   description: {
     type: String
   },
-  references: [
-    { personId: ObjectId, type: mongoose.Mixed },
-    { userId: ObjectId, type: mongoose.Mixed }
-  ]
+  references: [{ type: ObjectId, ref: 'Person' }]
 
   // Recursive asset deletion
 }).pre('remove', { document: true }, async function removeHook(next) {
