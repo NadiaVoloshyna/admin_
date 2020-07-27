@@ -3,6 +3,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const password = require('passport');
 const next = require('next');
+const Observer = require('./server/services/observer');
 const { logger, auditLogger } = require('./server/services/gcp/logger');
 
 require('dotenv').config();
@@ -44,6 +45,13 @@ app.prepare().then(() => {
   routes(server);
 
   server.all('*', handle);
+
+  const observer = new Observer();
+  const file = './server';
+  observer.on('file-updated', log => {
+    console.log(log.message);
+  });
+  observer.watchFile(file);
 
   const PORT = process.env.PORT || 8080;
   server.listen(PORT, (err) => {
