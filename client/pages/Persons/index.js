@@ -25,10 +25,13 @@ const PersonsPage = ({ user, persons, pagination }) => {
   const onPersonsGet = async (payload) => {
     setIsLoading(true);
 
-    const { offset, searchTerm, sort } = { ...paginationState, ...payload };
+    const { offset, searchTerm, sort } = {
+      ...paginationState,
+      ...payload
+    };
 
     try {
-      const { persons, pagination } = await PersonsApi.getPersons(offset, searchTerm, sort);
+      const { data: { persons, pagination } } = await PersonsApi.getPersons(offset, searchTerm, sort);
       setPersons(persons);
       setPaginationState({ offset, searchTerm, sort, ...pagination });
     } catch (error) {
