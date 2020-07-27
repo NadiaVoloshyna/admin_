@@ -1,5 +1,5 @@
 import React from 'react';
-import { exac, string, oneOf, number, object, oneOfType, func, element, elementType } from 'prop-types';
+import { exact, string, oneOf, number, object, oneOfType, func, element, elementType } from 'prop-types';
 import { transitions, positions, types, Provider } from 'react-alert';
 import AlertBootstrap from 'react-bootstrap/Alert';
 
@@ -36,7 +36,7 @@ const AlertTemplate = ({ options, message }) => {
 };
 
 AlertTemplate.propTypes = {
-  options: exac({
+  options: exact({
     offset: string,
     position: oneOf(Object.values(positions)),
     timeout: number,
