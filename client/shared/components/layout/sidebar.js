@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { element, func, shape } from 'prop-types';
+import { object, func, shape, arrayOf } from 'prop-types';
 import cx from 'classnames';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -79,6 +79,11 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     `}</style>
   </>
 ));
+
+CustomToggle.propTypes = {
+  children: arrayOf(object).isRequired,
+  onClick: func.isRequired
+};
 
 const RenderUserDropdown = (props) => {
   const { user } = props;
@@ -197,11 +202,6 @@ const LayoutSidebar = () => {
       `}</style>
     </>
   );
-};
-
-CustomToggle.propTypes = {
-  children: element.isRequired,
-  onClick: func.isRequired
 };
 
 RenderUserDropdown.propTypes = {

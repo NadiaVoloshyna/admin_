@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { oneOf, elementType, func, arrayOf } from 'prop-types';
+import { oneOf, elementType, func, arrayOf, shape } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -85,10 +85,10 @@ const AssigneUsersModal = ({ role, as, onUsersGet, users, setPermission }) => {
 };
 
 AssigneUsersModal.propTypes = {
-  role: oneOf(USER_ROLES).isRequired,
+  role: oneOf(Object.values(USER_ROLES)).isRequired,
   as: elementType,
   onUsersGet: func.isRequired,
-  users: arrayOf(UsersType),
+  users: arrayOf(shape(UsersType)),
   setPermission: func.isRequired
 };
 

@@ -32,7 +32,7 @@ const ProfessionsList = (props) => {
 };
 
 ProfessionsList.propTypes = {
-  professions: arrayOf(ProfessionType).isRequired,
+  professions: arrayOf(shape(ProfessionType)).isRequired,
   error: bool,
   pagination: shape(PaginationType).isRequired,
   onProfessionGet: func,

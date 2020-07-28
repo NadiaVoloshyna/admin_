@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, func, bool } from 'prop-types';
+import { arrayOf, func, bool, shape } from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import _groupBy from 'lodash/groupBy';
 import { DndProvider } from 'react-dnd';
@@ -34,7 +34,7 @@ const FileSystem = ({ assets, onSelect, onDelete, onMove, canDelete, isDragDrop 
 };
 
 FileSystem.propTypes = {
-  assets: arrayOf(AssetType).isRequired,
+  assets: arrayOf(shape(AssetType)).isRequired,
   onSelect: func,
   onDelete: func,
   onMove: func,

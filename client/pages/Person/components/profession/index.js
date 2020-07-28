@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, arrayOf } from 'prop-types';
+import { func, arrayOf, shape } from 'prop-types';
 import Select from 'react-select';
 import Card from 'react-bootstrap/Card';
 import { ProfessionType } from 'shared/prop-types';
@@ -45,7 +45,7 @@ const PersonProfession = ({ professions, onAdd, onRemove }) => {
 };
 
 PersonProfession.propTypes = {
-  professions: arrayOf(ProfessionType),
+  professions: arrayOf(shape(ProfessionType)),
   onAdd: func,
   onRemove: func
 };
