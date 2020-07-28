@@ -163,7 +163,7 @@ const DataGrid = (props) => {
 DataGrid.propTypes = {
   data: arrayOf(object),
   tableName: string.isRequired,
-  columns: shape(TableColumnType).isRequired,
+  columns: arrayOf(shape(TableColumnType)).isRequired,
   error: bool,
   loading: bool,
   pagination: shape(PaginationType).isRequired,

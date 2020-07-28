@@ -8,7 +8,7 @@ export const AssetType = {
   type: oneOf(Object.values(ASSET_TYPES)).isRequired,
   url: string,
   createdBy: string.isRequired,
-  created: number.isRequired,
+  created: string.isRequired,
   author: string,
   year: number,
   description: string

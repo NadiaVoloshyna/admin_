@@ -1,4 +1,4 @@
-import { string, oneOf, number, shape, arrayOf, bool } from 'prop-types';
+import { string, oneOf, shape, arrayOf, bool } from 'prop-types';
 import { PERSON_POST_STATUSES } from 'shared/constants/index';
 import { USER_ROLES } from 'common/constants/index';
 import { ProfessionType } from './profession';
@@ -7,11 +7,11 @@ import { Biography } from './biography';
 export const Person = {
   name: string.isRequired,
   status: oneOf(Object.values(PERSON_POST_STATUSES)).isRequired,
-  created: number.isRequired,
+  created: string.isRequired,
   createdBy: string.isRequired,
   biography: shape(Biography),
-  born: number,
-  died: number,
+  born: string,
+  died: string,
   title: string,
   portrait: string,
   rootAssetId: string.isRequired,
