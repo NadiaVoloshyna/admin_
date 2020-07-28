@@ -115,7 +115,7 @@ const UsersPage = (props) => {
 
 UsersPage.propTypes = {
   user: shape(UserType).isRequired,
-  users: arrayOf(UsersType).isRequired,
+  users: arrayOf(shape(UsersType)).isRequired,
   pagination: shape(PaginationType).isRequired
 };
 

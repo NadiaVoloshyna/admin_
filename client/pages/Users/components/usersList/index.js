@@ -58,7 +58,7 @@ const UsersList = (props) => {
 };
 
 UsersList.propTypes = {
-  users: arrayOf(UsersType).isRequired,
+  users: arrayOf(shape(UsersType)).isRequired,
   pagination: shape(PaginationType).isRequired,
   onUsersGet: func,
   onEdit: func,

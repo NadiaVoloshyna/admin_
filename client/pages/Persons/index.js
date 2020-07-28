@@ -125,7 +125,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
 
 PersonsPage.propTypes = {
   user: shape(UserType).isRequired,
-  persons: arrayOf(Person).isRequired,
+  persons: arrayOf(shape(Person)).isRequired,
   pagination: shape(PaginationType).isRequired
 };
 

@@ -6,7 +6,7 @@ import { Biography } from './biography';
 
 export const Person = {
   name: string.isRequired,
-  status: oneOf(PERSON_POST_STATUSES).isRequired,
+  status: oneOf(Object.values(PERSON_POST_STATUSES)).isRequired,
   created: number.isRequired,
   createdBy: string.isRequired,
   biography: shape(Biography),
@@ -15,11 +15,11 @@ export const Person = {
   title: string,
   portrait: string,
   rootAssetId: string.isRequired,
-  professions: arrayOf(ProfessionType),
-  permissions: arrayOf({
-    role: oneOf(USER_ROLES).isRequired,
+  professions: arrayOf(shape(ProfessionType)),
+  permissions: arrayOf(shape({
+    role: oneOf(Object.values(USER_ROLES)).isRequired,
     permissionId: string.isRequired,
     user: string.isRequired,
     active: bool.isRequired
-  })
+  }))
 };

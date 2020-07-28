@@ -86,7 +86,7 @@ const PersonsList = (props) => {
 
 PersonsList.propTypes = {
   hideSelectColumn: bool,
-  persons: arrayOf(Person).isRequired,
+  persons: arrayOf(shape(Person)).isRequired,
   pagination: shape(PaginationType).isRequired,
   onPersonsGet: func,
   onDelete: func,
