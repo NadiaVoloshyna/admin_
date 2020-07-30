@@ -1,9 +1,8 @@
 import React from 'react';
-import { shape, bool, func } from 'prop-types';
+import { shape, bool, func, string } from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
-import { Person } from 'shared/prop-types';
 
 const DuplicateModal = ({ show, onClose, duplicate }) => {
   return (
@@ -31,7 +30,10 @@ const DuplicateModal = ({ show, onClose, duplicate }) => {
 DuplicateModal.propTypes = {
   show: bool,
   onClose: func.isRequired,
-  duplicate: shape(Person)
+  duplicate: shape({
+    id: string,
+    name: string
+  })
 };
 
 DuplicateModal.defaultProps = {
