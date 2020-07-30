@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, arrayOf, func } from 'prop-types';
+import { bool, arrayOf, func, shape } from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
@@ -37,7 +37,7 @@ const ShouldDeletePersonsModal = ({ show, persons = [], onConfirm, onDiscard }) 
 
 ShouldDeletePersonsModal.propTypes = {
   show: bool.isRequired,
-  persons: arrayOf(Person),
+  persons: arrayOf(shape(Person)),
   onConfirm: func.isRequired,
   onDiscard: func.isRequired
 };

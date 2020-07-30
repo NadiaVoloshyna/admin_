@@ -89,8 +89,8 @@ const PersonUserList = ({
 
 PersonUserList.propTypes = {
   onUsersGet: func,
-  users: arrayOf(UsersType),
-  usersForAssignment: arrayOf(UsersType),
+  users: arrayOf(shape(UsersType)),
+  usersForAssignment: arrayOf(shape(UsersType)),
   userPermissions: shape(object).isRequired,
   setPermission: func
 };

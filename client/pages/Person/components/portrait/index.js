@@ -1,6 +1,6 @@
 import React from 'react';
-import { shape } from 'prop-types';
-import { Field, FieldRenderProps } from 'react-final-form';
+import { shape, object } from 'prop-types';
+import { Field } from 'react-final-form';
 import MediaLibraryModal from 'shared/components/mediaLibraryModal';
 import { Image } from 'cloudinary-react';
 
@@ -55,7 +55,7 @@ const PersonPortrait = () => {
 };
 
 PersonPortrait.propTypes = {
-  input: shape(FieldRenderProps).isRequired
+  input: shape(object).isRequired
 };
 
 export default PersonPortrait;

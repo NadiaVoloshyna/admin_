@@ -105,7 +105,7 @@ const RemotePagination = (props) => {
 
 RemotePagination.propTypes = {
   data: arrayOf(object).isRequired,
-  columns: arrayOf(TableColumnType).isRequired,
+  columns: arrayOf(shape(TableColumnType)).isRequired,
   onTableChange: func,
   handleOnSelect: func,
   handleOnSelectAll: func,

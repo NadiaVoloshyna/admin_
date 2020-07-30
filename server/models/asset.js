@@ -46,7 +46,9 @@ const schema = new Schema({
   // Description of the asset (Album)
   description: {
     type: String
-  }
+  },
+  references: [{ type: ObjectId, ref: 'Person' }]
+
   // Recursive asset deletion
 }).pre('remove', { document: true }, async function removeHook(next) {
   try {

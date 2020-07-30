@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, func, bool } from 'prop-types';
+import { arrayOf, func, bool, shape } from 'prop-types';
 import Asset from '../asset';
 import { AssetType } from '../../../prop-types';
 
@@ -38,7 +38,7 @@ const AssetsGrid = ({ assets, onSelect, onDelete, onMove, canDelete, isDragDrop 
 };
 
 AssetsGrid.propTypes = {
-  assets: arrayOf(AssetType).isRequired,
+  assets: arrayOf(shape(AssetType)).isRequired,
   onSelect: func,
   onDelete: func,
   onMove: func,

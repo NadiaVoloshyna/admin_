@@ -1,9 +1,9 @@
 import React from 'react';
-import { bool, string, shape } from 'prop-types';
+import { bool, string, shape, object } from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormControl from 'react-bootstrap/FormControl';
-import { Field, FieldRenderProps } from 'react-final-form';
+import { Field } from 'react-final-form';
 
 const DateInput = ({ name, disabled }) => {
   return (
@@ -28,7 +28,7 @@ const DateInput = ({ name, disabled }) => {
 DateInput.propTypes = {
   name: string.isRequired,
   disabled: bool,
-  input: shape(FieldRenderProps).isRequired
+  input: shape(object).isRequired
 };
 
 DateInput.defaultProps = {

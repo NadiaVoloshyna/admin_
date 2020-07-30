@@ -102,7 +102,7 @@ const StatusDropdown = ({ status, user, updateStatus }) => {
 };
 
 StatusDropdown.propTypes = {
-  status: oneOf(PERSON_POST_STATUSES).isRequired,
+  status: oneOf(Object.values(PERSON_POST_STATUSES)).isRequired,
   user: shape(UserType).isRequired,
   updateStatus: func
 };

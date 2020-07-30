@@ -1,8 +1,8 @@
-import { string, shape, number, array } from 'prop-types';
+import { string, shape, array } from 'prop-types';
 
 export const Biography = {
   documentId: string.isRequired,
-  modifiedTime: number,
+  modifiedTime: string,
   lastModifiedBy: string,
   permissions: shape({
     authors: array,

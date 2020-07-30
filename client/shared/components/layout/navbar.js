@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, element } from 'prop-types';
+import { string, element, oneOfType } from 'prop-types';
 import Navbar from 'react-bootstrap/Navbar';
 import cx from 'classnames';
 
@@ -28,7 +28,7 @@ const LayoutNavbar = (props) => {
 
 LayoutNavbar.propTypes = {
   className: string,
-  children: element.isRequired
+  children: oneOfType([element, string]).isRequired
 };
 
 LayoutNavbar.defaultProps = {

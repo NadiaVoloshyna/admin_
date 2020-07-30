@@ -1,4 +1,4 @@
-import { string, number, oneOf, bool, object, func } from 'prop-types';
+import { string, oneOf, bool, object, func } from 'prop-types';
 import { USER_ROLES } from '../../constants/index';
 
 export const UserType = {
@@ -7,7 +7,7 @@ export const UserType = {
   fullName: string,
   displayName: string,
   email: string,
-  created: number,
+  created: string,
   role: oneOf(Object.values(USER_ROLES)),
   active: bool,
   _id: string,

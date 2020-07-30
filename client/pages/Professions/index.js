@@ -114,7 +114,7 @@ const ProfessionsPage = (props) => {
 };
 
 ProfessionsPage.propTypes = {
-  professions: arrayOf(ProfessionType).isRequired,
+  professions: arrayOf(shape(ProfessionType)).isRequired,
   pagination: shape(PaginationType).isRequired
 };
 
