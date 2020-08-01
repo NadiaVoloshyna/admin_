@@ -87,7 +87,6 @@ const DataGrid = (props) => {
                     <InputGroup.Append>
                       <Button
                         variant="primary"
-                        disabled={!searchTerm}
                         onClick={() => onTableChange('search', { searchTerm })}
                       >
                         Search
