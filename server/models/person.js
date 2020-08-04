@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 const { PERSON_POST_STATUSES, USER_ROLES } = require('../constants');
 const GoogleApi = require('../services/google');
+const { logger } = require('../services/gcp/logger');
 
 const { Schema } = mongoose;
 const { ObjectId } = Schema;
@@ -110,8 +111,7 @@ const schema = new Schema({
 
     await asset.remove();
   } catch (error) {
-    // TODO: handle error cases
-    console.error(error);
+    logger.error(error);
   }
 
   next();

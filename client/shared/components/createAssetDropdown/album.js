@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import { Form as FinalForm } from 'react-final-form';
 import CloudinaryUpload from 'shared/components/mediaLibrary/upload';
 import { FormField } from 'shared/components/form';
+import logger from 'utils/logger';
 import { ASSET_TYPES } from './index';
 
 const validation = values => {
@@ -33,12 +34,11 @@ const Album = ({ onSubmit, onDismiss }) => {
   };
 
   const onImageUploadError = (error) => {
-    console.log(error);
-    // TODO: log the error
+    logger.error(error);
   };
 
   const onSubmitForm = ({ author, name, year, description }) => {
-    console.log(author);
+    logger.log(author);
     if (!image) return;
 
     onSubmit({

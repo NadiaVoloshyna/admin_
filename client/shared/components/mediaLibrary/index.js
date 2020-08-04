@@ -3,6 +3,7 @@ import { func, shape, bool } from 'prop-types';
 import api from 'shared/api/assets';
 import { isOfType } from 'shared/helpers';
 import { AssetType } from 'shared/prop-types';
+import logger from 'utils/logger';
 import Breadcrumbs from './breadcrumbs';
 import FileSystem from './fileSystem';
 import UploadBox from './uploadBox';
@@ -46,8 +47,7 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
       const newAssets = assets.filter(item => item._id !== asset._id);
       setAssets(newAssets);
     } else {
-      // TODO: log and show error message
-      console.error(response.statusText);
+      logger.log(response.statusText);
     }
   };
 
@@ -57,10 +57,9 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
     if (response.status === 200) {
       const newAssets = assets.filter(item => item._id !== asset._id);
       setAssets(newAssets);
-      console.log('Moved successfully');
+      logger.log('Moved successfully');
     } else {
-      // TODO: log and show error message
-      console.error(response.statusText);
+      logger.log(response.statusText);
     }
   };
 
