@@ -9,12 +9,14 @@ const createErrorBody = (error) => ({
 
 export const log = (message) => {
   if (process.env.NODE_ENV !== 'production') {
+    /* eslint-disable-next-line */
     console.log(message);
   }
 };
 
 export const error = (error) => {
   if (process.env.NODE_ENV !== 'production') {
+    /* eslint-disable-next-line */
     console.error(error.message);
   }
 
