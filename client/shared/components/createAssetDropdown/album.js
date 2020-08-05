@@ -10,6 +10,8 @@ import { Form as FinalForm } from 'react-final-form';
 import CloudinaryUpload from 'shared/components/mediaLibrary/upload';
 import { FormField } from 'shared/components/form';
 import logger from 'utils/logger';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
+import { ERROR_MESSAGES } from 'shared/constants';
 import { ASSET_TYPES } from './index';
 
 const validation = values => {
@@ -27,6 +29,7 @@ const validation = values => {
 };
 
 const Album = ({ onSubmit, onDismiss }) => {
+  const handleError = useErrorHandler();
   const [image, setImage] = useState(false);
 
   const onImageUpload = (image) => {
@@ -34,7 +37,7 @@ const Album = ({ onSubmit, onDismiss }) => {
   };
 
   const onImageUploadError = (error) => {
-    logger.error(error);
+    handleError(error, ERROR_MESSAGES.ASSET_UPLOAD_IMAGE);
   };
 
   const onSubmitForm = ({ author, name, year, description }) => {

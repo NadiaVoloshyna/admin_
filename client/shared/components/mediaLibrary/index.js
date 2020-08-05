@@ -4,12 +4,15 @@ import api from 'shared/api/assets';
 import { isOfType } from 'shared/helpers';
 import { AssetType } from 'shared/prop-types';
 import logger from 'utils/logger';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from 'shared/constants';
 import Breadcrumbs from './breadcrumbs';
 import FileSystem from './fileSystem';
 import UploadBox from './uploadBox';
 import ActionsPanel from './actionsPanel';
 
 const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUploadBoxOpen, root }) => {
+  const handleError = useErrorHandler();
   const [ currentFolder, setCurrentFolder ] = useState(null);
   const [ assets, setAssets ] = useState([]);
 
@@ -47,7 +50,7 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
       const newAssets = assets.filter(item => item._id !== asset._id);
       setAssets(newAssets);
     } else {
-      logger.log(response.statusText);
+      handleError(response.statusText, ERROR_MESSAGES.LIBRARY_FILE_DELETE);
     }
   };
 
@@ -57,9 +60,9 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
     if (response.status === 200) {
       const newAssets = assets.filter(item => item._id !== asset._id);
       setAssets(newAssets);
-      logger.log('Moved successfully');
+      logger.log(SUCCESS_MESSAGES.LIBRARY_FILE_MOVE);
     } else {
-      logger.log(response.statusText);
+      handleError(response.statusText, ERROR_MESSAGES.LIBRARY_FILE_MOVE);
     }
   };
 

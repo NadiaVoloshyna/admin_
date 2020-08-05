@@ -3,7 +3,6 @@ import { func, arrayOf, shape } from 'prop-types';
 import Select from 'react-select';
 import Card from 'react-bootstrap/Card';
 import { ProfessionType } from 'shared/prop-types';
-import logger from 'utils/logger';
 
 const PersonProfession = ({ professions, onAdd, onRemove }) => {
   const onChange = (value, meta) => {
@@ -17,10 +16,6 @@ const PersonProfession = ({ professions, onAdd, onRemove }) => {
 
     if (meta.action === 'remove-value') {
       onRemove('professions');
-    }
-
-    if (meta.action === 'clear') {
-      logger.log('Delete all professions');
     }
   };
 

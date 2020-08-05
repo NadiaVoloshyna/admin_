@@ -22,7 +22,8 @@ export const INSERTIONS = {
 export const SUCCESS_MESSAGES = {
   PERSON_SAVE: 'Person succesfully saved.',
   USERS_INVITE_USER: 'Invitation was sent.',
-  USERS_EDIT_USER: 'Changes were saved successfully.'
+  USERS_EDIT_USER: 'Changes were saved successfully.',
+  LIBRARY_FILE_MOVE: 'Moved successfully'
 };
 
 export const ERROR_MESSAGES = {
@@ -39,7 +40,10 @@ export const ERROR_MESSAGES = {
   PROFESSIONS_DELETE_PROFESSIONS: 'We are sorry, there was a problem deleting professions.',
   USERS_GET_USERS: 'We are sorry, there was a problem retreaving users.',
   USERS_INVITE_USER: 'We are sorry, there was a problem inviting user.',
-  USERS_EDIT_USER: 'We are sorry, there was a problem editing user.'
+  USERS_EDIT_USER: 'We are sorry, there was a problem editing user.',
+  ASSET_UPLOAD_IMAGE: 'We are sorry, there was a problem uploading the image.',
+  LIBRARY_FILE_DELETE: 'We are sorry, there was a problem deleting the file.',
+  LIBRARY_FILE_MOVE: 'We are sorry, there was a problem moving the file.'
 };
 
 export const WARNING_MESSAGES = {
