@@ -1,3 +1,20 @@
+function createQuery(searchTerm, fields) {
+  if (!searchTerm) {
+    return {};
+  }
+
+  const getFieldQuery = (field) => ({
+    [field]: {
+      $regex: searchTerm,
+      $options: 'i'
+    }
+  });
+
+  const queries = fields && { $or: fields.map((field) => getFieldQuery(field)) };
+
+  return queries || getFieldQuery('name');
+}
+
 const createQueryForPagination = (args) => {
   // No queries -> return all records
   if (!args || !Object.keys(args).length) {
@@ -12,18 +29,17 @@ const createQueryForPagination = (args) => {
   const {
     offset = 0,
     searchTerm = '',
+    fields,
     sort = 'ascending',
     limit = 10
   } = args;
+  const query = createQuery(searchTerm, fields);
 
-  const query = searchTerm ? { name: {
-    $regex: searchTerm,
-    $options: 'i'
-  } } : {};
+  const sortField = fields ? fields[0] : 'name';
 
   const options = {
     sort: {
-      name: sort
+      [sortField]: sort
     },
     offset: offset * limit,
     limit
