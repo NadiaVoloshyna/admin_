@@ -1,7 +1,6 @@
 import { string, oneOf, shape, arrayOf, bool } from 'prop-types';
 import { PERSON_POST_STATUSES } from 'shared/constants/index';
 import { USER_ROLES } from 'common/constants/index';
-import { ProfessionType } from './profession';
 import { Biography } from './biography';
 
 export const Person = {
@@ -15,9 +14,13 @@ export const Person = {
   title: string,
   portrait: string,
   rootAssetId: string.isRequired,
-  professions: arrayOf(shape(ProfessionType)),
+  professions: arrayOf(shape({
+    profession: string,
+    active: bool.isRequired,
+    media: arrayOf(string),
+  })),
   permissions: arrayOf(shape({
-    role: oneOf(Object.values(USER_ROLES)).isRequired,
+    role: oneOf([ ...Object.values(USER_ROLES), 'reader']).isRequired,
     permissionId: string.isRequired,
     user: string.isRequired,
     active: bool.isRequired
