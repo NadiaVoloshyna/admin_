@@ -35,22 +35,20 @@ const schema = new mongoose.Schema({
     //   unique: true
     // }
   }
+}, {
+  toObject: { virtuals: true }
+});
+
+schema.virtual('fullName').get(function getFullName() {
+  return `${this.firstName} ${this.lastName}`;
 });
 
 schema.methods.toJson = function toJson() {
-  const { _id, firstName, lastName, displayName, email, created, role, active } = this.toObject();
+  const user = this.toObject();
 
-  return {
-    firstName,
-    lastName,
-    fullName: `${firstName} ${lastName}`,
-    displayName,
-    email,
-    created,
-    role,
-    active,
-    _id
-  };
+  delete user.password;
+
+  return user;
 };
 
 schema.plugin(mongoosePaginate);

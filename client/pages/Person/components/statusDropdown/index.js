@@ -1,94 +1,72 @@
 import React from 'react';
-import { oneOf, shape, func } from 'prop-types';
-import Dropdown from 'react-bootstrap/Dropdown';
+import { shape, oneOf, func } from 'prop-types';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import _lowerCase from 'lodash/lowerCase';
-import _startCase from 'lodash/startCase';
-import { PERSON_POST_STATUSES } from 'shared/constants/index';
+import { PERSON_POST_STATUSES } from 'common/constants';
 import { UserType } from 'common/prop-types/authorization/user';
-import permissions from '../../../../permissions';
 
-const PERMISSIONS = {
-  NEW: {
-    actions: [{
-      name: 'Start',
-      status: 'IN_PROGRESS'
-    }],
-    roles: ['super', 'admin', 'author'],
-    variant: 'secondary'
+const config = {
+  [PERSON_POST_STATUSES.NEW]: {
+    text: 'Start',
+    variant: 'secondary',
+    newStatus: PERSON_POST_STATUSES.IN_PROGRESS
   },
-  IN_PROGRESS: {
-    actions: [{
-      name: 'Send to review',
-      status: 'IN_REVIEW'
-    }],
-    roles: ['super', 'admin', 'author'],
-    variant: 'primary'
+  [PERSON_POST_STATUSES.IN_PROGRESS]: {
+    text: 'Send to Review',
+    variant: 'primary',
+    newStatus: PERSON_POST_STATUSES.IN_REVIEW
   },
-  IN_REVIEW: {
-    actions: [{
-      name: 'Accept',
-      status: 'READY_TO_PUBLISH'
-    }, {
-      name: 'Reject',
-      status: 'IN_PROGRESS'
-    }],
-    roles: ['super', 'admin', 'reviewer'],
-    variant: '???'
-  },
-  READY_TO_PUBLISH: {
-    actions: [{
-      name: 'Publish',
-      status: 'PUBLISHED'
-    }],
-    roles: ['super', 'admin'],
-    variant: 'warning'
-  },
-  PUBLISHED: {
-    actions: [],
-    roles: [],
-    variant: 'success'
+  [PERSON_POST_STATUSES.IN_REVIEW]: [{
+    text: 'Reject',
+    variant: 'danger',
+    newStatus: PERSON_POST_STATUSES.IN_PROGRESS
+  }, {
+    text: 'Accept',
+    variant: 'warning',
+    newStatus: PERSON_POST_STATUSES.READY
+  }],
+  [PERSON_POST_STATUSES.READY]: [{
+    text: 'Back to Review',
+    variant: 'danger',
+    newStatus: PERSON_POST_STATUSES.IN_REVIEW
+  }, {
+    text: 'Publish',
+    variant: 'success',
+    newStatus: PERSON_POST_STATUSES.PUBLISHED
+  }],
+  [PERSON_POST_STATUSES.PUBLISHED]: {
+    text: 'Unpublish',
+    variant: 'danger',
+    newStatus: PERSON_POST_STATUSES.READY
   }
-};
-
-const getStatusActions = (status) => {
-  return PERMISSIONS[status];
 };
 
 const StatusDropdown = ({ status, user, updateStatus }) => {
-  const canChangeStatus = permissions.can(user.role).createAny('changeStatus');
-  const statusConfig = getStatusActions(status);
-  const hasPriviladge = statusConfig.roles.find(item => item.indexOf(user.role) !== -1);
+  const statusConfig = config[status];
+  const permission = user.createAny('changeStatus');
 
-  if (canChangeStatus.granted === false || !hasPriviladge) {
-    return (
-      <Button
-        variant={statusConfig.variant}
-        className="status-dropdown"
-      >{ _startCase(_lowerCase(status)) }</Button>
-    );
-  }
+  const attributes = permission.filter({ [status]: true });
+  const canChangeStatus = permission.granted && Object.keys(attributes).length;
+
+  // eslint-disable-next-line
+  const singleButton = ({ variant, text, newStatus }) => (
+    <Button
+      variant={variant}
+      onClick={() => updateStatus(newStatus)}
+      disabled={!canChangeStatus}
+    >{ text }</Button>
+  );
 
   return (
     <>
-      <Dropdown as={ButtonGroup} className="status-dropdown" alignRight>
-        <Button variant={statusConfig.variant}>{ _startCase(_lowerCase(status)) }</Button>
+      { !Array.isArray(statusConfig) && singleButton(statusConfig) }
 
-        <Dropdown.Toggle split variant={statusConfig.variant} id="dropdown-split-basic" />
-
-        <Dropdown.Menu>
-          { statusConfig.actions.map((item) => {
-            return (
-              <Dropdown.Item
-                key={item.name}
-                onClick={() => updateStatus(item.status)}
-              >{ item.name }
-              </Dropdown.Item>
-            );
-          })}
-        </Dropdown.Menu>
-      </Dropdown>
+      { Array.isArray(statusConfig)
+        && (
+        <ButtonGroup>
+          { statusConfig.map(item => singleButton(item)) }
+        </ButtonGroup>
+        )}
       <style>{`
         .status-dropdown {
           width: 50%;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, shape, func, object } from 'prop-types';
+import { arrayOf, shape, func } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Badge from 'react-bootstrap/Badge';
@@ -13,7 +13,7 @@ const PersonUserList = ({
   onUsersGet,
   users,
   usersForAssignment,
-  userPermissions,
+  user,
   setPermission
 }) => {
   return (
@@ -21,7 +21,7 @@ const PersonUserList = ({
       <Card.Header className="border-bottom-0 d-flex justify-content-between">
         Users
 
-        { userPermissions.createAny('person-assignUser').granted
+        { user.createAny('person-assignUser').granted
           && (
           <Dropdown>
             <Dropdown.Toggle as={ElipsisDropdownToggle} />
@@ -58,7 +58,7 @@ const PersonUserList = ({
                   <td>{ user.firstName } { user.lastName }</td>
                   <td>{ _upperFirst(role) }</td>
                   <td className="text-right"><Badge variant="success">Active</Badge></td>
-                  { userPermissions.createAny('person-canDeactivate').granted
+                  { user.createAny('person-canDeactivate').granted
                     && (
                     <td className="text-right">
                       <Dropdown>
@@ -91,7 +91,7 @@ PersonUserList.propTypes = {
   onUsersGet: func,
   users: arrayOf(shape(UsersType)),
   usersForAssignment: arrayOf(shape(UsersType)),
-  userPermissions: shape(object).isRequired,
+  user: shape(UsersType).isRequired,
   setPermission: func
 };
 

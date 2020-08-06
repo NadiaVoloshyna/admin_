@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
-const { PERSON_POST_STATUSES, USER_ROLES } = require('../constants');
+const { PERSON_POST_STATUSES } = require('../../common/constants');
+const { USER_ROLES } = require('../constants');
 const GoogleApi = require('../services/google');
 
 const { Schema } = mongoose;
@@ -60,9 +61,8 @@ const schema = new Schema({
     enum: [
       PERSON_POST_STATUSES.NEW,
       PERSON_POST_STATUSES.IN_PROGRESS,
-      PERSON_POST_STATUSES.AWAITS_REVIEW,
       PERSON_POST_STATUSES.IN_REVIEW,
-      PERSON_POST_STATUSES.READY_TO_PUBLISH,
+      PERSON_POST_STATUSES.READY,
       PERSON_POST_STATUSES.PUBLISHED
     ]
   },

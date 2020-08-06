@@ -11,13 +11,15 @@ module.exports = (message, code) => {
     return process.exit(1);
   }
 
+  const messages = Array.isArray(message) ? message : [message];
+
   return {
     error: {
       code,
-      details: [{
+      details: messages.map(message => ({
         code,
         message
-      }]
+      }))
     }
   };
 };

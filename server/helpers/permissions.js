@@ -1,4 +1,5 @@
-const { PERSON_POST_STATUSES, GOOGLE_USER_ROLES } = require('../constants');
+const { PERSON_POST_STATUSES } = require('../../common/constants');
+const { GOOGLE_USER_ROLES } = require('../constants');
 
 const getRoleToUpdate = (status, role) => {
   switch (status) {
@@ -6,15 +7,11 @@ const getRoleToUpdate = (status, role) => {
       if (role === 'author') return GOOGLE_USER_ROLES.AUTHOR;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
       break;
-    case PERSON_POST_STATUSES.AWAITS_REVIEW:
-      if (role === 'author') return GOOGLE_USER_ROLES.READER;
-      if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
-      break;
     case PERSON_POST_STATUSES.IN_REVIEW:
       if (role === 'author') return GOOGLE_USER_ROLES.READER;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.REVIEWER;
       break;
-    case PERSON_POST_STATUSES.READY_TO_PUBLISH:
+    case PERSON_POST_STATUSES.READY:
       if (role === 'author') return GOOGLE_USER_ROLES.READER;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
       break;

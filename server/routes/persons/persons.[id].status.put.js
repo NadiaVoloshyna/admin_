@@ -1,49 +1,93 @@
 const { body, check } = require('express-validator');
 const { each } = require('async');
+const { PERSON_POST_STATUSES } = require('../../../common/constants');
 const Person = require('../../models/person');
 const GoogleApi = require('../../services/google');
 const helpers = require('../../helpers/permissions');
-const { PERSON_POST_STATUSES } = require('../../constants');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
-/**
- * Sets document status
- * 2. Updates the status of the Person
- */
+// 1. Get resources from database
+const getResource = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const person = await Person.findById(id)
+      .populate('permissions.user');
+
+    if (!person) {
+      return res.status(404).end();
+    }
+
+    res.locals.person = person;
+    next();
+  } catch (error) {
+    return req.handle500(error);
+  }
+};
+
+// 2. Check if user has permissions to delete a person
+const checkPermissions = (req, res, next) => {
+  try {
+    const { user } = req;
+    const { person } = res.locals;
+
+    const permission = user.createAny('changeStatus');
+
+    const attributes = permission.filter({ [person.status]: true });
+    const canChangeStatus = permission.granted && Object.keys(attributes).length;
+
+    if (!canChangeStatus) {
+      return res.status(403).end();
+    }
+  } catch (error) {
+    return req.handle500(error);
+  }
+
+  next();
+};
+
+// 3. Update status and permissions
+const updateStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const { person } = res.locals;
+
+  try {
+    const { biography: { documentId } } = person;
+
+    await each(person.permissions, async ({ permissionId, user }) => {
+      await GoogleApi.updatePermissions(
+        documentId,
+        permissionId,
+        helpers.getRoleToUpdate(status, user.role)
+      );
+    });
+
+    await Person.updateOne(
+      { _id: id },
+      { status }
+    );
+
+    res.status(200).end();
+  } catch (error) {
+    req.handle500(error);
+  }
+};
+
+// Sets document status
 module.exports = (router) => {
   router.put('/:id/status', [
     check('id').isMongoId(),
     body('status').isIn([
+      PERSON_POST_STATUSES.NEW,
       PERSON_POST_STATUSES.IN_PROGRESS,
-      PERSON_POST_STATUSES.AWAITS_REVIEW,
       PERSON_POST_STATUSES.IN_REVIEW,
-      PERSON_POST_STATUSES.READY_TO_PUBLISH,
+      PERSON_POST_STATUSES.READY,
       PERSON_POST_STATUSES.PUBLISHED
     ]),
-  ], handle400, async (req, res) => {
-    const { status } = req.body;
-    const { id } = req.params;
-
-    try {
-      const person = await Person.findById(id);
-      const { biography: { documentId } } = person;
-
-      await each(person.permissions, async ({ role, permissionId }) => {
-        await GoogleApi.updatePermissions(
-          documentId,
-          permissionId,
-          helpers.getRoleToUpdate(status, role)
-        );
-      });
-
-      await Person.updateOne(
-        { _id: id },
-        { status }
-      );
-    } catch (error) {
-      return req.handle500(error);
-    }
-
-    res.status(200).end();
-  });
+  ],
+  handle400,
+  getResource,
+  checkPermissions,
+  updateStatus);
 };

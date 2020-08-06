@@ -13,7 +13,7 @@ const createQueryForPagination = (args) => {
     offset = 0,
     searchTerm = '',
     sort = 'ascending',
-    limit = 10
+    limit = 10,
   } = args;
 
   const query = searchTerm ? { name: {

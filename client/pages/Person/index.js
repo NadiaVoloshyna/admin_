@@ -41,13 +41,13 @@ const PersonPage = (props) => {
     professions: personsProfessions,
     status,
     biography,
-    permissions
+    permissions: docPermissions
   } = person;
 
   const canEdit = (
     user.isAdmin
     || user.isSuper
-    || (user.isAuthor && permissions.some(item => item.user._id === user._id))
+    || (user.isAuthor && docPermissions.some(item => item.user._id === user._id))
   );
 
   /**
@@ -70,8 +70,14 @@ const PersonPage = (props) => {
   const updateStatus = (newStatus) => {
     setIsLoading(true);
 
-    PersonApi.updateStatus(person._id, status)
-      .then(() => setPerson({ ...person, newStatus }))
+    PersonApi.updateStatus(person._id, newStatus)
+      .then(() => {
+        setPerson({
+          ...person,
+          status: newStatus
+        });
+        alert.success(SUCCESS_MESSAGES.PERSON_STATUS_UPDATE);
+      })
       .catch(error => handleError(error, ERROR_MESSAGES.PERSON_UPDATE_STATUS))
       .finally(() => setIsLoading(false));
   };
@@ -84,9 +90,9 @@ const PersonPage = (props) => {
     setIsLoading(true);
 
     PersonApi.updatePermissions(person._id, selectedUserId)
-      .then(permissions => setPerson({
+      .then(docPermissions => setPerson({
         ...person,
-        permissions: [...person.permissions, ...permissions]
+        permissions: [...person.permissions, ...docPermissions]
       }))
       .catch(error => handleError(error, ERROR_MESSAGES.PERSON_ASSIGN_USER))
       .finally(() => setIsLoading(false));
@@ -101,7 +107,7 @@ const PersonPage = (props) => {
 
     UsersApi.getUsersByRole(role)
       .then(({ data: users }) => {
-        const filtered = users.filter(user => !permissions.find(item => item.user._id === user._id));
+        const filtered = users.filter(user => !docPermissions.find(item => item.user._id === user._id));
         setUsersForAssignment(filtered);
       })
       .catch((error) => {
@@ -161,9 +167,9 @@ const PersonPage = (props) => {
                         && (
                         <PersonUserList
                           onUsersGet={getUsersForAssignment}
-                          users={permissions}
+                          users={docPermissions}
                           usersForAssignment={usersForAssignment}
-                          userPermissions={user.permissions}
+                          user={user}
                           setPermission={setPermission}
                         />
                         )}
@@ -185,8 +191,7 @@ const PersonPage = (props) => {
                         />
                         <DocumentAction
                           documentId={biography.documentId}
-                          me={user}
-                          permissions={permissions}
+                          user={user}
                         />
                       </div>
                       <PersonPortrait />

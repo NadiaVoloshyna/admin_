@@ -2,13 +2,12 @@ const { body } = require('express-validator');
 const Person = require('../../models/person');
 const Asset = require('../../models/asset');
 const GoogleApi = require('../../services/google');
-const ac = require('../../../accesscontrol.config');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 // 1. Check if user has permissions to create a person
 const checkPermissions = (req, res, next) => {
   const { user } = req;
-  const permission = ac.can(user.role).createOwn('person');
+  const permission = user.createOwn('person');
 
   if (permission.granted) {
     next();
