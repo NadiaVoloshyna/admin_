@@ -22,8 +22,7 @@ export const INSERTIONS = {
 export const SUCCESS_MESSAGES = {
   PERSON_SAVE: 'Person succesfully saved.',
   USERS_INVITE_USER: 'Invitation was sent.',
-  USERS_EDIT_USER: 'Changes were saved successfully.',
-  LIBRARY_FILE_MOVE: 'Moved successfully'
+  USERS_EDIT_USER: 'Changes were saved successfully.'
 };
 
 export const ERROR_MESSAGES = {

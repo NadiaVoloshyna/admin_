@@ -3,9 +3,8 @@ import { func, shape, bool } from 'prop-types';
 import api from 'shared/api/assets';
 import { isOfType } from 'shared/helpers';
 import { AssetType } from 'shared/prop-types';
-import logger from 'utils/logger';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from 'shared/constants';
+import { ERROR_MESSAGES } from 'shared/constants';
 import Breadcrumbs from './breadcrumbs';
 import FileSystem from './fileSystem';
 import UploadBox from './uploadBox';
@@ -44,25 +43,22 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
   };
 
   const onDelete = async (asset) => {
-    const response = await api.deleteAsset(asset._id);
-
-    if (response.status === 200) {
+    try {
+      await api.deleteAsset(asset._id);
       const newAssets = assets.filter(item => item._id !== asset._id);
       setAssets(newAssets);
-    } else {
-      handleError(response.statusText, ERROR_MESSAGES.LIBRARY_FILE_DELETE);
+    } catch (error) {
+      handleError(error, ERROR_MESSAGES.LIBRARY_FILE_DELETE);
     }
   };
 
   const onMove = async (asset, parent) => {
-    const response = await api.moveAsset(asset._id, parent._id);
-
-    if (response.status === 200) {
+    try {
+      await api.moveAsset(asset._id, parent._id);
       const newAssets = assets.filter(item => item._id !== asset._id);
       setAssets(newAssets);
-      logger.log(SUCCESS_MESSAGES.LIBRARY_FILE_MOVE);
-    } else {
-      handleError(response.statusText, ERROR_MESSAGES.LIBRARY_FILE_MOVE);
+    } catch (error) {
+      handleError(error, ERROR_MESSAGES.LIBRARY_FILE_MOVE);
     }
   };
 
