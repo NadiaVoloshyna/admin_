@@ -1,7 +1,5 @@
 function createQuery(searchTerm, fields) {
-  if (!searchTerm) {
-    return {};
-  }
+  if (!searchTerm) return {};
 
   const getFieldQuery = (field) => ({
     [field]: {
@@ -10,9 +8,19 @@ function createQuery(searchTerm, fields) {
     }
   });
 
-  const queries = fields && { $or: fields.map((field) => getFieldQuery(field)) };
+  return fields.reduce((queries, field) => {
+    const query = getFieldQuery(field);
 
-  return queries || getFieldQuery('name');
+    if (fields.length === 1) return query;
+
+    if (!queries.$or) {
+      queries.$or = [];
+    }
+
+    queries.$or.push(query);
+
+    return queries;
+  }, {});
 }
 
 const createQueryForPagination = (args) => {
@@ -29,17 +37,16 @@ const createQueryForPagination = (args) => {
   const {
     offset = 0,
     searchTerm = '',
-    fields,
+    fields = ['name'],
     sort = 'ascending',
+    sortBy = 'name',
     limit = 10
   } = args;
   const query = createQuery(searchTerm, fields);
 
-  const sortField = fields ? fields[0] : 'name';
-
   const options = {
     sort: {
-      [sortField]: sort
+      [sortBy]: sort
     },
     offset: offset * limit,
     limit
