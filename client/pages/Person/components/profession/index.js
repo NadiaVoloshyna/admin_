@@ -32,6 +32,7 @@ const PersonProfession = ({ professions, onAdd, onRemove }) => {
         <Card.Body className="p-0">
           <Select
             isMulti
+            isClearable={false}
             options={professions.map(item => ({ value: item, label: item.name }))}
             onChange={onChange}
             styles={{

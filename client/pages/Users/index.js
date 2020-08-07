@@ -33,7 +33,7 @@ const UsersPage = (props) => {
       const { data: { users, pagination } } = await UsersAPI.getUsers(offset, searchTerm, sort);
 
       setUsers(users);
-      setPagination(offset, searchTerm, sort, ...pagination);
+      setPagination({ offset, searchTerm, sort, ...pagination });
     } catch (error) {
       handleError(error, ERROR_MESSAGES.USERS_GET_USERS);
     } finally {
