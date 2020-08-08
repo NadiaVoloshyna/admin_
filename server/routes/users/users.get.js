@@ -18,7 +18,7 @@ module.exports = (router) => {
       const { query, options } = createQueryForPagination({
         ...req.query,
         fields: ['firstName', 'lastName'],
-        sortBy: 'firstName'
+        sortBy: 'lastName'
       });
       const users = await User.paginate(query, options);
       const documents = users.docs.filter(item => item.role !== 'super');
