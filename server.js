@@ -48,6 +48,6 @@ app.prepare().then(() => {
   const PORT = process.env.PORT || 8080;
   server.listen(PORT, (err) => {
     if (err) throw err;
-    console.log(`> Ready on http://localhost:${PORT}`);
+    logger.info(`Ready on http://localhost:${PORT}`);
   });
 });

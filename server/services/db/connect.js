@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { logger } = require('../gcp/logger');
 
 /* eslint-disable */
 const CONNECTION_URL = 'mongodb+srv://' + process.env.DB_USERNAME + ':' + process.env.DB_PASSWORD
@@ -6,7 +7,7 @@ const CONNECTION_URL = 'mongodb+srv://' + process.env.DB_USERNAME + ':' + proces
 /* eslint-enable */
 
 mongoose.connection.on('open', () => {
-  console.log('Connected to mongo server!');
+  logger.info('Connected to mongo server!');
 });
 
 module.exports = async (logger) => {
