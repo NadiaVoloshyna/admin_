@@ -48,7 +48,6 @@
     "no-unused-expressions": "off",
     "no-shadow": "off",
     "no-param-reassign": "off",
-    "no-console": "off",
     "key-spacing": "off",
     "max-len": ["error", 130, 2],
     "import/no-cycle": "off",

@@ -26,6 +26,7 @@ const DataGrid = (props) => {
 
   const [ selectedRecords, setSelectedRecords ] = useState([]);
   const [ searchTerm, setSearchTerm ] = useState('');
+  const [ searchDirty, setSearchDirty ] = useState(false);
 
   const hasData = !!data.length;
 
@@ -58,6 +59,7 @@ const DataGrid = (props) => {
 
     if (type === 'search') {
       onItemsGet({ searchTerm });
+      setSearchDirty(!!searchTerm);
     }
 
     if (type === 'cellEdit') {
@@ -87,7 +89,7 @@ const DataGrid = (props) => {
                     <InputGroup.Append>
                       <Button
                         variant="primary"
-                        disabled={!searchTerm}
+                        disabled={!searchDirty && !searchTerm}
                         onClick={() => onTableChange('search', { searchTerm })}
                       >
                         Search

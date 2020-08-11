@@ -8,15 +8,17 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import { USER_ROLES } from 'common/constants';
 import _upperFirst from 'lodash/upperFirst';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
 
 const ChangeRoleModal = ({ show, toggleShow, userId, userRole }) => {
+  const handleError = useErrorHandler();
+
   const onSubmit = ({ role }) => {
     if (!Object.values(USER_ROLES).includes(role)) return;
 
     UsersApi.changeRole(userId, role)
       .then(() => window.location.replace('/auth/logout'))
-      .catch((error) => console.error(error));
-
+      .catch((error) => handleError(error));
     toggleShow();
   };
 

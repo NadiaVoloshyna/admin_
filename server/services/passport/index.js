@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 const User = require('../../models/user');
 const { deserializeUser } = require('./functions');
+const { logger } = require('../gcp/logger');
 
 passport.use(
   new GoogleStrategy({
@@ -68,7 +69,7 @@ passport.deserializeUser(async (_id, done) => {
       done(null, user);
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     done(error);
   }
 });

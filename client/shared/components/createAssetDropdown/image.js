@@ -7,9 +7,12 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CloudinaryUpload from 'shared/components/mediaLibrary/upload';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
+import { ERROR_MESSAGES } from 'shared/constants';
 import { ASSET_TYPES } from './index';
 
 const Image = ({ onDismiss, onSubmit }) => {
+  const handleError = useErrorHandler();
   const [value, setValue] = useState('');
   const [image, setImage] = useState(false);
 
@@ -19,7 +22,7 @@ const Image = ({ onDismiss, onSubmit }) => {
   };
 
   const onImageUploadError = (error) => {
-    console.log(error);
+    handleError(error, ERROR_MESSAGES.ASSET_UPLOAD_IMAGE);
   };
 
   const onAssetAdd = () => {

@@ -17,10 +17,6 @@ const PersonProfession = ({ professions, onAdd, onRemove }) => {
     if (meta.action === 'remove-value') {
       onRemove('professions');
     }
-
-    if (meta.action === 'clear') {
-      console.log('Delete all professions');
-    }
   };
 
   return (
