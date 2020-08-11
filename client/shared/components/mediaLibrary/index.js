@@ -101,7 +101,7 @@ MediaLibrary.defaultProps = {
   canDelete: false,
   isDragDrop: false,
   isUploadBoxOpen: false,
-  root: null
+  root: undefined
 };
 
 export default MediaLibrary;
