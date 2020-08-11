@@ -6,15 +6,6 @@ export const ASSET_TYPES = {
   SONG: 'SONG'
 };
 
-export const PERSON_POST_STATUSES = {
-  NEW: 'NEW',
-  IN_PROGRESS: 'IN_PROGRESS',
-  AWAITS_REVIEW: 'AWAITS_REVIEW',
-  IN_REVIEW: 'IN_REVIEW',
-  READY_TO_PUBLISH: 'READY_TO_PUBLISH',
-  PUBLISHED: 'PUBLISHED'
-};
-
 export const INSERTIONS = {
   USER_ROLE: 'USER_ROLE'
 };
@@ -22,7 +13,8 @@ export const INSERTIONS = {
 export const SUCCESS_MESSAGES = {
   PERSON_SAVE: 'Person succesfully saved.',
   USERS_INVITE_USER: 'Invitation was sent.',
-  USERS_EDIT_USER: 'Changes were saved successfully.'
+  USERS_EDIT_USER: 'Changes were saved successfully.',
+  PERSON_STATUS_UPDATE: 'Status was updated successfully.'
 };
 
 export const ERROR_MESSAGES = {

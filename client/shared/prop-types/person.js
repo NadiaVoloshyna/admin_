@@ -1,6 +1,5 @@
 import { string, oneOf, shape, arrayOf, bool } from 'prop-types';
-import { PERSON_POST_STATUSES } from 'shared/constants/index';
-import { USER_ROLES } from 'common/constants/index';
+import { USER_ROLES, PERSON_POST_STATUSES } from 'common/constants';
 import { Biography } from './biography';
 
 export const Person = {

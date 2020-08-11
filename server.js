@@ -11,7 +11,7 @@ const DB = require('./server/services/db');
 const routes = require('./server/routes');
 
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev, quiet: true });
+const app = next({ dev, quiet: !dev });
 const handle = app.getRequestHandler();
 
 DB.connect(logger);

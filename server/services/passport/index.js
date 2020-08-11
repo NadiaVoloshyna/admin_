@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 const User = require('../../models/user');
+const { deserializeUser } = require('./functions');
 const { logger } = require('../gcp/logger');
 
 passport.use(
@@ -52,15 +53,19 @@ async (email, password, done) => {
   }
 }));
 
+// Add user into session
+// TODO: use id and fetch user in the _app to get a user
 passport.serializeUser((user, done) => {
-  done(null, user);
+  done(null, user._id);
 });
 
-passport.deserializeUser(async ({ _id }, done) => {
+// Add user into req.user
+passport.deserializeUser(async (_id, done) => {
   try {
-    const user = await User.findById(_id);
+    let user = await User.findOne({ _id, active: true });
 
     if (user) {
+      user = deserializeUser(user);
       done(null, user);
     }
   } catch (error) {

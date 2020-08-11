@@ -1,4 +1,4 @@
-import { PERSON_POST_STATUSES } from 'shared/constants';
+import { PERSON_POST_STATUSES } from 'common/constants';
 
 export const personState = {
   name: '',

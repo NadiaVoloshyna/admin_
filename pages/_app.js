@@ -46,17 +46,20 @@ library.add(
 class UkrainianAdminApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
+
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx) || {};
     }
     if (ctx.req && ctx.req.session.passport) {
-      pageProps.user = ctx.req.session.passport.user;
+      pageProps.user = ctx.req.user;
     }
+
     return { pageProps };
   }
 
   constructor(props) {
     super(props);
+
     this.state = {
       user: destructureUser(props.pageProps.user)
     };

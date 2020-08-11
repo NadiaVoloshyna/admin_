@@ -2,12 +2,11 @@ import React from 'react';
 import { shape, string } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import { UserType } from 'common/prop-types/authorization/user';
-import permissions from '../../../../permissions';
 
-const DocumentAction = ({ documentId, me }) => {
+const DocumentAction = ({ documentId, user }) => {
   const getDocumentMode = () => {
-    if (permissions.can(me.role).readOwn('document').granted) return 'view';
-    if (permissions.can(me.role).updateOwn('document').granted) return 'edit';
+    if (user.readOwn('document').granted) return 'view';
+    if (user.updateOwn('document').granted) return 'edit';
   };
 
   const mode = getDocumentMode();
@@ -35,7 +34,7 @@ const DocumentAction = ({ documentId, me }) => {
 
 DocumentAction.propTypes = {
   documentId: string.isRequired,
-  me: shape(UserType).isRequired
+  user: shape(UserType).isRequired
 };
 
 export default DocumentAction;

@@ -1,8 +1,7 @@
 const { body } = require('express-validator');
 const { each } = require('async');
+const { PERSON_POST_STATUSES } = require('../../../common/constants');
 const Person = require('../../models/person');
-const { PERSON_POST_STATUSES } = require('../../constants');
-const ac = require('../../../accesscontrol.config');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 // 1. Get resources from database
@@ -29,10 +28,10 @@ const checkPermissions = (req, res, next) => {
     const { user } = req;
 
     let { persons } = res.locals;
-    let permission = ac.can(user.role).deleteAny('person');
+    let permission = user.deleteAny('person');
 
     if (permission.granted === false) {
-      permission = ac.can(user.role).deleteOwn('person');
+      permission = user.deleteOwn('person');
 
       if (permission.granted === false) {
         return res.status(403).end();

@@ -1,7 +1,6 @@
 const { check } = require('express-validator');
 const Person = require('../../models/person');
 const GoogleApi = require('../../services/google');
-const ac = require('../../../accesscontrol.config');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 const getResource = async (req, res, next) => {
@@ -28,8 +27,9 @@ const getResource = async (req, res, next) => {
 };
 
 const checkPermissions = (req, res, next) => {
+  const { user } = req;
   // Admin or super
-  const permission = ac.can(req.user.role).readAny('person');
+  const permission = user.readAny('person');
 
   if (permission.granted === false) {
     return res.status(403).end();
