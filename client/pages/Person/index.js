@@ -134,7 +134,11 @@ const PersonPage = (props) => {
         <Form
           onSubmit={onPersonSave}
           mutators={{
-            ...arrayMutators
+            ...arrayMutators,
+            onProfessionRemove: ([id], state, { changeValue }) => {
+              const mutator = (value) => value.filter(item => item.profession._id !== id);
+              changeValue(state, 'professions', mutator);
+            }
           }}
           initialValues={{
             name,
@@ -143,7 +147,7 @@ const PersonPage = (props) => {
           }}
           render={({
             form: {
-              mutators: { push, pop }
+              mutators: { push, onProfessionRemove }
             },
             handleSubmit,
             form,
@@ -199,7 +203,7 @@ const PersonPage = (props) => {
                       <PersonProfession
                         professions={availableProfessions()}
                         onAdd={push}
-                        onRemove={pop}
+                        onRemove={onProfessionRemove}
                       />
                     </div>
                   </div>

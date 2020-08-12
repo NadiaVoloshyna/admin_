@@ -6,16 +6,19 @@ import { ProfessionType } from 'shared/prop-types';
 
 const PersonProfession = ({ professions, onAdd, onRemove }) => {
   const onChange = (value, meta) => {
+    const itemToRemove = meta?.removedValue?.value?._id;
+    const itemToAdd = meta?.option?.value;
+
     if (meta.action === 'select-option') {
       onAdd('professions', {
-        profession: meta.option.value,
+        profession: itemToAdd,
         active: false,
         media: []
       });
     }
 
     if (meta.action === 'remove-value') {
-      onRemove('professions');
+      onRemove(itemToRemove);
     }
   };
 
