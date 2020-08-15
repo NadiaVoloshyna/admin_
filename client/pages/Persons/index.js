@@ -41,15 +41,19 @@ const PersonsPage = ({ user, persons, pagination }) => {
     }
   };
 
-  const onDelete = async (persons) => {
+  const onDelete = async (records) => {
     setIsLoading(true);
 
-    const ids = persons.map(id => id._id);
+    const ids = records.map(id => id._id);
 
     try {
-      await PersonsApi.deletePersons(ids);
-      persons = persons.filter(person => ids.find(id => id === person._id));
-      setPersons(persons);
+      const response = await PersonsApi.deletePersons(ids);
+
+      if (response.status === 200) {
+        setPersons(personsState.filter(person => ids.find(id => id !== person._id)));
+      } else {
+        throw new Error(response.message);
+      }
     } catch (error) {
       handleError(error, ERROR_MESSAGES.PERSONS_DELETE_PERSONS);
     } finally {
