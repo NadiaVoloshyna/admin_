@@ -59,9 +59,9 @@ const ProfessionsPage = (props) => {
   };
 
   const onProfessionDelete = async (records) => {
-    const { professionsToDelete } = records;
     setIsLoading(true);
-    const ids = professionsToDelete.map(id => id._id);
+
+    const ids = records.map(id => id._id);
 
     try {
       const response = await ProfessionsAPI.deleteProfessions(ids);
