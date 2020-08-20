@@ -34,6 +34,7 @@ const PersonProfession = ({ professions, onAdd, onRemove }) => {
             isClearable={false}
             options={professions.map(item => ({ value: item, label: item.name }))}
             onChange={onChange}
+            menuPlacement="auto"
             styles={{
               control: styles => ({ ...styles, border: 'none' }),
             }}
