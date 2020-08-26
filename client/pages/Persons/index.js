@@ -47,13 +47,8 @@ const PersonsPage = ({ user, persons, pagination }) => {
     const ids = records.map(id => id._id);
 
     try {
-      const response = await PersonsApi.deletePersons(ids);
-
-      if (response.status === 200) {
-        setPersons(personsState.filter(person => ids.find(id => id !== person._id)));
-      } else {
-        throw new Error(response.message);
-      }
+      await PersonsApi.deletePersons(ids);
+      setPersons(personsState.filter(person => ids.find(id => id !== person._id)));
     } catch (error) {
       handleError(error, ERROR_MESSAGES.PERSONS_DELETE_PERSONS);
     } finally {
