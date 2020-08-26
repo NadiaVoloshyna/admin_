@@ -64,15 +64,8 @@ const ProfessionsPage = (props) => {
     const ids = records.map(id => id._id);
 
     try {
-      const response = await ProfessionsAPI.deleteProfessions(ids);
-
-      if (response.status === 200) {
-        setProfessions(professions.filter(profession => ids.indexOf(profession._id) === -1));
-      }
-
-      if (response.status !== 200) {
-        throw new Error(response.message);
-      }
+      await ProfessionsAPI.deleteProfessions(ids);
+      setProfessions(professions.filter(profession => ids.indexOf(profession._id) === -1));
     } catch (error) {
       handleError(error, ERROR_MESSAGES.PROFESSIONS_DELETE_PROFESSIONS);
     } finally {
