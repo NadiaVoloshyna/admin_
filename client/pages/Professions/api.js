@@ -10,7 +10,7 @@ class ProfessionsApi extends ApiService {
   }
 
   deleteProfessions = (ids) => {
-    return this.$http.delete('/api/professions', { ids });
+    return this.$http.delete('/api/professions', { data: { ids } });
   }
 
   create = (payload) => {
