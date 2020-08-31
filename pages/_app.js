@@ -19,7 +19,8 @@ import {
   faFolder,
   faImage,
   faCompactDisc,
-  faFileAudio
+  faFileAudio,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { destructureUser } from 'utils/user';
@@ -40,7 +41,8 @@ library.add(
   faFolder,
   faImage,
   faCompactDisc,
-  faFileAudio
+  faFileAudio,
+  faTimes,
 );
 
 class UkrainianAdminApp extends App {
