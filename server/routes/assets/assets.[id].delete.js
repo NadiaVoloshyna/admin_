@@ -1,5 +1,6 @@
 const { check } = require('express-validator');
 const Asset = require('../../models/asset');
+const References = require('../../models/references');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 const checkPermissions = (req, res, next) => {
@@ -17,8 +18,9 @@ const deleteAssets = async (req, res) => {
   try {
     // 1. Delete assert
     const asset = await Asset.findOne({ _id: id });
+    const references = await References.findOne({assetId: asset._id});
 
-    if (asset.references.length) {
+    if (references.listRefPersons) {
       return res.status(409).end();
     }
 

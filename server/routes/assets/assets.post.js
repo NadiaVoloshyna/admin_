@@ -1,5 +1,6 @@
 const { body } = require('express-validator');
 const Asset = require('../../models/asset');
+const References = require('../../models/references');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
@@ -41,6 +42,10 @@ module.exports = (router) => {
         year,
         description,
         createdBy: userId
+      }).save();
+
+      await new References ({
+        assetId: asset._id
       }).save();
 
       res.status(302).send(asset);
