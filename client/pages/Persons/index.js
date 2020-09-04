@@ -48,7 +48,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
 
     try {
       await PersonsApi.deletePersons(ids);
-      setPersons(personsState.filter(person => ids.find(id => id !== person._id)));
+      setPersons(personsState.filter(person => !ids.includes(person._id)));
     } catch (error) {
       handleError(error, ERROR_MESSAGES.PERSONS_DELETE_PERSONS);
     } finally {
