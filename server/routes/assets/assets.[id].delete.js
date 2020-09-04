@@ -18,9 +18,9 @@ const deleteAssets = async (req, res) => {
   try {
     // 1. Delete assert
     const asset = await Asset.findOne({ _id: id });
-    const references = await References.findOne({assetId: asset._id});
+    const references = await References.findOne({ dependOn: id });
 
-    if (references.listRefPersons) {
+    if (references) {
       return res.status(409).end();
     }
 

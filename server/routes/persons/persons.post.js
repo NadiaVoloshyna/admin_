@@ -1,7 +1,6 @@
 const { body } = require('express-validator');
 const Person = require('../../models/person');
 const Asset = require('../../models/asset');
-const References = require('../../models/references');
 const GoogleApi = require('../../services/google');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
@@ -77,8 +76,6 @@ const createAsset = async (req, res, next) => {
   }
 };
 
-
-
 // 5. Create person
 const createPerson = async (req, res) => {
   const { user } = req;
@@ -86,7 +83,7 @@ const createPerson = async (req, res) => {
   const { documentId, rootAssetId } = res.locals;
   let newPerson;
 
-  // Create person and references
+  // Create person
   try {
     newPerson = await new Person({
       name,
@@ -96,11 +93,6 @@ const createPerson = async (req, res) => {
         documentId
       }
     }).save();
-
-    await new References({
-      personId: newPerson._id
-    }).save();
-
   } catch (error) {
     return req.handle500(error);
   }
