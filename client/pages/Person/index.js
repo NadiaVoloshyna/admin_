@@ -54,10 +54,23 @@ const PersonPage = (props) => {
    * Updates the person
    * @param {Object} values Person fields to update
    */
+  const getPayload = (value) => {
+    if (typeof value.portrait !== 'string') {
+      return {
+        ...value,
+        portrait: value.portrait[0],
+        assetId:  value.portrait[1]
+      };
+    }
+    return value;
+  };
+
   const onPersonSave = (values) => {
     setIsLoading(true);
 
-    PersonApi.update(person._id, values)
+    const payload = getPayload(values);
+
+    PersonApi.update(person._id, payload)
       .then(() => alert.success(SUCCESS_MESSAGES.PERSON_SAVE))
       .catch(error => handleError(error, ERROR_MESSAGES.PERSON_SAVE))
       .finally(() => setIsLoading(false));

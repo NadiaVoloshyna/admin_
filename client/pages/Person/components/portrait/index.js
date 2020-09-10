@@ -16,15 +16,16 @@ const PersonPortrait = () => {
           <Field name="portrait">
             {props => {
               const { input: { onChange, value } } = props;
-              const onSelect = (asset => {
-                onChange(asset.url);
-              });
 
+              const onSelect = (asset => {
+                onChange([asset.url, asset._id]);
+              });
+              const url = typeof value !== 'string' ? value[0] : value;
               if (value) {
                 return (
                   <Image
                     cloudName="ukrainian"
-                    publicId={value}
+                    publicId={url}
                     height="235"
                     crop="fill"
                   />

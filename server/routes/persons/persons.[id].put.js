@@ -14,16 +14,20 @@ module.exports = (router) => {
     body('portrait').if(body('portrait').exists()).isString().escape(),
     body('born').if(body('born').exists()).isString().escape(),
     body('died').if(body('died').exists()).isString().escape(),
+    body('assetId').if(body('assetId').exists()).isMongoId()
   ], handle400, async (req, res) => {
-    const { name, portrait, born, died, professions } = req.body;
+    const { name, portrait, born, died, professions, assetId } = req.body;
     const { id } = req.params;
 
     try {
-      if (portrait) {
-        await new References({
-          depend: id,
-          dependOn: portrait // if portrait is a type ObjectId
-        }).save();
+      if (portrait && assetId) {
+        const reference = await References.findOne({ dependent: assetId }, { dependOn: id });
+        if (!reference) {
+          await new References({
+            dependent: assetId,
+            dependOn: id
+          }).save();
+        }
       }
 
       await Person.updateOne(

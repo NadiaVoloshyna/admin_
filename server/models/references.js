@@ -4,14 +4,14 @@ const { Schema } = mongoose;
 const { ObjectId } = Schema;
 
 const schema = new Schema({
-  depend: {
+  dependent: {
     type: ObjectId,
-    ref: 'Person',
+    ref: 'Asset',
     required: true
   },
   dependOn:{
     type: ObjectId,
-    ref: 'Asset',
+    ref: 'Person',
     required: true
   },
 });
