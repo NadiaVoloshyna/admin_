@@ -98,7 +98,7 @@ const UsersPage = (props) => {
             onUsersGet={onUsersGet}
             onEdit={onEdit}
             pagination={pagination}
-            isSuper={user.isSuper}
+            canEdit={user.deactivate('users')}
           />
         </Layout.Content>
       </Layout>
@@ -106,7 +106,7 @@ const UsersPage = (props) => {
       <InviteUserModal
         show={showInviteUserModal}
         onClose={() => toggleShowInviteUserModal(false)}
-        canInviteAdmin={user.isSuper}
+        canInviteAdmin={user.invite('users')}
         inviteUser={inviteUser}
       />
     </>

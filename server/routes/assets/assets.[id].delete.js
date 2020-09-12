@@ -4,7 +4,7 @@ const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 const checkPermissions = (req, res, next) => {
   const { user } = req;
-  const canDelete = user.deleteAny('assets').granted;
+  const canDelete = user.delete('assets');
 
   if (!canDelete) return res.status(403).end();
 

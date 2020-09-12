@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
+const { USER_ROLES } = require('../constants');
 
-const schema = new mongoose.Schema({
+const ROLES = Object.values(USER_ROLES);
+
+const userSchema = mongoose.Schema({
   firstName: String,
   lastName: String,
   displayName: String,
@@ -10,7 +13,10 @@ const schema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  password: String,
+  password: {
+    type: String,
+    required: true,
+  },
   created: {
     type: Date,
     required: true,
@@ -19,7 +25,7 @@ const schema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    enum: ['admin', 'author', 'reviewer']
+    enum: ROLES
   },
   active: {
     type: Boolean,
@@ -39,11 +45,17 @@ const schema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-schema.virtual('fullName').get(function getFullName() {
+userSchema.virtual('fullName').get(function getFullName() {
   return `${this.firstName} ${this.lastName}`;
 });
 
-schema.methods.toJson = function toJson() {
+userSchema.virtual('permissions', {
+  ref: 'Permissions',
+  localField: 'role',
+  foreignField: 'role',
+});
+
+userSchema.methods.toJson = function toJson() {
   const user = this.toObject();
 
   delete user.password;
@@ -51,6 +63,6 @@ schema.methods.toJson = function toJson() {
   return user;
 };
 
-schema.plugin(mongoosePaginate);
+userSchema.plugin(mongoosePaginate);
 
-module.exports = mongoose.model('User', schema, 'user');
+module.exports = mongoose.model('User', userSchema, 'user');

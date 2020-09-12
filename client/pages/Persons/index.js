@@ -19,8 +19,8 @@ const PersonsPage = ({ user, persons, pagination }) => {
   const [ personsState, setPersons ] = useState(persons);
   const [ paginationState, setPaginationState ] = useState(pagination);
 
-  const canCreatePerson = user.createOwn('person').granted;
-  const canDeletePerson = user.deleteAny('person').granted;
+  const canCreatePerson = user.create('persons');
+  const canDeletePerson = user.deleteOwn('persons');
 
   const onPersonsGet = async (payload) => {
     setIsLoading(true);

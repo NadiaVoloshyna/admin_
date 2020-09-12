@@ -131,7 +131,7 @@ Drawer.propTypes = {
 
 Drawer.defaultProps = {
   open: false,
-  backdropClose: false,
+  backdropClose: true,
 };
 
 Drawer.Header = DrawerHeader;

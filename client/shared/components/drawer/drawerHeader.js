@@ -12,7 +12,7 @@ const DrawerHeader = (props) => {
         <FontAwesomeIcon
           icon="times"
           size="lg"
-          className="cursor-pointer"
+          className="cur-pointer"
           onClick={() => onClose(false)}
         />
       </div>

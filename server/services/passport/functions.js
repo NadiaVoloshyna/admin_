@@ -1,10 +1,9 @@
-const { getPermissions } = require('../../../permissions');
+const { createPermissions } = require('../../../common/utils');
 
 const deserializeUser = (user) => {
-  const permissions = getPermissions(user.role);
   user = user.toObject();
   user = {
-    ...permissions,
+    ...createPermissions(user.permissions),
     ...user,
   };
 

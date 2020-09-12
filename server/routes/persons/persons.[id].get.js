@@ -29,9 +29,9 @@ const getResource = async (req, res, next) => {
 const checkPermissions = (req, res, next) => {
   const { user } = req;
   // Admin or super
-  const permission = user.readAny('person');
+  const canRead = user.read('persons');
 
-  if (permission.granted === false) {
+  if (canRead === false) {
     return res.status(403).end();
   }
 

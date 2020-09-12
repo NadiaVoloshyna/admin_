@@ -44,11 +44,8 @@ const PersonPage = (props) => {
     permissions: docPermissions
   } = person;
 
-  const canEdit = (
-    user.isAdmin
-    || user.isSuper
-    || (user.isAuthor && docPermissions.some(item => item.user._id === user._id))
-  );
+  const canEdit = user.updateAny('persons')
+    || (user.updateOwn('persons') && docPermissions.some(item => item.user._id === user._id));
 
   /**
    * Updates the person
@@ -167,16 +164,15 @@ const PersonPage = (props) => {
                   <div className="row">
                     <div className="col-9">
                       <PersonName canEdit={canEdit} />
-                      { user.userRoleUp('admin')
-                        && (
-                        <PersonUserList
-                          onUsersGet={getUsersForAssignment}
-                          users={docPermissions}
-                          usersForAssignment={usersForAssignment}
-                          user={user}
-                          setPermission={setPermission}
-                        />
-                        )}
+
+                      <PersonUserList
+                        onUsersGet={getUsersForAssignment}
+                        users={docPermissions}
+                        usersForAssignment={usersForAssignment}
+                        user={user}
+                        setPermission={setPermission}
+                      />
+
                       <ProfessionSection
                         professions={professions}
                         rootFolder={{

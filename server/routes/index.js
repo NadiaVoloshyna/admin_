@@ -2,6 +2,7 @@ const authRoutes = require('./auth');
 const personsRoutes = require('./persons');
 const usersRoutes = require('./users');
 const professionsRoutes = require('./professions');
+const permissionsRoutes = require('./permissions');
 const assetsRoutes = require('./assets');
 const logsRoutes = require('./_log');
 
@@ -16,6 +17,7 @@ module.exports = (app) => {
   app.use('/api/users', errorHandlers, usersRoutes);
   app.use('/api/professions', errorHandlers, professionsRoutes);
   app.use('/api/assets', errorHandlers, assetsRoutes);
+  app.use('/api/permissions', errorHandlers, permissionsRoutes);
 
   // Platform routes
   app.use('/api/__log__', errorHandlers, logsRoutes);
@@ -24,6 +26,8 @@ module.exports = (app) => {
   app.use('/persons', restrictAccess);
   app.use('/library', restrictAccess);
   app.use('/professions', restrictAccess);
+  app.use('/permissions', restrictAccess);
+  app.use('/users', restrictAccess);
   app.get('/', restrictAccess);
   app.use('/auth/login', restrictAccessForAuthenticated);
   app.use('/auth/register', restrictAccessForAuthenticated);

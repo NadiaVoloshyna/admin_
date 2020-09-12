@@ -21,7 +21,7 @@ const PersonUserList = ({
       <Card.Header className="border-bottom-0 d-flex justify-content-between">
         Users
 
-        { user.createAny('person-assignUser').granted
+        { user.assignUser('persons')
           && (
           <Dropdown>
             <Dropdown.Toggle as={ElipsisDropdownToggle} />
@@ -58,7 +58,7 @@ const PersonUserList = ({
                   <td>{ user.firstName } { user.lastName }</td>
                   <td>{ _upperFirst(role) }</td>
                   <td className="text-right"><Badge variant="success">Active</Badge></td>
-                  { user.createAny('person-canDeactivate').granted
+                  { user.deactivateUser('persons')
                     && (
                     <td className="text-right">
                       <Dropdown>
