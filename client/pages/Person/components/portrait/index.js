@@ -3,6 +3,8 @@ import { shape, object } from 'prop-types';
 import { Field } from 'react-final-form';
 import MediaLibraryModal from 'shared/components/mediaLibraryModal';
 import { Image } from 'cloudinary-react';
+import { encodePortrait } from '../../../../shared/helpers';
+import decodePortrait from '../../../../shared/helpers/decodePortrait';
 
 const PersonPortrait = () => {
   return (
@@ -18,14 +20,14 @@ const PersonPortrait = () => {
               const { input: { onChange, value } } = props;
 
               const onSelect = (asset => {
-                onChange([asset.url, asset._id]);
+                onChange(encodePortrait(asset));
               });
-              const url = typeof value !== 'string' ? value[0] : value;
+
               if (value) {
                 return (
                   <Image
                     cloudName="ukrainian"
-                    publicId={url}
+                    publicId={decodePortrait(value).url}
                     height="235"
                     crop="fill"
                   />

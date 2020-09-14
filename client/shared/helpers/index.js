@@ -42,3 +42,7 @@ export const applyBreadcrumbs = (breadcrumbs, folder) => {
 
   return crumbs;
 };
+
+export const encodePortrait = (asset) => {
+  return `${asset.url}|${asset._id}`;
+};
