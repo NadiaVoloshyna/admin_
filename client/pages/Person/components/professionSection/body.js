@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { shape, object, func, number } from 'prop-types';
+import { shape, object, func } from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import AssetsGrid from 'shared/components/mediaLibrary/assetsGrid';
 import { AssetType } from 'shared/prop-types';
 import ProfessionModal from '../professionModal';
 import Header from './header';
 
-const ProfessionSectionBody = ({ input, rootFolder, professionIdx, onRemove }) => {
+const ProfessionSectionBody = ({ input, rootFolder, onRemove }) => {
   const [ isOpen, setIsOpen ] = useState(false);
   const { onChange, value } = input;
   const { profession: { name }, media, active } = value;
@@ -28,7 +28,6 @@ const ProfessionSectionBody = ({ input, rootFolder, professionIdx, onRemove }) =
       <Card className="mb-3">
         <Header
           name={name}
-          idx={professionIdx}
           active={active}
           onModalOpen={setIsOpen}
           updateActive={updateActive}
@@ -63,7 +62,6 @@ const ProfessionSectionBody = ({ input, rootFolder, professionIdx, onRemove }) =
 
 ProfessionSectionBody.propTypes = {
   input: shape(object).isRequired,
-  professionIdx: number.isRequired,
   rootFolder: shape(AssetType),
   onRemove: func,
 };

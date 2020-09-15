@@ -15,8 +15,7 @@ const ProfessionSection = ({ rootFolder }) => {
               <Body
                 {...props}
                 rootFolder={rootFolder}
-                professionIdx={idx}
-                onRemove={idx => { fields.remove(idx); }}
+                onRemove={() => { fields.remove(idx); }}
               />
             )}
           </Field>
