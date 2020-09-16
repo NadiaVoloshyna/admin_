@@ -28,12 +28,12 @@ const checkPermissions = (req, res, next) => {
     const { user } = req;
 
     let { persons } = res.locals;
-    let permission = user.deleteAny('person');
+    let permission = user.deleteAny('persons');
 
-    if (permission.granted === false) {
-      permission = user.deleteOwn('person');
+    if (permission === false) {
+      permission = user.deleteOwn('persons');
 
-      if (permission.granted === false) {
+      if (permission === false) {
         return res.status(403).end();
       }
 

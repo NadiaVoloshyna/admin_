@@ -62,7 +62,9 @@ passport.serializeUser((user, done) => {
 // Add user into req.user
 passport.deserializeUser(async (_id, done) => {
   try {
-    let user = await User.findOne({ _id, active: true });
+    let user = await User
+      .findOne({ _id, active: true })
+      .populate('permissions');
 
     if (user) {
       user = deserializeUser(user);

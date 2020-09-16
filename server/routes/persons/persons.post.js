@@ -7,9 +7,9 @@ const handle400 = require('../../middlewares/errorHandlers/handle400');
 // 1. Check if user has permissions to create a person
 const checkPermissions = (req, res, next) => {
   const { user } = req;
-  const permission = user.createOwn('person');
+  const canCreatePerson = user.create('persons');
 
-  if (permission.granted) {
+  if (canCreatePerson) {
     next();
   } else {
     res.status(403).end();

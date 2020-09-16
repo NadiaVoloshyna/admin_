@@ -31,10 +31,7 @@ const checkPermissions = (req, res, next) => {
     const { user } = req;
     const { person } = res.locals;
 
-    const permission = user.createAny('changeStatus');
-
-    const attributes = permission.filter({ [person.status]: true });
-    const canChangeStatus = permission.granted && Object.keys(attributes).length;
+    const canChangeStatus = user.changeStatus('persons', person.status);
 
     if (!canChangeStatus) {
       return res.status(403).end();

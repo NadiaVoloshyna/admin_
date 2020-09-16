@@ -5,8 +5,8 @@ import { UserType } from 'common/prop-types/authorization/user';
 
 const DocumentAction = ({ documentId, user }) => {
   const getDocumentMode = () => {
-    if (user.readOwn('document').granted) return 'view';
-    if (user.updateOwn('document').granted) return 'edit';
+    if (user.readOwn('document')) return 'view';
+    if (user.updateOwn('document')) return 'edit';
   };
 
   const mode = getDocumentMode();

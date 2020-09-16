@@ -43,10 +43,7 @@ const config = {
 
 const StatusDropdown = ({ status, user, updateStatus }) => {
   const statusConfig = config[status];
-  const permission = user.createAny('changeStatus');
-
-  const attributes = permission.filter({ [status]: true });
-  const canChangeStatus = permission.granted && Object.keys(attributes).length;
+  const canChangeStatus = user.changeStatus('persons', status);
 
   // eslint-disable-next-line
   const singleButton = ({ variant, text, newStatus }) => (

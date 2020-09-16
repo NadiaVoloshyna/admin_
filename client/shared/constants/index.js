@@ -34,7 +34,10 @@ export const ERROR_MESSAGES = {
   USERS_EDIT_USER: 'We are sorry, there was a problem editing user.',
   ASSET_UPLOAD_IMAGE: 'We are sorry, there was a problem uploading the image.',
   LIBRARY_FILE_DELETE: 'We are sorry, there was a problem deleting the file.',
-  LIBRARY_FILE_MOVE: 'We are sorry, there was a problem moving the file.'
+  LIBRARY_FILE_MOVE: 'We are sorry, there was a problem moving the file.',
+  PERMISSION_UPDATE: 'We are sorry, there was a problem updating permission',
+  PERMISSION_CREATE: 'We are sorry, there was a problem creating permissions',
+  PERMISSION_DELETE: 'We are sorry, there was a problem deleting permissions'
 };
 
 export const WARNING_MESSAGES = {

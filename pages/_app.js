@@ -21,9 +21,10 @@ import {
   faCompactDisc,
   faFileAudio,
   faTimes,
+  faIdBadge,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { destructureUser } from 'utils/user';
+import { createPermissions } from 'common/utils';
 import { UserType } from '../common/prop-types/authorization/user';
 
 import 'assets/styles/styles.scss';
@@ -43,6 +44,7 @@ library.add(
   faCompactDisc,
   faFileAudio,
   faTimes,
+  faIdBadge,
 );
 
 class UkrainianAdminApp extends App {
@@ -63,12 +65,13 @@ class UkrainianAdminApp extends App {
     super(props);
 
     this.state = {
-      user: destructureUser(props.pageProps.user)
+      user: props.pageProps.user
     };
   }
 
   render() {
     const { Component, pageProps } = this.props;
+    const permissions = this.state.user?.permissions;
 
     const context = {
       user: this.state.user,
@@ -77,7 +80,10 @@ class UkrainianAdminApp extends App {
 
     const props = {
       ...pageProps,
-      user: this.state.user,
+      user: {
+        ...this.state.user,
+        ...createPermissions(permissions),
+      },
     };
 
     return (
