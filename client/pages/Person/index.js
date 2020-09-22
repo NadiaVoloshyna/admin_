@@ -14,14 +14,15 @@ import { UserType } from 'common/prop-types/authorization/user';
 import PersonApi from 'pages/Person/api';
 import UsersApi from 'shared/api/users';
 
+import Permissions from 'pages/Person/utils/permissions';
+
 import PersonActions from 'pages/Person/components/actions';
+import DocumentActions from 'pages/Person/components/documentActions';
 import PersonName from 'pages/Person/components/name';
 import PersonPortrait from 'pages/Person/components/portrait';
 import PersonProfession from 'pages/Person/components/profession';
 import ProfessionSection from 'pages/Person/components/professionSection';
 import PersonYears from 'pages/Person/components/years';
-import StatusDropdown from 'pages/Person/components/statusDropdown';
-import DocumentAction from 'pages/Person/components/documentAction';
 import PersonUserList from 'pages/Person/components/usersList';
 
 const PersonPage = (props) => {
@@ -39,13 +40,12 @@ const PersonPage = (props) => {
     portrait,
     rootAssetId,
     professions: personsProfessions,
-    status,
     biography,
-    permissions: docPermissions
+    drivePermissions,
   } = person;
 
-  const canEdit = user.updateAny('persons')
-    || (user.updateOwn('persons') && docPermissions.some(item => item.user._id === user._id));
+  // TODO: move to Person page level
+  const permissions = new Permissions(user, person);
 
   /**
    * Updates the person
@@ -81,16 +81,23 @@ const PersonPage = (props) => {
 
   /**
    * Assignes the user to be the author or reviewer for this post
-   * @param {String} selectedUserId The ID if the user to be assigned either as author or the reviewer
+   * @param {Array} selectedUsers The users to be assigned either as author or the reviewer
    */
-  const setPermission = (selectedUserId) => {
+  const setPermission = (selectedUsers) => {
     setIsLoading(true);
 
-    PersonApi.updatePermissions(person._id, selectedUserId)
-      .then(docPermissions => setPerson({
-        ...person,
-        permissions: [...person.permissions, ...docPermissions]
-      }))
+    const requests = selectedUsers.map(user => PersonApi.updatePermission(person._id, user._id));
+
+    Promise.all(requests)
+      .then((permissions) => {
+        setPerson({
+          ...person,
+          drivePermissions: [
+            ...person.drivePermissions,
+            ...permissions.map(item => item.data)
+          ]
+        });
+      })
       .catch(error => handleError(error, ERROR_MESSAGES.PERSON_ASSIGN_USER))
       .finally(() => setIsLoading(false));
   };
@@ -104,7 +111,7 @@ const PersonPage = (props) => {
 
     UsersApi.getUsersByRole(role)
       .then(({ data: users }) => {
-        const filtered = users.filter(user => !docPermissions.find(item => item.user._id === user._id));
+        const filtered = users.filter(user => !drivePermissions.find(item => item.user._id === user._id));
         setUsersForAssignment(filtered);
       })
       .catch((error) => {
@@ -163,11 +170,11 @@ const PersonPage = (props) => {
                 <Layout.Content className="py-3 pt-4" isLoading={isLoading}>
                   <div className="row">
                     <div className="col-9">
-                      <PersonName canEdit={canEdit} />
+                      <PersonName canEdit={permissions.canEdit()} />
 
                       <PersonUserList
                         onUsersGet={getUsersForAssignment}
-                        users={docPermissions}
+                        assignees={drivePermissions}
                         usersForAssignment={usersForAssignment}
                         user={user}
                         setPermission={setPermission}
@@ -183,19 +190,13 @@ const PersonPage = (props) => {
                       />
                     </div>
                     <div className="col-3">
-                      <div className="mb-4 d-flex">
-                        <StatusDropdown
-                          status={status}
-                          user={user}
-                          updateStatus={updateStatus}
-                        />
-                        <DocumentAction
-                          documentId={biography.documentId}
-                          user={user}
-                        />
-                      </div>
+                      <DocumentActions
+                        permissions={permissions}
+                        documentId={biography.documentId}
+                        updateStatus={updateStatus}
+                      />
                       <PersonPortrait />
-                      <PersonYears canEdit={canEdit} />
+                      <PersonYears canEdit={permissions.canEdit()} />
                       <PersonProfession
                         professions={availableProfessions()}
                         onAdd={push}

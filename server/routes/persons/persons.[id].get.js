@@ -8,11 +8,18 @@ const getResource = async (req, res, next) => {
 
   // Get person from database
   try {
-    const document = await Person
-      .findOne({ _id })
+    const document = await Person.findOne({ _id })
       .populate('professions.profession')
       .populate('professions.media')
-      .populate('permissions.user', '-password');
+      .populate([{
+        path: 'drivePermissions',
+        model: 'DrivePermission',
+        populate: [{
+          path: 'user',
+          model: 'User',
+        }]
+      }])
+      .exec();
 
     if (!document) {
       return req.handle404(`Document ${_id} was not found`);

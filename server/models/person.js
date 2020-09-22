@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 const { PERSON_POST_STATUSES } = require('../../common/constants');
-const { USER_ROLES } = require('../constants');
 const GoogleApi = require('../services/google');
 const { logger } = require('../services/gcp/logger');
 
@@ -20,32 +19,6 @@ const professionSchema = mongoose.Schema({
   },
   media: [{ type: ObjectId, ref: 'Asset' }],
 }, { _id : false });
-
-// Person's permissions schema
-const permissionSchema = mongoose.Schema({
-  role: {
-    type: String,
-    required: true,
-    enum: [
-      USER_ROLES.AUTHOR,
-      USER_ROLES.REVIEWER
-    ]
-  },
-  permissionId: {
-    type: String,
-    required: true
-  },
-  user: {
-    type: ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  active: {
-    type: Boolean,
-    default: true,
-    required: true
-  }
-});
 
 // Person's schema
 const schema = new Schema({
@@ -97,7 +70,6 @@ const schema = new Schema({
     required: true
   },
   professions: [professionSchema],
-  permissions: [permissionSchema]
 }).pre('remove', { document: true }, async function removeHook(next) {
   try {
     const { biography: { documentId }, rootAssetId } = this;
@@ -115,6 +87,16 @@ const schema = new Schema({
   }
 
   next();
+});
+
+schema.set('toObject', { virtuals: true });
+schema.set('toJSON', { virtuals: true });
+
+// Poppulate google drive permissions selected by user id
+schema.virtual('drivePermissions', {
+  ref: 'DrivePermission',
+  localField: 'biography.documentId',
+  foreignField: 'fileId',
 });
 
 schema.plugin(mongoosePaginate);

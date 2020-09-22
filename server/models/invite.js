@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const { USER_ROLES } = require('../constants');
+
+const ROLES = Object.values(USER_ROLES);
 
 const schema = new mongoose.Schema({
   email: {
@@ -13,7 +16,7 @@ const schema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    enum: ['admin', 'author', 'reviewer']
+    enum: ROLES
   },
   token: {
     type: String,

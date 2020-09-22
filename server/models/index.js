@@ -3,6 +3,7 @@ const Asset = require('./asset');
 const Profession = require('./profession');
 const User = require('./user');
 const Permissions = require('./permissions');
+const DrivePermission = require('./drivePermission');
 const Invite = require('./invite');
 
 module.exports = {
@@ -11,5 +12,6 @@ module.exports = {
   Profession,
   User,
   Permissions,
+  DrivePermission,
   Invite,
 };
