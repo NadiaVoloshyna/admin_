@@ -2,7 +2,7 @@ const { body, check } = require('express-validator');
 const Person = require('../../models/person');
 const References = require('../../models/references');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
-const decodePortrait = require('../../../client/shared/helpers/decodePortrait');
+const { decodePortrait } = require('../../../common/utils');
 
 /**
  * Update single person
@@ -23,13 +23,11 @@ module.exports = (router) => {
       const { url, _id } = decodePortrait(portrait);
 
       if (_id) {
-        const reference = await References.findOne({ dependent: _id }, { dependOn: id });
-        if (!reference) {
-          await new References({
-            dependent: _id,
-            dependOn: id
-          }).save();
-        }
+        await References.findOneAndUpdate(
+          { dependent: _id },
+          { dependent: _id, dependOn: id },
+          { new: true, upsert: true }
+        );
       }
 
       await Person.updateOne(

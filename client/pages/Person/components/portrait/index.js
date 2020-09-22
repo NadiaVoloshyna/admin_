@@ -3,8 +3,7 @@ import { shape, object } from 'prop-types';
 import { Field } from 'react-final-form';
 import MediaLibraryModal from 'shared/components/mediaLibraryModal';
 import { Image } from 'cloudinary-react';
-import { encodePortrait } from '../../../../shared/helpers';
-import decodePortrait from '../../../../shared/helpers/decodePortrait';
+import { decodePortrait, encodePortrait } from '../../../../../common/utils';
 
 const PersonPortrait = () => {
   return (

@@ -6,7 +6,7 @@
  *                                  and the values are what they should be replaced with
  * @returns {String}
  */
-export const insertReplacements = (original, replacements) => {
+exports.insertReplacements = (original, replacements) => {
   if (!original || typeof original !== 'string' || !replacements) {
     return original;
   }
@@ -15,4 +15,24 @@ export const insertReplacements = (original, replacements) => {
     const pattern = RegExp(`\\[${key}\\]`, 'g');
     return acc.replace(pattern, replacements[key]);
   }, original);
+};
+
+/**
+ *
+ * @param {Object} asset
+ * @returns {String}
+ */
+
+exports.encodePortrait = (asset) => {
+  return `${asset.url}|${asset._id}`;
+};
+
+/**
+ *
+ * @param {String} portrait
+ * @returns {Object}
+ */
+exports.decodePortrait = (portrait) => {
+  const [url, _id] = portrait.split('|');
+  return { url, _id };
 };
