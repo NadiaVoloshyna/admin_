@@ -21,7 +21,7 @@ module.exports = (router) => {
 
     try {
       const { url, _id: portraitId } = decodePortrait(portrait);
-      
+
       // Create a reference for portrait asset
       if (portraitId) {
         await References.updateOne(
