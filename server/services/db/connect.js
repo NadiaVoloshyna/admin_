@@ -16,7 +16,7 @@ module.exports = async (logger) => {
     await mongoose.connect(CONNECTION_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: false });
+    });
   } catch (error) {
     logger.error(error);
     process.exit(1);
