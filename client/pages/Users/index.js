@@ -63,18 +63,12 @@ const UsersPage = (props) => {
   const onEdit = async (payload) => {
     setIsLoading(true);
 
-    try {
-      const response = await UsersAPI.update(payload);
-      if (response.status === 200) {
+    UsersAPI.update(payload)
+      .then(() => {
         alert.success(SUCCESS_MESSAGES.USERS_EDIT_USER);
-      } else {
-        throw Error(response.message);
-      }
-    } catch (error) {
-      handleError(error, ERROR_MESSAGES.USERS_EDIT_USER);
-    } finally {
-      setIsLoading(false);
-    }
+      })
+      .catch(error => handleError(error, ERROR_MESSAGES.USERS_EDIT_USER))
+      .finally(() => setIsLoading(false));
   };
 
   return (

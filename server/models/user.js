@@ -40,7 +40,7 @@ const userSchema = mongoose.Schema({
     //   type: String,
     //   unique: true
     // }
-  }
+  },
 }, {
   toObject: { virtuals: true }
 });
@@ -49,10 +49,18 @@ userSchema.virtual('fullName').get(function getFullName() {
   return `${this.firstName} ${this.lastName}`;
 });
 
+// Poppulate permissions selected by user role
 userSchema.virtual('permissions', {
   ref: 'Permissions',
   localField: 'role',
   foreignField: 'role',
+});
+
+// Poppulate google drive permissions selected by user id
+userSchema.virtual('drivePermissions', {
+  ref: 'DrivePermission',
+  localField: '_id',
+  foreignField: 'user',
 });
 
 userSchema.methods.toJson = function toJson() {

@@ -11,14 +11,6 @@ const getRoleToUpdate = (status, role) => {
       if (role === 'author') return GOOGLE_USER_ROLES.READER;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.REVIEWER;
       break;
-    case PERSON_POST_STATUSES.READY:
-      if (role === 'author') return GOOGLE_USER_ROLES.READER;
-      if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
-      break;
-    case PERSON_POST_STATUSES.PUBLISHED:
-      if (role === 'author') return GOOGLE_USER_ROLES.READER;
-      if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;
-      break;
     default:
       if (role === 'author') return GOOGLE_USER_ROLES.READER;
       if (role === 'reviewer') return GOOGLE_USER_ROLES.READER;

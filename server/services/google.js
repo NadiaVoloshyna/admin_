@@ -14,13 +14,6 @@ const auth = new google.auth.JWT({
 const drive = google.drive({ version: 'v3', auth });
 
 const GoogleApi = {
-  createPermission: async (fileId, resource) => {
-    return await drive.permissions.create({
-      resource,
-      fileId,
-      fields: 'id',
-    });
-  },
   createDocument: async (title) => {
     return await drive.files.create({
       resource: {
@@ -52,7 +45,7 @@ const GoogleApi = {
     });
   },
 
-  createPermissions: (fileId, role, emailAddress) => {
+  createPermission: (fileId, role, emailAddress) => {
     return drive.permissions.create({
       fileId,
       fields: 'id,emailAddress,role',
@@ -64,21 +57,21 @@ const GoogleApi = {
     });
   },
 
-  getPermissions: (fileId, permissionId) => {
-    return drive.permissions.get({
-      fileId,
-      permissionId
-    });
-  },
-
   /**
    * Updates file permissions. Sets a new role for one of its maintainers
    */
-  updatePermissions: (fileId, permissionId, role) => {
+  updatePermission: (fileId, permissionId, role) => {
     return drive.permissions.update({
       fileId,
       permissionId,
       resource: { role }
+    });
+  },
+
+  deletePermission: (fileId, permissionId) => {
+    return drive.permissions.delete({
+      fileId,
+      permissionId,
     });
   },
 };

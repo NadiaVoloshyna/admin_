@@ -13,8 +13,8 @@ class PersonApi extends ApiService {
     return this.$http.put(`/api/persons/${id}/status`, { status });
   }
 
-  updatePermissions = (id, users) => {
-    return this.$http.post(`/api/persons/${id}/permissions`, { users });
+  updatePermission = (id, userId) => {
+    return this.$http.post(`/api/persons/${id}/permissions`, { userId });
   }
 }
 
