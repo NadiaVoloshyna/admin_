@@ -20,12 +20,13 @@ module.exports = (router) => {
     const { id } = req.params;
 
     try {
-      const { url, _id } = decodePortrait(portrait);
-
-      if (_id) {
-        await References.findOneAndUpdate(
-          { dependent: _id },
-          { dependent: _id, dependOn: id },
+      const { url, _id: portraitId } = decodePortrait(portrait);
+      
+      // Create a reference for portrait asset
+      if (portraitId) {
+        await References.updateOne(
+          { dependent: portraitId },
+          { dependent: portraitId, dependOn: id },
           { new: true, upsert: true }
         );
       }
