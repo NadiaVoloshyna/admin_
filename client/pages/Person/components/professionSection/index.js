@@ -9,12 +9,13 @@ const ProfessionSection = ({ rootFolder }) => {
   return (
     <div className="profession-section">
       <FieldArray name="professions">
-        {({ fields }) => fields.map((name) => (
+        {({ fields }) => fields.map((name, idx) => (
           <Field key={name} name={name}>
             { props => (
               <Body
                 {...props}
                 rootFolder={rootFolder}
+                onRemove={() => { fields.remove(idx); }}
               />
             )}
           </Field>

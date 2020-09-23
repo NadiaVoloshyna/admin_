@@ -1,4 +1,4 @@
-import { string, oneOf, bool, object, func } from 'prop-types';
+import { string, oneOf, bool, array } from 'prop-types';
 import { USER_ROLES } from '../../constants/index';
 
 export const UserType = {
@@ -11,10 +11,5 @@ export const UserType = {
   role: oneOf(Object.values(USER_ROLES)),
   active: bool,
   _id: string,
-  isSuper: bool,
-  isAdmin: bool,
-  isAuthor: bool,
-  isReviewer: bool,
-  userRoleUp: func,
-  permissions: object
+  permissions: array
 };

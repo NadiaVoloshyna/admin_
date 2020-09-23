@@ -19,8 +19,8 @@ const PersonsPage = ({ user, persons, pagination }) => {
   const [ personsState, setPersons ] = useState(persons);
   const [ paginationState, setPaginationState ] = useState(pagination);
 
-  const canCreatePerson = user.createOwn('person').granted;
-  const canDeletePerson = user.deleteAny('person').granted;
+  const canCreatePerson = user.create('persons');
+  const canDeletePerson = user.deleteOwn('persons');
 
   const onPersonsGet = async (payload) => {
     setIsLoading(true);
@@ -41,15 +41,14 @@ const PersonsPage = ({ user, persons, pagination }) => {
     }
   };
 
-  const onDelete = async (persons) => {
+  const onDelete = async (records) => {
     setIsLoading(true);
 
-    const ids = persons.map(id => id._id);
+    const ids = records.map(id => id._id);
 
     try {
       await PersonsApi.deletePersons(ids);
-      persons = persons.filter(person => ids.find(id => id === person._id));
-      setPersons(persons);
+      setPersons(personsState.filter(person => !ids.includes(person._id)));
     } catch (error) {
       handleError(error, ERROR_MESSAGES.PERSONS_DELETE_PERSONS);
     } finally {

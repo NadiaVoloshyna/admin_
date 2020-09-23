@@ -22,7 +22,6 @@ exports.insertReplacements = (original, replacements) => {
  * @param {Object} asset
  * @returns {String}
  */
-
 exports.encodePortrait = (asset) => {
   return `${asset.url}|${asset._id}`;
 };
@@ -35,4 +34,44 @@ exports.encodePortrait = (asset) => {
 exports.decodePortrait = (portrait) => {
   const [url, _id] = portrait.split('|');
   return { url, _id };
+};
+
+/**
+ * Converts raw permissions into permission functions based on the action
+ * @param {Array[{
+ *  resource: String,
+ *  action: String,
+ *  role: String,
+ *  attributes: Array
+ * }]} permissions raw permissions
+ * @returns {Object} permision functions. E.g create, update, delete, etc.
+ */
+exports.createPermissions = (permissions) => {
+  if (!permissions) return {};
+
+  const actions = permissions.reduce((acc, next) => {
+    if (!acc.includes(next.action)) {
+      acc.push(next.action);
+    }
+    return acc;
+  }, []);
+
+  return actions.reduce((acc, action) => {
+    if (!acc[action]) {
+      acc[action] = (resource, attribute) => {
+        if (!resource || typeof resource !== 'string') {
+          throw new Error('resource argument is required');
+        }
+
+        if (attribute && typeof attribute !== 'string') {
+          throw new Error('attribute argument must be of type string');
+        }
+
+        const permission = permissions.find(item => item.resource === resource && item.action === action);
+        const hasAttribute = !attribute || (permission.attributes && permission.attributes.includes(attribute));
+        return permission.permitted && hasAttribute;
+      };
+    }
+    return acc;
+  }, {});
 };

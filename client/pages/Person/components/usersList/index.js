@@ -1,5 +1,6 @@
 import React from 'react';
 import { arrayOf, shape, func } from 'prop-types';
+import classnames from 'classnames';
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Badge from 'react-bootstrap/Badge';
@@ -11,7 +12,7 @@ import { UsersType } from 'shared/prop-types/';
 
 const PersonUserList = ({
   onUsersGet,
-  users,
+  assignees,
   usersForAssignment,
   user,
   setPermission
@@ -21,7 +22,7 @@ const PersonUserList = ({
       <Card.Header className="border-bottom-0 d-flex justify-content-between">
         Users
 
-        { user.createAny('person-assignUser').granted
+        { user.assignUser('persons')
           && (
           <Dropdown>
             <Dropdown.Toggle as={ElipsisDropdownToggle} />
@@ -46,19 +47,23 @@ const PersonUserList = ({
           )}
       </Card.Header>
 
-      { !!users.length
+      { !!assignees.length
         && (
         <Table className="m-0">
           <tbody>
-            { users.map(item => {
-              const { role, user, _id } = item;
+            { assignees.map(item => {
+              const { active, user: assignee } = item;
+              const { role, _id, firstName, lastName } = assignee;
 
               return (
-                <tr key={_id}>
-                  <td>{ user.firstName } { user.lastName }</td>
+                <tr className={classnames(!active && 'table-secondary')} key={_id}>
+                  <td>{ firstName } { lastName }</td>
                   <td>{ _upperFirst(role) }</td>
-                  <td className="text-right"><Badge variant="success">Active</Badge></td>
-                  { user.createAny('person-canDeactivate').granted
+                  <td className="text-right">
+                    { active && <Badge variant="success">Active</Badge> }
+                    { !active && <Badge variant="secondary">Inactive</Badge> }
+                  </td>
+                  { user.deactivateUser('persons')
                     && (
                     <td className="text-right">
                       <Dropdown>
@@ -89,7 +94,7 @@ const PersonUserList = ({
 
 PersonUserList.propTypes = {
   onUsersGet: func,
-  users: arrayOf(shape(UsersType)),
+  assignees: arrayOf(shape(UsersType)),
   usersForAssignment: arrayOf(shape(UsersType)),
   user: shape(UsersType).isRequired,
   setPermission: func
@@ -97,7 +102,7 @@ PersonUserList.propTypes = {
 
 PersonUserList.defaultProps = {
   onUsersGet: () => {},
-  users: [],
+  assignees: [],
   usersForAssignment: [],
   setPermission: () => {}
 };

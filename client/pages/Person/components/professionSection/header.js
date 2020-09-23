@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ElipsisToggle from 'shared/components/elipsisDropdownToggle';
 
-const ProfessionSectionHeader = ({ name, active, updateActive, onModalOpen }) => {
+const ProfessionSectionHeader = ({ name, active, updateActive, onModalOpen, onRemove }) => {
   return (
     <Card.Header>
       { name }
@@ -25,7 +25,7 @@ const ProfessionSectionHeader = ({ name, active, updateActive, onModalOpen }) =>
           <Dropdown.Item onClick={() => updateActive()}>
             { active ? 'Disable' : 'Enable' }
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => {}}>
+          <Dropdown.Item onClick={() => onRemove()}>
             Delete Section
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -38,13 +38,15 @@ ProfessionSectionHeader.propTypes = {
   name: string.isRequired,
   active: bool,
   updateActive: func,
-  onModalOpen: func
+  onModalOpen: func,
+  onRemove: func,
 };
 
 ProfessionSectionHeader.defaultProps = {
   active: false,
   updateActive: () => {},
-  onModalOpen: () => {}
+  onModalOpen: () => {},
+  onRemove: () => {},
 };
 
 export default ProfessionSectionHeader;

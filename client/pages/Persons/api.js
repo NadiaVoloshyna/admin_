@@ -6,7 +6,7 @@ class PersonsApi extends ApiService {
   }
 
   deletePersons = (ids) => {
-    return this.$http.delete('/api/persons', { ids });
+    return this.$http.delete('/api/persons', { data: { ids } });
   }
 
   create = (name) => {

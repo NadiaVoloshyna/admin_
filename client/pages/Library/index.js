@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
-import { UserContext } from 'shared/context';
+import { shape } from 'prop-types';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
 import CreateAssetDropdown, { ASSET_TYPES } from 'shared/components/createAssetDropdown';
@@ -9,6 +9,7 @@ import AssetDetailsModal from 'pages/Library/components/assetDetailsModal';
 import MediaLibrary from 'shared/components/mediaLibrary';
 import Button from 'react-bootstrap/Button';
 import { isOfType } from 'shared/helpers';
+import { UserType } from 'common/prop-types/authorization/user';
 import api from 'pages/Library/api';
 
 const supportedAssetTypes = [
@@ -18,10 +19,8 @@ const supportedAssetTypes = [
   ASSET_TYPES.AUDIO
 ];
 
-const LibraryPage = () => {
+const LibraryPage = ({ user }) => {
   const handleError = useErrorHandler();
-  const { user } = useContext(UserContext);
-  const { userRoleUp } = user;
 
   const [isLoading, setIsLoading] = useState(false);
   const [ selectedAsset, setSelectedAsset ] = useState(null);
@@ -74,7 +73,7 @@ const LibraryPage = () => {
 
       <Layout activePage="Library">
         <Layout.Navbar className="mb-3">
-          { userRoleUp('admin')
+          { user.create('assets')
             && (
             <>
               <CreateAssetDropdown
@@ -88,7 +87,7 @@ const LibraryPage = () => {
 
         <Layout.Content isLoading={isLoading}>
           <MediaLibrary
-            canDelete={userRoleUp('admin')}
+            canDelete={user.delete('assets')}
             onAssetSelect={onAssetSelect}
             newAsset={newAsset}
             isDragDrop
@@ -107,6 +106,10 @@ const LibraryPage = () => {
         )}
     </>
   );
+};
+
+LibraryPage.propTypes = {
+  user: shape(UserType).isRequired,
 };
 
 export default LibraryPage;

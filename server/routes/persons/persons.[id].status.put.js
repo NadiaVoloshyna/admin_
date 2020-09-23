@@ -12,7 +12,15 @@ const getResource = async (req, res, next) => {
 
   try {
     const person = await Person.findById(id)
-      .populate('permissions.user');
+      .populate([{
+        path: 'drivePermissions',
+        model: 'DrivePermission',
+        populate: [{
+          path: 'user',
+          model: 'User',
+        }]
+      }])
+      .exec();
 
     if (!person) {
       return res.status(404).end();
@@ -31,10 +39,7 @@ const checkPermissions = (req, res, next) => {
     const { user } = req;
     const { person } = res.locals;
 
-    const permission = user.createAny('changeStatus');
-
-    const attributes = permission.filter({ [person.status]: true });
-    const canChangeStatus = permission.granted && Object.keys(attributes).length;
+    const canChangeStatus = user.changeStatus('persons', person.status);
 
     if (!canChangeStatus) {
       return res.status(403).end();
@@ -53,11 +58,12 @@ const updateStatus = async (req, res) => {
   const { person } = res.locals;
 
   try {
-    const { biography: { documentId } } = person;
+    const { drivePermissions } = person;
+    const permissions = drivePermissions.filter(item => item.active);
 
-    await each(person.permissions, async ({ permissionId, user }) => {
-      await GoogleApi.updatePermissions(
-        documentId,
+    await each(permissions, async ({ permissionId, fileId, user }) => {
+      await GoogleApi.updatePermission(
+        fileId,
         permissionId,
         helpers.getRoleToUpdate(status, user.role)
       );

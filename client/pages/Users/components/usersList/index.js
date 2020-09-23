@@ -37,10 +37,10 @@ const UsersList = (props) => {
     onEdit,
     error,
     loading,
-    isSuper
+    canEdit
   } = props;
 
-  const columns = getColumns(isSuper);
+  const columns = getColumns(canEdit);
 
   return (
     <DataGrid
@@ -64,7 +64,7 @@ UsersList.propTypes = {
   onEdit: func,
   error: bool,
   loading: bool,
-  isSuper: bool.isRequired
+  canEdit: bool.isRequired
 };
 
 UsersList.defaultProps = {

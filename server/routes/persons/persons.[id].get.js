@@ -8,11 +8,18 @@ const getResource = async (req, res, next) => {
 
   // Get person from database
   try {
-    const document = await Person
-      .findOne({ _id })
+    const document = await Person.findOne({ _id })
       .populate('professions.profession')
       .populate('professions.media')
-      .populate('permissions.user', '-password');
+      .populate([{
+        path: 'drivePermissions',
+        model: 'DrivePermission',
+        populate: [{
+          path: 'user',
+          model: 'User',
+        }]
+      }])
+      .exec();
 
     if (!document) {
       return req.handle404(`Document ${_id} was not found`);
@@ -29,9 +36,9 @@ const getResource = async (req, res, next) => {
 const checkPermissions = (req, res, next) => {
   const { user } = req;
   // Admin or super
-  const permission = user.readAny('person');
+  const canRead = user.read('persons');
 
-  if (permission.granted === false) {
+  if (canRead === false) {
     return res.status(403).end();
   }
 

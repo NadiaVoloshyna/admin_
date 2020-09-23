@@ -30,6 +30,11 @@ const NAV_LINKS = [{
   url: '/users',
   visibleTo: ['super', 'admin'],
   icon: 'users'
+}, {
+  name: 'Permissions',
+  url: '/permissions',
+  visibleTo: ['super', 'admin'],
+  icon: 'id-badge'
 }];
 
 const renderLinks = (active, { role }) => {
