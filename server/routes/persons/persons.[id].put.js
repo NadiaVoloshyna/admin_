@@ -1,6 +1,8 @@
 const { body, check } = require('express-validator');
 const Person = require('../../models/person');
+const References = require('../../models/references');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
+const { decodePortrait } = require('../../../common/utils');
 
 /**
  * Update single person
@@ -18,11 +20,22 @@ module.exports = (router) => {
     const { id } = req.params;
 
     try {
+      const { url, _id: portraitId } = decodePortrait(portrait);
+
+      // Create a reference for portrait asset
+      if (portraitId) {
+        await References.updateOne(
+          { dependent: portraitId },
+          { dependent: portraitId, dependOn: id },
+          { new: true, upsert: true }
+        );
+      }
+
       await Person.updateOne(
         { _id: id },
         {
           name,
-          portrait,
+          portrait: url,
           born,
           died,
           professions

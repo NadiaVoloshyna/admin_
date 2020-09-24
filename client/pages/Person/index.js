@@ -51,9 +51,9 @@ const PersonPage = (props) => {
    * Updates the person
    * @param {Object} values Person fields to update
    */
+
   const onPersonSave = (values) => {
     setIsLoading(true);
-
     PersonApi.update(person._id, values)
       .then(() => alert.success(SUCCESS_MESSAGES.PERSON_SAVE))
       .catch(error => handleError(error, ERROR_MESSAGES.PERSON_SAVE))

@@ -3,6 +3,7 @@ import { shape, object } from 'prop-types';
 import { Field } from 'react-final-form';
 import MediaLibraryModal from 'shared/components/mediaLibraryModal';
 import { Image } from 'cloudinary-react';
+import { decodePortrait, encodePortrait } from 'common/utils';
 
 const PersonPortrait = () => {
   return (
@@ -16,15 +17,16 @@ const PersonPortrait = () => {
           <Field name="portrait">
             {props => {
               const { input: { onChange, value } } = props;
+
               const onSelect = (asset => {
-                onChange(asset.url);
+                onChange(encodePortrait(asset));
               });
 
               if (value) {
                 return (
                   <Image
                     cloudName="ukrainian"
-                    publicId={value}
+                    publicId={decodePortrait(value).url}
                     height="235"
                     crop="fill"
                   />
