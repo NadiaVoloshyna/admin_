@@ -130,7 +130,7 @@ const createPerson = async (req, res) => {
 
   // Create person
   try {
-    newPerson = await new Person(newPerson).save();
+    newPerson = await new Person(newPerson).save({ user });
   } catch (error) {
     return req.handle500(error);
   }

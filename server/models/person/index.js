@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
-const { PERSON_POST_STATUSES } = require('../../common/constants');
-const GoogleApi = require('../services/google');
-const { logger } = require('../services/gcp/logger');
+const { PERSON_POST_STATUSES } = require('../../../common/constants');
+const { preRemove, postSave, postUpdateOne, postFindOneAndUpdate } = require('./hooks');
 
 const { Schema } = mongoose;
 const { ObjectId } = Schema;
@@ -70,24 +69,10 @@ const schema = new Schema({
     required: true
   },
   professions: [professionSchema],
-}).pre('remove', { document: true }, async function removeHook(next) {
-  try {
-    const { biography: { documentId }, rootAssetId } = this;
-
-    // Remove google document
-    await GoogleApi.delete(documentId);
-
-    // Remove assets
-    const Asset = mongoose.model('Asset');
-    const asset = await Asset.findById(rootAssetId.toString());
-
-    await asset.remove();
-  } catch (error) {
-    logger.error(error);
-  }
-
-  next();
-});
+}).pre('remove', { document: true }, preRemove)
+  .post('save', postSave)
+  .post('updateOne', postUpdateOne)
+  .post('findOneAndUpdate', postFindOneAndUpdate);
 
 schema.set('toObject', { virtuals: true });
 schema.set('toJSON', { virtuals: true });

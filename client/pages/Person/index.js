@@ -24,6 +24,7 @@ import PersonProfession from 'pages/Person/components/profession';
 import ProfessionSection from 'pages/Person/components/professionSection';
 import PersonYears from 'pages/Person/components/years';
 import PersonUserList from 'pages/Person/components/usersList';
+import HistoryDrawer from 'pages/Person/components/historyDrawer';
 
 const PersonPage = (props) => {
   const handleError = useErrorHandler();
@@ -32,6 +33,8 @@ const PersonPage = (props) => {
   const [ usersForAssignment, setUsersForAssignment ] = useState([]);
   const [ disableActions, setActionsDisabled ] = useState(false);
   const [ isLoading, setIsLoading ] = useState(false);
+  const [ activities, setActivities ] = useState([]);
+  const [ isHistoryDrawerOpen, setHistoryDrawerOpen ] = useState(false);
 
   const { user, professions } = props;
 
@@ -51,10 +54,20 @@ const PersonPage = (props) => {
    * Updates the person
    * @param {Object} values Person fields to update
    */
-  const onPersonSave = (values) => {
+  const onPersonSave = (values, form) => {
     setIsLoading(true);
 
-    PersonApi.update(person._id, values)
+    // send only updated fields
+    const changedFields = {};
+    const { dirtyFields } = form.getState();
+
+    Object.keys(values).forEach(key => {
+      if (typeof dirtyFields[key] !== 'undefined') {
+        changedFields[key] = values[key];
+      }
+    });
+
+    PersonApi.update(person._id, changedFields)
       .then(() => alert.success(SUCCESS_MESSAGES.PERSON_SAVE))
       .catch(error => handleError(error, ERROR_MESSAGES.PERSON_SAVE))
       .finally(() => setIsLoading(false));
@@ -117,6 +130,21 @@ const PersonPage = (props) => {
       .catch((error) => {
         handleError(error, ERROR_MESSAGES.PERSON_GET_USERS_FOR_ASSIGNMENT);
       })
+      .finally(() => setIsLoading(false));
+  };
+
+  /**
+   * Fetched this post's activity
+   */
+  const onHistoryGet = () => {
+    setIsLoading(true);
+
+    PersonApi.getActivities(person._id)
+      .then(({ data }) => {
+        setActivities(data);
+        setHistoryDrawerOpen(true);
+      })
+      .catch(error => handleError(error, ERROR_MESSAGES.PERSON_GET_ACTIVITY))
       .finally(() => setIsLoading(false));
   };
 
@@ -194,6 +222,7 @@ const PersonPage = (props) => {
                         permissions={permissions}
                         documentId={biography.documentId}
                         updateStatus={updateStatus}
+                        onHistoryGet={onHistoryGet}
                       />
                       <PersonPortrait />
                       <PersonYears canEdit={permissions.canEdit()} />
@@ -210,6 +239,12 @@ const PersonPage = (props) => {
           }}
         />
       </Layout>
+
+      <HistoryDrawer
+        isOpen={isHistoryDrawerOpen}
+        onClose={setHistoryDrawerOpen}
+        activities={activities}
+      />
     </div>
   );
 };

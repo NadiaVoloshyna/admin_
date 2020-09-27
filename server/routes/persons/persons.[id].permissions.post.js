@@ -2,6 +2,7 @@ const { body, check } = require('express-validator');
 const Person = require('../../models/person');
 const User = require('../../models/user');
 const DrivePermission = require('../../models/drivePermission');
+const Activity = require('../../models/activity');
 const GoogleApi = require('../../services/google');
 const helpers = require('../../helpers/permissions');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
@@ -36,6 +37,14 @@ module.exports = (router) => {
       // Create permission
       const newPermission = await new DrivePermission(permission).save();
       newPermission.user = user;
+
+      // Create activity
+      const activity = {
+        personId: _id,
+        message: `${req.user.fullName} <b>assugned</b> ${user.fullName} to be person's ${user.role}`,
+      };
+
+      await new Activity(activity).save();
 
       res.status(201).send(newPermission);
     } catch (error) {

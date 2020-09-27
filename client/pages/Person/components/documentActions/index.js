@@ -2,12 +2,14 @@ import React from 'react';
 import { string, shape, object, func } from 'prop-types';
 import StatusButton from 'pages/Person/components/statusButton';
 import DocumentButton from 'pages/Person/components/documentButton';
+import HistoryButton from 'pages/Person/components/historyButton';
 
 const DocumentActions = (props) => {
   const {
     documentId,
     updateStatus,
-    permissions
+    permissions,
+    onHistoryGet,
   } = props;
 
   return (
@@ -21,6 +23,7 @@ const DocumentActions = (props) => {
           documentId={documentId}
           permissions={permissions}
         />
+        <HistoryButton onHistoryGet={onHistoryGet} />
       </div>
       <style jsx global>{`
         .document-actions > * {
@@ -34,12 +37,9 @@ const DocumentActions = (props) => {
 
 DocumentActions.propTypes = {
   documentId: string.isRequired,
-  updateStatus: func,
+  updateStatus: func.isRequired,
   permissions: shape(object).isRequired,
-};
-
-DocumentActions.defaultProps = {
-  updateStatus: () => {}
+  onHistoryGet: func.isRequired,
 };
 
 export default DocumentActions;
