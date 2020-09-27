@@ -13,7 +13,10 @@ mongoose.connection.on('open', () => {
 module.exports = async (logger) => {
   try {
     mongoose.set('useCreateIndex', true);
-    await mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(CONNECTION_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
   } catch (error) {
     logger.error(error);
     process.exit(1);

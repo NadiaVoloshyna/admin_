@@ -18,6 +18,25 @@ exports.insertReplacements = (original, replacements) => {
 };
 
 /**
+ *
+ * @param {Object} asset
+ * @returns {String}
+ */
+exports.encodePortrait = (asset) => {
+  return `${asset.url}|${asset._id}`;
+};
+
+/**
+ *
+ * @param {String} portrait
+ * @returns {Object}
+ */
+exports.decodePortrait = (portrait) => {
+  const [url, _id] = portrait.split('|');
+  return { url, _id };
+};
+
+/**
  * Converts raw permissions into permission functions based on the action
  * @param {Array[{
  *  resource: String,

@@ -6,6 +6,7 @@ const Permissions = require('./permissions');
 const DrivePermission = require('./drivePermission');
 const Invite = require('./invite');
 const Activity = require('./activity');
+const References = require('./references');
 
 module.exports = {
   Person,
@@ -16,4 +17,5 @@ module.exports = {
   DrivePermission,
   Invite,
   Activity,
+  References,
 };
