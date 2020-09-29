@@ -16,6 +16,10 @@ class PersonApi extends ApiService {
   updatePermission = (id, userId) => {
     return this.$http.post(`/api/persons/${id}/permissions`, { userId });
   }
+
+  getActivities = (id) => {
+    return this.$http.get(`/api/persons/${id}/activities`);
+  }
 }
 
 export default new PersonApi();

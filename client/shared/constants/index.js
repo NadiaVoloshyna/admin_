@@ -22,6 +22,7 @@ export const ERROR_MESSAGES = {
   PERSON_GET_USERS_FOR_ASSIGNMENT: 'We are sorry, there was a problem getting users for assignment.',
   PERSON_UPDATE_STATUS: 'We are sorry, but we couldn\'t update the status of the post.',
   PERSON_SAVE: 'Unfortunatelly there was a problem saving person. Please try again later.',
+  PERSON_GET_ACTIVITY: 'There was a problem fetching person\'s activity',
   LIBRARY_CREATE_ASSET: 'We are sorry, we couldn\'t create your asset.',
   PERSONS_GET_PERSONS: 'We are sorry, there was a problem retreaving persons.',
   PERSONS_DELETE_PERSONS: 'We are sorryr, there was a problem deleting persons.',

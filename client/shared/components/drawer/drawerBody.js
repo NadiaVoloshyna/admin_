@@ -1,18 +1,25 @@
 import React from 'react';
-import { oneOfType, arrayOf, node } from 'prop-types';
+import classnames from 'classnames';
+import { oneOfType, arrayOf, node, bool } from 'prop-types';
 
 const DrawerBody = (props) => {
-  const { children } = props;
+  const { children, noPadding } = props;
+  const classNames = classnames('drawer-body', noPadding && 'drawer-body__no-padding');
 
   return (
     <>
-      <div className="drawer-body">{ children }</div>
+      <div className={classNames}>{ children }</div>
 
       <style jsx>{`
         .drawer-body {
           width: 100%;
           height: 100%;
           padding: 24px;
+          overflow: scroll;
+        }
+
+        .drawer-body__no-padding {
+          padding: 0;
         }
       `}</style>
     </>
@@ -23,7 +30,12 @@ DrawerBody.propTypes = {
   children: oneOfType([
     arrayOf(node),
     node
-  ]).isRequired
+  ]).isRequired,
+  noPadding: bool,
+};
+
+DrawerBody.defaultProps = {
+  noPadding: false,
 };
 
 export default DrawerBody;

@@ -22,6 +22,8 @@ import {
   faFileAudio,
   faTimes,
   faIdBadge,
+  faHistory,
+  faSortDown,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { createPermissions } from 'common/utils';
@@ -45,6 +47,8 @@ library.add(
   faFileAudio,
   faTimes,
   faIdBadge,
+  faHistory,
+  faSortDown,
 );
 
 class UkrainianAdminApp extends App {

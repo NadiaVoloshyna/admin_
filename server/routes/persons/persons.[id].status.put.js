@@ -3,7 +3,7 @@ const { each } = require('async');
 const { PERSON_POST_STATUSES } = require('../../../common/constants');
 const Person = require('../../models/person');
 const GoogleApi = require('../../services/google');
-const helpers = require('../../helpers/permissions');
+const { getHooksContext, getRoleToUpdate } = require('../../helpers');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 // 1. Get resources from database
@@ -65,13 +65,20 @@ const updateStatus = async (req, res) => {
       await GoogleApi.updatePermission(
         fileId,
         permissionId,
-        helpers.getRoleToUpdate(status, user.role)
+        getRoleToUpdate(status, user.role)
       );
     });
 
+    const hookMeta = {
+      ...getHooksContext(req),
+      oldStatus: person.status,
+      newStatus: status,
+    };
+
     await Person.updateOne(
       { _id: id },
-      { status }
+      { status },
+      { hookMeta }
     );
 
     res.status(200).end();
