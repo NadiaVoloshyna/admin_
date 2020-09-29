@@ -1,10 +1,11 @@
-const Person = require('./person');
+const Person = require('./person/index');
 const Asset = require('./asset');
 const Profession = require('./profession');
 const User = require('./user');
 const Permissions = require('./permissions');
 const DrivePermission = require('./drivePermission');
 const Invite = require('./invite');
+const Activity = require('./activity');
 const References = require('./references');
 
 module.exports = {
@@ -15,5 +16,6 @@ module.exports = {
   Permissions,
   DrivePermission,
   Invite,
+  Activity,
   References,
 };

@@ -2,6 +2,7 @@ const { body, check } = require('express-validator');
 const Person = require('../../models/person');
 const References = require('../../models/references');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
+const { getHooksContext } = require('../../helpers');
 const { decodePortrait } = require('../../../common/utils');
 
 /**
@@ -16,14 +17,16 @@ module.exports = (router) => {
     body('born').if(body('born').exists()).isString().escape(),
     body('died').if(body('died').exists()).isString().escape(),
   ], handle400, async (req, res) => {
-    const { name, portrait, born, died, professions } = req.body;
+    const updates = req.body;
+    const { portrait } = updates;
     const { id } = req.params;
 
     try {
-      const { url, _id: portraitId } = decodePortrait(portrait);
-
       // Create a reference for portrait asset
-      if (portraitId) {
+      if (portrait) {
+        const { url, _id: portraitId } = decodePortrait(portrait);
+        updates.portrait = url;
+
         await References.updateOne(
           { dependent: portraitId },
           { dependent: portraitId, dependOn: id },
@@ -31,15 +34,10 @@ module.exports = (router) => {
         );
       }
 
-      await Person.updateOne(
+      await Person.findOneAndUpdate(
         { _id: id },
-        {
-          name,
-          portrait: url,
-          born,
-          died,
-          professions
-        }
+        { $set: updates },
+        { hookMeta: getHooksContext(req) }
       );
     } catch (error) {
       return req.handle500(error);
