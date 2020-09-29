@@ -63,4 +63,13 @@ const schema = new Schema({
   }
 });
 
+schema.set('toObject', { virtuals: true });
+schema.set('toJSON', { virtuals: true });
+
+schema.virtual('references', {
+  ref: 'References',
+  localField: '_id',
+  foreignField: 'dependent'
+});
+
 module.exports = mongoose.model('Asset', schema, 'asset');
