@@ -128,18 +128,6 @@ const DataGrid = (props) => {
                 </Col>
               </Row>
             </Card.Header>
-
-            <Card.Body>
-              <RemotePagination
-                data={ data }
-                columns={columns}
-                pagination={pagination}
-                hideSelectColumn={hideSelectColumn}
-                onTableChange={ onTableChange }
-                handleOnSelect={ handleOnSelect }
-                handleOnSelectAll={ handleOnSelectAll }
-              />
-            </Card.Body>
           </>
           )}
 
@@ -152,6 +140,16 @@ const DataGrid = (props) => {
           </Card.Body>
           )}
       </Card>
+
+      <RemotePagination
+        data={ data }
+        columns={columns}
+        pagination={pagination}
+        hideSelectColumn={hideSelectColumn}
+        onTableChange={ onTableChange }
+        handleOnSelect={ handleOnSelect }
+        handleOnSelectAll={ handleOnSelectAll }
+      />
 
       <style global jsx>{`
         .react-bootstrap-table .table th {

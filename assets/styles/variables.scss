@@ -1,0 +1,29 @@
+$web-font-path: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap';
+@import url($web-font-path);
+
+$font-family-sans-serif: 'Roboto', sans-serif;
+$font-family-base:       $font-family-sans-serif !default;
+
+$gray-100: #F4F4F4 !default;
+$gray-300: #E4E4E4 !default;
+$gray-400: #d2d2d2 !default;
+$gray-500: #A5A5A5 !default;
+$gray-600: #6A6A6A !default;
+$gray-700: #363636 !default;
+$gray-900: #292929 !default;
+
+$purple:  #8A6FF7 !default;
+$orange:  #FF9736 !default;
+$yellow:  #FEE662 !default;
+$green:   #27AE60 !default;
+$teal:    #59CC89 !default;
+$cyan:    #61C5F0 !default;
+
+$body-bg: $gray-400;
+$body-color: $gray-500;
+$font-size-base: .875rem;
+
+$status-in-progress:      #D1E2E7;
+$status-in-review:        #FED808;
+$status-ready-to-publish: #4A8FE2;
+$status-published:        #7DD31F;
