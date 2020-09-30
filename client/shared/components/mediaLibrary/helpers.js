@@ -9,6 +9,10 @@ export const getActiveFolder = (breadcrumbs) => {
 };
 
 export const applyTransformations = (url, transformations) => {
+  if (!url) {
+    return '';
+  }
+
   const parts = url.split('/');
   const name = parts.pop();
   const version = parts.pop();
