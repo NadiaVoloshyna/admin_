@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const { each } = require('async');
 const GoogleApi = require('../../services/google');
 const Activity = require('../activity');
+const References = require('../references');
 const { logger } = require('../../services/gcp/logger');
 const { createActivity } = require('./utils');
 
@@ -20,6 +22,10 @@ exports.preRemove = async function preRemove(next) {
     const asset = await Asset.findById(rootAssetId.toString());
 
     await asset.remove();
+
+    // Remove references
+    const references = await References.find({ dependOn: _id });
+    await each(references, async (reference) => await reference.remove());
 
     // Remove person's activities
     await Activity.deleteMany({ personId: _id });
