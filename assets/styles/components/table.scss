@@ -1,0 +1,39 @@
+$table-cell-padding: .875rem;
+$table-border-width: 0;
+$table-color: $gray-700;
+$table-head-color: $gray-500;
+
+table {
+  margin: 0;
+  border-collapse: inherit !important;
+  border-spacing: 0 8px;
+}
+
+table th {
+  color: $table-head-color;
+  font-weight: 500;
+  font-size: .75rem !important;
+  padding: 8px 16px !important;
+}
+
+/* td */
+table tr td {
+  height: 72px;
+  vertical-align: middle !important;
+}
+
+table tr:not(:hover):not(.inactive) td {
+  background-color: white;
+}
+
+table tr.inactive td {
+  color: $table-head-color;
+}
+
+table tr td:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+table tr td:last-child {
+  border-radius: 0 4px 4px 0;
+}

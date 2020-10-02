@@ -60,7 +60,6 @@ const RemotePagination = (props) => {
                         <BootstrapTable
                           bootstrap4
                           bordered={false}
-                          hover
                           remote
                           selectRow={ selectRow }
                           onTableChange={ onTableChange }
