@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from 'shared/constants';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import InviteUserModal from 'pages/Users/components/inviteUserModal';
 import Button from 'react-bootstrap/Button';
 import UsersList from 'pages/Users/components/usersList';
@@ -78,7 +78,7 @@ const UsersPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout activePage="Users">
+      <Layout activePage={PAGE_NAMES.USERS} user={user}>
         <Layout.Navbar className="mb-3">
           <Button
             variant="primary"

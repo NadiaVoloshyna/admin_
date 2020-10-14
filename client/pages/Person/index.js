@@ -7,7 +7,7 @@ import arrayMutators from 'final-form-arrays';
 import Head from 'next/head';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from 'shared/constants';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import { ProfessionType, Person } from 'shared/prop-types';
 import { UserType } from 'common/prop-types/authorization/user';
 
@@ -162,7 +162,7 @@ const PersonPage = (props) => {
         <script src="https://media-library.cloudinary.com/global/all.js" defer />
       </Head>
 
-      <Layout activePage="Person">
+      <Layout activePage={PAGE_NAMES.PERSON} user={user}>
         <Form
           onSubmit={onPersonSave}
           mutators={{

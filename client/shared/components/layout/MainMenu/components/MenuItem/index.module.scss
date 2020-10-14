@@ -1,0 +1,46 @@
+@import 'assets/styles/variables.scss';
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  height: 72px;
+  width: 100%;
+  color: $gray-500;
+  text-decoration: none;
+
+  .icon {
+    height: 100%;
+    width: 72px;
+  }
+
+  span {
+    padding-left: 4px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__logo {
+    height: 96px;
+  }
+
+  &__logo,
+  &__user {
+    color: $gray-100;
+    // TODO: use future text mixin
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+.active,
+.hovered:hover {
+  color: $gray-100;
+
+  .icon {
+    border-left: 4px solid $green;
+    width: 68px;
+    margin-right: 4px;
+  }
+}
