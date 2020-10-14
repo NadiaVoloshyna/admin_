@@ -5,7 +5,13 @@ import Col from 'react-bootstrap/Col';
 import FormControl from 'react-bootstrap/FormControl';
 import { Field } from 'react-final-form';
 
-const DateInput = ({ name, disabled }) => {
+const DateInput = ({ name, disabled, date }) => {
+  let formattedDate;
+
+  if (date) {
+    formattedDate = date.slice(0, 10);
+  }
+
   return (
     <Field name={name}>
       { props => {
@@ -16,6 +22,7 @@ const DateInput = ({ name, disabled }) => {
             {...input}
             disabled={disabled}
             type="date"
+            value={!input.value ? formattedDate : input.value }
             placeholder="dd/MM/yyyy"
             autoComplete="off"
           />
@@ -28,26 +35,36 @@ const DateInput = ({ name, disabled }) => {
 DateInput.propTypes = {
   name: string.isRequired,
   disabled: bool,
-  input: shape(object).isRequired
+  input: shape(object).isRequired,
+  date: string
 };
 
 DateInput.defaultProps = {
-  disabled: false
+  disabled: false,
+  date: string
 };
 
-const PersonYears = ({ canEdit }) => {
+const PersonYears = ({ canEdit, born, died }) => {
   return (
     <Row>
       <Col>
         <div className="form-group">
           <label htmlFor="born">Born</label>
-          <DateInput name="born" disabled={!canEdit} />
+          <DateInput
+            name="born"
+            disabled={!canEdit}
+            date={born}
+          />
         </div>
       </Col>
       <Col>
         <div className="form-group">
           <label htmlFor="died">Died</label>
-          <DateInput name="died" disabled={!canEdit} />
+          <DateInput
+            name="died"
+            disabled={!canEdit}
+            date={died}
+          />
         </div>
       </Col>
     </Row>
@@ -55,11 +72,15 @@ const PersonYears = ({ canEdit }) => {
 };
 
 PersonYears.propTypes = {
-  canEdit: bool
+  canEdit: bool,
+  born: string,
+  died: string
 };
 
 PersonYears.defaultProps = {
-  canEdit: false
+  canEdit: false,
+  born: string,
+  died: string
 };
 
 export default PersonYears;

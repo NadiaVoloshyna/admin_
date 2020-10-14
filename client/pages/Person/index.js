@@ -44,9 +44,10 @@ const PersonPage = (props) => {
     rootAssetId,
     professions: personsProfessions,
     biography,
+    born,
+    died,
     drivePermissions,
   } = person;
-
   // TODO: move to Person page level
   const permissions = new Permissions(user, person);
 
@@ -57,12 +58,12 @@ const PersonPage = (props) => {
   const onPersonSave = (values, form) => {
     setIsLoading(true);
 
-    // send only updated fields
+    // send only updated fields and fields name
     const changedFields = {};
     const { dirtyFields } = form.getState();
 
     Object.keys(values).forEach(key => {
-      if (typeof dirtyFields[key] !== 'undefined') {
+      if (typeof dirtyFields[key] !== 'undefined' || key === 'name') {
         changedFields[key] = values[key];
       }
     });
@@ -225,7 +226,11 @@ const PersonPage = (props) => {
                         onHistoryGet={onHistoryGet}
                       />
                       <PersonPortrait />
-                      <PersonYears canEdit={permissions.canEdit()} />
+                      <PersonYears
+                        canEdit={permissions.canEdit()}
+                        born={born}
+                        died={died}
+                      />
                       <PersonProfession
                         professions={availableProfessions()}
                         onAdd={push}
