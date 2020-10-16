@@ -4,7 +4,7 @@ import { shape } from 'prop-types';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
 import CreateAssetDropdown, { ASSET_TYPES } from 'shared/components/createAssetDropdown';
-import { ERROR_MESSAGES } from 'shared/constants';
+import { ERROR_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import AssetDetailsModal from 'pages/Library/components/assetDetailsModal';
 import MediaLibrary from 'shared/components/mediaLibrary';
 import Button from 'react-bootstrap/Button';
@@ -71,7 +71,7 @@ const LibraryPage = ({ user }) => {
         <script src="https://widget.cloudinary.com/v2.0/global/all.js" defer />
       </Head>
 
-      <Layout activePage="Library">
+      <Layout activePage={PAGE_NAMES.LIBRARY} user={user}>
         <Layout.Navbar className="mb-3">
           { user.create('assets')
             && (

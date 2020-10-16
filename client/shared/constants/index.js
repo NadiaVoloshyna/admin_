@@ -1,3 +1,13 @@
+export const PAGE_NAMES = {
+  DASHBOARD: 'Dashboard',
+  LIBRARY: 'Library',
+  PERMISSIONS: 'Permissions',
+  PERSON: 'Person',
+  PERSONS: 'Persons',
+  PROFESSIONS: 'Professions',
+  USERS: 'Users',
+};
+
 export const ASSET_TYPES = {
   FOLDER: 'FOLDER',
   ALBUM: 'ALBUM',

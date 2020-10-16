@@ -24,7 +24,7 @@ input[type="checkbox"] + label:hover::before {
 
 input[type="checkbox"]:checked + label::before {
   border: $input-border-size solid $pink;
-  // background-image: url('/assets/components/Vector.svg');  
+  // background-image: url('/assets/components/Vector.svg'); 
 }
 
 input[type="checkbox"]:disabled + label::before {

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { arrayOf, object } from 'prop-types';
+import { shape, arrayOf, object } from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _upperFirst from 'lodash/upperFirst';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
-import { ERROR_MESSAGES } from 'shared/constants';
+import { ERROR_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import { USER_ROLES } from 'common/constants';
+import { UserType } from 'common/prop-types/authorization/user';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
@@ -18,7 +19,7 @@ import AddPermissionDrawer from './components/addPermissionDrawer';
 import AddAttributesDrawer from './components/addAttributesDrawer';
 import AttributesTooltip from './components/attributesTooltip';
 
-const PermissionsPage = ({ permissions: rawPermissions }) => {
+const PermissionsPage = ({ permissions: rawPermissions, user }) => {
   const handleError = useErrorHandler();
 
   const [permissions, setPermissions] = useState(rawPermissions);
@@ -104,7 +105,7 @@ const PermissionsPage = ({ permissions: rawPermissions }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout activePage="Permissions">
+      <Layout activePage={PAGE_NAMES.PERMISSIONS} user={user}>
         <Layout.Navbar className="mb-3">
           <Button type="button" onClick={() => setIsDrawerOpen(true)}>
             Add permission
@@ -199,6 +200,7 @@ const PermissionsPage = ({ permissions: rawPermissions }) => {
 
 PermissionsPage.propTypes = {
   permissions: arrayOf(object).isRequired,
+  user: shape(UserType).isRequired,
 };
 
 export default PermissionsPage;
