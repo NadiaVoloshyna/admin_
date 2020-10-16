@@ -4,11 +4,12 @@ import Head from 'next/head';
 import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
-import { ERROR_MESSAGES, WARNING_MESSAGES } from 'shared/constants';
+import { ERROR_MESSAGES, WARNING_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import CreateDropdown from 'shared/components/createDropdown';
 import ProfessionsList from 'pages/Professions/components/professionsList';
 import ProfessionsAPI from 'pages/Professions/api';
 import { PaginationType, ProfessionType } from 'shared/prop-types';
+import { UserType } from 'common/prop-types/authorization/user';
 
 const ProfessionsPage = (props) => {
   const handleError = useErrorHandler();
@@ -80,7 +81,7 @@ const ProfessionsPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout activePage="Professions">
+      <Layout activePage={PAGE_NAMES.PROFESSIONS} user={props.user}>
         <Layout.Navbar className="mb-5">
           <div className="row">
             <div className="col-10 m-auto">
@@ -108,7 +109,8 @@ const ProfessionsPage = (props) => {
 
 ProfessionsPage.propTypes = {
   professions: arrayOf(shape(ProfessionType)).isRequired,
-  pagination: shape(PaginationType).isRequired
+  pagination: shape(PaginationType).isRequired,
+  user: shape(UserType).isRequired,
 };
 
 export default ProfessionsPage;

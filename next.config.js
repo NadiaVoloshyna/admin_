@@ -1,11 +1,9 @@
 const path = require('path');
-const withSass = require('@zeit/next-sass');
-const withCSS = require('@zeit/next-css');
 
 const isProd = process.env.NODE_ENV === 'production';
 const protocol = isProd ? 'https' : 'http';
 
-module.exports = withCSS(withSass({
+module.exports = {
   webpack(config) {
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -22,4 +20,4 @@ module.exports = withCSS(withSass({
   publicRuntimeConfig: {
     baseUrl: `${protocol}://${process.env.BASE_URL}`
   }
-}));
+};

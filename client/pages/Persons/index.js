@@ -3,7 +3,7 @@ import { shape, arrayOf } from 'prop-types';
 import Head from 'next/head';
 import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
-import { ERROR_MESSAGES } from 'shared/constants';
+import { ERROR_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import PersonsList from 'pages/Persons/components/personsList';
 import DuplicateModal from 'pages/Persons/components/duplicateModal';
 import CreateDropdown from 'shared/components/createDropdown';
@@ -90,7 +90,7 @@ const PersonsPage = ({ user, persons, pagination }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout activePage="Persons">
+      <Layout activePage={PAGE_NAMES.PERSONS} user={user}>
         <Layout.Navbar className="mb-5">
           { canCreatePerson
             && (
