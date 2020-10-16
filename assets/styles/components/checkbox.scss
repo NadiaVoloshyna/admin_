@@ -1,0 +1,38 @@
+input[type="checkbox"] {
+  display: none;
+}
+
+label:hover {
+  cursor: pointer;
+}
+
+input[type="checkbox"] + label::before {
+  content: '';
+  display: inline-block;
+  height: 1.125rem;
+  width: 1.125rem;
+  border: $input-border-size solid $gray-500;
+  border-radius: .125rem;
+  background-color: #fff;
+  vertical-align: middle;
+  margin-right: .75rem;
+}
+
+input[type="checkbox"] + label:hover::before {
+  border: $input-border-size solid $pink;
+}
+
+input[type="checkbox"]:checked + label::before {
+  border: $input-border-size solid $pink;
+  // background-image: url('/assets/components/Vector.svg');  
+}
+
+input[type="checkbox"]:disabled + label::before {
+  border: $input-border-size solid $gray-300;
+  // background-image: url('./Vector.svg');
+  opacity: 0.5;
+}
+
+input[type="checkbox"] + label {
+  color: $gray-700;
+}
