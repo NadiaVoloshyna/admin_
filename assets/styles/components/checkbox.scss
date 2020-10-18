@@ -19,17 +19,26 @@ input[type="checkbox"] + label::before {
 }
 
 input[type="checkbox"] + label:hover::before {
-  border: $input-border-size solid $pink;
+  border: $input-border-size solid $gray-600;
 }
 
 input[type="checkbox"]:checked + label::before {
-  border: $input-border-size solid $pink;
-  // background-image: url('/assets/components/Vector.svg'); 
+  border: $input-border-size solid $gray-600;
+  background-image: url('./checkmark.svg'); 
+  background-repeat: no-repeat;
+  text-align: center;
+  background-position: center center;
+}
+
+input[type="checkbox"]:disabled + input[type="checkbox"]:checked + label::before {
+  border: $input-border-size solid $gray-300;
+  background-image: url('./checkmark.svg');
+  background-repeat: no-repeat;
+  opacity: 0.5;
 }
 
 input[type="checkbox"]:disabled + label::before {
   border: $input-border-size solid $gray-300;
-  // background-image: url('./Vector.svg');
   opacity: 0.5;
 }
 

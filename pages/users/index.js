@@ -8,12 +8,6 @@ import logger from 'utils/logger';
 
 const Users = (props) => (
   <WithError statusCode={props.statusCode}>
-    <div className="form-check">
-      <input className="" type="checkbox" value="" id="defaultCheck1" />
-      <label className="form-check-label" htmlFor="defaultCheck1">
-        Default checkbox
-      </label>
-    </div>
     <UsersPage {...props} />
   </WithError>
 );
