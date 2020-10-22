@@ -1,0 +1,20 @@
+$alert-font-size: 16px;
+$alert-padding-y: 1.7rem;
+$alert-padding-x: 1.4rem;
+$alert-font-weight: 400;
+$alert-margin-bottom: 5px;
+
+.alert {
+  border-radius: 0 !important;
+  color: #FFFFFF !important;
+  font-size: $alert-font-size;
+  line-height: 19px;
+}
+
+.alert-success {
+  background-color: rgba($green, .6) !important;
+}
+
+.alert-danger {
+  background-color: rgba($red, .6) !important;
+}
