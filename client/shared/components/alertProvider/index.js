@@ -13,7 +13,7 @@ const config = {
   containerStyle: {
     alignItems: 'none',
     left: '50%',
-    width: '800px',
+    width: '87%',
     transform: 'translateX(-50%)'
   }
 };
@@ -29,8 +29,17 @@ const AlertTemplate = ({ options, message }) => {
   };
 
   return (
-    <AlertBootstrap variant={variant()}>
-      { message }
+    <AlertBootstrap className="d-flex justify-content-between" variant={variant()}>
+      <div className="d-flex align-items-center">
+        <i className="material-icons">check_circle_outline</i>
+        <span className=" ml-3">{ message }</span>
+      </div>
+      <div className="d-flex align-items-center">
+        <span className=" mr-3">
+          Window will automatically disappear in 5 seconds
+        </span>
+        <i className="material-icons">clear</i>
+      </div>
     </AlertBootstrap>
   );
 };
