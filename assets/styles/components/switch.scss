@@ -1,0 +1,51 @@
+$switch-bg-normal: $gray-500;
+$switch-bg-hover: $gray-700;
+$switch-thumb-bg: $white;
+
+.custom-switch {
+  .custom-control-input {
+    &:checked ~ .custom-control-label::before {
+      border: none;
+      background-color: $green !important;
+    }
+
+    &:checked ~ .custom-control-label::after {
+      transform: translateX(calc(1.625rem - 4px)) !important;
+    }
+
+    &[disabled] ~ .custom-control-label::before,
+    &:disabled ~ .custom-control-label::before {
+      background-color: $switch-bg-normal !important;
+      border: none;
+    }
+  }
+
+  .custom-control-label {
+    &::before {
+      width: 2.75rem !important;
+      left: -3.25rem !important;
+      top: 0;
+      height: 1.375rem !important;
+      border-radius: 1rem !important;
+
+      border: none;
+      background-image: none !important;
+      background-color: $switch-bg-normal;
+    }
+
+    &:hover::before {
+      background-color: $switch-bg-hover;
+      border: none;
+    }
+
+    &::after {
+      width: 1.125rem !important;
+      height: 1.125rem !important;
+      top: calc(0rem + 2px) !important;
+      left: calc(-3.25rem + 2px) !important;
+      border-radius: 50% !important;
+      filter: drop-shadow(0px 2px 4px rgba($gray-700, 0.2));
+      background-color: $switch-thumb-bg !important;
+    }
+  }
+}
