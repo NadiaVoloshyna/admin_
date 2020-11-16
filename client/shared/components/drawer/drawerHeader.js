@@ -1,6 +1,5 @@
 import React from 'react';
 import { oneOfType, arrayOf, node, func } from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const DrawerHeader = (props) => {
   const { children, onClose } = props;
@@ -9,12 +8,10 @@ const DrawerHeader = (props) => {
     <>
       <div className="drawer-header">
         <h4>{ children }</h4>
-        <FontAwesomeIcon
-          icon="times"
-          size="lg"
-          className="cur-pointer"
+        <i
+          className="material-icons cur-pointer"
           onClick={() => onClose(false)}
-        />
+        >close</i>
       </div>
 
       <style jsx>{`

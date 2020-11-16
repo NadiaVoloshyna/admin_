@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, element, oneOfType } from 'prop-types';
+import { string, arrayOf, oneOfType, node } from 'prop-types';
 import Navbar from 'react-bootstrap/Navbar';
 import cx from 'classnames';
 
@@ -18,8 +18,8 @@ const LayoutNavbar = (props) => {
 
       <style global jsx>{`
         .layout-navbar {
-          height: 54px;
-          max-height: 54px;
+          height: 96px;
+          max-height: 96px;
         }
       `}</style>
     </>
@@ -28,7 +28,10 @@ const LayoutNavbar = (props) => {
 
 LayoutNavbar.propTypes = {
   className: string,
-  children: oneOfType([element, string]).isRequired
+  children: oneOfType([
+    arrayOf(node),
+    node
+  ]).isRequired,
 };
 
 LayoutNavbar.defaultProps = {

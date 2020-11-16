@@ -6,7 +6,7 @@ $switch-thumb-bg: $white;
   .custom-control-input {
     &:checked ~ .custom-control-label::before {
       border: none;
-      background-color: $green !important;
+      background-color: $success !important;
     }
 
     &:checked ~ .custom-control-label::after {

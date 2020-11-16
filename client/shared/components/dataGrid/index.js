@@ -1,39 +1,36 @@
 import React, { useState } from 'react';
-import { arrayOf, object, string, shape, bool, func } from 'prop-types';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import RemotePagination from 'shared/components/pagination';
-import { PaginationType, TableColumnType } from '../../prop-types';
+import { arrayOf, object, shape, string } from 'prop-types';
+import BootstrapTable from 'react-bootstrap-table-next';
+import useListDataFetch from 'shared/hooks/useListDataFetch';
+import { TableColumnType } from '../../prop-types';
+import * as utils from './utils';
+
+const { checkboxRenderer, sortingConfig } = utils;
 
 const DataGrid = (props) => {
-  const {
-    data,
-    tableName,
-    columns,
-    error,
-    loading,
-    pagination,
-    onItemsGet,
-    onItemsDelete,
-    onEdit,
-    hideSelectColumn
-  } = props;
-
+  const { data, rowClasses } = props;
   const [ selectedRecords, setSelectedRecords ] = useState([]);
-  const [ searchTerm, setSearchTerm ] = useState('');
-  const [ searchDirty, setSearchDirty ] = useState(false);
 
-  const hasData = !!data.length;
+  // eslint-disable-next-line
+  console.log(selectedRecords);
 
-  if (error) return null;
-  if (loading) return null;
+  const defaultSorted = { dataField: 'created', order: 'desc' };
 
-  const handleOnSelect = (row, isSelect) => {
+  const { addQueryParams, getQueryParams } = useListDataFetch();
+  const sort = getQueryParams('sort');
+
+  const onSort = ({ sortField, sortOrder }) => {
+    if (!sort && defaultSorted.dataField === sortField && defaultSorted.order === sortOrder) return;
+    addQueryParams('sort', [sortField, sortOrder]);
+  };
+
+  const columns = props.columns.map(item => ({
+    ...item,
+    ...(item.sort && sortingConfig),
+    ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] })
+  }));
+
+  const onSelect = (row, isSelect) => {
     setSelectedRecords(records => {
       if (isSelect) {
         return [...records, row];
@@ -42,118 +39,66 @@ const DataGrid = (props) => {
     });
   };
 
-  const handleOnSelectAll = (isSelect, rows) => {
+  const onSelectAll = (isSelect, rows) => {
     setSelectedRecords(isSelect ? rows : []);
   };
 
-  const onSearchChange = (event) => {
-    setSearchTerm(event.target.value);
+  const onTableChange = (type, config) => {
+    type === 'sort' && onSort(config);
   };
 
-  const onTableChange = (type, args) => {
-    const { page, searchTerm, cellEdit } = args;
-
-    if (type === 'pagination') {
-      onItemsGet({ offset: page - 1 });
-    }
-
-    if (type === 'search') {
-      onItemsGet({ searchTerm });
-      setSearchDirty(!!searchTerm);
-    }
-
-    if (type === 'cellEdit') {
-      onEdit && onEdit({
-        id: cellEdit.rowId,
-        [cellEdit.dataField]: cellEdit.newValue
-      });
-    }
+  const selectRow = {
+    mode: 'checkbox',
+    clickToSelect: false,
+    onSelect,
+    onSelectAll,
+    selectionHeaderRenderer: checkboxRenderer,
+    selectionRenderer: checkboxRenderer,
   };
 
   return (
     <>
-      <Card>
-        { hasData
-          && (
-          <>
-            <Card.Header>
-              <Row>
-                <Col>
-                  <InputGroup>
-                    <FormControl
-                      placeholder={`Find ${tableName}`}
-                      onChange={onSearchChange}
-                      value={searchTerm}
-                    />
-
-                    <InputGroup.Append>
-                      <Button
-                        variant="primary"
-                        disabled={!searchDirty && !searchTerm}
-                        onClick={() => onTableChange('search', { searchTerm })}
-                      >
-                        Search
-                      </Button>
-                    </InputGroup.Append>
-                  </InputGroup>
-                </Col>
-
-                <Col>
-                  <InputGroup>
-                    <FormControl
-                      as="select"
-                      value={pagination.sort}
-                      onChange={(e) => onItemsGet({ sort: e.target.value })}
-                    >
-                      <option value="ascending">A to Z</option>
-                      <option value="descending">Z to A</option>
-                      <option value="newest">Newest</option>
-                      <option value="older">Older</option>
-                    </FormControl>
-
-                    { !hideSelectColumn
-                      && (
-                      <InputGroup.Append>
-                        <Button
-                          onClick={() => onItemsDelete(selectedRecords)}
-                          size="sm"
-                          variant="secondary"
-                          disabled={!selectedRecords.length}
-                        >
-                          <FontAwesomeIcon icon="trash-alt" /> &nbsp; Delete {tableName}s
-                        </Button>
-                      </InputGroup.Append>
-                      )}
-                  </InputGroup>
-                </Col>
-              </Row>
-            </Card.Header>
-          </>
-          )}
-
-        { !hasData
-          && (
-          <Card.Body>
-            <Card.Text className="text-center">
-              There are no {tableName}s yet.
-            </Card.Text>
-          </Card.Body>
-          )}
-      </Card>
-
-      <RemotePagination
+      <BootstrapTable
+        keyField="_id"
         data={ data }
-        columns={columns}
-        pagination={pagination}
-        hideSelectColumn={hideSelectColumn}
-        onTableChange={ onTableChange }
-        handleOnSelect={ handleOnSelect }
-        handleOnSelectAll={ handleOnSelectAll }
+        columns={ columns }
+        bootstrap4
+        bordered={false}
+        remote
+        selectRow={ selectRow }
+        onTableChange={onTableChange}
+        defaultSorted={[defaultSorted]}
+        rowClasses={rowClasses}
       />
 
       <style global jsx>{`
         .react-bootstrap-table .table th {
           border-top: 0;
+          outline: none;
+        }
+
+        .react-bootstrap-table table {
+          margin: 0;
+        }
+
+        .react-bootstrap-table table th i {
+          font-size: 17px;
+          margin-left: 10px;
+          display: none;
+        }
+
+        .react-bootstrap-table table th.sortable {
+          cursor: pointer;
+        }
+
+        .react-bootstrap-table table th.active,
+        .react-bootstrap-table table th.sortable:hover {
+          color: #27AE60;
+        }
+
+        .react-bootstrap-table table th.active i {
+          color: #27AE60;
+          display: inline;
         }
       `}</style>
     </>
@@ -162,24 +107,13 @@ const DataGrid = (props) => {
 
 DataGrid.propTypes = {
   data: arrayOf(object),
-  tableName: string.isRequired,
   columns: arrayOf(shape(TableColumnType)).isRequired,
-  error: bool,
-  loading: bool,
-  pagination: shape(PaginationType).isRequired,
-  onItemsGet: func.isRequired,
-  onItemsDelete: func,
-  onEdit: func,
-  hideSelectColumn: bool
+  rowClasses: string,
 };
 
 DataGrid.defaultProps = {
   data: [],
-  error: false,
-  loading: false,
-  onItemsDelete: () => {},
-  onEdit: () => {},
-  hideSelectColumn: false
+  rowClasses: '',
 };
 
 export default DataGrid;

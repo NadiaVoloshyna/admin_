@@ -23,10 +23,12 @@ const checkProfession = async (req, res, next) => {
 
 // Create profession
 const createProfession = async (req, res, next) => {
-  const { name } = req.body;
+  const { name, description } = req.body;
   try {
     const newProfession = await new Profession({
-      name
+      name,
+      description,
+      createdBy: req.user._id,
     }).save();
     const response = {
       id: newProfession._id,

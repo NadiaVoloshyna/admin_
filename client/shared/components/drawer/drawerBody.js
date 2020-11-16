@@ -16,6 +16,7 @@ const DrawerBody = (props) => {
           height: 100%;
           padding: 24px;
           overflow: scroll;
+          background-color: #f4f4f4; // TODO: change to variable
         }
 
         .drawer-body__no-padding {

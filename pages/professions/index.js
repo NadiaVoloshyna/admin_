@@ -2,8 +2,6 @@ import React from 'react';
 import { number } from 'prop-types';
 import ProfessionsPage from 'pages/Professions';
 import ProfessionsAPI from 'pages/Professions/api';
-import { professionsState } from 'pages/Professions/state';
-import { paginationState } from 'shared/state';
 import logger from 'utils/logger';
 import WithError from 'shared/components/withError';
 
@@ -14,17 +12,17 @@ const Professions = (props) => (
 );
 
 Professions.getInitialProps = async (ctx) => {
-  const { req } = ctx;
-  const { offset, searchTerm, sort } = paginationState;
+  const { req, query } = ctx;
 
   try {
-    let { data: { pagination, professions } } = await
-    ProfessionsAPI.setCookie(req).getProfessions(offset, searchTerm, sort);
+    const { data: { docs: professions, limit, total } } = await ProfessionsAPI
+      .setCookie(req)
+      .getProfessions(query);
 
-    professions = professions || professionsState.professions;
-    pagination = { offset, searchTerm, sort, ...pagination };
-
-    return { professions, pagination };
+    return {
+      professions,
+      pages: Math.ceil(total / limit),
+    };
   } catch (error) {
     logger.error(error);
     return {

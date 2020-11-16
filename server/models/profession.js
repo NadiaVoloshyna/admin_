@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
+const { Schema } = mongoose;
+const { ObjectId } = Schema;
+
 const schema = new mongoose.Schema({
   name: {
     type: String,
@@ -8,15 +11,18 @@ const schema = new mongoose.Schema({
     unique: true,
     dropDups: true
   },
-  // mediaType: {
-  //     type: String,
-  //     required: true
-  // },
-  // media: [{ type: Schema.Types.ObjectId, ref: 'Media' }],
-  // active: {
-  //     type: Boolean,
-  //     required: true
-  // }
+  created: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
+  createdBy: {
+    type: ObjectId,
+    required: true,
+  },
+  description: {
+    type: String,
+  },
 });
 
 schema.plugin(mongoosePaginate);

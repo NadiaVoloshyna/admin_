@@ -1,45 +1,29 @@
 import React, { useState } from 'react';
-import { shape, arrayOf } from 'prop-types';
+import { shape, arrayOf, number } from 'prop-types';
 import Head from 'next/head';
 import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES, PAGE_NAMES } from 'shared/constants';
-import InviteUserModal from 'pages/Users/components/inviteUserModal';
-import Button from 'react-bootstrap/Button';
-import UsersList from 'pages/Users/components/usersList';
+import FilterByRoleDrawer from 'pages/Users/components/filterByRoleDrawer';
+import InviteUserDrawer from 'pages/Users/components/inviteUserDrawer';
 import UsersAPI from 'pages/Users/api';
 import { UserType } from 'common/prop-types/authorization/user';
-import { PaginationType, UsersType } from 'shared/prop-types';
+import { UsersType } from 'shared/prop-types';
+import Pagination from 'shared/components/pagination';
+import Pager from 'shared/components/pager';
+import SelectedFilters from 'shared/components/selectedFilters';
+import SearchField from 'shared/components/searchField';
+import DataGrid from 'shared/components/dataGrid';
+import Filters from 'shared/components/filters';
+import columns from './columns';
 
 const UsersPage = (props) => {
-  const { user } = props;
+  const { user, users, pages } = props;
 
+  const [ isLoading, setIsLoading ] = useState(false);
   const alert = useAlert();
   const handleError = useErrorHandler();
-  const [isLoading, setIsLoading] = useState(false);
-  const [showInviteUserModal, toggleShowInviteUserModal] = useState(false);
-
-  const [users, setUsers] = useState(props.users);
-  const [pagination, setPagination] = useState(props.pagination);
-
-  const onUsersGet = async (payload) => {
-    setIsLoading(true);
-
-    const newPagination = { ...pagination, ...payload };
-    const { offset, searchTerm, sort } = newPagination;
-
-    try {
-      const { data: { users, pagination } } = await UsersAPI.getUsers(offset, searchTerm, sort);
-
-      setUsers(users);
-      setPagination({ offset, searchTerm, sort, ...pagination });
-    } catch (error) {
-      handleError(error, ERROR_MESSAGES.USERS_GET_USERS);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const inviteUser = async (payload) => {
     setIsLoading(true);
@@ -60,15 +44,19 @@ const UsersPage = (props) => {
     }
   };
 
-  const onEdit = async (payload) => {
-    setIsLoading(true);
+  // const onEdit = async (payload) => {
+  //   setIsLoading(true);
 
-    UsersAPI.update(payload)
-      .then(() => {
-        alert.success(SUCCESS_MESSAGES.USERS_EDIT_USER);
-      })
-      .catch(error => handleError(error, ERROR_MESSAGES.USERS_EDIT_USER))
-      .finally(() => setIsLoading(false));
+  //   UsersAPI.update(payload)
+  //     .then(() => {
+  //       alert.success(SUCCESS_MESSAGES.USERS_EDIT_USER);
+  //     })
+  //     .catch(error => handleError(error, ERROR_MESSAGES.USERS_EDIT_USER))
+  //     .finally(() => setIsLoading(false));
+  // };
+
+  const setRowClasses = (row) => {
+    return row.active ? '' : 'inactive';
   };
 
   return (
@@ -79,30 +67,46 @@ const UsersPage = (props) => {
       </Head>
 
       <Layout activePage={PAGE_NAMES.USERS} user={user}>
-        <Layout.Navbar className="mb-3">
-          <Button
-            variant="primary"
-            onClick={() => toggleShowInviteUserModal(true)}
-          >Invite User</Button>
+        <Layout.Navbar>
+          <h2>Users</h2>
+
+          <div className="d-flex">
+            <SearchField />
+            <FilterByRoleDrawer />
+          </div>
+
+          <InviteUserDrawer
+            onApply={inviteUser}
+            canInviteAdmin={user.invite('users')}
+          />
         </Layout.Navbar>
 
         <Layout.Content isLoading={isLoading}>
-          <UsersList
-            users={users}
-            onUsersGet={onUsersGet}
-            onEdit={onEdit}
-            pagination={pagination}
-            canEdit={user.deactivate('users')}
+          <div className="mb-4 d-flex justify-content-between">
+            <Filters
+              items={{
+                all: 'All',
+                active: 'Active',
+                blocked: 'Blocked',
+              }}
+              name="status"
+            />
+            <SelectedFilters />
+          </div>
+
+          <DataGrid
+            data={users}
+            columns={columns}
+            rowClasses={setRowClasses}
           />
         </Layout.Content>
-      </Layout>
 
-      <InviteUserModal
-        show={showInviteUserModal}
-        onClose={() => toggleShowInviteUserModal(false)}
-        canInviteAdmin={user.invite('users')}
-        inviteUser={inviteUser}
-      />
+        <Layout.Footer>
+          <Pager />
+
+          <Pagination pages={pages} />
+        </Layout.Footer>
+      </Layout>
     </>
   );
 };
@@ -110,7 +114,7 @@ const UsersPage = (props) => {
 UsersPage.propTypes = {
   user: shape(UserType).isRequired,
   users: arrayOf(shape(UsersType)).isRequired,
-  pagination: shape(PaginationType).isRequired
+  pages: number.isRequired
 };
 
 export default UsersPage;

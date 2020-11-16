@@ -1,35 +1,29 @@
-const { query, body } = require('express-validator');
+const { query } = require('express-validator');
 const Profession = require('../../models/profession');
-const { createQueryForPagination } = require('../../helpers/resolvers');
+const { createQueryForPagination, createSortVarints } = require('../../helpers/resolvers');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
+
+const validators = [
+  query('q').if(query('q').exists()).escape().isString(),
+  query('offset').if(query('offset').exists()).escape().isNumeric(),
+  query('limit').if(query('limit').exists()).escape().isNumeric(),
+  query('sort').if(query('sort').exists()).escape().isIn(
+    createSortVarints('name', 'description', 'createdBy', 'created')
+  ),
+  query('createdBy').if(query('createdBy').exists()).escape().isIn(['me']),
+];
 
 module.exports = (router) => {
   /**
    * Get subset of professions based of query parameters
    */
-  router.get('/', [
-    query('offset').if(body('offset').exists()).escape().isNumeric(),
-    query('searchTerm').if(body('searchTerm').exists()).escape(),
-    query('limit').if(body('limit').exists()).escape().isNumeric(),
-    query('sort').if(body('sort').exists()).escape().isIn([
-      'ascending',
-      'descending',
-      'newest',
-      'older'
-    ]),
-  ], handle400, async (req, res) => {
+  router.get('/', validators, handle400, async (req, res) => {
     try {
-      const { query, options } = createQueryForPagination({ ...req.query });
-      const professions = await Profession.paginate(query, options);
-
-      const response = {
-        professions: professions.docs,
-        pagination: {
-          total: professions.total,
-          limit: professions.limit,
-          offset: professions.offset
-        }
-      };
+      const { query, options } = createQueryForPagination({
+        user: req.user,
+        query: req.query
+      });
+      const response = await Profession.paginate(query, options);
 
       res.send(response);
     } catch (error) {

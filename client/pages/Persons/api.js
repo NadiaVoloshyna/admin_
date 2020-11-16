@@ -1,8 +1,11 @@
 import ApiService from 'shared/api';
+import queryString from 'query-string';
 
 class PersonsApi extends ApiService {
-  getPersons = (offset, searchTerm, sort) => {
-    return this.$http.get(`/api/persons?offset=${offset}&searchTerm=${searchTerm}&sort=${sort}`);
+  getPersons = (args) => {
+    let query = queryString.stringify(args);
+    query = query ? `?${query}` : '';
+    return this.$http.get(`/api/persons${query}`);
   }
 
   deletePersons = (ids) => {
