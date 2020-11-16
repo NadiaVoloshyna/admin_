@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { func, bool } from 'prop-types';
 import Button from 'react-bootstrap/Button';
-import BootstrapForm from 'react-bootstrap/form';
+import BootstrapForm from 'react-bootstrap/Form';
 import { Form, Field } from 'react-final-form';
 import Drawer from 'shared/components/drawer';
 
