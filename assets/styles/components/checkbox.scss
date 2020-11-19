@@ -1,3 +1,7 @@
+$checkmark: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALCAYAAABPhbxiAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACeSURBVHgBlZDBDcIwDEW/CyuwAuLYEbIDEmdPQt1NOCOhjFBG4MgQnDk2ja2mqqpGbSxFtmM/+8tAgbmOcfHsNKa9UO0Zf0Ao4B4I7bEQajSvehCVQtG33+tDKk2S7r2QbT17bkJAp34J5iADVe9YkDmscQ6yP5P6YomXsqboJQ3KQRO4hKdiBlI7pOD3/LxPt5riKLcFrZpu1rfVNwCvs1ObxZMHTwAAAABJRU5ErkJggg==';
+$input-border-size: .063rem;
+$form-check-input-gutter: 0;
+
 input[type="checkbox"] {
   display: none;
 }
@@ -24,14 +28,14 @@ input[type="checkbox"] + label:hover::before {
 
 input[type="checkbox"]:checked + label::before {
   border: $input-border-size solid $gray-600;
-  background-image: url('./checkmark.svg');
+  background-image: url($checkmark); 
   background-repeat: no-repeat;
   background-position: center center;
 }
 
 input[type="checkbox"]:disabled + input[type="checkbox"]:checked + label::before {
   border: $input-border-size solid $gray-300;
-  background-image: url('./checkmark.svg');
+  background-image: url($checkmark);
   background-repeat: no-repeat;
   background-position: center center;
   opacity: 0.5;
@@ -44,6 +48,7 @@ input[type="checkbox"]:disabled + label::before {
 
 input[type="checkbox"] + label {
   color: $gray-700;
+  margin: 0;
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {

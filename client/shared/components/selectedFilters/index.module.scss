@@ -1,0 +1,12 @@
+@import 'assets/styles/variables.scss';
+
+.badge {
+  min-width: auto;
+  padding: 4px 8px;
+
+  i {
+    font-size: .8rem;
+    font-weight: 800;
+    color: $gray-500;
+  }
+}

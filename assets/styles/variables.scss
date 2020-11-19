@@ -15,17 +15,18 @@ $gray-700: #363636 !default;
 $gray-900: #292929 !default;
 
 $purple:  #8A6FF7 !default;
-$orange:  #FF9736 !default;
+$warning: #FF9736 !default;
 $yellow:  #FEE662 !default;
-$green:   #27AE60 !default;
+$success: #27AE60 !default;
 $teal:    #59CC89 !default;
-$cyan:    #61C5F0 !default;
-$red:     #FF4040 !default;
+$info:    #61C5F0 !default;
+$danger:  #FF4040 !default;
+
+$link-color: $gray-700;
 
 $body-bg: $gray-400;
 $body-color: $gray-500;
 $font-size-base: .875rem;
-$input-border-size: .063rem;
 
 $status-in-progress:      #D1E2E7;
 $status-in-review:        #FED808;
@@ -35,5 +36,17 @@ $status-published:        #7DD31F;
 $transparent: transparent;
 
 $theme-colors: (
-  "primary": $green
+  "primary":    $success,
+  "secondary":  $purple,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "yellow":     $yellow,
+  "danger":     $danger,
+  "light":      $gray-100,
+  "dark":       $gray-700,
+  "gray":       $gray-300,
 );
+
+$component-active-color: $gray-700;
+$component-active-bg: $gray-300;

@@ -40,7 +40,6 @@ export const ERROR_MESSAGES = {
   PROFESSIONS_CREATE_PROFESSION: 'We are sorry, we couldn\'t create a profession.',
   PROFESSIONS_GET_PROFESSIONS: 'We are sorry, there was a problem retreaving professions.',
   PROFESSIONS_DELETE_PROFESSIONS: 'We are sorry, there was a problem deleting professions.',
-  USERS_GET_USERS: 'We are sorry, there was a problem retreaving users.',
   USERS_INVITE_USER: 'We are sorry, there was a problem inviting user.',
   USERS_EDIT_USER: 'We are sorry, there was a problem editing user.',
   ASSET_UPLOAD_IMAGE: 'We are sorry, there was a problem uploading the image.',

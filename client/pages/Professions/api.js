@@ -1,8 +1,11 @@
 import ApiService from 'shared/api';
+import queryString from 'query-string';
 
 class ProfessionsApi extends ApiService {
-  getProfessions = (offset, searchTerm, sort) => {
-    return this.$http.get(`/api/professions?offset=${offset}&searchTerm=${searchTerm}&sort=${sort}`);
+  getProfessions = (args) => {
+    let query = queryString.stringify(args);
+    query = query ? `?${query}` : '';
+    return this.$http.get(`/api/professions${query}`);
   }
 
   getAllProfessions = () => {

@@ -1,122 +1,89 @@
-import React from 'react';
-import { arrayOf, object, func, shape, bool } from 'prop-types';
-import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory from 'react-bootstrap-table2-editor';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
-import ToolkitProvider from 'react-bootstrap-table2-toolkit';
-import { PaginationType, TableColumnType } from '../../prop-types';
+import React, { useState } from 'react';
+import { number } from 'prop-types';
+import _range from 'lodash/range';
+import BootstrapPagination from 'react-bootstrap/Pagination';
+import useListDataFetch from 'shared/hooks/useListDataFetch';
 
-const RemotePagination = (props) => {
-  const {
-    data,
-    columns,
-    onTableChange,
-    handleOnSelect,
-    handleOnSelectAll,
-    pagination,
-    hideSelectColumn
-  } = props;
+const definePages = (current, total) => {
+  let startPage = current - 1;
+  let endPage = current + 2;
 
-  const selectRow = {
-    mode: 'checkbox',
-    clickToSelect: false,
-    selectColumnPosition: 'right',
-    onSelect: handleOnSelect,
-    onSelectAll: handleOnSelectAll,
-    hideSelectColumn
+  if (startPage <= 0) {
+    endPage -= (startPage - 1);
+    startPage = 1;
+  }
+
+  if (endPage > total) {
+    endPage = total;
+  }
+
+  return { startPage, endPage };
+};
+
+const Pagination = ({ pages }) => {
+  const { addQueryParams, getQueryParams } = useListDataFetch();
+  const offset = parseInt(getQueryParams('offset') || 0);
+  const [current, setCurrent] = useState(offset + 1);
+
+  if (pages < 2) return null;
+
+  const isPrevDisabled = current === 1;
+  const isNextDisabled = current === pages;
+
+  const { startPage, endPage } = definePages(current, pages);
+
+  const navigate = (item) => {
+    if (current === item) return;
+    setCurrent(item);
+    addQueryParams('offset', item - 1);
   };
 
-  const activePage = (pagination.offset / pagination.limit) + 1;
-  const shouldShowPagination = (pagination.total / pagination.limit) > 1;
+  const onPrevClick = () => {
+    navigate(current - 1);
+  };
+
+  const onNextClick = () => {
+    navigate(current + 1);
+  };
+
+  const renderPages = () => {
+    const visiblePages = _range(startPage, endPage + 1);
+
+    return visiblePages.map(item => {
+      const onClick = () => navigate(item);
+      return (
+        <BootstrapPagination.Item
+          key={`pagination_${item}`}
+          active={current === item}
+          onClick={onClick}
+        >{ item }</BootstrapPagination.Item>
+      );
+    });
+  };
 
   return (
-    <>
-      <PaginationProvider
-        pagination={
-          paginationFactory({
-            custom: true,
-            page: activePage,
-            sizePerPage: pagination.limit,
-            totalSize: pagination.total
-          })
-        }
-      >
-        {
-          ({
-            paginationProps,
-            paginationTableProps
-          }) => {
-            return (
-              <div>
-                <ToolkitProvider
-                  keyField="_id"
-                  data={ data }
-                  columns={ columns }
-                  search
-                >
-                  {
-                    toolkitprops => (
-                      <div>
-                        <BootstrapTable
-                          bootstrap4
-                          bordered={false}
-                          remote
-                          selectRow={ selectRow }
-                          onTableChange={ onTableChange }
-                          cellEdit={ cellEditFactory({
-                            mode: 'dbclick',
-                            blurToSave: true
-                          }) }
-                          { ...toolkitprops.baseProps }
-                          { ...paginationTableProps }
-                        />
-                      </div>
-                    )
-                  }
-                </ToolkitProvider>
-                <div>
-                  { !!shouldShowPagination
-                    && (
-                    <PaginationListStandalone
-                      { ...paginationProps }
-                      dataSize={pagination.total}
-                    />
-                    )}
-                </div>
-              </div>
-            );
-          }
-        }
-      </PaginationProvider>
+    <div className="d-flex align-items-center">
+      <span>Pages: </span>
 
-      <style global jsx>{`
-        .react-bootstrap-table table {
-          margin: 0;
-        }
-
-        .react-bootstrap-table table th {
-          font-size: 14px;
-        }
-      `}</style>
-    </>
+      <BootstrapPagination className="m-0">
+        <BootstrapPagination.Prev
+          disabled={isPrevDisabled}
+          onClick={onPrevClick}
+        />
+        { startPage > 1 && <BootstrapPagination.Ellipsis disabled /> }
+        { renderPages() }
+        { (endPage < pages) && <BootstrapPagination.Ellipsis disabled /> }
+        <BootstrapPagination.Next
+          disabled={isNextDisabled}
+          onClick={onNextClick}
+        />
+      </BootstrapPagination>
+    </div>
   );
 };
 
-RemotePagination.propTypes = {
-  data: arrayOf(object).isRequired,
-  columns: arrayOf(shape(TableColumnType)).isRequired,
-  onTableChange: func,
-  handleOnSelect: func,
-  handleOnSelectAll: func,
-  pagination: shape(PaginationType).isRequired,
-  hideSelectColumn: bool
+Pagination.propTypes = {
+  pages: number.isRequired,
 };
 
-RemotePagination.defaultProps = {
-  onTableChange: () => {},
-  handleOnSelect: () => {},
-  handleOnSelectAll: () => {},
-  hideSelectColumn: false
-};
-
-export default RemotePagination;
+export default Pagination;

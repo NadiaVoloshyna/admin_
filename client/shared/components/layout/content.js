@@ -1,15 +1,15 @@
 import React from 'react';
 import cx from 'classnames';
-import { string, bool, element } from 'prop-types';
+import { string, bool, oneOfType, arrayOf, node } from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
 
 const LayoutContent = (props) => {
   const {
     children,
-    className
+    className,
+    isLoading
   } = props;
 
-  const { isLoading } = props;
   const contentCX = cx('row flex-grow-1 page-content', className);
 
   return (
@@ -34,6 +34,7 @@ const LayoutContent = (props) => {
 
         .page-content-inner {
           position: relative;
+          padding: 24px;
         }
 
         .content-loader {
@@ -60,7 +61,10 @@ const LayoutContent = (props) => {
 LayoutContent.propTypes = {
   className: string,
   isLoading: bool,
-  children: element.isRequired
+  children: oneOfType([
+    arrayOf(node),
+    node
+  ]).isRequired,
 };
 
 LayoutContent.defaultProps = {

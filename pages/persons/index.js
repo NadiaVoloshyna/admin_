@@ -1,6 +1,5 @@
 import React from 'react';
 import { number } from 'prop-types';
-import { paginationState } from 'shared/state';
 import PersonsApi from 'pages/Persons/api';
 import PersonsPage from 'pages/Persons';
 import WithError from 'shared/components/withError';
@@ -13,15 +12,17 @@ const Persons = (props) => (
 );
 
 Persons.getInitialProps = async (ctx) => {
-  const { req } = ctx;
-  const { offset, searchTerm, sort } = paginationState;
+  const { req, query } = ctx;
 
   try {
-    const { data: { persons, pagination } } = await PersonsApi
+    const { data: { docs: persons, limit, total } } = await PersonsApi
       .setCookie(req)
-      .getPersons(offset, searchTerm, sort);
+      .getPersons(query);
 
-    return { persons, pagination: { offset, searchTerm, sort, ...pagination } };
+    return {
+      persons,
+      pages: Math.ceil(total / limit),
+    };
   } catch (error) {
     logger.error(error);
     return {

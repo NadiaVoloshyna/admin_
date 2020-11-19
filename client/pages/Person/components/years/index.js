@@ -72,15 +72,14 @@ const PersonYears = ({ canEdit, born, died }) => {
 };
 
 PersonYears.propTypes = {
-  canEdit: bool,
+  canEdit: bool.isRequired,
   born: string,
   died: string
 };
 
 PersonYears.defaultProps = {
-  canEdit: false,
-  born: string,
-  died: string
+  born: '',
+  died: ''
 };
 
 export default PersonYears;

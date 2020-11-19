@@ -1,8 +1,11 @@
 import ApiService from 'shared/api';
+import queryString from 'query-string';
 
 class UsersApi extends ApiService {
-  getUsers = (offset, searchTerm, sort) => {
-    return this.$http.get(`/api/users?offset=${offset}&searchTerm=${searchTerm}&sort=${sort}`);
+  getUsers = (args) => {
+    let query = queryString.stringify(args);
+    query = query ? `?${query}` : '';
+    return this.$http.get(`/api/users${query}`);
   }
 
   invite = (email = '', role = '') => {

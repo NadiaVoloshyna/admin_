@@ -19,7 +19,7 @@ Person.getInitialProps = async (ctx) => {
     const personReq = PersonAPI.setCookie(req).getPerson(query.id);
     const professionsReq = ProfessionsAPI.getAllProfessions();
     const { data: person } = await personReq;
-    const { data: { professions } } = await professionsReq;
+    const { data: { docs: professions } } = await professionsReq;
 
     return {
       person,

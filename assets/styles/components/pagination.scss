@@ -1,0 +1,10 @@
+$pagination-border-width: 0;
+$pagination-bg: transparent;
+$pagination-disabled-bg: transparent;
+$pagination-padding-x: 1rem;
+
+.page-item {
+  .page-link {
+    border-radius: 4px;
+  }
+}

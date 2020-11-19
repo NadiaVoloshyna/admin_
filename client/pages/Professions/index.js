@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
-import { shape, arrayOf } from 'prop-types';
+import { shape, arrayOf, number } from 'prop-types';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import { ERROR_MESSAGES, WARNING_MESSAGES, PAGE_NAMES } from 'shared/constants';
-import CreateDropdown from 'shared/components/createDropdown';
-import ProfessionsList from 'pages/Professions/components/professionsList';
 import ProfessionsAPI from 'pages/Professions/api';
-import { PaginationType, ProfessionType } from 'shared/prop-types';
+import { ProfessionType } from 'shared/prop-types';
 import { UserType } from 'common/prop-types/authorization/user';
+import SearchField from 'shared/components/searchField';
+import Pagination from 'shared/components/pagination';
+import Pager from 'shared/components/pager';
+import DataGrid from 'shared/components/dataGrid';
+import Filters from 'shared/components/filters';
+import CreateProfessionDrawer from './components/createProfessionDrawer';
+import dataGridColumns from './columns';
 
 const ProfessionsPage = (props) => {
+  const { user, professions, pages } = props;
   const handleError = useErrorHandler();
   const alert = useAlert();
+  const router = useRouter();
   const [ isLoading, setIsLoading ] = useState(false);
-  const [ professions, setProfessions ] = useState(props.professions);
-  const [ pagination, setPagination ] = useState(props.pagination);
 
   const createProfession = async (payload) => {
     setIsLoading(true);
-    const { value: name } = payload;
 
     try {
-      const { data: profession, status } = await ProfessionsAPI.create({ name });
+      const { status } = await ProfessionsAPI.create(payload);
 
       if (status === 201) {
-        setProfessions([ ...professions, profession ]);
+        await router.replace({
+          pathname: router.pathname,
+          query: router.query,
+        });
       }
 
       if (status === 409) {
@@ -39,26 +47,6 @@ const ProfessionsPage = (props) => {
     }
   };
 
-  const onProfessionGet = async (payload) => {
-    setIsLoading(true);
-
-    const newPagination = { ...pagination, ...payload };
-    const { offset, searchTerm, sort } = newPagination;
-
-    try {
-      const { data: { professions }, status } = await ProfessionsAPI.getProfessions(offset, searchTerm, sort);
-
-      if (status === 200) {
-        setProfessions(professions);
-        setPagination(newPagination);
-      }
-    } catch (error) {
-      handleError(error, ERROR_MESSAGES.PROFESSIONS_GET_PROFESSIONS);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const onProfessionDelete = async (records) => {
     setIsLoading(true);
 
@@ -66,7 +54,10 @@ const ProfessionsPage = (props) => {
 
     try {
       await ProfessionsAPI.deleteProfessions(ids);
-      setProfessions(professions.filter(profession => ids.indexOf(profession._id) === -1));
+      await router.replace({
+        pathname: router.pathname,
+        query: router.query,
+      });
     } catch (error) {
       handleError(error, ERROR_MESSAGES.PROFESSIONS_DELETE_PROFESSIONS);
     } finally {
@@ -81,27 +72,40 @@ const ProfessionsPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout activePage={PAGE_NAMES.PROFESSIONS} user={props.user}>
-        <Layout.Navbar className="mb-5">
-          <div className="row">
-            <div className="col-10 m-auto">
-              <CreateDropdown
-                onCreate={createProfession}
-                buttonText="Create Profession"
-                placeholder="Profession's name"
-              />
-            </div>
-          </div>
+      <Layout activePage={PAGE_NAMES.PROFESSIONS} user={user}>
+        <Layout.Navbar>
+          <h2>Professions</h2>
+
+          <div><SearchField /></div>
+
+          <CreateProfessionDrawer
+            onApply={createProfession}
+            canCreate={user.create('professions')}
+          />
         </Layout.Navbar>
 
-        <Layout.Content loading={isLoading}>
-          <ProfessionsList
-            professions={professions}
-            pagination={pagination}
-            onProfessionGet={onProfessionGet}
-            onProfessionDelete={onProfessionDelete}
+        <Layout.Content isLoading={isLoading}>
+          <div className="mb-4">
+            <Filters
+              items={{
+                all: 'All',
+                me: 'Created by me'
+              }}
+              name="createdBy"
+            />
+          </div>
+          <DataGrid
+            data={professions}
+            columns={dataGridColumns}
+            onDelete={onProfessionDelete}
           />
         </Layout.Content>
+
+        <Layout.Footer>
+          <Pager />
+
+          <Pagination pages={pages} />
+        </Layout.Footer>
       </Layout>
     </div>
   );
@@ -109,7 +113,7 @@ const ProfessionsPage = (props) => {
 
 ProfessionsPage.propTypes = {
   professions: arrayOf(shape(ProfessionType)).isRequired,
-  pagination: shape(PaginationType).isRequired,
+  pages: number.isRequired,
   user: shape(UserType).isRequired,
 };
 

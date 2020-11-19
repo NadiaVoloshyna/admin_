@@ -1,3 +1,5 @@
+const queryString = require('query-string');
+
 /**
  * Replace all the keys of `replacements` in `original` with their values
  *
@@ -74,4 +76,24 @@ exports.createPermissions = (permissions) => {
     }
     return acc;
   }, {});
+};
+
+/**
+ * Stringify filter to the url consumable string
+ * @param {Object} filter Filter object
+ */
+exports.stringifyFilters = (filter) => {
+  return queryString.stringify(filter, {
+    arrayFormat: 'comma',
+  });
+};
+
+/**
+ * Parse filter string to object string
+ * @param {String} filter Filter string
+ */
+exports.parseFilters = (filter) => {
+  return queryString.parse(filter, {
+    arrayFormat: 'comma',
+  });
 };
