@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import { func } from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ElipsisDropdownToggle = forwardRef(({ onClick }, ref) => (
   <>
@@ -13,7 +12,9 @@ const ElipsisDropdownToggle = forwardRef(({ onClick }, ref) => (
         onClick(e);
       }}
     >
-      <FontAwesomeIcon icon="ellipsis-v" />
+      <i className="material-icons">
+        more_vert
+      </i>
     </span>
     <style jsx>{`
       .toggle {

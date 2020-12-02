@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import { shape, arrayOf, object } from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _upperFirst from 'lodash/upperFirst';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
@@ -161,12 +160,13 @@ const PermissionsPage = ({ permissions: rawPermissions, user }) => {
                                 </div>
                               </td>
                             ))}
-                            <td>
-                              <FontAwesomeIcon
-                                icon="times"
-                                className="cur-pointer text-danger"
+                            <td className="d-flex align-items-center">
+                              <i
+                                className="material-icons cur-pointer text-danger"
                                 onClick={() => onPermissionRemove(item)}
-                              />
+                              >
+                                close
+                              </i>
                             </td>
                           </tr>
                         ))}
