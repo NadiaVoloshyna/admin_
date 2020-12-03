@@ -4,7 +4,6 @@ import cx from 'classnames';
 import _upperFirst from 'lodash/upperFirst';
 import _toLower from 'lodash/toLower';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Folder from './folder';
 import Image from './image';
 import Album from './album';
@@ -31,12 +30,12 @@ const availableAssets = {
   },
   ALBUM: {
     name: 'ALBUM',
-    icon: 'compact-disc',
+    icon: 'album',
     component: Album
   },
   AUDIO: {
     name: 'AUDIO',
-    icon: 'file-audio',
+    icon: 'audiotrack',
     component: Audio
   }
 };
@@ -103,8 +102,11 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes }) => {
                 key={item}
                 eventKey={item}
                 onSelect={(form) => onDropdownToggle(true, form)}
+                className="d-flex align-items-center"
               >
-                <FontAwesomeIcon icon={availableAssets[item].icon} className="mr-2" />
+                <i className="material-icons mr-2">
+                  {availableAssets[item].icon}
+                </i>
                 { _upperFirst(_toLower(item)) }
               </Dropdown.Item>
             );

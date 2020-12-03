@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { shape, object } from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import format from 'date-fns/format';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Collapse from 'react-bootstrap/Collapse';
@@ -26,12 +25,12 @@ const Activity = (props) => {
             <small>{ format(new Date(createdAt), 'LLL dd') }</small>
           </p>
           { hasContent && (
-            <FontAwesomeIcon
-              icon="sort-down"
-              size="lg"
-              className="cur-pointer"
+            <i
+              className="material-icons cur-pointer"
               onClick={() => setOpen(!open)}
-            />
+            >
+              arrow_drop_down
+            </i>
           )}
         </div>
       </div>
