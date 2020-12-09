@@ -7,15 +7,16 @@ $font-weight-light:           400 !important;
 $font-weight-normal:          500 !important;
 $font-weight-bold:            700 !important;
 
-$h1-font-size:                1.625rem  !important;  //26px
-$h2-font-size:                1.5rem !important;     //24px
-$h3-font-size:                1rem !important;       //16px
-$h4-font-size:                .875rem  !important;  //14px
-$h5-font-size:                .8125rem  !important; //13px
-$h6-font-size:                .75rem  !important;   //12px
+$h1-font-size:                1.75rem !important;    //28px
+$h2-font-size:                1.625rem  !important;  //26px
+$h3-font-size:                1.5rem !important;     //24px
+$h4-font-size:                1rem !important;       //16px
+$h5-font-size:                .875rem  !important;   //14px
+$h6-font-size:                .8125rem  !important;  //13px
 
-h1, h2, h3, h4 { font-weight: $font-weight-bold !important; }
-h5, h6 { font-weight: $font-weight-normal !important; }
+
+h1, h2, h3, h4, h5 { font-weight: $font-weight-bold !important; }
+h6 { font-weight: $font-weight-normal !important; }
 
 p {
   font-weight: $font-weight-normal;
