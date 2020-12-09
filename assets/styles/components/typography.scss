@@ -1,29 +1,23 @@
-$regular: 400;
-$medium: 500;
-$bold: 700;
+$small-font-size:             .75rem !important;
+$font-size-sm:                .812rem !important;
+$font-size-md:                1rem !important;
+$font-size-lg:                1.5rem;
 
-$size-sm-11: 11px;
-$size-sm-12: 12px;
-$size-sm: 13px;
-$size-base: 14px;
-$size-md: 16px;
-$size-lg: 24px;
-$size-lg-26: 26px;
-$size-lg-28: 28px;
+$font-weight-light:           400 !important;
+$font-weight-normal:          500 !important;
+$font-weight-bold:            700 !important;
 
-@mixin styleText($weight, $size) {
- font-weight: $weight !important;
- font-size: $size !important;
+$h1-font-size:                1.625rem  !important;  //26px
+$h2-font-size:                1.5rem !important;     //24px
+$h3-font-size:                1rem !important;       //16px
+$h4-font-size:                .875rem  !important;  //14px
+$h5-font-size:                .8125rem  !important; //13px
+$h6-font-size:                .75rem  !important;   //12px
+
+h1, h2, h3, h4 { font-weight: $font-weight-bold !important; }
+h5, h6 { font-weight: $font-weight-normal !important; }
+
+p {
+  font-weight: $font-weight-normal;
+  font-size: $font-size-md;
 }
-
-h1 { @include styleText($bold, $size-lg-28) }
-h2 { @include styleText($bold, $size-lg-26) }
-h3 { @include styleText($bold, $size-lg) }
-h4 { @include styleText($bold, $size-md) }
-h5 { @include styleText($bold, $size-base) }
-
-p { @include styleText($regular, $size-base) }
-
-.text-sm { @include styleText($regular, $size-sm-11) }
-.text-md { @include styleText($medium, $size-md ) }
-.text-lg { @include styleText($bold, $size-lg )}
