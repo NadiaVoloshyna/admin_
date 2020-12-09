@@ -1,7 +1,6 @@
 import React from 'react';
 import { shape, func, bool } from 'prop-types';
 import Card from 'react-bootstrap/Card';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { applyTransformations, isOfType, getAssetMetadata } from '../helpers';
 import Draggable from './draggable';
 import Droppable from './droppable';
@@ -38,7 +37,6 @@ const Asset = (props) => {
           className={`asset asset-${type.toLowerCase()}`}
           onClick={onClick}
         >
-
           { (isImage || isAlbum)
             && (
             <Card.Img
@@ -49,7 +47,12 @@ const Asset = (props) => {
 
           <Card.Body>
             <div className="d-flex align-items-center">
-              <FontAwesomeIcon icon={getAssetMetadata(type).icon} size="lg" className="mr-2 text-muted" />
+              <i
+                className="material-icons mr-2 text-muted"
+                icon={getAssetMetadata(type).icon}
+              >
+                folder
+              </i>
               <Card.Text className="text-truncate"><small>{ name }</small></Card.Text>
             </div>
 
