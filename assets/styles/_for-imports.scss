@@ -1,0 +1,12 @@
+/**
+* Import this file if you need variables in your components
+*/
+
+/* Helpers */
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "./mixins.scss";
+
+/* Variables */
+@import "./variables-bs-overrides.scss";
+@import "./variables.scss";

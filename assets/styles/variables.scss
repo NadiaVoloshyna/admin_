@@ -1,32 +1,9 @@
-$web-font-path: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap';
-@import url($web-font-path);
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+/**
+  ONLY CUSTOM VARIABLES HERE!!!
+  BS VARIABLES HAVE TO BE OVVERIDDEN IN variables-bs-overrides.scss
+*/
 
 $font-family-sans-serif: 'Roboto', sans-serif;
-$font-family-base:       $font-family-sans-serif !default;
-
-$white:    #FFFFFF !default;
-$gray-100: #F4F4F4 !default;
-$gray-300: #E4E4E4 !default;
-$gray-400: #d2d2d2 !default;
-$gray-500: #A5A5A5 !default;
-$gray-600: #6A6A6A !default;
-$gray-700: #363636 !default;
-$gray-900: #292929 !default;
-
-$purple:  #8A6FF7 !default;
-$warning: #FF9736 !default;
-$yellow:  #FEE662 !default;
-$success: #27AE60 !default;
-$teal:    #59CC89 !default;
-$info:    #61C5F0 !default;
-$danger:  #FF4040 !default;
-
-$link-color: $gray-700;
-
-$body-bg: $gray-400;
-$body-color: $gray-500;
-$font-size-base: .875rem;
 
 $status-in-progress:      #D1E2E7;
 $status-in-review:        #FED808;
@@ -34,19 +11,26 @@ $status-ready-to-publish: #4A8FE2;
 $status-published:        #7DD31F;
 
 $transparent: transparent;
-
-$theme-colors: (
-  "primary":    $success,
-  "secondary":  $purple,
-  "success":    $success,
-  "info":       $info,
-  "warning":    $warning,
-  "yellow":     $yellow,
-  "danger":     $danger,
-  "light":      $gray-100,
-  "dark":       $gray-700,
-  "gray":       $gray-300,
-);
+$hover-background: $gray-700;
 
 $component-active-color: $gray-700;
 $component-active-bg: $gray-300;
+
+/* Alerts */
+$alert-font-size: 16px;
+$alert-font-weight: 400;
+
+/* Buttons */
+$btn-min-width: 168px;
+$btn-hover-border: $hover-background;
+$btn-color-secondary: transparent;
+$btn-disabled: $gray-300;
+
+/* Checkbox */
+$checkmark: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALCAYAAABPhbxiAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACeSURBVHgBlZDBDcIwDEW/CyuwAuLYEbIDEmdPQt1NOCOhjFBG4MgQnDk2ja2mqqpGbSxFtmM/+8tAgbmOcfHsNKa9UO0Zf0Ao4B4I7bEQajSvehCVQtG33+tDKk2S7r2QbT17bkJAp34J5iADVe9YkDmscQ6yP5P6YomXsqboJQ3KQRO4hKdiBlI7pOD3/LxPt5riKLcFrZpu1rfVNwCvs1ObxZMHTwAAAABJRU5ErkJggg==';
+$input-border-size: .063rem;
+
+/* Switch */
+$switch-bg-normal: $gray-500;
+$switch-bg-hover: $gray-700;
+$switch-thumb-bg: $white;
