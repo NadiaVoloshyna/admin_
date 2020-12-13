@@ -1,7 +1,3 @@
-$switch-bg-normal: $gray-500;
-$switch-bg-hover: $gray-700;
-$switch-thumb-bg: $white;
-
 .custom-switch {
   .custom-control-input {
     &:checked ~ .custom-control-label::before {
