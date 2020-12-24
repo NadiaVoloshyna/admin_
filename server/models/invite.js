@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { USER_ROLES } = require('../constants');
+const { USER_ROLES } = require('../../common/constants');
 
 const ROLES = Object.values(USER_ROLES);
 

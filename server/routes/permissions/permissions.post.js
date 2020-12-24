@@ -1,5 +1,5 @@
 const { body } = require('express-validator');
-const { USER_ROLES } = require('../../constants');
+const { USER_ROLES } = require('../../../common/constants');
 const Permissions = require('../../models/permissions');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 

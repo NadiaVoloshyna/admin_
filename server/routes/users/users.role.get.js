@@ -1,6 +1,6 @@
 const { query } = require('express-validator');
 const User = require('../../models/user');
-const { USER_ROLES } = require('../../constants');
+const { USER_ROLES } = require('../../../common/constants');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {

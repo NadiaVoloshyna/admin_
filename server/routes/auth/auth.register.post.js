@@ -5,7 +5,8 @@ const User = require('../../models/user');
 const GoogleApi = require('../../services/google');
 const isExpiredInvitation = require('../../helpers/isExpiredInvitation');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
-const { GOOGLE_USER_ROLES, USER_ROLES } = require('../../constants');
+const { USER_ROLES } = require('../../../common/constants');
+const { GOOGLE_USER_ROLES } = require('../../constants');
 const { logger } = require('../../services/gcp/logger');
 
 module.exports = (router) => {

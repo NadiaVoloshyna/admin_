@@ -3,7 +3,7 @@ const cryptoRandomString = require('crypto-random-string');
 const User = require('../../models/user');
 const Invite = require('../../models/invite');
 const mailer = require('../../services/mailer');
-const { USER_ROLES } = require('../../constants');
+const { USER_ROLES } = require('../../../common/constants');
 const { template, subject } = require('../../services/mailer/templates/inviteUser');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
