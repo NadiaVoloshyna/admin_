@@ -24,7 +24,7 @@ const SearchField = () => {
       type="search"
       placeholder="Search"
       onChange={onSearchChange}
-      value={searchTerm}
+      defaultValue={searchTerm}
     />
   );
 };
