@@ -5,5 +5,6 @@ require('./users.invite.post')(router);
 require('./users.[id].put')(router);
 require('./users.[id].roles.patch')(router);
 require('./users.get')(router);
+require('./users.[id].get')(router);
 
 module.exports = router;
