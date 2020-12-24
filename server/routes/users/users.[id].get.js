@@ -4,7 +4,7 @@ const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 module.exports = (router) => {
   router.get('/:id', [
-    param('id').isMongoId().isBoolean()
+    param('id').isMongoId()
   ], handle400, async (req, res) => {
     try {
       const user = await User.findById({ _id: req.params.id });
