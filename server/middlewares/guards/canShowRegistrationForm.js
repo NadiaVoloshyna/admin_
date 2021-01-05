@@ -13,20 +13,25 @@ module.exports = async (req, res, next) => {
   const { token } = req.query;
   let invitation;
 
-  // Get the invite
+  if (!token || token.length !== 32) {
+    return res.redirect('/auth/login');
+  }
+
   try {
     invitation = await Invite.findOne({ token });
 
+    // Check if invitation exist
     if (!invitation) {
       throw new Error('Invalid invitation');
     }
-  } catch (error) {
-    return next(error);
-  }
 
-  // Check invite expiration
-  if (isExpiredInvitation(invitation.created)) {
-    return next(new Error('Invitation is expired'));
+    // Check invite expiration
+    if (isExpiredInvitation(invitation.created)) {
+      throw new Error('Invitation is expired');
+    }
+  } catch (error) {
+    res.locals.statusCode = 403;
+    res.locals.errorMessage = error.message;
   }
 
   next();
