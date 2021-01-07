@@ -1,12 +1,12 @@
 import React from 'react';
-import { number, shape } from 'prop-types';
+import { number, shape, string } from 'prop-types';
 import Error from 'next/error';
 
 const WithError = (props) => {
-  const { children, statusCode } = props;
+  const { children, statusCode, errorMessage } = props;
 
   if (statusCode) {
-    return <Error statusCode={statusCode} />;
+    return <Error statusCode={statusCode} title={errorMessage} />;
   }
 
   return children;
@@ -14,6 +14,7 @@ const WithError = (props) => {
 
 WithError.propTypes = {
   statusCode: number,
+  errorMessage: string,
   children: shape({}).isRequired
 };
 
