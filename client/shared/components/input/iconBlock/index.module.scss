@@ -1,0 +1,29 @@
+@import 'assets/styles/_for-imports.scss';
+
+.large {
+  padding: calc( (#{$input-height-lg} - 24px)/2 ) 16px !important;
+}
+
+.icon {
+  padding: calc( (#{$input-height} - 24px)/2 ) 16px;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+}
+
+.lg {
+  @extend .large;
+}
+
+.prepend {
+  @extend .icon;
+  left: 0px;
+}
+
+.append {
+  @extend .icon;
+  right: 0px;
+}

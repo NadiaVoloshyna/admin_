@@ -1,17 +1,10 @@
-.form-control {
+@import 'assets/styles/_for-imports.scss';
+
+/* Global Custom Input Styles */
+input.form-control,
+textarea.form-control {
   &:focus {
-    color: $input-focus-color;
-    background-color: $input-focus-bg !important;
-    border-color: $input-focus-border-color;
     outline: 0;
     box-shadow: none !important;
   }
-
-  &.is-invalid {
-    color: theme-color("danger");
-  }
-}
-
-@each $state, $data in $form-validation-states {
-  @include form-validation-state-ua($state, map-get($data, color));
 }
