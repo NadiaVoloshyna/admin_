@@ -1,36 +1,38 @@
 import React from 'react';
-import { string } from 'prop-types';
+import classnames from 'classnames';
+import { func, oneOf, string } from 'prop-types';
 import { Image } from 'react-bootstrap';
 
-import './index.module.scss';
+import styles from './index.module.scss';
 
-const Avatar = ({ size, img }) => {
-  function renderAvatar(imgSrc) {
-    if (imgSrc) {
-      return (
-        <Image src={imgSrc} roundedCircle />
-      );
-    }
-    return (
-      <div className="empty" />
-    );
-  }
+const Avatar = ({ size, src, onEdit }) => {
+  const classes = classnames(
+    styles.avatar,
+    styles[size],
+    onEdit && styles.edit
+  );
+
+  const onClick = (src) => {
+    onEdit && onEdit(src);
+  };
 
   return (
-    <div className={`avatar ${size}`}>
-      {renderAvatar(img)}
+    <div className={classes} onClick={onClick}>
+      { src && <Image src={src} roundedCircle /> }
+      <i className="material-icons">insert_photo</i>
     </div>
   );
 };
 
 Avatar.propTypes = {
-  size: string,
-  img: string
+  size: oneOf(['sm', 'md', 'lg']),
+  src: string.isRequired,
+  onEdit: func,
 };
 
 Avatar.defaultProps = {
   size: 'md',
-  img: 'default'
+  onEdit: null,
 };
 
 export default Avatar;
