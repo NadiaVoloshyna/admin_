@@ -1,7 +1,9 @@
 import React from 'react';
 import _debounce from 'lodash/debounce';
-import Form from 'react-bootstrap/Form';
 import useListDataFetch from 'shared/hooks/useListDataFetch';
+import Input from 'shared/components/input';
+
+import styles from './index.module.scss';
 
 const SearchField = () => {
   const { addQueryParams, removeQueryParam, getQueryParams } = useListDataFetch();
@@ -20,11 +22,16 @@ const SearchField = () => {
   const onSearchChange = (event) => debouncedSearch(event.target.value);
 
   return (
-    <Form.Control
+    <Input
       type="search"
+      className={styles.searchField}
       placeholder="Search"
       onChange={onSearchChange}
       defaultValue={searchTerm}
+      size="lg"
+      prepend={{
+        icon: 'search'
+      }}
     />
   );
 };
