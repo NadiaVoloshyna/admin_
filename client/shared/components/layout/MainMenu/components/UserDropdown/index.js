@@ -4,9 +4,8 @@ import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { UserType } from 'common/prop-types/authorization/user';
 import ChangeRoleModal from 'shared/components/changeRoleModal';
+import Avatar from 'shared/components/avatar';
 import MenuItem from '../MenuItem';
-
-import styles from './index.module.scss';
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <>
@@ -33,7 +32,7 @@ const UserDropdown = (props) => {
   const toggleIsModalOpen = () => setIsOpen(!isChangeRoleModalOpen);
 
   return (
-    <div className={styles.nav}>
+    <div>
       <Dropdown>
         <Dropdown.Toggle as={CustomToggle}>
           <MenuItem
@@ -41,7 +40,9 @@ const UserDropdown = (props) => {
             hovered={false}
             variant="user"
           >
-            <div className={`${styles.avatar} rounded-circle`} />
+            <Avatar src={'https://i2.wp.com/digital-photography-school.com/wp-content/uploads'
+            + '/2011/07/outdoor-portraits-1.jpg?resize=100%2C100'}
+            />
           </MenuItem>
         </Dropdown.Toggle>
 
