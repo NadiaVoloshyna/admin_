@@ -1,30 +1,19 @@
 import React from 'react';
 import { oneOfType, arrayOf, node, func } from 'prop-types';
+import styles from './index.module.scss';
 
 const DrawerHeader = (props) => {
   const { children, onClose } = props;
 
   return (
     <>
-      <div className="drawer-header">
-        <h4>{ children }</h4>
+      <div className={styles['drawer-header']}>
+        <h3 className="h3">{ children }</h3>
         <i
           className="material-icons cur-pointer"
           onClick={() => onClose(false)}
         >close</i>
       </div>
-
-      <style jsx>{`
-        .drawer-header {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          min-height: 88px;
-          padding: 24px;
-          background: white;
-        }
-      `}</style>
     </>
   );
 };

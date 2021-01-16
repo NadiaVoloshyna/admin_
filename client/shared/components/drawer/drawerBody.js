@@ -1,28 +1,15 @@
 import React from 'react';
 import classnames from 'classnames';
 import { oneOfType, arrayOf, node, bool } from 'prop-types';
+import styles from './index.module.scss';
 
 const DrawerBody = (props) => {
   const { children, noPadding } = props;
-  const classNames = classnames('drawer-body', noPadding && 'drawer-body__no-padding');
+  const classNames = classnames(styles['drawer-body'], noPadding && styles['drawer-body__no-padding']);
 
   return (
     <>
       <div className={classNames}>{ children }</div>
-
-      <style jsx>{`
-        .drawer-body {
-          width: 100%;
-          height: 100%;
-          padding: 24px;
-          overflow: scroll;
-          background-color: #f4f4f4; // TODO: change to variable
-        }
-
-        .drawer-body__no-padding {
-          padding: 0;
-        }
-      `}</style>
     </>
   );
 };
