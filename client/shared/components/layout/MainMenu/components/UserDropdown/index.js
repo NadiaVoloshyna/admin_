@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { object, func, shape, arrayOf } from 'prop-types';
+import { oneOfType, func, shape, element, elementType } from 'prop-types';
 import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { UserType } from 'common/prop-types/authorization/user';
@@ -22,7 +22,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 ));
 
 CustomToggle.propTypes = {
-  children: arrayOf(object).isRequired,
+  children: oneOfType([element, elementType]).isRequired,
   onClick: func.isRequired
 };
 

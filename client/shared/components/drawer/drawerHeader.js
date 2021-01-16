@@ -35,7 +35,11 @@ DrawerHeader.propTypes = {
     node
   ]).isRequired,
 
-  onClose: func.isRequired,
+  onClose: func,
+};
+
+DrawerHeader.defaultProps = {
+  onClose: () => {},
 };
 
 export default DrawerHeader;

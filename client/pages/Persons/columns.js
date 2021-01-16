@@ -32,6 +32,7 @@ export default [{
   formatter: 'badge',
   sort: true,
 }, {
+  dataField: '',
   text: '',
   isDummyField: true,
   formatter: 'settings',

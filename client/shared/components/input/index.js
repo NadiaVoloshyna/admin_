@@ -44,30 +44,31 @@ const UAInput = (props) => {
 
   return (
     <div className={styles.ua_input_container}>
-      <IconBlock
-        onClick={onIconClick}
-        icon={prepend.icon}
-        variant="prepend"
-        size={size}
-      />
+      { prepend.icon && (
+        <IconBlock
+          onClick={onIconClick}
+          icon={prepend.icon}
+          variant="prepend"
+          size={size}
+        />
+      )}
+
       <FormControl
         {...inputProps}
         size={size}
         className={inputClasses}
       />
-      <IconBlock
-        onClick={onIconClick}
-        icon={append.icon}
-        variant="append"
-        size={size}
-      />
+
+      { append.icon && (
+        <IconBlock
+          onClick={onIconClick}
+          icon={append.icon}
+          variant="append"
+          size={size}
+        />
+      )}
     </div>
   );
-};
-
-const iconActionsDefault = {
-  icon: undefined,
-  action: () => {},
 };
 
 UAInput.propTypes = {
@@ -75,11 +76,11 @@ UAInput.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   append: PropTypes.shape({
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.string,
     action: PropTypes.func,
   }),
   prepend: PropTypes.shape({
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.string,
     action: PropTypes.func,
   }),
 };
@@ -88,8 +89,12 @@ UAInput.defaultProps = {
   size: 'md',
   disabled: false,
   className: '',
-  append: { ...iconActionsDefault },
-  prepend: { ...iconActionsDefault },
+  append: {
+    action: () => {},
+  },
+  prepend: {
+    action: () => {},
+  },
 };
 
 export default UAInput;

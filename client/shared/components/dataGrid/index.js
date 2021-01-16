@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { arrayOf, object, shape, string } from 'prop-types';
+import { arrayOf, object, shape, func } from 'prop-types';
 import BootstrapTable from 'react-bootstrap-table-next';
 import useListDataFetch from 'shared/hooks/useListDataFetch';
 import { TableColumnType } from '../../prop-types';
@@ -108,12 +108,12 @@ const DataGrid = (props) => {
 DataGrid.propTypes = {
   data: arrayOf(object),
   columns: arrayOf(shape(TableColumnType)).isRequired,
-  rowClasses: string,
+  rowClasses: func,
 };
 
 DataGrid.defaultProps = {
   data: [],
-  rowClasses: '',
+  rowClasses: () => {},
 };
 
 export default DataGrid;

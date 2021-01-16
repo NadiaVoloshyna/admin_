@@ -14,7 +14,12 @@ export const Person = {
   portrait: string,
   rootAssetId: string.isRequired,
   professions: arrayOf(shape({
-    profession: string,
+    profession: shape({
+      created: string,
+      createdBy: string,
+      name: string,
+      _id: string,
+    }),
     active: bool.isRequired,
     media: arrayOf(string),
   })),

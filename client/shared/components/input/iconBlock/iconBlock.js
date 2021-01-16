@@ -4,8 +4,6 @@ import cx from 'classnames';
 import styles from './index.module.scss';
 
 export const IconBlock = ({ onClick, icon, variant, size }) => {
-  if (!icon) return null;
-
   const classes = cx(
     styles[variant],
     styles[size],
@@ -22,9 +20,9 @@ export const IconBlock = ({ onClick, icon, variant, size }) => {
 
 IconBlock.propTypes = {
   icon: string.isRequired,
-  variant: oneOf('prepend', 'append').isRequired,
+  variant: oneOf(['prepend', 'append']).isRequired,
   onClick: func,
-  size: oneOf('sm', 'md', 'lg'),
+  size: oneOf(['sm', 'md', 'lg']),
 };
 
 IconBlock.defaultProps = {
