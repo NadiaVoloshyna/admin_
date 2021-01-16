@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { shape, arrayOf, number } from 'prop-types';
 import Head from 'next/head';
+import { shape, arrayOf, number } from 'prop-types';
+import { useRouter } from 'next/router';
 import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
@@ -23,6 +24,7 @@ const UsersPage = (props) => {
 
   const [ isLoading, setIsLoading ] = useState(false);
   const alert = useAlert();
+  const router = useRouter();
   const handleError = useErrorHandler();
 
   const inviteUser = async (payload) => {
@@ -54,6 +56,17 @@ const UsersPage = (props) => {
   //     .catch(error => handleError(error, ERROR_MESSAGES.USERS_EDIT_USER))
   //     .finally(() => setIsLoading(false));
   // };
+
+  const rowEvents = {
+    onClick: (e, row) => {
+      if (!user.read('user')) return;
+
+      router.push({
+        pathname: '/users/[id]',
+        query: { id: row._id },
+      });
+    },
+  };
 
   const setRowClasses = (row) => {
     return row.active ? '' : 'inactive';
@@ -98,6 +111,7 @@ const UsersPage = (props) => {
             data={users}
             columns={columns}
             rowClasses={setRowClasses}
+            rowEvents={rowEvents}
           />
         </Layout.Content>
 

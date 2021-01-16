@@ -1,38 +1,44 @@
 import React from 'react';
-import { string } from 'prop-types';
-import Head from 'next/head';
-import Layout from 'shared/components/layout';
+import { number } from 'prop-types';
+import UserAPI from 'pages/User/api';
+import UserPage from 'pages/User';
+import WithError from 'shared/components/withError';
+import logger from 'utils/logger';
 
-function UserProfile({ id }) {
-  return (
-    <div className="users-page">
-      <Head>
-        <title>Users</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const User = (props) => (
+  <WithError statusCode={props.statusCode}>
+    <UserPage {...props} />
+  </WithError>
+);
 
-      <Layout activePage="UserProfile">
-        <Layout.Navbar />
+User.getInitialProps = async (ctx) => {
+  const { query, req } = ctx;
 
-        <Layout.Content>
-          <div>
-            <div>{ id }</div>
-          </div>
-        </Layout.Content>
-      </Layout>
-    </div>
-  );
-}
+  if (req && req.user && req.user.id === query.id) {
+    return {
+      currentUser: req.user
+    };
+  }
 
-UserProfile.getInitialProps = (ctx) => {
-  const { query } = ctx;
-  return {
-    id: query.id
-  };
+  try {
+    const { data } = await UserAPI.getUser(query.id);
+    return {
+      currentUser: data
+    };
+  } catch (error) {
+    logger.error(error);
+    return {
+      statusCode: (error.response && error.response.status) || 500
+    };
+  }
 };
 
-UserProfile.propTypes = {
-  id: string.isRequired
+User.propTypes = {
+  statusCode: number
 };
 
-export default UserProfile;
+User.defaultProps = {
+  statusCode: null
+};
+
+export default User;

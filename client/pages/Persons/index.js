@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { shape, arrayOf, number } from 'prop-types';
 import Head from 'next/head';
+import { shape, arrayOf, number } from 'prop-types';
+import { useRouter } from 'next/router';
 import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import { ERROR_MESSAGES, PAGE_NAMES } from 'shared/constants';
@@ -17,6 +18,7 @@ import columns from './columns';
 
 const PersonsPage = ({ user, persons, pages }) => {
   const handleError = useErrorHandler();
+  const router = useRouter();
   const [ isLoading, setIsLoading ] = useState(false);
   const [ isPersonExist, setIsPersonExist ] = useState(false);
   const [ duplicate, setDuplicate ] = useState({});
@@ -69,6 +71,17 @@ const PersonsPage = ({ user, persons, pages }) => {
     }
   };
 
+  const rowEvents = {
+    onClick: (e, row) => {
+      if (!user.read('user')) return;
+
+      router.push({
+        pathname: '/persons/[id]',
+        query: { id: row._id },
+      });
+    },
+  };
+
   return (
     <div>
       <Head>
@@ -108,6 +121,7 @@ const PersonsPage = ({ user, persons, pages }) => {
             data={persons}
             columns={columns}
             onDelete={onDelete}
+            rowEvents={rowEvents}
           />
         </Layout.Content>
 
