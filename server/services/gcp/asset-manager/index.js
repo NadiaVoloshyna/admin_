@@ -1,14 +1,10 @@
 const { Storage } = require('@google-cloud/storage');
 const cryptoRandomString = require('crypto-random-string');
 
-class AssetStorageManager {
-  fileCacheMaxAge = 60 * 60 * 24 * 365;
-
-  storage;
-
-  bucket;
-
+class AssetManager {
   constructor() {
+    this.fileCacheMaxAge = 60 * 60 * 24 * 365;
+
     this.getStorage();
     this.getBucket();
   }
@@ -59,4 +55,4 @@ class AssetStorageManager {
   }
 }
 
-module.exports = new AssetStorageManager();
+module.exports = new AssetManager();

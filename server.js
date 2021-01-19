@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
 const password = require('passport');
 const next = require('next');
 const { logger, auditLogger } = require('./server/services/gcp/logger');
@@ -28,6 +29,15 @@ app.prepare().then(() => {
     saveUninitialized: false
   };
 
+  const multerMiddleware = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+      // no larger than 5mb.
+      fileSize: 5 * 1024 * 1024,
+    },
+  });
+
+  server.use(multerMiddleware.single('file'));
   server.use(cookieParser('secret'));
   server.use(session(sessionConfig));
 

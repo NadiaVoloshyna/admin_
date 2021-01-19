@@ -1,26 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Head from 'next/head';
 import { shape } from 'prop-types';
 import { UserType } from 'common/prop-types/authorization/user';
-import Head from 'next/head';
-import { PAGE_NAMES } from 'shared/constants';
+import useErrorHandler from 'shared/hooks/useErrorHandler';
+import { ERROR_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import Layout from 'shared/components/layout';
+import UserApi from './api';
 import UserInfo from './components/userInfo';
+import UploadDrawer from './components/uploadDrawer';
 
 // _app.js will replace user prop with currently logged in user
 // so we use currentUser to pass user from HOC. Confusing, right :)
-const UserPage = ({ user, currentUser }) => {
+const UserPage = (props) => {
+  const { user } = props;
+  const [ currentUser, setUser ] = useState(props.currentUser);
+  const [ isDrawerOpen, setIsDrawerOpen ] = useState(false);
+  const handleError = useErrorHandler();
+
   const {
     fullName,
   } = currentUser;
 
-  const onEdit = (image) => {
-    console.log(image);
+  const canEdit = user._id === currentUser._id;
+
+  const onEdit = canEdit
+    ? () => setIsDrawerOpen(true)
+    : null;
+
+  const onUpload = async (file) => {
+    try {
+      await UserApi.update(currentUser._id, {
+        image: file
+      });
+
+      setUser({
+        ...currentUser,
+        image: file,
+      });
+    } catch (error) {
+      handleError(error, ERROR_MESSAGES.USERS_EDIT_USER);
+    }
   };
 
   return (
     <div>
       <Head>
-        <title>Users</title>
+        <title>User Profile</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -36,6 +61,12 @@ const UserPage = ({ user, currentUser }) => {
           />
         </Layout.Content>
       </Layout>
+
+      <UploadDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        onUpload={onUpload}
+      />
     </div>
   );
 };
