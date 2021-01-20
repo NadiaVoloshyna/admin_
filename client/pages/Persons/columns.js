@@ -1,7 +1,6 @@
 export default [{
   dataField: 'name',
   text: 'Title',
-  formatter: 'link', // TODO: figure out link url
   editable: false,
   sort: true,
 }, {

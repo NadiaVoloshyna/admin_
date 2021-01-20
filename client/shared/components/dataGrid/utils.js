@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import Badge from 'react-bootstrap/Badge';
 import format from 'date-fns/format';
 import TextFormatter from './formatters/text';
@@ -56,14 +55,6 @@ export const badgeFormatter = (cell) => {
 
   return <Badge variant={status.variant}>{ status.displayName }</Badge>;
 };
-
-// TODO: figure out link url
-export const linkFormatter = (cell, row) => (
-  <Link href={`/persons/${row._id}`}>
-    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-    <a>{ cell }</a>
-  </Link>
-);
 
 export const textFormatter = (text) => {
   if (!text) return null;

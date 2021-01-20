@@ -19,7 +19,8 @@ const Avatar = ({ size, src, onEdit }) => {
   return (
     <div className={classes} onClick={onClick}>
       { src && <Image src={src} roundedCircle /> }
-      <i className="material-icons">insert_photo</i>
+      <i className="material-icons photo">insert_photo</i>
+      <i className="material-icons pencil shadow-sm">create</i>
     </div>
   );
 };
