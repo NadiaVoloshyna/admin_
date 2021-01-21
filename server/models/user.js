@@ -41,6 +41,9 @@ const userSchema = mongoose.Schema({
     //   unique: true
     // }
   },
+  image: {
+    type: String
+  }
 }, {
   toObject: { virtuals: true }
 });

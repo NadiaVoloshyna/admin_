@@ -4,6 +4,7 @@ const usersRoutes = require('./users');
 const professionsRoutes = require('./professions');
 const permissionsRoutes = require('./permissions');
 const assetsRoutes = require('./assets');
+const filesRoutes = require('./files');
 const logsRoutes = require('./_log');
 
 // Middlewares
@@ -18,6 +19,7 @@ module.exports = (app) => {
   app.use('/api/professions', errorHandlers, professionsRoutes);
   app.use('/api/assets', errorHandlers, assetsRoutes);
   app.use('/api/permissions', errorHandlers, permissionsRoutes);
+  app.use('/api/files', errorHandlers, filesRoutes);
 
   // Platform routes
   app.use('/api/__log__', errorHandlers, logsRoutes);

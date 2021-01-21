@@ -5,10 +5,13 @@ const DrivePermission = require('../../models/drivePermission');
 const GoogleApi = require('../../services/google');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
+// TODO: add permissions check. This one should be simple.
+// Check if active and if logged in user is the user we are trying to update
 module.exports = (router) => {
   router.put('/:id', [
     param('id').isMongoId(),
-    body('active').if(body('active').exists()).isBoolean()
+    body('active').if(body('active').exists()).isBoolean(),
+    body('image').if(body('image').exists()).isString().escape(),
   ], handle400, async (req, res) => {
     const query = {
       _id: req.params.id
@@ -28,10 +31,12 @@ module.exports = (router) => {
     };
 
     const updateBody = constructBody(req.body, [
-      'active'
+      'active',
+      'image'
     ]);
 
     // If not active remove all drive permissions
+    // TODO: think about moving this logic into seperate API
     if (req.body.active === 'false') {
       const permissions = await DrivePermission.find({ user: user._id });
 

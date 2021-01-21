@@ -12,7 +12,8 @@ const UserInfo = ({ user, onEdit }) => {
     role,
     email,
     createdAt,
-    createdBy
+    createdBy,
+    image,
   } = user;
 
   let status = 'Active';
@@ -28,8 +29,7 @@ const UserInfo = ({ user, onEdit }) => {
       <div className="col-2">
         <Avatar
           size="lg"
-          src={'https://i2.wp.com/digital-photography-school.com/wp-content/uploads'
-            + '/2011/07/outdoor-portraits-1.jpg?resize=100%2C100'}
+          image={image}
           onEdit={onEdit}
         />
       </div>
