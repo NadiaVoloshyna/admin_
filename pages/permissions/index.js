@@ -4,9 +4,14 @@ import PermissionsPage from 'pages/Permissions';
 import WithError from 'shared/components/withError';
 import PermissionsAPI from 'pages/Permissions/api';
 import logger from 'utils/logger';
+import Head from 'next/head';
 
 const Permissions = (props) => (
   <WithError statusCode={props.statusCode}>
+    <Head>
+      <title>Permissions</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <PermissionsPage {...props} />
   </WithError>
 );

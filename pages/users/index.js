@@ -4,9 +4,14 @@ import UserAPI from 'pages/Users/api';
 import UsersPage from 'pages/Users';
 import WithError from 'shared/components/withError';
 import logger from 'utils/logger';
+import Head from 'next/head';
 
 const Users = (props) => (
   <WithError statusCode={props.statusCode}>
+    <Head>
+      <title>Users</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <UsersPage {...props} />
   </WithError>
 );

@@ -4,7 +4,6 @@ import _unescape from 'lodash/unescape';
 import { Form } from 'react-final-form';
 import { useAlert } from 'react-alert';
 import arrayMutators from 'final-form-arrays';
-import Head from 'next/head';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES, PAGE_NAMES } from 'shared/constants';
@@ -157,12 +156,6 @@ const PersonPage = (props) => {
 
   return (
     <div>
-      <Head>
-        <title>Post</title>
-        <link rel="icon" href="/favicon.ico" />
-        <script src="https://media-library.cloudinary.com/global/all.js" defer />
-      </Head>
-
       <Layout activePage={PAGE_NAMES.PERSON} user={user}>
         <Form
           onSubmit={onPersonSave}

@@ -5,9 +5,15 @@ import ProfessionsAPI from 'pages/Professions/api';
 import PersonPage from 'pages/Person';
 import WithError from 'shared/components/withError';
 import logger from 'utils/logger';
+import Head from 'next/head';
 
 const Person = (props) => (
   <WithError statusCode={props.statusCode}>
+    <Head>
+      <title>Post</title>
+      <link rel="icon" href="/favicon.ico" />
+      <script src="https://media-library.cloudinary.com/global/all.js" defer />
+    </Head>
     <PersonPage {...props} />
   </WithError>
 );

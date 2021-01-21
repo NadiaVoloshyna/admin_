@@ -4,9 +4,14 @@ import ProfessionsPage from 'pages/Professions';
 import ProfessionsAPI from 'pages/Professions/api';
 import logger from 'utils/logger';
 import WithError from 'shared/components/withError';
+import Head from 'next/head';
 
 const Professions = (props) => (
   <WithError statusCode={props.statusCode}>
+    <Head>
+      <title>Professions</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <ProfessionsPage {...props} />
   </WithError>
 );

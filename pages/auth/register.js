@@ -2,9 +2,14 @@ import React from 'react';
 import RegisterPage from 'pages/Auth/Register';
 import WithError from 'shared/components/withError';
 import { number, string } from 'prop-types';
+import { Head } from 'next/head';
 
 const Register = (props) => (
   <WithError statusCode={props.statusCode} errorMessage={props.errorMessage}>
+    <Head>
+      <title>Register</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <RegisterPage {...props} />
   </WithError>
 );

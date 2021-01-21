@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Head from 'next/head';
 import { shape, arrayOf, object } from 'prop-types';
 import _upperFirst from 'lodash/upperFirst';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
@@ -99,11 +98,6 @@ const PermissionsPage = ({ permissions: rawPermissions, user }) => {
 
   return (
     <>
-      <Head>
-        <title>Permissions</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Layout activePage={PAGE_NAMES.PERMISSIONS} user={user}>
         <Layout.Navbar className="mb-3">
           <Button type="button" onClick={() => setIsDrawerOpen(true)}>

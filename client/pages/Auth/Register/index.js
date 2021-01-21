@@ -1,6 +1,5 @@
 import React from 'react';
 import { string } from 'prop-types';
-import Head from 'next/head';
 import Form from 'react-bootstrap/Form';
 import { Form as FinalForm, Field } from 'react-final-form';
 import Button from 'react-bootstrap/Button';
@@ -36,11 +35,6 @@ const RegisterPage = (props) => {
 
   return (
     <div className="register-page">
-      <Head>
-        <title>Register</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <FinalForm
         onSubmit={(values) => onSubmit(values)}
         validate={validator}
