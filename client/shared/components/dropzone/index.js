@@ -57,8 +57,7 @@ const Dropzone = forwardRef((props, ref) => {
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()} className={`img-thumbnail ${styles.preview}`} style={previewStyles}>
             <input {...getInputProps()} />
-            {/* { !!files.length && thumbnails } */}
-            <p>Пепетягніть файл сюди або накисніть щоб вибрати файл</p>
+            <p>Пепетягніть файл сюди або натисніть щоб вибрати файл</p>
           </div>
         )}
       </ReactDropzone>
