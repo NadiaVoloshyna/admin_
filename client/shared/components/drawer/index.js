@@ -6,6 +6,10 @@ import DrawerHeader from './drawerHeader';
 import DrawerFooter from './drawerFooter';
 import DrawerBody from './drawerBody';
 
+import styles from './index.module.scss';
+import drawerTransitions from './transitions/drawer.module.scss';
+import backdropTransitions from './transitions/backdrop.module.scss';
+
 const Drawer = (props) => {
   const { children, open, onClose, backdropClose } = props;
 
@@ -27,94 +31,23 @@ const Drawer = (props) => {
       <CSSTransition
         in={open}
         timeout={300}
-        classNames="drawer"
+        classNames={drawerTransitions}
         unmountOnExit
       >
-        <div className="drawer">{ clonedChildren }</div>
+        <div className={styles.drawer}>{ clonedChildren }</div>
       </CSSTransition>
 
       <CSSTransition
         in={open}
         timeout={300}
-        classNames="drawer-backdrop"
+        classNames={backdropTransitions}
         unmountOnExit
       >
         <div
-          className="drawer-backdrop"
+          className={styles['drawer-backdrop']}
           onClick={onBackdropClick}
         />
       </CSSTransition>
-
-      <style jsx>{`
-        .drawer {
-          position: fixed;
-          top: 0;
-          right: -360px;
-          width: 360px;
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          background: #E4E4E4;
-          z-index: 200;
-        }
-
-        .drawer-enter {
-          transform: translateX(0);
-        }
-
-        .drawer-enter-active {
-          transform: translateX(-360px);
-          transition: transform 300ms ease-in-out;
-        }
-
-        .drawer.drawer-enter-done {
-          right: 0;
-        }
-
-        .drawer-exit {
-          transform: translateX(-360px);
-        }
-
-        .drawer-exit-active {
-          transform: translateX(0);
-          transition: transform 300ms ease-in-out;
-        }
-
-        .drawer-backdrop {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          content: ' ';
-          background: #000;
-          opacity: 0;
-          z-index: 199;
-        }
-
-        .drawer-backdrop-enter {
-          opacity: 0;
-        }
-
-        .drawer-backdrop-enter-active {
-          opacity: .1;
-          transition: opacity 300ms ease-in-out;
-        }
-        
-        .drawer-backdrop-enter-done {
-          opacity: .1;
-        }
-
-        .drawer-backdrop-exit {
-          opacity: .1;
-        }
-
-        .drawer-backdrop-exit-active {
-          opacity: 0;
-          transition: opacity 300ms ease-in-out;
-        }
-      `}</style>
     </>
   );
 };
