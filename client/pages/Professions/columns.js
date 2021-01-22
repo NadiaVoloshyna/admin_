@@ -14,6 +14,7 @@ export default [{
   text: 'Created by',
   editable: false,
   sort: true,
+  formatter: 'user'
 }, {
   dataField: 'created',
   text: 'Date of creation',

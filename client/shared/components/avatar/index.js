@@ -8,11 +8,12 @@ import styles from './index.module.scss';
 // TODO: this has to be moved into config
 const IMAGE_URL = 'https://storage.googleapis.com/ukrainian-assets/';
 
-const Avatar = ({ size, image, onEdit }) => {
+const Avatar = ({ size, image, onEdit, className }) => {
   const classes = classnames(
     styles.avatar,
     styles[size],
-    onEdit && styles.edit
+    onEdit && styles.edit,
+    className
   );
 
   const onClick = (src) => {
@@ -34,11 +35,13 @@ Avatar.propTypes = {
   size: oneOf(['sm', 'md', 'lg']),
   image: string.isRequired,
   onEdit: func,
+  className: string,
 };
 
 Avatar.defaultProps = {
   size: 'md',
   onEdit: null,
+  className: '',
 };
 
 export default Avatar;
