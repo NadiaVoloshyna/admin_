@@ -25,6 +25,7 @@ export default [{
   editable: false,
   formatter: 'status',
 }, {
+  dataField: '',
   text: '',
   isDummyField: true,
   formatter: 'settings'

@@ -21,6 +21,7 @@ export default [{
   sort: true,
   formatter: 'date',
 }, {
+  dataField: '',
   text: '',
   isDummyField: true,
   formatter: 'settings',
