@@ -1,11 +1,11 @@
 import React from 'react';
+import Head from 'next/head';
 import { number } from 'prop-types';
 import PersonAPI from 'pages/Person/api';
 import ProfessionsAPI from 'pages/Professions/api';
 import PersonPage from 'pages/Person';
 import WithError from 'shared/components/withError';
 import logger from 'utils/logger';
-import Head from 'next/head';
 
 const Person = (props) => (
   <WithError statusCode={props.statusCode}>

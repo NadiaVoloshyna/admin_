@@ -1,8 +1,8 @@
 import React from 'react';
+import Head from 'next/head';
 import { number } from 'prop-types';
 import HomePage from 'pages/Home';
 import WithError from 'shared/components/withError';
-import Head from 'next/head';
 
 const Home = (props) => (
   <WithError statusCode={props.statusCode}>

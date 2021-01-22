@@ -1,10 +1,10 @@
 import React from 'react';
+import Head from 'next/head';
 import { number } from 'prop-types';
 import PermissionsPage from 'pages/Permissions';
 import WithError from 'shared/components/withError';
 import PermissionsAPI from 'pages/Permissions/api';
 import logger from 'utils/logger';
-import Head from 'next/head';
 
 const Permissions = (props) => (
   <WithError statusCode={props.statusCode}>

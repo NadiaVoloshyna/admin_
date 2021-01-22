@@ -1,10 +1,10 @@
 import React from 'react';
+import Head from 'next/head';
 import { number } from 'prop-types';
 import ProfessionsPage from 'pages/Professions';
 import ProfessionsAPI from 'pages/Professions/api';
 import logger from 'utils/logger';
 import WithError from 'shared/components/withError';
-import Head from 'next/head';
 
 const Professions = (props) => (
   <WithError statusCode={props.statusCode}>
