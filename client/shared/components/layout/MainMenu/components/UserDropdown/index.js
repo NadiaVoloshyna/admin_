@@ -40,9 +40,7 @@ const UserDropdown = (props) => {
             hovered={false}
             variant="user"
           >
-            <Avatar src={'https://i2.wp.com/digital-photography-school.com/wp-content/uploads'
-            + '/2011/07/outdoor-portraits-1.jpg?resize=100%2C100'}
-            />
+            <Avatar />
           </MenuItem>
         </Dropdown.Toggle>
 

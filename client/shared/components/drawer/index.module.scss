@@ -1,0 +1,58 @@
+@import 'assets/styles/_for-imports.scss';
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 360px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #E4E4E4;
+  z-index: 200;
+}
+
+.drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  content: ' ';
+  background: #000;
+  opacity: 0;
+  z-index: 199;
+}
+
+.drawer-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 88px;
+  padding: 24px;
+  background: white;
+}
+
+.drawer-body {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  overflow: scroll;
+  background-color: $gray-100;
+}
+
+.drawer-body__no-padding {
+  padding: 0;
+}
+
+.drawer-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+  padding: 24px;
+  background: white;
+}

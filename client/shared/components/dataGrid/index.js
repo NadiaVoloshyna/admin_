@@ -8,7 +8,7 @@ import * as utils from './utils';
 const { checkboxRenderer, sortingConfig } = utils;
 
 const DataGrid = (props) => {
-  const { data, rowClasses } = props;
+  const { data, rowClasses, rowEvents } = props;
   const [ selectedRecords, setSelectedRecords ] = useState([]);
 
   // eslint-disable-next-line
@@ -69,6 +69,7 @@ const DataGrid = (props) => {
         onTableChange={onTableChange}
         defaultSorted={[defaultSorted]}
         rowClasses={rowClasses}
+        rowEvents={rowEvents}
       />
 
       <style global jsx>{`
@@ -109,11 +110,13 @@ DataGrid.propTypes = {
   data: arrayOf(object),
   columns: arrayOf(shape(TableColumnType)).isRequired,
   rowClasses: func,
+  rowEvents: shape,
 };
 
 DataGrid.defaultProps = {
   data: [],
   rowClasses: () => {},
+  rowEvents: {},
 };
 
 export default DataGrid;

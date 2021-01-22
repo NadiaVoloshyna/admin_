@@ -5,16 +5,25 @@
   background-color: $gray-500;
   position: relative;
 
-  :global .material-icons {
+  img {
+    width: 100%;
+  }
+
+  :global .photo {
+    display: none;
+  }
+
+  :global .pencil {
     display: none;
   }
 }
 
 .edit {
   color: $white;
+  cursor: pointer;
   
-  :global .material-icons {
-    font-size: 18px;
+  :global .photo {
+    font-size: 24px;
     display: none;
     position: absolute;
     left: 50%;
@@ -23,9 +32,24 @@
   }
 
   &:hover {
-    :global .material-icons {
+    :global .photo {
       display: block;
     }
+  }
+
+  :global .pencil {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    background-color: $white;
+    color: $gray-500;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

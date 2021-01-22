@@ -48,7 +48,7 @@ const InviteUserDrawer = ({ onApply, canInviteAdmin }) => {
                     className="form-control"
                   />
 
-                  <p>Select the role</p>
+                  <p className="mt-4">Select the role</p>
 
                   <ListGroup>
                     { roles.map((item) => {
