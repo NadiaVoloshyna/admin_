@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { shape, arrayOf, number } from 'prop-types';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
@@ -67,11 +66,6 @@ const ProfessionsPage = (props) => {
 
   return (
     <div>
-      <Head>
-        <title>Professions</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Layout activePage={PAGE_NAMES.PROFESSIONS} user={user}>
         <Layout.Navbar>
           <h2>Professions</h2>

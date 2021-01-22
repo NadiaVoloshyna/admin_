@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { number } from 'prop-types';
 import ProfessionsPage from 'pages/Professions';
 import ProfessionsAPI from 'pages/Professions/api';
@@ -7,6 +8,10 @@ import WithError from 'shared/components/withError';
 
 const Professions = (props) => (
   <WithError statusCode={props.statusCode}>
+    <Head>
+      <title>Professions</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <ProfessionsPage {...props} />
   </WithError>
 );

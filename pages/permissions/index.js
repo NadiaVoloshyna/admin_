@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { number } from 'prop-types';
 import PermissionsPage from 'pages/Permissions';
 import WithError from 'shared/components/withError';
@@ -7,6 +8,10 @@ import logger from 'utils/logger';
 
 const Permissions = (props) => (
   <WithError statusCode={props.statusCode}>
+    <Head>
+      <title>Permissions</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <PermissionsPage {...props} />
   </WithError>
 );

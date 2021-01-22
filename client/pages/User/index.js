@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Head from 'next/head';
 import { shape } from 'prop-types';
 import { UserType } from 'common/prop-types/authorization/user';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
@@ -44,11 +43,6 @@ const UserPage = (props) => {
 
   return (
     <div>
-      <Head>
-        <title>User Profile</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Layout activePage={PAGE_NAMES.PROFILE} user={user}>
         <Layout.Navbar className="mb-3">
           <h3>{ fullName }</h3>

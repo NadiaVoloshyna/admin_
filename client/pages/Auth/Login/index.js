@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
 import Form from 'react-bootstrap/Form';
 import { Form as FinalForm, Field } from 'react-final-form';
@@ -44,11 +43,6 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
-      <Head>
-        <title>Login</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <FinalForm
         onSubmit={(values) => onSubmit(values)}
         render={({ handleSubmit }) => {

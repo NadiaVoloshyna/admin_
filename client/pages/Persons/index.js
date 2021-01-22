@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Head from 'next/head';
 import { shape, arrayOf, number } from 'prop-types';
 import { useRouter } from 'next/router';
 import Layout from 'shared/components/layout';
@@ -84,11 +83,6 @@ const PersonsPage = ({ user, persons, pages }) => {
 
   return (
     <div>
-      <Head>
-        <title>Persons</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Layout activePage={PAGE_NAMES.PERSONS} user={user}>
         <Layout.Navbar>
           <h2>Persons</h2>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Head from 'next/head';
 import { shape } from 'prop-types';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import Layout from 'shared/components/layout';
@@ -64,13 +63,6 @@ const LibraryPage = ({ user }) => {
 
   return (
     <>
-      <Head>
-        <title>Media Library</title>
-        <link rel="icon" href="/favicon.ico" />
-        <script src="https://media-library.cloudinary.com/global/all.js" defer />
-        <script src="https://widget.cloudinary.com/v2.0/global/all.js" defer />
-      </Head>
-
       <Layout activePage={PAGE_NAMES.LIBRARY} user={user}>
         <Layout.Navbar className="mb-3">
           { user.create('assets')

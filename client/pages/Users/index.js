@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Head from 'next/head';
 import { shape, arrayOf, number } from 'prop-types';
 import { useRouter } from 'next/router';
 import { useAlert } from 'react-alert';
@@ -74,11 +73,6 @@ const UsersPage = (props) => {
 
   return (
     <>
-      <Head>
-        <title>Users</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Layout activePage={PAGE_NAMES.USERS} user={user}>
         <Layout.Navbar>
           <h2>Users</h2>

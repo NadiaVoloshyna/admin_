@@ -1,5 +1,4 @@
 import React from 'react';
-import Head from 'next/head';
 import { shape } from 'prop-types';
 import Layout from 'shared/components/layout';
 import { UserType } from 'common/prop-types/authorization/user';
@@ -7,11 +6,6 @@ import { PAGE_NAMES } from 'shared/constants';
 
 const HomePage = ({ user }) => (
   <div>
-    <Head>
-      <title>Home</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-
     <Layout activePage={PAGE_NAMES.DASHBOARD} user={user}>
       <Layout.Navbar>
         Home

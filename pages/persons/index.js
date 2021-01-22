@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { number } from 'prop-types';
 import PersonsApi from 'pages/Persons/api';
 import PersonsPage from 'pages/Persons';
@@ -7,6 +8,10 @@ import logger from 'utils/logger';
 
 const Persons = (props) => (
   <WithError statusCode={props.statusCode}>
+    <Head>
+      <title>Persons</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <PersonsPage {...props} />
   </WithError>
 );

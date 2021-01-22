@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { number } from 'prop-types';
 import PersonAPI from 'pages/Person/api';
 import ProfessionsAPI from 'pages/Professions/api';
@@ -8,6 +9,11 @@ import logger from 'utils/logger';
 
 const Person = (props) => (
   <WithError statusCode={props.statusCode}>
+    <Head>
+      <title>Post</title>
+      <link rel="icon" href="/favicon.ico" />
+      <script src="https://media-library.cloudinary.com/global/all.js" defer />
+    </Head>
     <PersonPage {...props} />
   </WithError>
 );
