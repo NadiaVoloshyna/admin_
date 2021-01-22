@@ -6,7 +6,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { Form, Field } from 'react-final-form';
 import Drawer from 'shared/components/drawer';
 import { USER_ROLES } from 'common/constants';
-import styles from './index.module.scss';
 
 const roles = Object.values(USER_ROLES).filter(item => item !== USER_ROLES.SUPER);
 
@@ -49,7 +48,7 @@ const InviteUserDrawer = ({ onApply, canInviteAdmin }) => {
                     className="form-control"
                   />
 
-                  <p className={styles['group-title']}>Select the role</p>
+                  <p className="mt-4">Select the role</p>
 
                   <ListGroup>
                     { roles.map((item) => {

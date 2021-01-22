@@ -6,6 +6,10 @@ import DrawerHeader from './drawerHeader';
 import DrawerFooter from './drawerFooter';
 import DrawerBody from './drawerBody';
 
+import styles from './index.module.scss';
+import drawerTransitions from './transitions/drawer.module.scss';
+import backdropTransitions from './transitions/backdrop.module.scss';
+
 const Drawer = (props) => {
   const { children, open, onClose, backdropClose } = props;
 
@@ -27,20 +31,20 @@ const Drawer = (props) => {
       <CSSTransition
         in={open}
         timeout={300}
-        classNames="drawer"
+        classNames={drawerTransitions}
         unmountOnExit
       >
-        <div className="drawer">{ clonedChildren }</div>
+        <div className={styles.drawer}>{ clonedChildren }</div>
       </CSSTransition>
 
       <CSSTransition
         in={open}
         timeout={300}
-        classNames="drawer-backdrop"
+        classNames={backdropTransitions}
         unmountOnExit
       >
         <div
-          className="drawer-backdrop"
+          className={styles['drawer-backdrop']}
           onClick={onBackdropClick}
         />
       </CSSTransition>
