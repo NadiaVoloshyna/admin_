@@ -1,6 +1,7 @@
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import format from 'date-fns/format';
+import Avatar from 'shared/components/avatar';
 import TextFormatter from './formatters/text';
 
 const statuses = {
@@ -77,6 +78,19 @@ export const usersFormatter = (cell) => {
       { users.map(item => (
         <div key={item}>{item} <br /></div>
       )) }
+    </div>
+  );
+};
+
+export const userFormatter = (name, cell) => {
+  return (
+    <div className="d-flex align-items-center">
+      <Avatar
+        size="sm"
+        image={cell.image}
+        className="mr-3"
+      />
+      <div>{name}</div>
     </div>
   );
 };

@@ -3,6 +3,7 @@ export default [{
   text: 'Name',
   editable: false,
   sort: true,
+  formatter: 'user',
 }, {
   dataField: 'role',
   text: 'Role',
