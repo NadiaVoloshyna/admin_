@@ -1,0 +1,34 @@
+@import 'assets/styles/_for-imports.scss';
+
+.header {
+  position: relative;
+  display: flex;
+  flex: 1;
+  padding: 0 0 8px 40px;
+  border: none;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  left: 2px;
+  font-size: 20px;
+  color: $orange;
+}
+
+.body {
+  padding: 0 0 0 40px;
+  font-size: $font-size-sm;
+  color: rgba($gray-700, .5);
+}
+
+.footer {
+  display: flex;
+  flex: 1;
+  padding: 24px 0 0 40px;
+  border: none;
+}
+
+.button {
+  min-width: 72px;
+}
