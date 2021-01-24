@@ -89,8 +89,8 @@ const UAPrompt = ({
       titleContent={
         titleContent && (
           <>
-            {icon || <i className={cx(styles.icon, 'material-icons')}>info</i>}
-            {titleContent}
+            {icon || <i className={cx(styles.icon, 'material-icons')}>error_outline</i>}
+            <h4>{titleContent}</h4>
           </>
         )
       }
