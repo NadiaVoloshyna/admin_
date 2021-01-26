@@ -23,7 +23,8 @@
     }
   },
   "rules": {
-    "comma-dangle": "off",
+    "comma-dangle": ["error", "always-multiline"],
+    "eol-last": ["error", "always"],
     "object-curly-newline": "off",
     "consistent-return": "off",
     "import/prefer-default-export": "off",
