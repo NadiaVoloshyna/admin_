@@ -30,12 +30,12 @@ LayoutNavbar.propTypes = {
   className: string,
   children: oneOfType([
     arrayOf(node),
-    node
+    node,
   ]).isRequired,
 };
 
 LayoutNavbar.defaultProps = {
-  className: ''
+  className: '',
 };
 
 export default LayoutNavbar;

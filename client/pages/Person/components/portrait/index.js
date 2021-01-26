@@ -57,7 +57,7 @@ const PersonPortrait = () => {
 };
 
 PersonPortrait.propTypes = {
-  input: shape(object).isRequired
+  input: shape(object).isRequired,
 };
 
 export default PersonPortrait;

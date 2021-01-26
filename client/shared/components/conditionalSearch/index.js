@@ -17,12 +17,12 @@ const CustomToggle = React.forwardRef(({ onChange, onClick, value }, ref) => (
 CustomToggle.propTypes = {
   onChange: func.isRequired,
   onClick: func,
-  value: string
+  value: string,
 };
 
 CustomToggle.defaultProps = {
   onClick: () => {},
-  value: ''
+  value: '',
 };
 
 const ConditionalSearch = (props) => {
@@ -85,7 +85,7 @@ const ConditionalSearch = (props) => {
 };
 
 ConditionalSearch.propTypes = {
-  onSearch: func.isRequired
+  onSearch: func.isRequired,
 };
 
 export default ConditionalSearch;

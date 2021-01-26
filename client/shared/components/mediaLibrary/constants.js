@@ -14,5 +14,5 @@ export const ASSETS_CONFIG = {
   AUDIO: {
     name: 'AUDIO',
     icon: 'file-audio',
-  }
+  },
 };

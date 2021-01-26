@@ -7,8 +7,8 @@ class FilesApi extends ApiService {
 
     return this.$http.post('/api/files', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+        'Content-Type': 'multipart/form-data',
+      },
     });
   }
 }

@@ -8,7 +8,7 @@ const validators = [
   query('offset').if(query('offset').exists()).escape().isNumeric(),
   query('limit').if(query('limit').exists()).escape().isNumeric(),
   query('sort').if(query('sort').exists()).escape().isIn(
-    createSortVarints('name', 'description', 'createdBy', 'created')
+    createSortVarints('name', 'description', 'createdBy', 'created'),
   ),
   query('createdBy').if(query('createdBy').exists()).escape().isIn(['me']),
 ];
@@ -21,7 +21,7 @@ module.exports = (router) => {
     try {
       const { query, options } = createQueryForPagination({
         user: req.user,
-        query: req.query
+        query: req.query,
       });
       const response = await Profession.paginate(query, options);
 

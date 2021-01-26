@@ -30,7 +30,7 @@ const ElipsisDropdownToggle = forwardRef(({ onClick }, ref) => (
 ));
 
 ElipsisDropdownToggle.propTypes = {
-  onClick: func.isRequired
+  onClick: func.isRequired,
 };
 
 export default ElipsisDropdownToggle;

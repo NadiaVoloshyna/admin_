@@ -71,7 +71,7 @@ ChangeRoleModal.propTypes = {
   show: bool.isRequired,
   toggleShow: func.isRequired,
   userId: string.isRequired,
-  userRole: oneOf(Object.values(USER_ROLES)).isRequired
+  userRole: oneOf(Object.values(USER_ROLES)).isRequired,
 };
 
 export default ChangeRoleModal;

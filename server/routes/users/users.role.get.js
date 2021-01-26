@@ -7,8 +7,8 @@ module.exports = (router) => {
   router.get('/role', [
     query('role').isIn([
       USER_ROLES.AUTHOR,
-      USER_ROLES.REVIEWER
-    ])
+      USER_ROLES.REVIEWER,
+    ]),
   ], handle400, async (req, res) => {
     const { role } = req.query;
 

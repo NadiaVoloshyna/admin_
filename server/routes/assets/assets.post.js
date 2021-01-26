@@ -24,7 +24,7 @@ module.exports = (router) => {
       url,
       author,
       year,
-      description
+      description,
     } = req.body;
 
     // 1. Get current user
@@ -40,7 +40,7 @@ module.exports = (router) => {
         author,
         year,
         description,
-        createdBy: userId
+        createdBy: userId,
       }).save();
 
       res.status(302).send(asset);

@@ -15,7 +15,7 @@ const ProfessionSectionBody = ({ input, rootFolder, onRemove }) => {
   const onSelect = (assets) => {
     onChange({
       ...value,
-      media: assets
+      media: assets,
     });
   };
 

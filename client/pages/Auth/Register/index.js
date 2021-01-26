@@ -20,7 +20,7 @@ const RegisterPage = (props) => {
         lastName,
         email,
         password,
-        token
+        token,
       });
 
       if (response.status === 302) {
@@ -163,7 +163,7 @@ const RegisterPage = (props) => {
 };
 
 RegisterPage.propTypes = {
-  token: string.isRequired
+  token: string.isRequired,
 };
 
 export default RegisterPage;

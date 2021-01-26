@@ -46,12 +46,12 @@ const ActionsMenu = (props) => {
 
 ActionsMenu.propTypes = {
   onDelete: func,
-  canDelete: bool
+  canDelete: bool,
 };
 
 ActionsMenu.defaultProps = {
   onDelete: () => {},
-  canDelete: false
+  canDelete: false,
 };
 
 export default ActionsMenu;

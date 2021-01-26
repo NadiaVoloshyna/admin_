@@ -30,14 +30,14 @@ module.exports = (router) => {
         await References.updateOne(
           { dependent: portraitId },
           { dependent: portraitId, dependOn: id },
-          { new: true, upsert: true }
+          { new: true, upsert: true },
         );
       }
 
       await Person.findOneAndUpdate(
         { _id: id },
         { $set: updates },
-        { hookMeta: getHooksContext(req) }
+        { hookMeta: getHooksContext(req) },
       );
     } catch (error) {
       return req.handle500(error);

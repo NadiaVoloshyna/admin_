@@ -13,5 +13,5 @@ const deserializeUser = (user) => {
 };
 
 module.exports = {
-  deserializeUser
+  deserializeUser,
 };

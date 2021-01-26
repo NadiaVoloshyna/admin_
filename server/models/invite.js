@@ -6,22 +6,22 @@ const ROLES = Object.values(USER_ROLES);
 const schema = new mongoose.Schema({
   email: {
     type: String,
-    required: true
+    required: true,
   },
   created: {
     type: Date,
     required: true,
-    default: Date.now
+    default: Date.now,
   },
   role: {
     type: String,
     required: true,
-    enum: ROLES
+    enum: ROLES,
   },
   token: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Invite', schema, 'invite');

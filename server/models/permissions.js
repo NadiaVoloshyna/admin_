@@ -8,7 +8,7 @@ const schema = mongoose.Schema({
   role: {
     type: String,
     required: true,
-    enum: ROLES
+    enum: ROLES,
   },
   permitted: {
     type: Boolean,
@@ -26,7 +26,7 @@ const schema = mongoose.Schema({
   attributes: {
     type: Array,
     default: [],
-  }
+  },
 });
 
 module.exports = mongoose.model('Permissions', schema, 'permissions');

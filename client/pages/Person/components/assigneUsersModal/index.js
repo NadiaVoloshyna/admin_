@@ -89,12 +89,12 @@ AssigneUsersModal.propTypes = {
   as: elementType,
   onUsersGet: func.isRequired,
   users: arrayOf(shape(UsersType)),
-  setPermission: func.isRequired
+  setPermission: func.isRequired,
 };
 
 AssigneUsersModal.defaultProps = {
   as: null,
-  users: []
+  users: [],
 };
 
 export default AssigneUsersModal;

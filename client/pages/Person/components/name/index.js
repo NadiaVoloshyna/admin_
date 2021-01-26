@@ -31,11 +31,11 @@ const PersonName = ({ canEdit }) => {
 };
 
 PersonName.propTypes = {
-  canEdit: bool
+  canEdit: bool,
 };
 
 PersonName.defaultProps = {
-  canEdit: false
+  canEdit: false,
 };
 
 export default PersonName;

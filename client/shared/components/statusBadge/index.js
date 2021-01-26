@@ -8,7 +8,7 @@ const StatusBadge = ({ status, className }) => {
   const classNames = cx(
     'status-badge',
     className,
-    _kebabCase(status)
+    _kebabCase(status),
   );
   const text = status.replace(/_/g, ' ');
 
@@ -53,11 +53,11 @@ const StatusBadge = ({ status, className }) => {
 
 StatusBadge.propTypes = {
   status: string.isRequired,
-  className: string
+  className: string,
 };
 
 StatusBadge.defaultProps = {
-  className: ''
+  className: '',
 };
 
 export default StatusBadge;

@@ -39,7 +39,7 @@ const UAInput = (props) => {
     styles.ua_input,
     prepend.icon && styles.hasprepend,
     append.icon && styles.hasappend,
-    className
+    className,
   );
 
   return (

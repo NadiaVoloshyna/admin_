@@ -31,17 +31,17 @@ Persons.getInitialProps = async (ctx) => {
   } catch (error) {
     logger.error(error);
     return {
-      statusCode: (error.response && error.response.status) || 500
+      statusCode: (error.response && error.response.status) || 500,
     };
   }
 };
 
 Persons.propTypes = {
-  statusCode: number
+  statusCode: number,
 };
 
 Persons.defaultProps = {
-  statusCode: null
+  statusCode: null,
 };
 
 export default Persons;

@@ -13,8 +13,8 @@ class AssetManager {
     this.storage = new Storage({
       credentials: {
         client_email: process.env.GOOGLE_STORAGE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_STORAGE_CLIENT_PRIVATE_KEY
-      }
+        private_key: process.env.GOOGLE_STORAGE_CLIENT_PRIVATE_KEY,
+      },
     });
   }
 
@@ -35,7 +35,7 @@ class AssetManager {
     const objectName = cryptoRandomString({ length: 35 });
     const options = {
       cacheControl: `public, max-age=${this.fileCacheMaxAge}`,
-      contentType
+      contentType,
     };
 
     const file = this.bucket.file(objectName);

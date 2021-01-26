@@ -7,7 +7,7 @@ module.exports = (router) => {
   * Get assets
   */
   router.get('/', [
-    query('parent').if(query('parent').exists()).isMongoId()
+    query('parent').if(query('parent').exists()).isMongoId(),
   ], handle400, async (req, res) => {
     const { parent } = req.query;
     const query = parent

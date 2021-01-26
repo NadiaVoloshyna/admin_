@@ -33,7 +33,7 @@ const ActionsPanel = () => {
             options={filters}
             onChange={onChange}
             styles={{
-              control: styles => ({ ...styles, borderRadius: '0 4px 4px 0' })
+              control: styles => ({ ...styles, borderRadius: '0 4px 4px 0' }),
             }}
           />
         </InputGroup>

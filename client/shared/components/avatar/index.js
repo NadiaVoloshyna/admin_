@@ -13,7 +13,7 @@ const Avatar = ({ size, image, onEdit, className }) => {
     styles.avatar,
     styles[size],
     onEdit && styles.edit,
-    className
+    className,
   );
 
   const onClick = (src) => {

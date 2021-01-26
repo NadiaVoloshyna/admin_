@@ -29,7 +29,7 @@ const UserPage = (props) => {
   const onUpload = async (file) => {
     try {
       await UserApi.update(currentUser._id, {
-        image: file
+        image: file,
       });
 
       setUser({

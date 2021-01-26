@@ -11,7 +11,7 @@ const AddPermissionDrawer = (props) => {
     permissions,
     isOpen,
     setIsOpen,
-    onAdd
+    onAdd,
   } = props;
 
   const [resource, setResource] = useState(null);

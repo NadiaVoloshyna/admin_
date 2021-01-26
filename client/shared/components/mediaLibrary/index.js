@@ -92,7 +92,7 @@ MediaLibrary.propTypes = {
   canDelete: bool,
   isDragDrop: bool,
   isUploadBoxOpen: bool,
-  root: shape(AssetType)
+  root: shape(AssetType),
 };
 
 MediaLibrary.defaultProps = {
@@ -101,7 +101,7 @@ MediaLibrary.defaultProps = {
   canDelete: false,
   isDragDrop: false,
   isUploadBoxOpen: false,
-  root: undefined
+  root: undefined,
 };
 
 export default MediaLibrary;

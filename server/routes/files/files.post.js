@@ -7,11 +7,11 @@ module.exports = (router) => {
     try {
       const image = await AssetsManager.upload(
         req.file.buffer,
-        req.file.mimetype
+        req.file.mimetype,
       );
 
       res.status(302).send({
-        file: image.objectName
+        file: image.objectName,
       });
     } catch (error) {
       return req.handle500(error);

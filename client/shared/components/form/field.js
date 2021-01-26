@@ -5,7 +5,7 @@ import { Field } from 'react-final-form';
 
 const FIELD_TYPES = {
   TEXT: 'text',
-  TEXTAREA: 'textarea'
+  TEXTAREA: 'textarea',
 };
 
 const FormField = (props) => {
@@ -14,7 +14,7 @@ const FormField = (props) => {
     validate,
     placeholder,
     type,
-    rows
+    rows,
   } = props;
 
   return (
@@ -59,14 +59,14 @@ FormField.propTypes = {
   validate: func,
   placeholder: string,
   type: oneOf(Object.values(FIELD_TYPES)),
-  rows: number
+  rows: number,
 };
 
 FormField.defaultProps = {
   validate: null,
   placeholder: '',
   type: FIELD_TYPES.TEXT,
-  rows: 3
+  rows: 3,
 };
 
 export default FormField;

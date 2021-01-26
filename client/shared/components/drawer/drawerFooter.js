@@ -15,8 +15,8 @@ const DrawerFooter = (props) => {
 DrawerFooter.propTypes = {
   children: oneOfType([
     arrayOf(node),
-    node
-  ]).isRequired
+    node,
+  ]).isRequired,
 };
 
 export default DrawerFooter;

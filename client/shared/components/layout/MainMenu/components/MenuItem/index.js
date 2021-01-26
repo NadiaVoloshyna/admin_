@@ -25,7 +25,7 @@ const MenuItem = ({ children, text, hovered, active, variant }) => {
 MenuItem.propTypes = {
   children: oneOfType([
     arrayOf(node),
-    node
+    node,
   ]).isRequired,
   text: string.isRequired,
   hovered: bool,

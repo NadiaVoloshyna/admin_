@@ -9,12 +9,12 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    dropDups: true
+    dropDups: true,
   },
   created: {
     type: Date,
     required: true,
-    default: Date.now
+    default: Date.now,
   },
   createdBy: {
     type: ObjectId,

@@ -18,8 +18,8 @@ module.exports = (message, code) => {
       code,
       details: messages.map(message => ({
         code,
-        message
-      }))
-    }
+        message,
+      })),
+    },
   };
 };

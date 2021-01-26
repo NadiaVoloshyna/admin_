@@ -23,7 +23,7 @@ const Folder = ({ onSubmit }) => {
             setValue('');
             onSubmit({
               name: value,
-              type: ASSET_TYPES.FOLDER
+              type: ASSET_TYPES.FOLDER,
             });
           }}
         >Create</Button>
@@ -33,7 +33,7 @@ const Folder = ({ onSubmit }) => {
 };
 
 Folder.propTypes = {
-  onSubmit: func.isRequired
+  onSubmit: func.isRequired,
 };
 
 export default Folder;

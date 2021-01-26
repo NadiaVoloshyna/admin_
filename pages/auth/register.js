@@ -27,13 +27,13 @@ Register.getInitialProps = (ctx) => {
 Register.propTypes = {
   statusCode: number,
   errorMessage: string,
-  token: string
+  token: string,
 };
 
 Register.defaultProps = {
   statusCode: null,
   errorMessage: null,
-  token: ''
+  token: '',
 };
 
 export default Register;

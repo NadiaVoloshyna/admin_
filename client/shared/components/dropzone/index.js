@@ -12,7 +12,7 @@ const Dropzone = forwardRef((props, ref) => {
 
   const onDrop = (acceptedFiles) => {
     setFiles(acceptedFiles.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file)
+      preview: URL.createObjectURL(file),
     })));
   };
 
@@ -40,11 +40,11 @@ const Dropzone = forwardRef((props, ref) => {
   // Provide public api
   useImperativeHandle(ref, () => ({
     upload: onUpload,
-    revokePreview
+    revokePreview,
   }));
 
   const previewStyles = {
-    backgroundSize: '312px auto'
+    backgroundSize: '312px auto',
   };
 
   if (files.length) {

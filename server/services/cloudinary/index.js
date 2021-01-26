@@ -4,7 +4,7 @@ const request = require('request');
 const config = {
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key:    process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET
+  api_secret: process.env.CLOUDINARY_SECRET,
 };
 
 cloudinary.config(config);
@@ -18,11 +18,11 @@ module.exports = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': Buffer.byteLength(name),
-          'User-Agent': 'request'
+          'User-Agent': 'request',
         },
         auth: {
           user: config.api_key,
-          pass: config.api_secret
+          pass: config.api_secret,
         },
       };
 
@@ -34,5 +34,5 @@ module.exports = {
         }
       });
     });
-  }
+  },
 };

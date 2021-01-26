@@ -36,12 +36,12 @@ DateInput.propTypes = {
   name: string.isRequired,
   disabled: bool,
   input: shape(object).isRequired,
-  date: string
+  date: string,
 };
 
 DateInput.defaultProps = {
   disabled: false,
-  date: string
+  date: string,
 };
 
 const PersonYears = ({ canEdit, born, died }) => {
@@ -74,12 +74,12 @@ const PersonYears = ({ canEdit, born, died }) => {
 PersonYears.propTypes = {
   canEdit: bool.isRequired,
   born: string,
-  died: string
+  died: string,
 };
 
 PersonYears.defaultProps = {
   born: '',
-  died: ''
+  died: '',
 };
 
 export default PersonYears;

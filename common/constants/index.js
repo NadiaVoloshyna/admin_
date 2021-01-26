@@ -2,12 +2,12 @@ const USER_ROLES = {
   SUPER: 'super',
   ADMIN: 'admin',
   AUTHOR: 'author',
-  REVIEWER: 'reviewer'
+  REVIEWER: 'reviewer',
 };
 
 const LOG_TYPE = {
   API: 'api',
-  CLIENT: 'client'
+  CLIENT: 'client',
 };
 
 const HTTP_HEADERS = {
@@ -20,12 +20,12 @@ const PERSON_POST_STATUSES = {
   IN_REVIEW: 'IN_REVIEW',
   READY: 'READY',
   ON_HOLD: 'ON_HOLD',
-  PUBLISHED: 'PUBLISHED'
+  PUBLISHED: 'PUBLISHED',
 };
 
 module.exports = {
   USER_ROLES,
   LOG_TYPE,
   HTTP_HEADERS,
-  PERSON_POST_STATUSES
+  PERSON_POST_STATUSES,
 };

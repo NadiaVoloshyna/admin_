@@ -55,7 +55,7 @@ const Drawer = (props) => {
 Drawer.propTypes = {
   children: oneOfType([
     arrayOf(node),
-    node
+    node,
   ]).isRequired,
   open: bool,
   onClose: func.isRequired,

@@ -27,6 +27,6 @@ export const Person = {
     role: oneOf([ ...Object.values(USER_ROLES), 'reader']).isRequired,
     permissionId: string.isRequired,
     user: string.isRequired,
-    active: bool.isRequired
-  }))
+    active: bool.isRequired,
+  })),
 };

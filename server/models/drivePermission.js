@@ -7,22 +7,22 @@ const { ObjectId } = Schema;
 const schema = mongoose.Schema({
   permissionId: {
     type: String,
-    required: true
+    required: true,
   },
   user: {
     type: ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   fileId: {
     type: String,
-    required: true
+    required: true,
   },
   active: {
     type: Boolean,
     default: true,
-    required: true
-  }
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('DrivePermission', schema, 'drivePermission');

@@ -1,19 +1,19 @@
 const GOOGLE_USER_ROLES = {
   AUTHOR: 'writer',
   REVIEWER: 'commenter',
-  READER: 'reader'
+  READER: 'reader',
 };
 
 const FROM_GOOGLE_ROLES = {
   WRITER: 'author',
   COMMENTER: 'reviewer',
-  READER: 'reader'
+  READER: 'reader',
 };
 
 const ASSET_ACTIONS = {
   MOVE: 'move',
   COPY: 'copy',
-  DELETE: 'delete'
+  DELETE: 'delete',
 };
 
 module.exports = {

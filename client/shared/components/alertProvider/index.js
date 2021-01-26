@@ -14,8 +14,8 @@ const config = {
     alignItems: 'none',
     left: '50%',
     width: '87%',
-    transform: 'translateX(-50%)'
-  }
+    transform: 'translateX(-50%)',
+  },
 };
 
 const AlertTemplate = ({ options, message }) => {
@@ -55,14 +55,14 @@ AlertTemplate.propTypes = {
       alignItems: string,
       left: string,
       width: string,
-      transform: string
-    })
+      transform: string,
+    }),
   }).isRequired,
-  message: string
+  message: string,
 };
 
 AlertTemplate.defaultProps = {
-  message: null
+  message: null,
 };
 
 const AlertProvider = (props) => (
@@ -72,7 +72,7 @@ const AlertProvider = (props) => (
 );
 
 AlertProvider.propTypes = {
-  children: oneOfType([element, elementType]).isRequired
+  children: oneOfType([element, elementType]).isRequired,
 };
 
 export default AlertProvider;

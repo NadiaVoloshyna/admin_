@@ -76,7 +76,7 @@ const deletePersons = async (req, res) => {
  */
 module.exports = (router) => {
   router.delete('/', [
-    body('ids').exists().isArray({ min: 1 }).withMessage('At least one id is required')
+    body('ids').exists().isArray({ min: 1 }).withMessage('At least one id is required'),
   ],
   handle400,
   getResources,

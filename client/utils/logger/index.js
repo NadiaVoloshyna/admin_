@@ -28,5 +28,5 @@ export const error = (error) => {
 
 export default {
   log,
-  error
+  error,
 };

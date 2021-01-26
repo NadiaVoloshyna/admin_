@@ -8,7 +8,7 @@ const LayoutFooter = (props) => {
   const footerCN = cx(
     'd-flex justify-content-between align-items-center',
     styles.footer,
-    props.className
+    props.className,
   );
 
   return (
@@ -26,12 +26,12 @@ LayoutFooter.propTypes = {
   className: string,
   children: oneOfType([
     arrayOf(node),
-    node
+    node,
   ]).isRequired,
 };
 
 LayoutFooter.defaultProps = {
-  className: ''
+  className: '',
 };
 
 export default LayoutFooter;

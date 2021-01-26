@@ -7,7 +7,7 @@ const DraggableAsset = (props) => {
   const {
     item,
     children,
-    isDragDrop
+    isDragDrop,
   } = props;
 
   const [drag] = useDrag({
@@ -34,11 +34,11 @@ const DraggableAsset = (props) => {
 DraggableAsset.propTypes = {
   item: shape(AssetType).isRequired,
   children: element.isRequired,
-  isDragDrop: bool
+  isDragDrop: bool,
 };
 
 DraggableAsset.defaultProps = {
-  isDragDrop: false
+  isDragDrop: false,
 };
 
 export default DraggableAsset;

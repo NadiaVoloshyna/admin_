@@ -32,13 +32,13 @@ DuplicateModal.propTypes = {
   onClose: func.isRequired,
   duplicate: shape({
     id: string,
-    name: string
-  })
+    name: string,
+  }),
 };
 
 DuplicateModal.defaultProps = {
   show: false,
-  duplicate: {}
+  duplicate: {},
 };
 
 export default DuplicateModal;

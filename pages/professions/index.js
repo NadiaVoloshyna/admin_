@@ -31,17 +31,17 @@ Professions.getInitialProps = async (ctx) => {
   } catch (error) {
     logger.error(error);
     return {
-      statusCode: (error.response && error.response.status) || 500
+      statusCode: (error.response && error.response.status) || 500,
     };
   }
 };
 
 Professions.propTypes = {
-  statusCode: number
+  statusCode: number,
 };
 
 Professions.defaultProps = {
-  statusCode: null
+  statusCode: null,
 };
 
 export default Professions;

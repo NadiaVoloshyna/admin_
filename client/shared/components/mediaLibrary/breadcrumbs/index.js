@@ -8,7 +8,7 @@ const rootFolder = {
   name: 'Root',
   parent: null,
   _id: null,
-  type: 'FOLDER'
+  type: 'FOLDER',
 };
 
 const Breadcrumbs = ({ currentFolder, onCrumbClick, root }) => {
@@ -42,13 +42,13 @@ const Breadcrumbs = ({ currentFolder, onCrumbClick, root }) => {
 Breadcrumbs.propTypes = {
   currentFolder: shape(AssetType),
   onCrumbClick: func,
-  root: shape(AssetType)
+  root: shape(AssetType),
 };
 
 Breadcrumbs.defaultProps = {
   currentFolder: null,
   onCrumbClick: () => {},
-  root: rootFolder
+  root: rootFolder,
 };
 
 export default Breadcrumbs;

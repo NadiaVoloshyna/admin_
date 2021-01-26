@@ -43,7 +43,7 @@ AssetsGrid.propTypes = {
   onDelete: func,
   onMove: func,
   canDelete: bool,
-  isDragDrop: bool
+  isDragDrop: bool,
 };
 
 AssetsGrid.defaultProps = {
@@ -51,7 +51,7 @@ AssetsGrid.defaultProps = {
   onDelete: () => {},
   onMove: () => {},
   canDelete: false,
-  isDragDrop: false
+  isDragDrop: false,
 };
 
 export default AssetsGrid;
