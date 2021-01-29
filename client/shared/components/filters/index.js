@@ -32,7 +32,7 @@ const Filters = ({ items, name }) => {
 
 Filters.propTypes = {
   items: shape(object).isRequired,
-  name: string.isRequired
+  name: string.isRequired,
 };
 
 export default Filters;

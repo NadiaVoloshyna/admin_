@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   personId: {
     type: mongoose.Schema.ObjectId,
-    required: true
+    required: true,
   },
 
   createdAt: {
     type: Date,
     required: true,
-    default: Date.now
+    default: Date.now,
   },
 
   message: {
@@ -19,7 +19,7 @@ const schema = new mongoose.Schema({
 
   content: {
     type: String,
-  }
+  },
 });
 
 module.exports = mongoose.model('Activity', schema, 'activity');

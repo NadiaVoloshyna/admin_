@@ -83,7 +83,7 @@ const ProfessionsPage = (props) => {
             <Filters
               items={{
                 all: 'All',
-                me: 'Created by me'
+                me: 'Created by me',
               }}
               name="createdBy"
             />

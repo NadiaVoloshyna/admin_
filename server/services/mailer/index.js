@@ -14,8 +14,8 @@ async function mailer({ template, subject, to }) {
     secure: false, // true for 465, false for other ports
     auth: {
       user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass // generated ethereal password
-    }
+      pass: testAccount.pass, // generated ethereal password
+    },
   });
 
   // send mail with defined transport object
@@ -23,7 +23,7 @@ async function mailer({ template, subject, to }) {
     from: '"Fred Foo 👻" <foo@example.com>', // sender address
     to,
     subject,
-    html: template
+    html: template,
   });
 
   logger.info(`Message sent: ${info.messageId}`);

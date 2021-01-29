@@ -56,12 +56,12 @@ const CreateDropdown = ({ onCreate, buttonText, placeholder }) => {
 CreateDropdown.propTypes = {
   onCreate: func.isRequired,
   buttonText: string,
-  placeholder: string
+  placeholder: string,
 };
 
 CreateDropdown.defaultProps = {
   buttonText: 'Create',
-  placeholder: ''
+  placeholder: '',
 };
 
 export default CreateDropdown;

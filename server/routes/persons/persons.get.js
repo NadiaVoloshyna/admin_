@@ -8,8 +8,8 @@ const validators = [
   query('offset').if(query('offset').exists()).escape().isNumeric(),
   query('limit').if(query('limit').exists()).escape().isNumeric(),
   query('sort').if(query('sort').exists()).escape().isIn(
-    createSortVarints('name', 'created')
-  )
+    createSortVarints('name', 'created'),
+  ),
 ];
 
 module.exports = (router) => {
@@ -19,7 +19,7 @@ module.exports = (router) => {
   router.get('/', validators, handle400, async (req, res) => {
     try {
       const { query, options } = createQueryForPagination({
-        query: req.query
+        query: req.query,
       });
 
       options.populate = ['professions.profession', {
@@ -28,7 +28,7 @@ module.exports = (router) => {
         populate: [{
           path: 'user',
           model: 'User',
-        }]
+        }],
       }];
 
       const response = await Person.paginate(query, options);
@@ -40,7 +40,7 @@ module.exports = (router) => {
           return person.drivePermissions
             .filter(item => item.user.role === role)
             .map(item => ({
-              name: item.user.fullName // change this to a function which excepts fields to return
+              name: item.user.fullName, // change this to a function which excepts fields to return
             })); // remove unnecessary data
         };
 

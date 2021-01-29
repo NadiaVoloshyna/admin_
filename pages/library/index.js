@@ -17,11 +17,11 @@ const Library = (props) => (
 );
 
 Library.propTypes = {
-  statusCode: number
+  statusCode: number,
 };
 
 Library.defaultProps = {
-  statusCode: null
+  statusCode: null,
 };
 
 export default Library;

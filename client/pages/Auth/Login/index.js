@@ -37,7 +37,7 @@ const LoginPage = () => {
   const onSubmit = ({ email, password }) => {
     loginUser && loginUser({
       email,
-      password
+      password,
     });
   };
 

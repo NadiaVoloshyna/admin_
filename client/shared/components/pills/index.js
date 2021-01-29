@@ -12,7 +12,7 @@ const Pills = (props) => {
 
   const classnames = cx(
     wide && styles.wide,
-    className
+    className,
   );
 
   const onClick = (item) => {

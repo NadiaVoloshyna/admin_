@@ -26,7 +26,7 @@ const ProfessionSection = ({ rootFolder }) => {
 };
 
 ProfessionSection.propTypes = {
-  rootFolder: shape(AssetType).isRequired
+  rootFolder: shape(AssetType).isRequired,
 };
 
 export default ProfessionSection;

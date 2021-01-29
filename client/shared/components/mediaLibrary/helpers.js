@@ -23,7 +23,7 @@ export const isOfType = (type) => ({
   isFolder: type === 'FOLDER',
   isImage:  type === 'IMAGE',
   isVideo:  type === 'VIDEO',
-  isAlbum:  type === 'ALBUM'
+  isAlbum:  type === 'ALBUM',
 });
 
 export const constructBreadcrumbs = (path) => {

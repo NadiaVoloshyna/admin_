@@ -11,7 +11,7 @@ const handle400 = require('../../middlewares/errorHandlers/handle400');
 module.exports = (router) => {
   router.post('/:id/permissions', [
     check('id').isMongoId(),
-    body('userId').isMongoId()
+    body('userId').isMongoId(),
   ], handle400, async (req, res) => {
     const { id: _id } = req.params;
     const { userId } = req.body;
@@ -25,7 +25,7 @@ module.exports = (router) => {
       const { data: { id } } = await GoogleApi.createPermission(
         documentId,
         helpers.getRoleToUpdate(status, user.role),
-        user.email
+        user.email,
       );
 
       const permission = {

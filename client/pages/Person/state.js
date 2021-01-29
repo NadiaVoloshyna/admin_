@@ -4,9 +4,9 @@ export const personState = {
   name: '',
   status: PERSON_POST_STATUSES.IN_PROGRESS,
   biography: {
-    documentId: null
+    documentId: null,
   },
   portrait: '',
   professions: [],
-  permissions: []
+  permissions: [],
 };

@@ -17,7 +17,7 @@ const loggingConfig = {
   colorize: true,
   format: winston.format.combine(
     winston.format.printf(createLog),
-  )
+  ),
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -29,5 +29,5 @@ const auditLogger = expressWinston.logger(loggingConfig);
 
 module.exports = {
   logger,
-  auditLogger
+  auditLogger,
 };

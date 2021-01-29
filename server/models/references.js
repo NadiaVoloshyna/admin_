@@ -7,12 +7,12 @@ const schema = new Schema({
   dependent: {
     type: ObjectId,
     ref: 'Asset',
-    required: true
+    required: true,
   },
   dependOn:{
     type: ObjectId,
     ref: 'Person',
-    required: true
+    required: true,
   },
 });
 

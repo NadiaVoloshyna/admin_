@@ -13,18 +13,18 @@ export const ASSET_TYPES = {
   ALBUM: 'ALBUM',
   IMAGE: 'IMAGE',
   VIDEO: 'VIDEO',
-  SONG: 'SONG'
+  SONG: 'SONG',
 };
 
 export const INSERTIONS = {
-  USER_ROLE: 'USER_ROLE'
+  USER_ROLE: 'USER_ROLE',
 };
 
 export const SUCCESS_MESSAGES = {
   PERSON_SAVE: 'Person succesfully saved.',
   USERS_INVITE_USER: 'Invitation was sent.',
   USERS_EDIT_USER: 'Changes were saved successfully.',
-  PERSON_STATUS_UPDATE: 'Status was updated successfully.'
+  PERSON_STATUS_UPDATE: 'Status was updated successfully.',
 };
 
 export const ERROR_MESSAGES = {
@@ -52,5 +52,5 @@ export const ERROR_MESSAGES = {
 };
 
 export const WARNING_MESSAGES = {
-  PROFESSIONS_DUPLICATE_PROFESSION: 'This profession already exists'
+  PROFESSIONS_DUPLICATE_PROFESSION: 'This profession already exists',
 };

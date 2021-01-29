@@ -15,7 +15,7 @@ const WithError = (props) => {
 WithError.propTypes = {
   statusCode: number,
   errorMessage: string,
-  children: shape({}).isRequired
+  children: shape({}).isRequired,
 };
 
 export default WithError;

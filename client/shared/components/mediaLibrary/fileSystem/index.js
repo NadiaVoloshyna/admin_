@@ -39,7 +39,7 @@ FileSystem.propTypes = {
   onDelete: func,
   onMove: func,
   canDelete: bool,
-  isDragDrop: bool
+  isDragDrop: bool,
 };
 
 FileSystem.defaultProps = {
@@ -47,7 +47,7 @@ FileSystem.defaultProps = {
   onDelete: () => {},
   onMove: () => {},
   canDelete: false,
-  isDragDrop: false
+  isDragDrop: false,
 };
 
 export default FileSystem;

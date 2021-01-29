@@ -25,22 +25,22 @@ Permissions.getInitialProps = async (ctx) => {
       .getPermissions();
 
     return {
-      permissions
+      permissions,
     };
   } catch (error) {
     logger.error(error);
     return {
-      statusCode: (error.response && error.response.status) || 500
+      statusCode: (error.response && error.response.status) || 500,
     };
   }
 };
 
 Permissions.propTypes = {
-  statusCode: number
+  statusCode: number,
 };
 
 Permissions.defaultProps = {
-  statusCode: null
+  statusCode: null,
 };
 
 export default Permissions;

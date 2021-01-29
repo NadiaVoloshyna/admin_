@@ -2,7 +2,7 @@ const { google } = require('googleapis');
 
 const SCOPES = [
   'https://www.googleapis.com/auth/drive',
-  'https://www.googleapis.com/auth/drive.file'
+  'https://www.googleapis.com/auth/drive.file',
 ];
 
 const auth = new google.auth.JWT({
@@ -19,29 +19,29 @@ const GoogleApi = {
       resource: {
         name : title,
         mimeType : 'application/vnd.google-apps.document',
-        parents:[process.env.GOOGLE_DOC_ROOT_FOLDER_ID]
+        parents:[process.env.GOOGLE_DOC_ROOT_FOLDER_ID],
       },
-      fields: 'id'
+      fields: 'id',
     });
   },
 
   getDocumentContent: async (documentId) => {
     return await drive.files.export({
       fileId: documentId,
-      mimeType: 'text/html'
+      mimeType: 'text/html',
     });
   },
 
   getFileMeta: async (fileId, fields) => {
     return await drive.files.get({
       fileId,
-      fields: fields || 'lastModifyingUser,modifiedTime'
+      fields: fields || 'lastModifyingUser,modifiedTime',
     });
   },
 
   delete: (id) => {
     return drive.files.delete({
-      fileId: id
+      fileId: id,
     });
   },
 
@@ -52,8 +52,8 @@ const GoogleApi = {
       resource: {
         type: 'user',
         role,
-        emailAddress
-      }
+        emailAddress,
+      },
     });
   },
 
@@ -64,7 +64,7 @@ const GoogleApi = {
     return drive.permissions.update({
       fileId,
       permissionId,
-      resource: { role }
+      resource: { role },
     });
   },
 

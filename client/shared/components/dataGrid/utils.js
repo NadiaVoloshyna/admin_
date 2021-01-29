@@ -7,7 +7,7 @@ import TextFormatter from './formatters/text';
 const statuses = {
   NEW: {
     variant: 'info',
-    displayName: 'New'
+    displayName: 'New',
   },
   IN_PROGRESS: {
     variant: 'secondary',

@@ -17,7 +17,7 @@ const DrawerBody = (props) => {
 DrawerBody.propTypes = {
   children: oneOfType([
     arrayOf(node),
-    node
+    node,
   ]).isRequired,
   noPadding: bool,
 };

@@ -27,7 +27,7 @@ const DataGrid = (props) => {
   const columns = props.columns.map(item => ({
     ...item,
     ...(item.sort && sortingConfig),
-    ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] })
+    ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] }),
   }));
 
   const onSelect = (row, isSelect) => {

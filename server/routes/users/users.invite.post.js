@@ -22,8 +22,8 @@ module.exports = (router) => {
     body('role').escape().isIn([
       USER_ROLES.ADMIN,
       USER_ROLES.AUTHOR,
-      USER_ROLES.REVIEWER
-    ])
+      USER_ROLES.REVIEWER,
+    ]),
   ], handle400, async (req, res) => {
     const { email, role } = req.body;
     const token = cryptoRandomString({ length: 32, type: 'url-safe' });
@@ -51,7 +51,7 @@ module.exports = (router) => {
       await mailer({
         template: template(token, role),
         to: email,
-        subject: subject()
+        subject: subject(),
       });
     } catch (error) {
       return req.handle500(error);

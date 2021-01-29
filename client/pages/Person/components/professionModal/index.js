@@ -91,13 +91,13 @@ ProfessionModal.propTypes = {
   rootFolder: shape(AssetType),
   onAssetSelect: func,
   isOpen: bool,
-  onModalToggle: func.isRequired
+  onModalToggle: func.isRequired,
 };
 
 ProfessionModal.defaultProps = {
   rootFolder: null,
   onAssetSelect: () => {},
-  isOpen: false
+  isOpen: false,
 };
 
 export default ProfessionModal;

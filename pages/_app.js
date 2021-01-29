@@ -27,7 +27,7 @@ class UkrainianAdminApp extends App {
     super(props);
 
     this.state = {
-      user: props.pageProps.user
+      user: props.pageProps.user,
     };
   }
 
@@ -37,7 +37,7 @@ class UkrainianAdminApp extends App {
 
     const context = {
       user: this.state.user,
-      activePage: Component.name
+      activePage: Component.name,
     };
 
     const props = {
@@ -64,8 +64,8 @@ UkrainianAdminApp.propTypes = {
   Component: elementType.isRequired,
   pageProps: shape({
     user: shape(UserType),
-    statusCode: number
-  })
+    statusCode: number,
+  }),
 };
 
 export default UkrainianAdminApp;

@@ -14,7 +14,7 @@ module.exports = (router) => {
     body('image').if(body('image').exists()).isString().escape(),
   ], handle400, async (req, res) => {
     const query = {
-      _id: req.params.id
+      _id: req.params.id,
     };
 
     const user = await User.findById({ _id: req.params.id });
@@ -32,7 +32,7 @@ module.exports = (router) => {
 
     const updateBody = constructBody(req.body, [
       'active',
-      'image'
+      'image',
     ]);
 
     // If not active remove all drive permissions
@@ -46,7 +46,7 @@ module.exports = (router) => {
 
       await DrivePermission.updateMany(
         { _id: { $in: permissions.map(item => item._id) } },
-        { active: false }
+        { active: false },
       );
     }
 

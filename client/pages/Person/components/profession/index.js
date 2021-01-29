@@ -13,7 +13,7 @@ const PersonProfession = ({ professions, onAdd, onRemove }) => {
       onAdd('professions', {
         profession: itemToAdd,
         active: false,
-        media: []
+        media: [],
       });
     }
 
@@ -48,13 +48,13 @@ const PersonProfession = ({ professions, onAdd, onRemove }) => {
 PersonProfession.propTypes = {
   professions: arrayOf(shape(ProfessionType)),
   onAdd: func,
-  onRemove: func
+  onRemove: func,
 };
 
 PersonProfession.defaultProps = {
   professions: [],
   onAdd: () => {},
-  onRemove: () => {}
+  onRemove: () => {},
 };
 
 export default PersonProfession;

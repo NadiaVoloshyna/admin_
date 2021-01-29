@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
@@ -20,21 +20,21 @@ const userSchema = mongoose.Schema({
   created: {
     type: Date,
     required: true,
-    default: Date.now
+    default: Date.now,
   },
   role: {
     type: String,
     required: true,
-    enum: ROLES
+    enum: ROLES,
   },
   active: {
     type: Boolean,
     default: true,
-    required: true
+    required: true,
   },
   google: {
     id: {
-      type: String
+      type: String,
     },
     // token: {
     //   type: String,
@@ -42,10 +42,10 @@ const userSchema = mongoose.Schema({
     // }
   },
   image: {
-    type: String
-  }
+    type: String,
+  },
 }, {
-  toObject: { virtuals: true }
+  toObject: { virtuals: true },
 });
 
 userSchema.virtual('fullName').get(function getFullName() {

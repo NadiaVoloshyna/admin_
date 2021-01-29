@@ -15,7 +15,7 @@ const supportedAssetTypes = [
   ASSET_TYPES.FOLDER,
   ASSET_TYPES.ALBUM,
   ASSET_TYPES.IMAGE,
-  ASSET_TYPES.AUDIO
+  ASSET_TYPES.AUDIO,
 ];
 
 const LibraryPage = ({ user }) => {

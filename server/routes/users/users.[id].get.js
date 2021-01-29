@@ -30,7 +30,7 @@ const findUser = async (req, res) => {
 
 module.exports = (router) => {
   router.get('/:id', [
-    param('id').isMongoId()
+    param('id').isMongoId(),
   ],
   handle400,
   checkPermissions,

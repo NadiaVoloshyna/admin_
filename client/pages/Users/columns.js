@@ -29,5 +29,5 @@ export default [{
   dataField: '',
   text: '',
   isDummyField: true,
-  formatter: 'settings'
+  formatter: 'settings',
 }];

@@ -84,7 +84,7 @@ const PersonPage = (props) => {
       .then(() => {
         setPerson({
           ...person,
-          status: newStatus
+          status: newStatus,
         });
         alert.success(SUCCESS_MESSAGES.PERSON_STATUS_UPDATE);
       })
@@ -107,8 +107,8 @@ const PersonPage = (props) => {
           ...person,
           drivePermissions: [
             ...person.drivePermissions,
-            ...permissions.map(item => item.data)
-          ]
+            ...permissions.map(item => item.data),
+          ],
         });
       })
       .catch(error => handleError(error, ERROR_MESSAGES.PERSON_ASSIGN_USER))
@@ -164,16 +164,16 @@ const PersonPage = (props) => {
             onProfessionRemove: ([id], state, { changeValue }) => {
               const mutator = (value) => value.filter(item => item.profession._id !== id);
               changeValue(state, 'professions', mutator);
-            }
+            },
           }}
           initialValues={{
             name,
             portrait: _unescape(portrait).replace(/&#x2F;/g, '/'),
-            professions: personsProfessions
+            professions: personsProfessions,
           }}
           render={({
             form: {
-              mutators: { push, onProfessionRemove }
+              mutators: { push, onProfessionRemove },
             },
             handleSubmit,
             form,
@@ -207,7 +207,7 @@ const PersonPage = (props) => {
                         rootFolder={{
                           _id: rootAssetId,
                           name,
-                          type: 'folder'
+                          type: 'folder',
                         }}
                       />
                     </div>
@@ -250,7 +250,7 @@ const PersonPage = (props) => {
 PersonPage.propTypes = {
   person: shape(Person).isRequired,
   user: shape(UserType).isRequired,
-  professions: shape(ProfessionType).isRequired
+  professions: shape(ProfessionType).isRequired,
 };
 
 export default PersonPage;

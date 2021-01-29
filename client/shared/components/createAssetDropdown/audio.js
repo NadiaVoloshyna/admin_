@@ -14,7 +14,7 @@ import { ASSET_TYPES } from './index';
 
 // Force only client rendering
 const AudioPlayer = dynamic(() => import('react-audio-player'), {
-  ssr: false
+  ssr: false,
 });
 
 const Audio = ({ onDismiss, onSubmit }) => {
@@ -36,7 +36,7 @@ const Audio = ({ onDismiss, onSubmit }) => {
     onSubmit({
       name: value,
       url: image.url,
-      type: ASSET_TYPES.IMAGE
+      type: ASSET_TYPES.IMAGE,
     });
   };
 
@@ -90,7 +90,7 @@ const Audio = ({ onDismiss, onSubmit }) => {
 
 Audio.propTypes = {
   onDismiss: func.isRequired,
-  onSubmit: func.isRequired
+  onSubmit: func.isRequired,
 };
 
 export default Audio;

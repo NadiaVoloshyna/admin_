@@ -13,7 +13,7 @@ module.exports = (router) => {
 
     try {
       await Profession.deleteMany({
-        _id: ids
+        _id: ids,
       });
 
       res.status(200).end();

@@ -122,7 +122,7 @@ const UsersPage = (props) => {
 UsersPage.propTypes = {
   user: shape(UserType).isRequired,
   users: arrayOf(shape(UsersType)).isRequired,
-  pages: number.isRequired
+  pages: number.isRequired,
 };
 
 export default UsersPage;

@@ -11,7 +11,7 @@ const checkProfession = async (req, res, next) => {
       // profession with this name is already exist
       res.status(409).send({
         id: profession._id,
-        name: profession.name
+        name: profession.name,
       });
       return;
     }
@@ -32,7 +32,7 @@ const createProfession = async (req, res, next) => {
     }).save();
     const response = {
       id: newProfession._id,
-      name: newProfession.name
+      name: newProfession.name,
     };
     res.locals.response = response;
     next();
@@ -52,7 +52,7 @@ module.exports = (router) => {
    * 6. If document was created add document id to persons data
    */
   router.post('/', [
-    body('name').isString().escape()
+    body('name').isString().escape(),
   ], handle400, checkProfession, createProfession,
   (req, res) => res.status(201).send(res.locals.response));
 };

@@ -23,7 +23,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 
 CustomToggle.propTypes = {
   children: oneOfType([element, elementType]).isRequired,
-  onClick: func.isRequired
+  onClick: func.isRequired,
 };
 
 const UserDropdown = (props) => {
@@ -89,7 +89,7 @@ const UserDropdown = (props) => {
 };
 
 UserDropdown.propTypes = {
-  user: shape(UserType).isRequired
+  user: shape(UserType).isRequired,
 };
 
 export default UserDropdown;

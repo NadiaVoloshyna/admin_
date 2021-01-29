@@ -10,11 +10,11 @@ const { ObjectId } = Schema;
 const professionSchema = mongoose.Schema({
   profession: {
     type: ObjectId,
-    ref: 'Profession'
+    ref: 'Profession',
   },
   active: {
     type: Boolean,
-    required: true
+    required: true,
   },
   media: [{ type: ObjectId, ref: 'Asset' }],
 }, { _id : false });
@@ -25,7 +25,7 @@ const schema = new Schema({
     type: String,
     required: true,
     unique: true,
-    dropDups: true
+    dropDups: true,
   },
   status: {
     type: String,
@@ -36,13 +36,13 @@ const schema = new Schema({
       PERSON_POST_STATUSES.IN_PROGRESS,
       PERSON_POST_STATUSES.IN_REVIEW,
       PERSON_POST_STATUSES.READY,
-      PERSON_POST_STATUSES.PUBLISHED
-    ]
+      PERSON_POST_STATUSES.PUBLISHED,
+    ],
   },
   created: {
     type: Date,
     required: true,
-    default: Date.now
+    default: Date.now,
   },
   createdBy: {
     type: ObjectId,
@@ -51,14 +51,14 @@ const schema = new Schema({
   biography: {
     documentId: {
       type: String,
-      required: true
+      required: true,
     },
     modifiedTime: Date,
     lastModifiedBy: String,
     permissions: {
       authors: Array,
-      reviewers: Array
-    }
+      reviewers: Array,
+    },
   },
   born: Date,
   died: Date,
@@ -66,7 +66,7 @@ const schema = new Schema({
   portrait: String,
   rootAssetId: {
     type: ObjectId,
-    required: true
+    required: true,
   },
   professions: [professionSchema],
 }).pre('remove', { document: true }, preRemove)

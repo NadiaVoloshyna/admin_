@@ -35,7 +35,7 @@ const PermissionsPage = ({ permissions: rawPermissions, user }) => {
       const index = permissions.findIndex(item => item._id === id);
       permissions[index] = {
         ...permissions[index],
-        ...updates
+        ...updates,
       };
 
       await PermissionsAPI.updatePermission(id, permissions[index]);

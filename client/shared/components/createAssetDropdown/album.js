@@ -50,7 +50,7 @@ const Album = ({ onSubmit, onDismiss }) => {
       year,
       description,
       url: image.url,
-      type: ASSET_TYPES.ALBUM
+      type: ASSET_TYPES.ALBUM,
     });
   };
 
@@ -61,7 +61,7 @@ const Album = ({ onSubmit, onDismiss }) => {
       render={({
         handleSubmit,
         submitting,
-        pristine
+        pristine,
       }) => {
         return (
           <Form
@@ -140,7 +140,7 @@ const Album = ({ onSubmit, onDismiss }) => {
 
 Album.propTypes = {
   onSubmit: func.isRequired,
-  onDismiss: func.isRequired
+  onDismiss: func.isRequired,
 };
 
 export default Album;

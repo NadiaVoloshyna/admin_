@@ -14,7 +14,7 @@ const Asset = (props) => {
     onDelete,
     canDelete,
     onMove,
-    isDragDrop
+    isDragDrop,
   } = props;
 
   const { name, type, url, year } = item;
@@ -126,7 +126,7 @@ Asset.propTypes = {
   onDelete: func,
   canDelete: bool,
   onMove: func,
-  isDragDrop: bool
+  isDragDrop: bool,
 };
 
 Asset.defaultProps = {
@@ -134,7 +134,7 @@ Asset.defaultProps = {
   onDelete: () => {},
   canDelete: false,
   onMove: () => {},
-  isDragDrop: false
+  isDragDrop: false,
 };
 
 export default Asset;

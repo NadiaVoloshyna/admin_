@@ -19,5 +19,5 @@ const getRoleToUpdate = (status, role) => {
 };
 
 module.exports = {
-  getRoleToUpdate
+  getRoleToUpdate,
 };

@@ -59,7 +59,7 @@ const PersonsPage = ({ user, persons, pages }) => {
       if (status === 409) {
         setDuplicate({
           id: person.id,
-          name: person.name
+          name: person.name,
         });
         setIsPersonExist(true);
       }
@@ -138,7 +138,7 @@ const PersonsPage = ({ user, persons, pages }) => {
 PersonsPage.propTypes = {
   user: shape(UserType).isRequired,
   persons: arrayOf(shape(Person)).isRequired,
-  pages: number.isRequired
+  pages: number.isRequired,
 };
 
 export default PersonsPage;

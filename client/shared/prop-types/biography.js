@@ -6,6 +6,6 @@ export const Biography = {
   lastModifiedBy: string,
   permissions: shape({
     authors: array,
-    reviewers: array
-  })
+    reviewers: array,
+  }),
 };

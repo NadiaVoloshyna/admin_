@@ -44,11 +44,11 @@ Layout.Footer = LayoutFooter;
 Layout.propTypes = {
   activePage: string,
   user: shape(UserType).isRequired,
-  children: arrayOf(object).isRequired
+  children: arrayOf(object).isRequired,
 };
 
 Layout.defaultProps = {
-  activePage: ''
+  activePage: '',
 };
 
 export default Layout;

@@ -26,7 +26,7 @@ const DroppableAsset = (props) => {
     item,
     children,
     onDrop,
-    isDragDrop
+    isDragDrop,
   } = props;
 
   const [{ isOver }, drop] = useDrop({
@@ -64,11 +64,11 @@ DroppableAsset.propTypes = {
   item: shape(AssetType).isRequired,
   children: element.isRequired,
   onDrop: func.isRequired,
-  isDragDrop: bool
+  isDragDrop: bool,
 };
 
 DroppableAsset.defaultProps = {
-  isDragDrop: false
+  isDragDrop: false,
 };
 
 export default DroppableAsset;

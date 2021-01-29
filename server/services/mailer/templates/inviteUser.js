@@ -14,5 +14,5 @@ const subject = () => {
 
 module.exports = {
   template,
-  subject
+  subject,
 };
