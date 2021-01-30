@@ -49,6 +49,7 @@ export const ERROR_MESSAGES = {
   PERMISSION_UPDATE: 'We are sorry, there was a problem updating permission',
   PERMISSION_CREATE: 'We are sorry, there was a problem creating permissions',
   PERMISSION_DELETE: 'We are sorry, there was a problem deleting permissions',
+  IMAGE_UPLOAD: 'We are sorry, image upload failed',
 };
 
 export const WARNING_MESSAGES = {

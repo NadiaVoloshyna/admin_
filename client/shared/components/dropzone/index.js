@@ -1,4 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import { oneOf } from 'prop-types';
+import classnames from 'classnames';
 import ReactDropzone from 'react-dropzone';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import { ERROR_MESSAGES } from 'shared/constants';
@@ -6,7 +8,7 @@ import FilesApi from 'shared/api/files';
 
 import styles from './index.module.scss';
 
-const Dropzone = forwardRef((props, ref) => {
+const Dropzone = forwardRef(({ variant }, ref) => {
   const handleError = useErrorHandler();
   const [files, setFiles] = useState([]);
 
@@ -51,11 +53,17 @@ const Dropzone = forwardRef((props, ref) => {
     previewStyles.backgroundImage = `url(${files[0].preview})`;
   }
 
+  const classes = classnames(
+    'img-thumbnail',
+    styles.preview,
+    variant === 'rounded' && styles.rounded,
+  );
+
   return (
     <>
       <ReactDropzone onDrop={onDrop} accept="image/*">
         {({ getRootProps, getInputProps }) => (
-          <div {...getRootProps()} className={`img-thumbnail ${styles.preview}`} style={previewStyles}>
+          <div {...getRootProps()} className={classes} style={previewStyles}>
             <input {...getInputProps()} />
             <p>Пепетягніть файл сюди або натисніть щоб вибрати файл</p>
           </div>
@@ -64,5 +72,13 @@ const Dropzone = forwardRef((props, ref) => {
     </>
   );
 });
+
+Dropzone.propTypes = {
+  variant: oneOf(['rounded']),
+};
+
+Dropzone.defaultProps = {
+  variant: null,
+};
 
 export default Dropzone;

@@ -18,7 +18,7 @@ const deleteAssets = async (req, res) => {
     // 1. Delete asset
     const asset = await Asset.findOne({ _id: id }).populate('references');
 
-    if (asset.references) {
+    if (asset.references && asset.references.length) {
       return res.status(409).end();
     }
 

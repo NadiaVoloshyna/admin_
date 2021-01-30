@@ -1,78 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { func, shape, bool } from 'prop-types';
-import api from 'shared/api/assets';
-import { isOfType } from 'shared/helpers';
+import React from 'react';
+import { func, shape, bool, arrayOf, string } from 'prop-types';
 import { AssetType } from 'shared/prop-types';
-import useErrorHandler from 'shared/hooks/useErrorHandler';
-import { ERROR_MESSAGES } from 'shared/constants';
 import Breadcrumbs from './breadcrumbs';
 import FileSystem from './fileSystem';
-import UploadBox from './uploadBox';
-import ActionsPanel from './actionsPanel';
 
-const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUploadBoxOpen, root }) => {
-  const handleError = useErrorHandler();
-  const [ currentFolder, setCurrentFolder ] = useState(null);
-  const [ assets, setAssets ] = useState([]);
-
-  const getAssets = async (id) => {
-    const { data: assets } = await api.getAssets(id);
-
-    setAssets(assets);
-  };
-
-  useEffect(() => {
-    getAssets(root ? root._id : null);
-  }, []);
-
-  useEffect(() => {
-    if (newAsset) {
-      setAssets([...assets, newAsset]);
-    }
-  }, [newAsset]);
-
-  const onSelect = (asset) => {
-    const { isFolder } = isOfType(asset.type);
-
-    if (isFolder) {
-      getAssets(asset._id);
-      setCurrentFolder(asset);
-    }
-
-    onAssetSelect(asset);
-  };
-
-  const onDelete = async (asset) => {
-    try {
-      await api.deleteAsset(asset._id);
-      const newAssets = assets.filter(item => item._id !== asset._id);
-      setAssets(newAssets);
-    } catch (error) {
-      handleError(error, ERROR_MESSAGES.LIBRARY_FILE_DELETE);
-    }
-  };
-
-  const onMove = async (asset, parent) => {
-    try {
-      await api.moveAsset(asset._id, parent._id);
-      const newAssets = assets.filter(item => item._id !== asset._id);
-      setAssets(newAssets);
-    } catch (error) {
-      handleError(error, ERROR_MESSAGES.LIBRARY_FILE_MOVE);
-    }
-  };
+const MediaLibrary = (props) => {
+  const {
+    assets,
+    breadcrumbs,
+    onSelect,
+    onDelete,
+    onMove,
+    canDelete,
+    isDragDrop,
+    root,
+  } = props;
 
   return (
     <>
-      <UploadBox open={isUploadBoxOpen} />
-
       <Breadcrumbs
-        currentFolder={currentFolder}
-        onCrumbClick={onSelect}
+        breadcrumbs={breadcrumbs}
         root={root}
       />
-
-      <ActionsPanel />
 
       <FileSystem
         assets={assets}
@@ -87,20 +36,25 @@ const MediaLibrary = ({ onAssetSelect, newAsset, canDelete, isDragDrop, isUpload
 };
 
 MediaLibrary.propTypes = {
-  onAssetSelect: func,
-  newAsset: shape(AssetType),
+  assets: arrayOf(shape(AssetType)).isRequired,
+  breadcrumbs: arrayOf(shape({
+    _id: string,
+    name: string,
+  })).isRequired,
+  onSelect: func,
+  onMove: func,
+  onDelete: func,
   canDelete: bool,
   isDragDrop: bool,
-  isUploadBoxOpen: bool,
   root: shape(AssetType),
 };
 
 MediaLibrary.defaultProps = {
-  onAssetSelect: () => {},
-  newAsset: null,
+  onSelect: () => {},
+  onMove: () => {},
+  onDelete: () => {},
   canDelete: false,
   isDragDrop: false,
-  isUploadBoxOpen: false,
   root: undefined,
 };
 
