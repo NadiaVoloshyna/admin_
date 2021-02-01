@@ -70,7 +70,7 @@ const AttributesTooltip = (props) => {
 
 AttributesTooltip.propTypes = {
   permission: shape(object).isRequired,
-  onEditClick: func.isRequired
+  onEditClick: func.isRequired,
 };
 
 export default AttributesTooltip;

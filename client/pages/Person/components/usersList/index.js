@@ -15,7 +15,7 @@ const PersonUserList = ({
   assignees,
   usersForAssignment,
   user,
-  setPermission
+  setPermission,
 }) => {
   return (
     <Card className="person-user-list mb-4">
@@ -97,14 +97,14 @@ PersonUserList.propTypes = {
   assignees: arrayOf(shape(UsersType)),
   usersForAssignment: arrayOf(shape(UsersType)),
   user: shape(UsersType).isRequired,
-  setPermission: func
+  setPermission: func,
 };
 
 PersonUserList.defaultProps = {
   onUsersGet: () => {},
   assignees: [],
   usersForAssignment: [],
-  setPermission: () => {}
+  setPermission: () => {},
 };
 
 export default PersonUserList;

@@ -39,11 +39,11 @@ ShouldDeletePersonsModal.propTypes = {
   show: bool.isRequired,
   persons: arrayOf(shape(Person)),
   onConfirm: func.isRequired,
-  onDiscard: func.isRequired
+  onDiscard: func.isRequired,
 };
 
 ShouldDeletePersonsModal.defaultProps = {
-  persons: []
+  persons: [],
 };
 
 export default ShouldDeletePersonsModal;

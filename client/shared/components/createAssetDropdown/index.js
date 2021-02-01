@@ -14,30 +14,30 @@ export const ASSET_TYPES = {
   IMAGE: 'IMAGE',
   ALBUM: 'ALBUM',
   VIDEO: 'VIDEO',
-  AUDIO: 'AUDIO'
+  AUDIO: 'AUDIO',
 };
 
 const availableAssets = {
   FOLDER: {
     name: 'FOLDER',
     icon: 'folder',
-    component: Folder
+    component: Folder,
   },
   IMAGE: {
     name: 'IMAGE',
     icon: 'image',
-    component: Image
+    component: Image,
   },
   ALBUM: {
     name: 'ALBUM',
     icon: 'album',
-    component: Album
+    component: Album,
   },
   AUDIO: {
     name: 'AUDIO',
     icon: 'audiotrack',
-    component: Audio
-  }
+    component: Audio,
+  },
 };
 
 const createAssetShape = (props) => {
@@ -48,7 +48,7 @@ const createAssetShape = (props) => {
       return {
         type,
         name,
-        url
+        url,
       };
     case ASSET_TYPES.ALBUM:
       return {
@@ -57,12 +57,12 @@ const createAssetShape = (props) => {
         url,
         year,
         description,
-        author
+        author,
       };
     default:
       return {
         type,
-        name
+        name,
       };
   }
 };
@@ -135,11 +135,11 @@ const CreateAssetDropdown = ({ onAssetCreate, supportedTypes }) => {
 
 CreateAssetDropdown.propTypes = {
   onAssetCreate: func.isRequired,
-  supportedTypes: arrayOf(string)
+  supportedTypes: arrayOf(string),
 };
 
 CreateAssetDropdown.defaultProps = {
-  supportedTypes: []
+  supportedTypes: [],
 };
 
 export default CreateAssetDropdown;

@@ -14,7 +14,7 @@ const createPermission = async (req, res) => {
       action,
       role,
       attributes,
-      permitted: role === USER_ROLES.SUPER // defaults to true for super admin
+      permitted: role === USER_ROLES.SUPER, // defaults to true for super admin
     }));
 
     const tasks = permissions.map((permission) => new Permissions(permission).save());
@@ -31,7 +31,7 @@ module.exports = (router) => {
     [
       body('resource').isString().escape(),
       body('action').isString().escape(),
-      body('attributes').if(body('attributes').exists()).isArray()
+      body('attributes').if(body('attributes').exists()).isArray(),
     ],
     handle400,
     createPermission);

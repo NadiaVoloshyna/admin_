@@ -11,5 +11,5 @@ export const AssetType = {
   created: string.isRequired,
   author: string,
   year: number,
-  description: string
+  description: string,
 };

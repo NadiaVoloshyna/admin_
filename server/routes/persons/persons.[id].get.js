@@ -17,7 +17,7 @@ const getResource = async (req, res, next) => {
         populate: [{
           path: 'user',
           model: 'User',
-        }]
+        }],
       }])
       .exec();
 
@@ -57,7 +57,7 @@ const getGoogleDocument = async (req, res, next) => {
       const { modifiedTime, lastModifyingUser } = response.data;
       documentMeta = {
         modifiedTime,
-        lastModifiedBy: (lastModifyingUser && lastModifyingUser.displayName) || null
+        lastModifiedBy: (lastModifyingUser && lastModifyingUser.displayName) || null,
       };
     } else {
       throw new Error("Couldn't fetch file's metadata");
@@ -70,8 +70,8 @@ const getGoogleDocument = async (req, res, next) => {
     ...person,
     biography: {
       ...person.biography,
-      ...documentMeta
-    }
+      ...documentMeta,
+    },
   };
 
   res.locals.response = responseBody;
@@ -83,7 +83,7 @@ module.exports = (router) => {
    * Get single person
    */
   router.get('/:id', [
-    check('id').isMongoId()
+    check('id').isMongoId(),
   ],
   handle400,
   getResource,

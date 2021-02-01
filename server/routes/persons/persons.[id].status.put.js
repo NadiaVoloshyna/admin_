@@ -18,7 +18,7 @@ const getResource = async (req, res, next) => {
         populate: [{
           path: 'user',
           model: 'User',
-        }]
+        }],
       }])
       .exec();
 
@@ -65,7 +65,7 @@ const updateStatus = async (req, res) => {
       await GoogleApi.updatePermission(
         fileId,
         permissionId,
-        getRoleToUpdate(status, user.role)
+        getRoleToUpdate(status, user.role),
       );
     });
 
@@ -78,7 +78,7 @@ const updateStatus = async (req, res) => {
     await Person.updateOne(
       { _id: id },
       { status },
-      { hookMeta }
+      { hookMeta },
     );
 
     res.status(200).end();
@@ -96,7 +96,7 @@ module.exports = (router) => {
       PERSON_POST_STATUSES.IN_PROGRESS,
       PERSON_POST_STATUSES.IN_REVIEW,
       PERSON_POST_STATUSES.READY,
-      PERSON_POST_STATUSES.PUBLISHED
+      PERSON_POST_STATUSES.PUBLISHED,
     ]),
   ],
   handle400,

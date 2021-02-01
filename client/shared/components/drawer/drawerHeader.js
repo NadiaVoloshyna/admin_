@@ -21,7 +21,7 @@ const DrawerHeader = (props) => {
 DrawerHeader.propTypes = {
   children: oneOfType([
     arrayOf(node),
-    node
+    node,
   ]).isRequired,
 
   onClose: func,

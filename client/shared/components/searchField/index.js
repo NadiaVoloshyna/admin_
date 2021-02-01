@@ -30,7 +30,7 @@ const SearchField = () => {
       defaultValue={searchTerm}
       size="lg"
       prepend={{
-        icon: 'search'
+        icon: 'search',
       }}
     />
   );

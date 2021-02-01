@@ -16,7 +16,7 @@ module.exports = (router) => {
     body('lastName').exists().escape(),
     body('email').exists().isEmail().escape(),
     body('password').exists().escape(),
-    body('token').exists().escape()
+    body('token').exists().escape(),
   ], handle400, async (req, res) => {
     const { firstName, lastName, email, password, token } = req.body;
     let invitation;
@@ -44,7 +44,7 @@ module.exports = (router) => {
         await GoogleApi.createPermission(
           process.env.GOOGLE_DOC_ROOT_FOLDER_ID,
           GOOGLE_USER_ROLES.READER,
-          email
+          email,
         );
       } catch (error) {
         return req.handle500(error);

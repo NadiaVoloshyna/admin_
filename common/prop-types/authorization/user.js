@@ -11,5 +11,5 @@ export const UserType = {
   role: oneOf(Object.values(USER_ROLES)),
   active: bool,
   _id: string,
-  permissions: array
+  permissions: array,
 };

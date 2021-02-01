@@ -15,11 +15,11 @@ const Home = (props) => (
 );
 
 Home.propTypes = {
-  statusCode: number
+  statusCode: number,
 };
 
 Home.defaultProps = {
-  statusCode: null
+  statusCode: null,
 };
 
 export default Home;

@@ -30,7 +30,7 @@ const AddAttributesDrawer = (props) => {
 
     const option = (item) => ({
       value: item,
-      label: item
+      label: item,
     });
 
     if (Array.isArray(attr)) {

@@ -17,11 +17,11 @@ const PersonActions = ({ disableActions }) => (
 );
 
 PersonActions.propTypes = {
-  disableActions: bool
+  disableActions: bool,
 };
 
 PersonActions.defaultProps = {
-  disableActions: false
+  disableActions: false,
 };
 
 export default PersonActions;

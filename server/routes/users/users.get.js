@@ -10,8 +10,8 @@ const validators = [
   query('role').if(query('role').exists()).escape().isString(),
   query('status').if(query('status').exists()).escape().isString(),
   query('sort').if(query('sort').exists()).escape().isIn(
-    createSortVarints('fullName', 'created', 'role', 'email')
-  )
+    createSortVarints('fullName', 'created', 'role', 'email'),
+  ),
 ];
 
 module.exports = (router) => {
@@ -20,12 +20,12 @@ module.exports = (router) => {
       req.query = {
         ...req.query,
         // transforma status from `active` to true and from `blocked` to false
-        ...(req.query.status && { active: req.query.status === 'active' })
+        ...(req.query.status && { active: req.query.status === 'active' }),
       };
 
       const { query, options } = createQueryForPagination({
         query: req.query,
-        searchBy: ['firstName', 'lastName']
+        searchBy: ['firstName', 'lastName'],
       });
 
       const response = await User.paginate(query, options);

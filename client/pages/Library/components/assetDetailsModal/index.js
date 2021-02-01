@@ -40,7 +40,7 @@ const AssetDetailsModal = ({ show, item, setShow }) => {
 AssetDetailsModal.propTypes = {
   show: bool.isRequired,
   item: shape(AssetType).isRequired,
-  setShow: func.isRequired
+  setShow: func.isRequired,
 };
 
 export default AssetDetailsModal;

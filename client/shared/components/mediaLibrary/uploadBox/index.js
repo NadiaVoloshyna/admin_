@@ -14,7 +14,7 @@ const UploadBox = ({ open }) => {
 };
 
 UploadBox.propTypes = {
-  open: bool.isRequired
+  open: bool.isRequired,
 };
 
 export default UploadBox;

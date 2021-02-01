@@ -23,10 +23,10 @@ app.prepare().then(() => {
   const sessionConfig = {
     secret: 'secret',
     cookie: {
-      maxAge: 86400 * 1000 // 24 hours in milliseconds
+      maxAge: 86400 * 1000, // 24 hours in milliseconds
     },
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
   };
 
   const multerMiddleware = multer({

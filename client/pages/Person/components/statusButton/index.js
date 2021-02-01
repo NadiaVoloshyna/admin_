@@ -8,44 +8,44 @@ const config = {
   [PERSON_POST_STATUSES.NEW]: {
     text: 'Start',
     variant: 'secondary',
-    newStatus: PERSON_POST_STATUSES.IN_PROGRESS
+    newStatus: PERSON_POST_STATUSES.IN_PROGRESS,
   },
   [PERSON_POST_STATUSES.IN_PROGRESS]: {
     text: 'To Review',
     variant: 'primary',
-    newStatus: PERSON_POST_STATUSES.IN_REVIEW
+    newStatus: PERSON_POST_STATUSES.IN_REVIEW,
   },
   [PERSON_POST_STATUSES.IN_REVIEW]: [{
     text: 'Reject',
     variant: 'danger',
-    newStatus: PERSON_POST_STATUSES.IN_PROGRESS
+    newStatus: PERSON_POST_STATUSES.IN_PROGRESS,
   }, {
     text: 'Accept',
     variant: 'warning',
-    newStatus: PERSON_POST_STATUSES.READY
+    newStatus: PERSON_POST_STATUSES.READY,
   }],
   [PERSON_POST_STATUSES.READY]: [{
     text: 'Back to Review',
     variant: 'danger',
-    newStatus: PERSON_POST_STATUSES.IN_REVIEW
+    newStatus: PERSON_POST_STATUSES.IN_REVIEW,
   }, {
     text: 'Publish',
     variant: 'success',
-    newStatus: PERSON_POST_STATUSES.PUBLISHED
+    newStatus: PERSON_POST_STATUSES.PUBLISHED,
   }],
   [PERSON_POST_STATUSES.PUBLISHED]: {
     text: 'Unpublish',
     variant: 'danger',
-    newStatus: PERSON_POST_STATUSES.ON_HOLD
+    newStatus: PERSON_POST_STATUSES.ON_HOLD,
   },
   [PERSON_POST_STATUSES.ON_HOLD]: [{
     text: 'Back to Review',
     variant: 'danger',
-    newStatus: PERSON_POST_STATUSES.IN_REVIEW
+    newStatus: PERSON_POST_STATUSES.IN_REVIEW,
   }, {
     text: 'Publish',
     variant: 'success',
-    newStatus: PERSON_POST_STATUSES.PUBLISHED
+    newStatus: PERSON_POST_STATUSES.PUBLISHED,
   }],
 };
 
@@ -80,11 +80,11 @@ const StatusButton = ({ updateStatus, permissions }) => {
 
 StatusButton.propTypes = {
   permissions: shape(object).isRequired,
-  updateStatus: func
+  updateStatus: func,
 };
 
 StatusButton.defaultProps = {
-  updateStatus: () => {}
+  updateStatus: () => {},
 };
 
 export default StatusButton;

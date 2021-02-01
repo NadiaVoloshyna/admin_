@@ -41,7 +41,7 @@ const findResource = async (req, res, next) => {
       // Person with this name exist
       return res.status(409).send({
         id: person._id,
-        name: person.name
+        name: person.name,
       });
     }
   } catch (error) {
@@ -75,7 +75,7 @@ const createDocumentPermission = async (req, res, next) => {
   try {
     if (user.role === USER_ROLES.AUTHOR) {
       const { data: { id } } = await GoogleApi.createPermission(
-        fileId, GOOGLE_USER_ROLES.READER, user.email
+        fileId, GOOGLE_USER_ROLES.READER, user.email,
       );
 
       const permission = {
@@ -103,7 +103,7 @@ const createAsset = async (req, res, next) => {
     const rootAsset = await new Asset({
       type: 'FOLDER',
       name,
-      createdBy: user._id
+      createdBy: user._id,
     }).save();
 
     res.locals.rootAssetId = rootAsset._id;
@@ -124,8 +124,8 @@ const createPerson = async (req, res) => {
     rootAssetId,
     createdBy: user._id,
     biography: {
-      documentId: fileId
-    }
+      documentId: fileId,
+    },
   };
 
   // Create person
@@ -137,7 +137,7 @@ const createPerson = async (req, res) => {
 
   res.status(302).send({
     id: newPerson._id,
-    name: newPerson.name
+    name: newPerson.name,
   });
 };
 

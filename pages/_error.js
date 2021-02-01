@@ -22,11 +22,11 @@ Error.getInitialProps = ({ res, err }) => {
 };
 
 Error.propTypes = {
-  statusCode: number
+  statusCode: number,
 };
 
 Error.defaultProps = {
-  statusCode: null
+  statusCode: null,
 };
 
 export default Error;

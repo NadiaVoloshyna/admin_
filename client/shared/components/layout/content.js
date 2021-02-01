@@ -7,7 +7,7 @@ const LayoutContent = (props) => {
   const {
     children,
     className,
-    isLoading
+    isLoading,
   } = props;
 
   const contentCX = cx('row flex-grow-1 page-content', className);
@@ -63,7 +63,7 @@ LayoutContent.propTypes = {
   isLoading: bool,
   children: oneOfType([
     arrayOf(node),
-    node
+    node,
   ]).isRequired,
 };
 

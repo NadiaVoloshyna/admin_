@@ -37,6 +37,6 @@ module.exports = (router) => {
     query('token', 'Token is invalid')
       .exists()
       .escape()
-      .custom(value => value.length === 32)
+      .custom(value => value.length === 32),
   ], canShowRegistrationForm);
 };

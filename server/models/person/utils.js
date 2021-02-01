@@ -6,7 +6,7 @@ const personActivity = (user, document, updates) => {
     const diffs = keys.map(key => ({
       key,
       from: document[key],
-      to: fields[key]
+      to: fields[key],
     }));
 
     return JSON.stringify(diffs);
@@ -34,7 +34,7 @@ exports.createActivity = (options, document, updates) => {
 
     case '/:id/status':
       return {
-        message: `${user.fullName} <b>changed status</b> from ${oldStatus} to ${newStatus}`
+        message: `${user.fullName} <b>changed status</b> from ${oldStatus} to ${newStatus}`,
       };
 
     default:

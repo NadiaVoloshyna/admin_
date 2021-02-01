@@ -11,7 +11,7 @@ const updatePermission = async (req, res) => {
     await Permissions.updateOne(
       { _id: id },
       { permitted, attributes },
-      { multi: true }
+      { multi: true },
     );
   } catch (error) {
     return req.handle500(error);

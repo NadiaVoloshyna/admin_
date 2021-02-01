@@ -5,10 +5,10 @@ const optionsGenerators = {
     const [sortBy, value] = sort.split(',');
     return {
       sort: {
-        [sortBy]: value
+        [sortBy]: value,
       },
     };
-  }
+  },
 };
 
 const queryGenerators = {
@@ -18,8 +18,8 @@ const queryGenerators = {
     const getFieldQuery = (field) => ({
       [field]: {
         $regex: q,
-        $options: 'i'
-      }
+        $options: 'i',
+      },
     });
 
     return searchBy.reduce((queries, field) => {
@@ -42,8 +42,8 @@ const queryGenerators = {
     return {
       role: {
         $ne: 'super', // find all but when role is super
-        $in: values
-      }
+        $in: values,
+      },
     };
   },
   active: ({ active }) => ({ active }),
@@ -53,7 +53,7 @@ const queryGenerators = {
 function construct(generators, query, searchBy) {
   return Object.entries(generators).reduce((acc, [key, generator]) => ({
     ...acc,
-    ...(typeof query[key] !== 'undefined' && generator(query, searchBy))
+    ...(typeof query[key] !== 'undefined' && generator(query, searchBy)),
   }), {});
 }
 
@@ -63,8 +63,8 @@ const createQueryForPagination = ({ query, user, searchBy = ['name'] }) => {
     return {
       query: {},
       options: {
-        pagination: false
-      }
+        pagination: false,
+      },
     };
   }
 

@@ -16,7 +16,7 @@ export const reduceResource = (items, name) => {
 export const flattenObject = (items, [key, value]) => {
   return Object.entries(items).map(([resource, actions]) => ({
     [key]: resource,
-    [value]: actions
+    [value]: actions,
   }));
 };
 
@@ -30,13 +30,13 @@ export const flattenPermissions = (permissions) => {
     actions = actions.map(action => {
       return {
         ...action,
-        roles: _sortBy(action.roles, ['role'])
+        roles: _sortBy(action.roles, ['role']),
       };
     });
 
     return {
       ...item,
-      actions
+      actions,
     };
   });
 };
@@ -51,7 +51,7 @@ export const getResources = (permissions) => {
 export const getRoles = () => {
   return Object.keys(USER_ROLES).map(item => ({
     value: item.toLowerCase(),
-    label: _upperFirst(item.toLowerCase())
+    label: _upperFirst(item.toLowerCase()),
   }));
 };
 
@@ -60,6 +60,6 @@ export const getActions = (permissions, resource, role) => {
     .filter(item => item.resource === resource && item.role === role)
     .map(item => ({
       value: item.action,
-      label: _upperFirst(item.action.toLowerCase())
+      label: _upperFirst(item.action.toLowerCase()),
     }));
 };

@@ -30,7 +30,7 @@ const Image = ({ onDismiss, onSubmit }) => {
     onSubmit({
       name: value,
       url: image.url,
-      type: ASSET_TYPES.IMAGE
+      type: ASSET_TYPES.IMAGE,
     });
   };
 
@@ -77,7 +77,7 @@ const Image = ({ onDismiss, onSubmit }) => {
 
 Image.propTypes = {
   onDismiss: func.isRequired,
-  onSubmit: func.isRequired
+  onSubmit: func.isRequired,
 };
 
 export default Image;

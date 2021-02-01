@@ -63,7 +63,7 @@ CloudinaryUpload.propTypes = {
   onError: func,
   btnText: string,
   width: number,
-  height: number
+  height: number,
 };
 
 CloudinaryUpload.defaultProps = {
@@ -71,7 +71,7 @@ CloudinaryUpload.defaultProps = {
   onError: () => {},
   btnText: 'Open Assets',
   width: 0,
-  height: 0
+  height: 0,
 };
 
 export default CloudinaryUpload;

@@ -8,45 +8,45 @@ const schema = new Schema({
   // Name of the asset. E.g. name of the folder, image, album and so on
   name: {
     type: String,
-    required: true
+    required: true,
   },
   // Parent folder id
   parent: {
-    type: ObjectId
+    type: ObjectId,
   },
   // Type of the asset
   type: {
     type: String,
     required: true,
-    enum: ['FOLDER', 'IMAGE', 'VIDEO', 'ALBUM']
+    enum: ['FOLDER', 'IMAGE', 'VIDEO', 'ALBUM'],
   },
   // Url of the assets, image, video, etc.
   url: {
-    type: String
+    type: String,
   },
   // Id of the user who created the asset
   createdBy: {
     type: ObjectId,
-    required: true
+    required: true,
   },
   // Date when asset was created
   created: {
     type: Date,
     required: true,
-    default: Date.now
+    default: Date.now,
   },
   // Name of the author (in Album)
   author: {
-    type: String
+    type: String,
   },
   // Year of (song, album, video)
   year: {
-    type: Number
+    type: Number,
   },
   // Description of the asset (Album)
   description: {
-    type: String
-  }
+    type: String,
+  },
   // Recursive asset deletion
 }).pre('remove', { document: true }, async function removeHook(next) {
   try {
@@ -69,7 +69,7 @@ schema.set('toJSON', { virtuals: true });
 schema.virtual('references', {
   ref: 'References',
   localField: '_id',
-  foreignField: 'dependent'
+  foreignField: 'dependent',
 });
 
 module.exports = mongoose.model('Asset', schema, 'asset');

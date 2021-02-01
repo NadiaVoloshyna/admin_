@@ -5,5 +5,5 @@ exports.STATUSES = {
   404: 'Not Found',
   409: 'Resource Conflict',
   500: 'Indernal Server Error',
-  550: 'Permission Denied'
+  550: 'Permission Denied',
 };

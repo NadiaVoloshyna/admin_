@@ -9,5 +9,5 @@ export const UsersType = {
   created: string.isRequired,
   role: string.isRequired,
   active: bool.isRequired,
-  _id: string.isRequired
+  _id: string.isRequired,
 };

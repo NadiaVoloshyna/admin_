@@ -49,11 +49,11 @@ const MediaLibraryModal = ({ triggerComponent, onAssetSelect }) => {
 
 MediaLibraryModal.propTypes = {
   triggerComponent: elementType,
-  onAssetSelect: func.isRequired
+  onAssetSelect: func.isRequired,
 };
 
 MediaLibraryModal.defaultProps = {
-  triggerComponent: null
+  triggerComponent: null,
 };
 
 export default MediaLibraryModal;

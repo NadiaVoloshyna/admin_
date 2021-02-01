@@ -9,8 +9,8 @@ module.exports = (router) => {
     body('role').isIn([
       USER_ROLES.ADMIN,
       USER_ROLES.AUTHOR,
-      USER_ROLES.REVIEWER
-    ])
+      USER_ROLES.REVIEWER,
+    ]),
   ], handle400, async (req, res) => {
     const { role } = req.body;
     const { id } = req.params;
@@ -18,7 +18,7 @@ module.exports = (router) => {
     try {
       await User.updateOne(
         { _id: id },
-        { role }
+        { role },
       );
     } catch (error) {
       return req.handle500(error);

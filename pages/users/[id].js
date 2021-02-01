@@ -21,29 +21,29 @@ User.getInitialProps = async (ctx) => {
 
   if (req && req.user && req.user.id === query.id) {
     return {
-      currentUser: req.user
+      currentUser: req.user,
     };
   }
 
   try {
     const { data } = await UserAPI.getUser(query.id);
     return {
-      currentUser: data
+      currentUser: data,
     };
   } catch (error) {
     logger.error(error);
     return {
-      statusCode: (error.response && error.response.status) || 500
+      statusCode: (error.response && error.response.status) || 500,
     };
   }
 };
 
 User.propTypes = {
-  statusCode: number
+  statusCode: number,
 };
 
 User.defaultProps = {
-  statusCode: null
+  statusCode: null,
 };
 
 export default User;

@@ -10,7 +10,7 @@ passport.use(
   new GoogleStrategy({
     callbackURL: '/auth/google/redirect',
     clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET
+    clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
   }, async (accessToken, refreshToken, profile, done) => {
     try {
       const currentUser = await User.findOne({ 'google.id': profile.id });
@@ -19,13 +19,13 @@ passport.use(
       } else {
         done(
           `Unfortunatelly you don't have access to this site. 
-          If you beleave you should have access contact your administrator.`
+          If you beleave you should have access contact your administrator.`,
         );
       }
     } catch (error) {
       done('Something unexpected has happened');
     }
-  })
+  }),
 );
 
 async function verifyPassword(userPassword, password) {
@@ -34,7 +34,7 @@ async function verifyPassword(userPassword, password) {
 
 passport.use(new LocalStrategy({
   usernameField: 'email',
-  passwordField: 'password'
+  passwordField: 'password',
 },
 async (email, password, done) => {
   try {
@@ -45,7 +45,7 @@ async (email, password, done) => {
     } else {
       done(
         `Unfortunatelly you don't have access to this site. 
-          If you beleave you should have access contact your administrator.`
+          If you beleave you should have access contact your administrator.`,
       );
     }
   } catch (error) {
