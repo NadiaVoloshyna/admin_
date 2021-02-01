@@ -1,14 +1,14 @@
 .alert {
-  border-radius: 0 !important;
-  color: #FFFFFF !important;
+  border-radius: 0;
+  color: #FFFFFF;
   font-size: $alert-font-size;
   line-height: 19px;
 }
 
 .alert-success {
-  background-color: rgba($success, .6) !important;
+  background-color: rgba($success, .6);
 }
 
 .alert-danger {
-  background-color: rgba($danger, .6) !important;
+  background-color: rgba($danger, .6);
 }

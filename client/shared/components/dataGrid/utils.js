@@ -1,7 +1,7 @@
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import format from 'date-fns/format';
-import Avatar from 'shared/components/avatar';
+import AvatarGroup from './components/avatarGroup';
 import TextFormatter from './formatters/text';
 
 const statuses = {
@@ -71,29 +71,7 @@ export const professionsFormatter = (cell) => {
   );
 };
 
-export const usersFormatter = (cell) => {
-  const users = cell.map(item => item.name);
-  return (
-    <div>
-      { users.map(item => (
-        <div key={item}>{item} <br /></div>
-      )) }
-    </div>
-  );
-};
-
-export const userFormatter = (name, cell) => {
-  return (
-    <div className="d-flex align-items-center">
-      <Avatar
-        size="sm"
-        image={cell.image}
-        className="mr-3"
-      />
-      <div>{name}</div>
-    </div>
-  );
-};
+export const usersFormatter = (users) => (<AvatarGroup users={users} />);
 
 // eslint-disable-next-line
 export const checkboxRenderer = ({ mode, ...rest }) => (
