@@ -41,6 +41,7 @@ module.exports = (router) => {
             .filter(item => item.user.role === role)
             .map(item => ({
               name: item.user.fullName, // change this to a function which excepts fields to return
+              image: item.user.image,
             })); // remove unnecessary data
         };
 
