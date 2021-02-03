@@ -2,30 +2,30 @@
   .custom-control-input {
     &:checked ~ .custom-control-label::before {
       border: none;
-      background-color: $success !important;
+      background-color: $success;
     }
 
     &:checked ~ .custom-control-label::after {
-      transform: translateX(calc(1.625rem - 4px)) !important;
+      transform: translateX(calc(1.625rem - 4px));
     }
 
     &[disabled] ~ .custom-control-label::before,
     &:disabled ~ .custom-control-label::before {
-      background-color: $switch-bg-normal !important;
+      background-color: $switch-bg-normal;
       border: none;
     }
   }
 
   .custom-control-label {
     &::before {
-      width: 2.75rem !important;
-      left: -3.25rem !important;
+      width: 2.75rem;
+      left: -3.25rem;
       top: 0;
-      height: 1.375rem !important;
-      border-radius: 1rem !important;
+      height: 1.375rem;
+      border-radius: 1rem;
 
       border: none;
-      background-image: none !important;
+      background-image: none;
       background-color: $switch-bg-normal;
     }
 
@@ -35,13 +35,13 @@
     }
 
     &::after {
-      width: 1.125rem !important;
-      height: 1.125rem !important;
-      top: calc(0rem + 2px) !important;
-      left: calc(-3.25rem + 2px) !important;
-      border-radius: 50% !important;
+      width: 1.125rem;
+      height: 1.125rem;
+      top: calc(0rem + 2px);
+      left: calc(-3.25rem + 2px);
+      border-radius: 50%;
       filter: drop-shadow(0px 2px 4px rgba($gray-700, 0.2));
-      background-color: $switch-thumb-bg !important;
+      background-color: $switch-thumb-bg;
     }
   }
 }
