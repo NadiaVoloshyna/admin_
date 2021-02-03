@@ -26,7 +26,7 @@ const UploadDrawer = ({ isOpen, onClose, onUpload }) => {
       </Drawer.Header>
 
       <Drawer.Body>
-        <Dropzone ref={childRef} />
+        <Dropzone ref={childRef} variant="rounded" />
       </Drawer.Body>
 
       <Drawer.Footer>

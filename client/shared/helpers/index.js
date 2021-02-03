@@ -19,26 +19,3 @@ export const isOfType = (type) => ({
   isVideo:  type === 'VIDEO',
   isAlbum:  type === 'ALBUM',
 });
-
-export const constructBreadcrumbs = (path) => {
-  path = path ? path.split('/') : [];
-  return ['Root', ...path];
-};
-
-export const applyBreadcrumbs = (breadcrumbs, folder) => {
-  let crumbs = breadcrumbs;
-
-  if (folder.name !== 'Root') {
-    const index = crumbs.findIndex(item => item._id === folder._id);
-
-    if (index === -1) {
-      crumbs.push(folder);
-    } else {
-      crumbs = crumbs.splice(0, index + 1);
-    }
-  } else {
-    crumbs = [];
-  }
-
-  return crumbs;
-};
