@@ -1,20 +1,20 @@
 table {
   margin: 0;
-  border-collapse: inherit !important;
+  border-collapse: inherit;
   border-spacing: 0 8px;
 }
 
 table th {
   color: $table-head-color;
   font-weight: 500;
-  font-size: .75rem !important;
-  padding: 8px 16px !important;
+  font-size: .75rem;
+  padding: 8px 16px;
 }
 
 /* td */
-table tr td {
+.table td {
   height: 72px;
-  vertical-align: middle !important;
+  vertical-align: middle;
 }
 
 table tbody tr:not(.inactive) {
