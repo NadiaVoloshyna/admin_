@@ -54,6 +54,6 @@
     "import/no-cycle": "off",
     "no-return-await": "off",
     "radix": "off",
-    "linebreak-style": 0
+    "linebreak-style": ["error", "windows"]
   }
 }
