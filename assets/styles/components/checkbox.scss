@@ -48,10 +48,10 @@ input[type="checkbox"] + label {
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
-  background-image: none !important;
+  background-image: none;
 }
 
 .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: $white !important;
-  border-color: $gray-600 !important;
+  background-color: $white;
+  border-color: $gray-600;
 }

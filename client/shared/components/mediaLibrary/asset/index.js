@@ -1,11 +1,14 @@
 import React from 'react';
 import { shape, func, bool } from 'prop-types';
 import Card from 'react-bootstrap/Card';
-import { applyTransformations, isOfType, getAssetMetadata } from '../helpers';
+import { isOfType, getAssetMetadata } from '../helpers';
 import Draggable from './draggable';
 import Droppable from './droppable';
 import Actions from '../actionsMenu';
 import { AssetType } from '../../../prop-types';
+
+// TODO: move to the config
+const IMAGE_URL = 'https://storage.googleapis.com/ukrainian-assets/';
 
 const Asset = (props) => {
   const {
@@ -41,7 +44,7 @@ const Asset = (props) => {
             && (
             <Card.Img
               variant="top"
-              src={applyTransformations(url, 'c_thumb,w_auto,c_scale')}
+              src={`${IMAGE_URL}${url}`}
             />
             )}
 
