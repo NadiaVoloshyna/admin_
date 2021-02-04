@@ -53,7 +53,6 @@
     "max-len": ["error", 130, 2],
     "import/no-cycle": "off",
     "no-return-await": "off",
-    "radix": "off",
-    "linebreak-style": 0
+    "radix": "off"
   }
 }
