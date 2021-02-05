@@ -1,13 +1,12 @@
 .preview {
-  height: 312px;
+  height: 168px;
   text-align: center;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   outline: none;
 }
 
-.thumbnail {
-  width: 100%;
+.rounded {
+  height: 312px;
   border-radius: 50%;
 }

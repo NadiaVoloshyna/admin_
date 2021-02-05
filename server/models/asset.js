@@ -55,6 +55,7 @@ const schema = new Schema({
 
     children.forEach(doc => {
       doc.remove();
+      // TODO: remove from Google storage
     });
 
     next();
