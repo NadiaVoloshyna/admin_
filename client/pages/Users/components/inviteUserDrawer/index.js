@@ -62,7 +62,7 @@ const InviteUserDrawer = ({ onApply, canInviteAdmin }) => {
                           >
                             {props => (
                               // eslint-disable-next-line react/prop-types
-                              <BootstrapForm.Check {...props.input} label={item} />
+                              <BootstrapForm.Check {...props.input} label={item} type="radio" name="roles" id={`roles-${item}`} />
                             )}
                           </Field>
                         </ListGroup.Item>
