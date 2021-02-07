@@ -5,6 +5,7 @@ const DrivePermission = require('../../models/drivePermission');
 const Activity = require('../../models/activity');
 const GoogleApi = require('../../services/google');
 const helpers = require('../../helpers/permissions');
+const { getHooksContext } = require('../../helpers');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 // TODO: split into middlewares and add permissions check
@@ -17,8 +18,16 @@ module.exports = (router) => {
     const { userId } = req.body;
 
     try {
-      const person = await Person.findById(_id);
       const user = await User.findById({ _id: userId });
+
+      const person = await Person.findOneAndUpdate(
+        { _id },
+        { $push: { [`${user.role}s`]: userId } },
+        {
+          new: true,
+          hookMeta: getHooksContext(req),
+        },
+      );
 
       const { biography: { documentId }, status } = person;
 

@@ -55,11 +55,15 @@ const schema = new Schema({
     },
     modifiedTime: Date,
     lastModifiedBy: String,
-    permissions: {
-      authors: Array,
-      reviewers: Array,
-    },
   },
+  authors: [{
+    type: ObjectId,
+    ref: 'User',
+  }],
+  reviewers: [{
+    type: ObjectId,
+    ref: 'User',
+  }],
   born: Date,
   died: Date,
   title: String,

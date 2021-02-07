@@ -10,7 +10,7 @@ import { USER_ROLES } from 'common/constants';
 const roles = Object.values(USER_ROLES).filter(item => item !== USER_ROLES.SUPER);
 
 const FilterByRoleDrawer = () => {
-  const { addQueryParams, getQueryParams } = useListDataFetch();
+  const { toggleQueryParams, getQueryParams } = useListDataFetch();
   const role = getQueryParams('role');
   const selectedRoles = role ? role.split(',') : [];
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +18,7 @@ const FilterByRoleDrawer = () => {
   let submitHandler;
 
   const onFilterApply = async (values) => {
-    addQueryParams('role', values.role);
+    toggleQueryParams({ role: values.role });
     setIsOpen(false);
   };
 

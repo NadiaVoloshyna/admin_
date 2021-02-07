@@ -12,6 +12,7 @@ const validators = [
   query('sort').if(query('sort').exists()).escape().isIn(
     createSortVarints('fullName', 'created', 'role', 'email'),
   ),
+  query('pagination').if(query('pagination').exists()).isBoolean(),
 ];
 
 module.exports = (router) => {

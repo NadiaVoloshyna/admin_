@@ -71,7 +71,10 @@ export const professionsFormatter = (cell) => {
   );
 };
 
-export const usersFormatter = (users) => (<AvatarGroup users={users} />);
+export const usersFormatter = (field, row) => {
+  if (typeof field === 'string') return <AvatarGroup users={row} />;
+  return <AvatarGroup users={field} />;
+};
 
 // eslint-disable-next-line
 export const checkboxRenderer = ({ mode, ...rest }) => (

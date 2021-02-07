@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
-import _pull from 'lodash/pull';
+import _omitBy from 'lodash/omitBy';
+import _isNull from 'lodash/isNull';
+import queryString from 'query-string';
 import { PageContext } from 'shared/context';
 
 const useListDataFetch = () => {
@@ -8,45 +10,32 @@ const useListDataFetch = () => {
   const router = useRouter();
   const { pathname, query } = router;
 
-  const addQueryParams = async (key, value) => {
+  const getQueryParams = (param, isArray) => {
+    const query = router.query[param];
+
+    if (!isArray) return query;
+
+    return query ? query.split(',') : [];
+  };
+
+  const toggleQueryParams = async (params) => {
     setIsLoading(true);
 
-    if (typeof value === 'undefined' && typeof query[key] !== 'undefined') {
-      delete query[key];
-    } else {
-      query[key] = Array.isArray(value)
-        ? value.join(',')
-        : value;
-    }
+    const newQuery = queryString.stringify(_omitBy({
+      ...query,
+      ...params,
+    }, _isNull), { arrayFormat: 'comma' });
 
     await router.push({
       pathname,
-      query,
+      query: newQuery,
     });
 
     setIsLoading(false);
   };
 
-  const getQueryParams = (param) => {
-    return router.query[param];
-  };
-
-  const removeQueryParam = (param, value) => {
-    const { query } = router;
-
-    if (!query[param]) return;
-
-    if (!value || query[param] === value) {
-      return addQueryParams(param);
-    }
-
-    const currentValues = query[param].split(',');
-    let updatedValues = _pull(currentValues, value);
-    updatedValues = updatedValues.length > 1
-      ? updatedValues.join(',')
-      : updatedValues;
-
-    addQueryParams(param, updatedValues);
+  const removeQueryParam = (param) => {
+    toggleQueryParams({ [param]: null });
   };
 
   const refetchQuery = async () => {
@@ -57,10 +46,10 @@ const useListDataFetch = () => {
   };
 
   return {
-    addQueryParams,
     getQueryParams,
     removeQueryParam,
     refetchQuery,
+    toggleQueryParams,
   };
 };
 

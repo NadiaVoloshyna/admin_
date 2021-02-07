@@ -21,7 +21,7 @@ const definePages = (current, total) => {
 };
 
 const Pagination = ({ pages }) => {
-  const { addQueryParams, getQueryParams } = useListDataFetch();
+  const { toggleQueryParams, getQueryParams } = useListDataFetch();
   const offset = parseInt(getQueryParams('offset') || 0);
   const [current, setCurrent] = useState(offset + 1);
 
@@ -35,7 +35,7 @@ const Pagination = ({ pages }) => {
   const navigate = (item) => {
     if (current === item) return;
     setCurrent(item);
-    addQueryParams('offset', item - 1);
+    toggleQueryParams({ offset: item - 1 });
   };
 
   const onPrevClick = () => {

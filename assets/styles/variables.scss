@@ -5,10 +5,25 @@
 
 $font-family-sans-serif: 'Roboto', sans-serif;
 
-$status-in-progress:      #D1E2E7;
-$status-in-review:        #FED808;
-$status-ready-to-publish: #4A8FE2;
-$status-published:        #7DD31F;
+// Status colors
+$color-new: rgba(#36C3FF, .75);
+$color-progress: rgba(#8567FF, .75%);
+$color-review: rgba(#FFE138, 75%);
+$color-ready: rgba(#FF9029, .75%);
+$color-hold: rgba(#FF4040, .60%);
+$color-published: #5DC288;
+
+$status-colors: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+$status-colors: (
+  "new":       $color-new,
+  "progress":  $color-progress,
+  "review":    $color-review,
+  "ready":     $color-ready,
+  "hold":      $color-hold,
+  "published": $color-published,
+);
+
 
 $transparent: transparent;
 $hover-background: $gray-700;
