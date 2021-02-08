@@ -3,15 +3,13 @@ const createResponseBody = require('./createResponseBody');
 const { logger } = require('../../services/gcp/logger');
 const { HTTP_HEADERS, LOG_TYPE } = require('../../../common/constants');
 
-const createErrorPayload = (req, error, code, status) => {
-  const { message, stack } = error;
+const createErrorPayload = (req, message, code, status) => {
   return {
     traceId: req.get(HTTP_HEADERS.X_TRACE_ID),
     status,
     code,
     message,
     errorType: LOG_TYPE.API,
-    stack,
     url: req.originalUrl,
   };
 };
@@ -24,12 +22,7 @@ const handle400 = (req, res, next) => {
   // TODO: log errors
 
   if (errors.array().length) {
-    errors.array().forEach((error) => {
-      error = new Error(error);
-      const code = 400;
-      const status = 'badRequest';
-      logger.error(createErrorPayload(req, error, code, status));
-    });
+    logger.error(createErrorPayload(req, JSON.stringify(errors.array()), 400, 'badRequest'));
     const responseBody = createResponseBody(errors.array(), 'badRequest');
     return res.status(400).send(responseBody);
   }
