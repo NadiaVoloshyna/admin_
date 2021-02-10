@@ -19,7 +19,7 @@ const LibraryPage = (props) => {
   const { user, breadcrumbs, currentFolderId } = props;
 
   const handleError = useErrorHandler();
-  const { addQueryParams } = useListDataFetch();
+  const { toggleQueryParams } = useListDataFetch();
 
   const [ assets, setAssets ] = useState(props.assets);
   const [ isLoading, setIsLoading ] = useState(false);
@@ -34,7 +34,7 @@ const LibraryPage = (props) => {
     const { isFolder, isAlbum } = isOfType(asset.type);
 
     if (isFolder || isAlbum) {
-      addQueryParams('path', asset._id);
+      toggleQueryParams({ path: asset._id });
     } else {
       setSelectedAsset(asset);
       setIsShow(true);

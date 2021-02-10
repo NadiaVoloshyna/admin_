@@ -17,7 +17,7 @@ const TYPES = {
 };
 
 const FilterDrawer = () => {
-  const { addQueryParams, getQueryParams, removeQueryParam } = useListDataFetch();
+  const { getQueryParams, toggleQueryParams } = useListDataFetch();
   const [isOpen, setIsOpen] = useState(false);
 
   const creator = getQueryParams('creator');
@@ -29,13 +29,11 @@ const FilterDrawer = () => {
   const onFilterApply = async (values) => {
     const { type, creator } = values;
 
-    if (type.length) {
-      addQueryParams('type', type);
-    } else {
-      removeQueryParam('type');
-    }
+    toggleQueryParams({
+      type,
+      creator,
+    });
 
-    addQueryParams('creator', creator);
     setIsOpen(false);
   };
 

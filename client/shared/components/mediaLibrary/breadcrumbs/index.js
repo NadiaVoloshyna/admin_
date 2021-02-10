@@ -12,14 +12,10 @@ const rootFolder = {
 };
 
 const Breadcrumbs = ({ breadcrumbs = [], root }) => {
-  const { addQueryParams, removeQueryParam } = useListDataFetch();
+  const { toggleQueryParams } = useListDataFetch();
 
   const onCrumbClick = (id) => {
-    if (id) {
-      addQueryParams('path', id);
-    } else {
-      removeQueryParam('path');
-    }
+    toggleQueryParams({ path: id });
   };
 
   return (

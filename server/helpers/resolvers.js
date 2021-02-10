@@ -75,6 +75,12 @@ const queryGenerators = {
   active: ({ active }) => ({ active }),
   path: ({ path }) => ({ parent: path || { $exists: false } }),
   createdBy: ({ user }) => ({ createdBy: user._id }),
+  authors: ({ authors }) => ({
+    authors: { $in: authors.split(',') },
+  }),
+  reviewers: ({ reviewers }) => ({
+    reviewers: { $in: reviewers.split(',') },
+  }),
 };
 
 function construct(generators, query, searchBy) {
@@ -103,6 +109,16 @@ const createQueryForPagination = ({ query, user, searchBy = ['name'] }) => {
     ...query,
     user,
   };
+
+  // Do not paginate if pagination is false
+  if (query.pagination === false) {
+    return {
+      query: construct(queryGenerators, defaultQuery),
+      options: {
+        pagination: false,
+      },
+    };
+  }
 
   return {
     query: construct(queryGenerators, defaultQuery),
