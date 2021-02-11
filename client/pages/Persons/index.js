@@ -14,6 +14,7 @@ import Pager from 'shared/components/pager';
 import SearchField from 'shared/components/searchField';
 import DataGrid from 'shared/components/dataGrid';
 import columns from './columns';
+import FilterPersonsDrawer from './components/filterDrawer';
 
 const PersonsPage = ({ user, persons, pages }) => {
   const handleError = useErrorHandler();
@@ -89,7 +90,7 @@ const PersonsPage = ({ user, persons, pages }) => {
 
           <div className="d-flex">
             <SearchField />
-            {/* <FilterByRoleDrawer /> */}
+            <FilterPersonsDrawer />
           </div>
 
           { canCreatePerson

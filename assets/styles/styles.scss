@@ -21,6 +21,15 @@
 
 @import "./components/popover.scss";
 
+@each $color, $value in $status-colors {
+  .color-#{$color} {
+    color: $value;
+  }
+
+  .bg-#{$color} {
+    background-color: $value;
+  }
+}
 
 
 .cur-pointer {

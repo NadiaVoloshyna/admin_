@@ -24,7 +24,7 @@ const AvatarGroup = (props) => {
           image={users[0].image}
           className="mr-3"
         />
-        <div>{users[0].name}</div>
+        <div>{users[0].fullName}</div>
       </div>
     );
   }
@@ -36,7 +36,7 @@ const AvatarGroup = (props) => {
           key={item.name}
           size="sm"
           image={item.image}
-          popoverContent={item.name}
+          popoverContent={item.fullName}
         />
       )) }
     </div>
