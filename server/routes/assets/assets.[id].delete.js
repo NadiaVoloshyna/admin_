@@ -24,8 +24,6 @@ const deleteAssets = async (req, res) => {
 
     await asset.remove();
 
-    // 2. Delete cloudinary asset
-    // TODO
     return res.status(200).end();
   } catch (error) {
     req.handle500(error);
