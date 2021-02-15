@@ -20,7 +20,7 @@ export const NAV_LINKS = [{
 }, {
   name: PAGE_NAMES.USERS,
   url: '/users',
-  visibleTo: ['super', 'admin'],
+  visibleTo: ['super', 'admin', 'author', 'reviewer'],
   icon: 'contacts',
 }, {
   name: 'Notifications', // TODO: update when the screen will be implemented

@@ -15,16 +15,30 @@ const checkPermissions = (req, res, next) => {
 };
 
 const findUser = async (req, res) => {
-  try {
-    const user = await User.findById({ _id: req.params.id });
-
-    if (!user) {
-      return req.handle404();
+  if (req.user.role === 'reviewer' || req.user.role === 'author') {
+    if (req.user.id === req.params.id) {
+      try {
+        const user = await User.findById({ _id: req.params.id });
+        if (!user) {
+          return req.handle404();
+        }
+        res.status(200).send(user.toObject());
+      } catch (error) {
+        req.handle500(error);
+      }
     }
+  } else {
+    try {
+      const user = await User.findById({ _id: req.params.id });
 
-    res.status(200).send(user.toObject());
-  } catch (error) {
-    req.handle500(error);
+      if (!user) {
+        return req.handle404();
+      }
+
+      res.status(200).send(user.toObject());
+    } catch (error) {
+      req.handle500(error);
+    }
   }
 };
 
