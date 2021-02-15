@@ -426,22 +426,22 @@ $hover-background: $gray-700;
 $btn-hover-border: $hover-background;
 $btn-color-secondary: transparent;
 
-$btn-padding-y:               1.035rem;
-$btn-padding-x:               1.1rem;
+$btn-padding-y:               null;
+$btn-padding-x:               null;
 $btn-font-family:             $input-btn-font-family;
 $btn-font-size:               $font-size-base;
-$btn-line-height:             .853rem;
+$btn-line-height:             1rem;
 $btn-white-space:             null; // Set to `nowrap` to prevent text wrapping
 
-$btn-padding-y-sm:            $input-btn-padding-y-sm;
-$btn-padding-x-sm:            $input-btn-padding-x-sm;
+$btn-padding-y-sm:            null;
+$btn-padding-x-sm:            null;
 $btn-font-size-sm:            .625rem;
 $btn-line-height-sm:          $input-btn-line-height-sm;
 
-$btn-padding-y-lg:            $input-btn-padding-y-lg;
-$btn-padding-x-lg:            $input-btn-padding-x-lg;
-$btn-font-size-lg:            $input-btn-font-size-lg;
-$btn-line-height-lg:          $input-btn-line-height-lg;
+$btn-padding-y-lg:            null;
+$btn-padding-x-lg:            null;
+$btn-font-size-lg:            1rem;
+$btn-line-height-lg:          1.188rem;
 
 $btn-border-width:            1px;
 
