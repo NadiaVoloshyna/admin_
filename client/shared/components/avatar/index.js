@@ -10,15 +10,28 @@ import styles from './index.module.scss';
 // TODO: this has to be moved into config
 const IMAGE_URL = 'https://storage.googleapis.com/ukrainian-assets/';
 
-const Avatar = ({ size, image, onEdit, className, popoverContent }) => {
+const Avatar = ({ fullName, sizeInitials, size, image, onEdit, className, popoverContent }) => {
   const canEdit = Boolean(onEdit);
   const usePopover = Boolean(popoverContent);
 
-  const src = image ? `${IMAGE_URL}${image}` : null;
+  const src = `${IMAGE_URL}${image}`;
+
+  fullName = fullName.replace(' ', '');
+  let initials = '';
+  for (let i = 0; i < fullName.length; i++) {
+    if (fullName[i] === fullName[i].toUpperCase()) {
+      initials += fullName[i];
+      if (initials.length === 2) {
+        break;
+      }
+      initials;
+    }
+  }
 
   const classes = classnames(
     styles.avatar,
     styles[size],
+    styles[sizeInitials],
     canEdit && styles.edit,
     className,
   );
@@ -32,7 +45,7 @@ const Avatar = ({ size, image, onEdit, className, popoverContent }) => {
       className={classes}
       onClick={onClick}
     >
-      { src && <Image src={src} roundedCircle /> }
+      { image ? (<Image src={src} roundedCircle />) : (<div className="initials">{initials}</div>)}
       { canEdit && (
         <>
           <i className="material-icons photo">insert_photo</i>
@@ -67,16 +80,20 @@ const Avatar = ({ size, image, onEdit, className, popoverContent }) => {
 
 Avatar.propTypes = {
   size: oneOf(['sm', 'md', 'lg']),
+  sizeInitials: oneOf(['sminitials', 'lginitials']),
   image: string.isRequired,
   onEdit: func,
+  fullName: string,
   className: string,
   popoverContent: oneOfType([string, element]),
 };
 
 Avatar.defaultProps = {
   size: 'md',
+  sizeInitials: 'lginitials',
   onEdit: null,
   className: '',
+  fullName: '',
   popoverContent: null,
 };
 

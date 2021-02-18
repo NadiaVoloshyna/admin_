@@ -8,7 +8,9 @@
   img {
     width: 100%;
   }
-
+  :global .initials {
+    color: 	$gray-900;
+  }
   :global .photo {
     display: none;
   }
@@ -16,6 +18,7 @@
   :global .pencil {
     display: none;
   }
+  
 }
 
 .edit {
@@ -70,4 +73,18 @@
   width: 104px;
   min-width: 104px;
   height: 104px;
+}
+
+%initials-shared {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sminitials {
+  font-size: 16px;
+  @extend %initials-shared;
+}
+.lginitials {
+  font-size: 44px;
+  @extend %initials-shared;
 }

@@ -29,8 +29,10 @@ const UserInfo = ({ user, onEdit }) => {
       <div className="col-2">
         <Avatar
           size="lg"
+          sizeInitials="lginitials"
           image={image}
           onEdit={onEdit}
+          fullName={fullName}
         />
       </div>
       <div>

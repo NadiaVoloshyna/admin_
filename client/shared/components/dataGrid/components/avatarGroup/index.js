@@ -21,8 +21,10 @@ const AvatarGroup = (props) => {
       <div className="d-flex align-items-center">
         <Avatar
           size="sm"
+          sizeInitials="sminitials"
           image={users[0].image}
           className="mr-3"
+          fullName={users[0].fullName}
         />
         <div>{users[0].fullName}</div>
       </div>
@@ -35,6 +37,7 @@ const AvatarGroup = (props) => {
         <Avatar
           key={item.name}
           size="sm"
+          sizeInitials="sminitials"
           image={item.image}
           popoverContent={item.fullName}
         />

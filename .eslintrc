@@ -53,6 +53,8 @@
     "max-len": ["error", 130, 2],
     "import/no-cycle": "off",
     "no-return-await": "off",
-    "radix": "off"
+    "radix": "off",
+    "no-console":"off",
+    "no-plusplus": "off"
   }
 }
