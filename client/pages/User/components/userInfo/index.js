@@ -13,7 +13,6 @@ const UserInfo = ({ user, onEdit }) => {
     email,
     createdAt,
     createdBy,
-    image,
   } = user;
 
   let status = 'Active';
@@ -29,10 +28,8 @@ const UserInfo = ({ user, onEdit }) => {
       <div className="col-2">
         <Avatar
           size="lg"
-          sizeInitials="lginitials"
-          image={image}
+          user={user}
           onEdit={onEdit}
-          fullName={fullName}
         />
       </div>
       <div>

@@ -2,7 +2,8 @@ import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import classnames from 'classnames';
-import { func, oneOf, string, oneOfType, element } from 'prop-types';
+import { shape, func, oneOf, string, oneOfType, element } from 'prop-types';
+import { UserType } from 'common/prop-types/authorization/user';
 import { Image } from 'react-bootstrap';
 
 import styles from './index.module.scss';
@@ -10,28 +11,18 @@ import styles from './index.module.scss';
 // TODO: this has to be moved into config
 const IMAGE_URL = 'https://storage.googleapis.com/ukrainian-assets/';
 
-const Avatar = ({ fullName, sizeInitials, size, image, onEdit, className, popoverContent }) => {
+const Avatar = ({ user, size, onEdit, className, popoverContent }) => {
+  const { image, firstName, lastName } = user;
   const canEdit = Boolean(onEdit);
   const usePopover = Boolean(popoverContent);
 
   const src = `${IMAGE_URL}${image}`;
 
-  fullName = fullName.replace(' ', '');
-  let initials = '';
-  for (let i = 0; i < fullName.length; i++) {
-    if (fullName[i] === fullName[i].toUpperCase()) {
-      initials += fullName[i];
-      if (initials.length === 2) {
-        break;
-      }
-      initials;
-    }
-  }
+  const initials = firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
 
   const classes = classnames(
     styles.avatar,
     styles[size],
-    styles[sizeInitials],
     canEdit && styles.edit,
     className,
   );
@@ -45,7 +36,8 @@ const Avatar = ({ fullName, sizeInitials, size, image, onEdit, className, popove
       className={classes}
       onClick={onClick}
     >
-      { image ? (<Image src={src} roundedCircle />) : (<div className="initials">{initials}</div>)}
+      { image && <Image src={src} roundedCircle /> }
+      { !image && <div className="initials">{initials}</div> }
       { canEdit && (
         <>
           <i className="material-icons photo">insert_photo</i>
@@ -80,20 +72,16 @@ const Avatar = ({ fullName, sizeInitials, size, image, onEdit, className, popove
 
 Avatar.propTypes = {
   size: oneOf(['sm', 'md', 'lg']),
-  sizeInitials: oneOf(['sminitials', 'lginitials']),
-  image: string.isRequired,
+  user: shape(UserType).isRequired,
   onEdit: func,
-  fullName: string,
   className: string,
   popoverContent: oneOfType([string, element]),
 };
 
 Avatar.defaultProps = {
   size: 'md',
-  sizeInitials: 'lginitials',
   onEdit: null,
   className: '',
-  fullName: '',
   popoverContent: null,
 };
 

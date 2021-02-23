@@ -23,6 +23,12 @@ module.exports = (router) => {
         user: req.user,
         query: req.query,
       });
+
+      options.populate = [
+        'createdBy',
+        { path: 'user', model: 'User' },
+      ];
+
       const response = await Profession.paginate(query, options);
 
       res.send(response);

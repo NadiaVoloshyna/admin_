@@ -56,10 +56,18 @@
   }
 }
 
+%initials-shared {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .md {
   width: 48px;
   min-width: 48px;
   height: 48px;
+  @extend %initials-shared;
+  font-size: 21px;
 }
 
 .sm {
@@ -67,24 +75,16 @@
   min-width: 40px;
   height: 40px;
   border: 2px solid $white;
+  @extend %initials-shared;
+  font-size: 16px;
 }
 
 .lg {
   width: 104px;
   min-width: 104px;
   height: 104px;
+  @extend %initials-shared;
+  font-size: 44px;
 }
 
-%initials-shared {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.sminitials {
-  font-size: 16px;
-  @extend %initials-shared;
-}
-.lginitials {
-  font-size: 44px;
-  @extend %initials-shared;
-}
+
