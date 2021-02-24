@@ -37,7 +37,7 @@ const Avatar = ({ user, size, onEdit, className, popoverContent }) => {
       onClick={onClick}
     >
       { image && <Image src={src} roundedCircle /> }
-      { !image && <div className="initials">{initials}</div> }
+      { !image && <div className={styles.initials}>{initials}</div> }
       { canEdit && (
         <>
           <i className="material-icons photo">insert_photo</i>

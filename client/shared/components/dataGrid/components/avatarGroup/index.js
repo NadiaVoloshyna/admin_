@@ -24,7 +24,7 @@ const AvatarGroup = (props) => {
           user={users[0]}
           className="mr-3"
         />
-        <div>{users[0].fullName}</div>
+        <div className={styles.name}>{users[0].fullName}</div>
       </div>
     );
   }

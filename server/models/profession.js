@@ -16,11 +16,11 @@ const schema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  createdBy: [{
+  createdBy: {
     type: ObjectId,
     ref: 'User',
     required: true,
-  }],
+  },
   description: {
     type: String,
   },

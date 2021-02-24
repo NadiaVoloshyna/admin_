@@ -4,13 +4,14 @@
   border-radius: 50%;
   background-color: $gray-500;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
     width: 100%;
   }
-  :global .initials {
-    color: 	$gray-900;
-  }
+
   :global .photo {
     display: none;
   }
@@ -18,7 +19,10 @@
   :global .pencil {
     display: none;
   }
-  
+}
+
+.initials {
+  color: $gray-900;
 }
 
 .edit {
@@ -56,17 +60,10 @@
   }
 }
 
-%initials-shared {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .md {
   width: 48px;
   min-width: 48px;
   height: 48px;
-  @extend %initials-shared;
   font-size: 21px;
 }
 
@@ -75,7 +72,6 @@
   min-width: 40px;
   height: 40px;
   border: 2px solid $white;
-  @extend %initials-shared;
   font-size: 16px;
 }
 
@@ -83,8 +79,5 @@
   width: 104px;
   min-width: 104px;
   height: 104px;
-  @extend %initials-shared;
   font-size: 44px;
 }
-
-
