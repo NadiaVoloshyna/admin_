@@ -11,9 +11,6 @@ $btn-hover-border: $hover-background;
 $btn-color-secondary: $transparent;
 
 .btn {
-  min-width: $btn-min-width;
-  min-height: 40px;
-
   &:hover,
   &:focus,
   &.focus {
@@ -28,15 +25,6 @@ $btn-color-secondary: $transparent;
     background-color: $btn-disabled !important;
     border-color: $btn-disabled !important;
   }
-}
-
-.btn-sm {
-  min-height: 30px;
-}
-
-.btn-lg {
-  min-width: $btn-min-width;
-  min-height: 48px;
 }
 
 .btn-secondary {
