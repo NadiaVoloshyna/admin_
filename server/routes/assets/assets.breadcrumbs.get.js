@@ -24,12 +24,16 @@ module.exports = (router) => {
             as: 'crumbs',
           },
         },
+        {
+          $project: {
+            'crumbs._id': 1,
+            'crumbs.name': 1,
+            name: 1,
+          },
+        },
       ]);
 
-      const crumbs = [asset[0], ...asset[0].crumbs].map(item => ({
-        _id: item._id,
-        name: item.name,
-      })).reverse();
+      const crumbs = [asset[0], ...asset[0].crumbs].reverse();
 
       res.status(200).send(crumbs);
     } catch (error) {
