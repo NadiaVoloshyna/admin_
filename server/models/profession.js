@@ -24,7 +24,7 @@ const schema = new mongoose.Schema({
   description: {
     type: String,
   },
-});
+}, { collation: { locale: 'en_US', strength: 1 } });
 
 schema.plugin(mongoosePaginate);
 
