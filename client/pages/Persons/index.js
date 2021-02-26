@@ -5,7 +5,6 @@ import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import { ERROR_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import DuplicateModal from 'pages/Persons/components/duplicateModal';
-import CreateDropdown from 'shared/components/createDropdown';
 import PersonsApi from 'pages/Persons/api';
 import { Person } from 'shared/prop-types';
 import { UserType } from 'common/prop-types/authorization/user';
@@ -14,6 +13,7 @@ import Pager from 'shared/components/pager';
 import SearchField from 'shared/components/searchField';
 import DataGrid from 'shared/components/dataGrid';
 import columns from './columns';
+import CreateButton from './components/createButton';
 import FilterPersonsDrawer from './components/filterDrawer';
 
 const PersonsPage = ({ user, persons, pages }) => {
@@ -44,10 +44,8 @@ const PersonsPage = ({ user, persons, pages }) => {
     }
   };
 
-  const onPersonCreate = async (data) => {
+  const onPersonCreate = async (name) => {
     setIsLoading(true);
-
-    const { value: name } = data;
 
     try {
       const { data: person, status } = await PersonsApi.create({ name });
@@ -93,25 +91,10 @@ const PersonsPage = ({ user, persons, pages }) => {
             <FilterPersonsDrawer />
           </div>
 
-          { canCreatePerson
-            && (
-            <CreateDropdown
-              buttonText="Create Person"
-              placeholder="Person's name"
-              onCreate={onPersonCreate}
-            />
-            )}
+          { canCreatePerson && <CreateButton onCreate={onPersonCreate} /> }
         </Layout.Navbar>
 
         <Layout.Content isLoading={isLoading}>
-          {/* <PersonsList
-            onPersonsGet={onPersonsGet}
-            onDelete={onDelete}
-            hideSelectColumn={!canDeletePerson}
-            persons={personsState}
-            pagination={paginationState}
-          /> */}
-
           <DataGrid
             data={persons}
             columns={columns}
@@ -122,7 +105,6 @@ const PersonsPage = ({ user, persons, pages }) => {
 
         <Layout.Footer>
           <Pager />
-
           <Pagination pages={pages} />
         </Layout.Footer>
       </Layout>

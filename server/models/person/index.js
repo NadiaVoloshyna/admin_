@@ -73,7 +73,8 @@ const schema = new Schema({
     required: true,
   },
   professions: [professionSchema],
-}).pre('remove', { document: true }, preRemove)
+},
+{ collation: { locale: 'en_US', strength: 1 } }).pre('remove', { document: true }, preRemove)
   .post('save', postSave)
   .post('updateOne', postUpdateOne)
   .post('findOneAndUpdate', postFindOneAndUpdate);

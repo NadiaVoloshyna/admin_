@@ -46,7 +46,7 @@ const userSchema = mongoose.Schema({
   },
 }, {
   toObject: { virtuals: true },
-});
+}, { collation: { locale: 'en_US', strength: 1 } });
 
 userSchema.virtual('fullName').get(function getFullName() {
   return `${this.firstName} ${this.lastName}`;
