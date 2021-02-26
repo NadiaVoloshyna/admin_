@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { shape, func } from 'prop-types';
+import React from 'react';
+import { shape, arrayOf, string } from 'prop-types';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { applyBreadcrumbs } from 'shared/helpers';
+import useListDataFetch from 'shared/hooks/useListDataFetch';
 import { AssetType } from '../../../prop-types';
 
 const rootFolder = {
@@ -11,28 +11,30 @@ const rootFolder = {
   type: 'FOLDER',
 };
 
-const Breadcrumbs = ({ currentFolder, onCrumbClick, root }) => {
-  const [ breadcrumbs, setBreadcrumbs ] = useState([]);
+const Breadcrumbs = ({ breadcrumbs = [], root }) => {
+  const { toggleQueryParams } = useListDataFetch();
 
-  useEffect(() => {
-    if (currentFolder) {
-      const crumbs = applyBreadcrumbs(breadcrumbs, currentFolder);
-      setBreadcrumbs(crumbs);
-    }
-  }, [currentFolder]);
+  const onCrumbClick = (id) => {
+    toggleQueryParams({ path: id });
+  };
 
   return (
     <Breadcrumb>
-      { [root, ...breadcrumbs].map(folder => {
-        const isActive = (!currentFolder || folder._id === currentFolder._id);
+      { [root, ...breadcrumbs].map((item, index) => {
+        const isCurrent = (index === breadcrumbs.length);
+        const onClick = () => {
+          if (!isCurrent) {
+            onCrumbClick(item._id);
+          }
+        };
 
         return (
           <Breadcrumb.Item
             href="#"
-            onClick={() => onCrumbClick(folder)}
-            key={folder._id}
-            active={isActive}
-          >{folder.name}</Breadcrumb.Item>
+            onClick={onClick}
+            key={item._id}
+            active={isCurrent}
+          >{item.name}</Breadcrumb.Item>
         );
       }) }
     </Breadcrumb>
@@ -40,14 +42,15 @@ const Breadcrumbs = ({ currentFolder, onCrumbClick, root }) => {
 };
 
 Breadcrumbs.propTypes = {
-  currentFolder: shape(AssetType),
-  onCrumbClick: func,
+  breadcrumbs: arrayOf(shape({
+    _id: string,
+    name: string,
+  })),
   root: shape(AssetType),
 };
 
 Breadcrumbs.defaultProps = {
-  currentFolder: null,
-  onCrumbClick: () => {},
+  breadcrumbs: [],
   root: rootFolder,
 };
 

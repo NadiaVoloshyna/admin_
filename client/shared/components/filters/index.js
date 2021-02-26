@@ -4,7 +4,7 @@ import Pills from 'shared/components/pills';
 import useListDataFetch from 'shared/hooks/useListDataFetch';
 
 const Filters = ({ items, name }) => {
-  const { addQueryParams, removeQueryParam, getQueryParams } = useListDataFetch();
+  const { toggleQueryParams, removeQueryParam, getQueryParams } = useListDataFetch();
 
   const pillsItems = Object.values(items);
   const param = getQueryParams(name);
@@ -16,7 +16,7 @@ const Filters = ({ items, name }) => {
     if (key === 'all') {
       removeQueryParam(name);
     } else {
-      addQueryParams(name, key);
+      toggleQueryParams({ [name]: key });
     }
   };
 

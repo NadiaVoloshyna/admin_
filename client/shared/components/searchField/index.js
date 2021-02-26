@@ -6,13 +6,12 @@ import Input from 'shared/components/input';
 import styles from './index.module.scss';
 
 const SearchField = () => {
-  const { addQueryParams, removeQueryParam, getQueryParams } = useListDataFetch();
+  const { toggleQueryParams, getQueryParams } = useListDataFetch();
   const searchTerm = getQueryParams('q');
 
   // Debouncing getting new users set after search
   const debouncedSearch = _debounce((searchTerm) => {
-    if (!searchTerm) return removeQueryParam('q');
-    addQueryParams('q', searchTerm);
+    toggleQueryParams({ q: searchTerm });
   }, 700);
 
   /**

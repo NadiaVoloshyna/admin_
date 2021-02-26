@@ -15,6 +15,11 @@ const checkPermissions = (req, res, next) => {
 };
 
 const findUser = async (req, res) => {
+  const isAuthor = req.user.role === 'author';
+  const isReviewer = req.user.role === 'reviewer';
+  if ((isAuthor || isReviewer) && req.user.id !== req.params.id) {
+    return req.handle401();
+  }
   try {
     const user = await User.findById({ _id: req.params.id });
 

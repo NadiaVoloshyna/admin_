@@ -4,6 +4,8 @@
 @import "~bootstrap/scss/mixins";
 @import "./mixins.scss";
 
+@import "~bootstrap/scss/bootstrap";
+
 @import "./components/table.scss";
 @import "./components/checkbox.scss";
 @import "./components/buttons.scss";
@@ -15,8 +17,19 @@
 @import "./components/pagination.scss";
 @import "./components/typography.scss";
 @import "./components/forms.scss";
+@import "./components/radio.scss";
 
-@import "~bootstrap/scss/bootstrap";
+@import "./components/popover.scss";
+
+@each $color, $value in $status-colors {
+  .color-#{$color} {
+    color: $value;
+  }
+
+  .bg-#{$color} {
+    background-color: $value;
+  }
+}
 
 
 .cur-pointer {

@@ -23,9 +23,18 @@ const PERSON_POST_STATUSES = {
   PUBLISHED: 'PUBLISHED',
 };
 
+const ASSET_TYPES = {
+  FOLDER: 'FOLDER',
+  ALBUM: 'ALBUM',
+  IMAGE: 'IMAGE',
+  AUDIO: 'AUDIO',
+  VIDEO: 'ViDEO',
+};
+
 module.exports = {
   USER_ROLES,
   LOG_TYPE,
   HTTP_HEADERS,
   PERSON_POST_STATUSES,
+  ASSET_TYPES,
 };

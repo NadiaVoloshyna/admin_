@@ -16,12 +16,12 @@ const DataGrid = (props) => {
 
   const defaultSorted = { dataField: 'created', order: 'desc' };
 
-  const { addQueryParams, getQueryParams } = useListDataFetch();
+  const { toggleQueryParams, getQueryParams } = useListDataFetch();
   const sort = getQueryParams('sort');
 
   const onSort = ({ sortField, sortOrder }) => {
     if (!sort && defaultSorted.dataField === sortField && defaultSorted.order === sortOrder) return;
-    addQueryParams('sort', [sortField, sortOrder]);
+    toggleQueryParams({ sort: [sortField, sortOrder] });
   };
 
   const columns = props.columns.map(item => ({

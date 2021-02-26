@@ -18,14 +18,12 @@ const deleteAssets = async (req, res) => {
     // 1. Delete asset
     const asset = await Asset.findOne({ _id: id }).populate('references');
 
-    if (asset.references) {
+    if (asset.references && asset.references.length) {
       return res.status(409).end();
     }
 
     await asset.remove();
 
-    // 2. Delete cloudinary asset
-    // TODO
     return res.status(200).end();
   } catch (error) {
     req.handle500(error);

@@ -1,3 +1,6 @@
+const _sub = require('date-fns/sub');
+const _formatISO = require('date-fns/formatISO');
+
 const optionsGenerators = {
   limit: ({ limit }) => ({ limit: parseInt(limit) }),
   offset: ({ offset, limit }) => ({ offset: offset * limit }),
@@ -46,8 +49,38 @@ const queryGenerators = {
       },
     };
   },
+  type: ({ type }) => {
+    const values = type.split(',');
+
+    return {
+      type: {
+        $in: values,
+      },
+    };
+  },
+  files: ({ files, user }) => {
+    if (files === 'my') {
+      return { createdBy: user._id };
+    }
+
+    if (files === 'recent') {
+      return {
+        created: {
+          // 24 hours / 1 day prior to today
+          $gte : _formatISO(_sub(new Date(), { days: 1 })),
+        },
+      };
+    }
+  },
   active: ({ active }) => ({ active }),
+  path: ({ path }) => ({ parent: path || { $exists: false } }),
   createdBy: ({ user }) => ({ createdBy: user._id }),
+  authors: ({ authors }) => ({
+    authors: { $in: authors.split(',') },
+  }),
+  reviewers: ({ reviewers }) => ({
+    reviewers: { $in: reviewers.split(',') },
+  }),
 };
 
 function construct(generators, query, searchBy) {
@@ -76,6 +109,16 @@ const createQueryForPagination = ({ query, user, searchBy = ['name'] }) => {
     ...query,
     user,
   };
+
+  // Do not paginate if pagination is false
+  if (query.pagination === false) {
+    return {
+      query: construct(queryGenerators, defaultQuery),
+      options: {
+        pagination: false,
+      },
+    };
+  }
 
   return {
     query: construct(queryGenerators, defaultQuery),

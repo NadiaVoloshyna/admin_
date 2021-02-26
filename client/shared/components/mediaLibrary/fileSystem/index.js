@@ -14,9 +14,6 @@ const FileSystem = ({ assets, onSelect, onDelete, onMove, canDelete, isDragDrop 
     <DndProvider backend={Backend}>
       <Row>
         { Object.keys(assets).map(key => (
-          // <div key={key}>
-          //   <h5>{ _upperFirst(key.toLowerCase()) }</h5>
-          //   <hr/>
           <AssetsGrid
             key={key}
             assets={assets[key]}
@@ -26,7 +23,6 @@ const FileSystem = ({ assets, onSelect, onDelete, onMove, canDelete, isDragDrop 
             canDelete={canDelete}
             isDragDrop={isDragDrop}
           />
-          // </div>
         ))}
       </Row>
     </DndProvider>

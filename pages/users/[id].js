@@ -26,7 +26,7 @@ User.getInitialProps = async (ctx) => {
   }
 
   try {
-    const { data } = await UserAPI.getUser(query.id);
+    const { data } = await UserAPI.setCookie(req).getUser(query.id);
     return {
       currentUser: data,
     };

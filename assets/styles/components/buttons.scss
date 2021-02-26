@@ -14,38 +14,38 @@ $btn-color-secondary: $transparent;
   &:hover,
   &:focus,
   &.focus {
-    background-color: $hover-background !important;
-    box-shadow: none !important;
-    border-color: $btn-hover-border !important;
+    background-color: $hover-background;
+    box-shadow: none;
+    border-color: $btn-hover-border;
   }
   &.disabled,
   &:disabled {
-    opacity: 1 !important;
-    color: $gray-500 !important;
-    background-color: $btn-disabled !important;
-    border-color: $btn-disabled !important;
+    opacity: 1;
+    color: $gray-500;
+    background-color: $btn-disabled;
+    border-color: $btn-disabled;
   }
 }
 
 .btn-secondary {
-  background-color: $btn-color-secondary !important;
-  border-color: $gray-900 !important;
-  color: $gray-700 !important;
+  background-color: $btn-color-secondary;
+  border-color: $gray-900;
+  color: $gray-700;
 }
 
 .btn-secondary {
   &:hover,
   &:focus,
   &.focus {
-    background-color: $gray-100 !important;
-    border-color: $gray-500 !important;
-    color: rgba($gray-900, .5) !important;
+    background-color: $gray-100;
+    border-color: $gray-500;
+    color: rgba($gray-900, .5);
   }
   &.disabled,
   &:disabled {
-    border-color: $gray-300 !important;
-    color: $gray-500 !important;
-    background-color: $btn-color-secondary !important;
+    border-color: $gray-300;
+    color: $gray-500;
+    background-color: $btn-color-secondary;
   }
 }
 

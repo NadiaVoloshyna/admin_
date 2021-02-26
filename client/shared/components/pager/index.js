@@ -5,9 +5,9 @@ import Pills from 'shared/components/pills';
 const PAGES = ['10', '20', '50'];
 
 const Pager = () => {
-  const { addQueryParams, getQueryParams } = useListDataFetch();
+  const { toggleQueryParams, getQueryParams } = useListDataFetch();
   const limit = getQueryParams('limit');
-  const onSelect = (value) => addQueryParams('limit', value);
+  const onSelect = (value) => toggleQueryParams({ limit: value });
 
   return (
     <div className="d-flex align-items-center">

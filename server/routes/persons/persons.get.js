@@ -1,6 +1,7 @@
 const { query } = require('express-validator');
 const Person = require('../../models/person');
 const { createQueryForPagination, createSortVarints } = require('../../helpers/resolvers');
+const { everyMongoId, everyStatus } = require('../../helpers/validators');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 const validators = [
@@ -8,8 +9,11 @@ const validators = [
   query('offset').if(query('offset').exists()).escape().isNumeric(),
   query('limit').if(query('limit').exists()).escape().isNumeric(),
   query('sort').if(query('sort').exists()).escape().isIn(
-    createSortVarints('name', 'created'),
+    createSortVarints('name', 'created', 'status'),
   ),
+  query('authors').if(query('authors').exists()).custom(everyMongoId),
+  query('reviewers').if(query('reviewers').exists()).custom(everyMongoId),
+  query('status').if(query('status').exists()).custom(everyStatus),
 ];
 
 module.exports = (router) => {
@@ -22,38 +26,14 @@ module.exports = (router) => {
         query: req.query,
       });
 
-      options.populate = ['professions.profession', {
-        path: 'drivePermissions',
-        model: 'DrivePermission',
-        populate: [{
-          path: 'user',
-          model: 'User',
-        }],
-      }];
+      options.populate = [
+        'professions.profession',
+        { path: 'authors', select: 'firstName lastName image' },
+        { path: 'reviewers', select: 'firstName lastName image' },
+      ];
 
       const response = await Person.paginate(query, options);
-
-      response.docs = response.docs.map(item => {
-        const person = item.toObject();
-
-        const getUsersByRole = (role) => {
-          return person.drivePermissions
-            .filter(item => item.user.role === role)
-            .map(item => ({
-              name: item.user.fullName, // change this to a function which excepts fields to return
-            })); // remove unnecessary data
-        };
-
-        const newPerson = {
-          ...person,
-          authors: getUsersByRole('author'),
-          reviewers: getUsersByRole('reviewer'),
-        };
-
-        delete newPerson.drivePermissions;
-
-        return newPerson;
-      });
+      response.docs = response.docs.map(item => item.toObject());
 
       res.send(response);
     } catch (error) {

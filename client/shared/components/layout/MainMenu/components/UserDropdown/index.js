@@ -40,7 +40,10 @@ const UserDropdown = (props) => {
             hovered={false}
             variant="user"
           >
-            <Avatar image={user.image} />
+            <Avatar
+              user={user}
+              size="md"
+            />
           </MenuItem>
         </Dropdown.Toggle>
 

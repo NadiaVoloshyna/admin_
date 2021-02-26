@@ -5,16 +5,16 @@ import AlertBootstrap from 'react-bootstrap/Alert';
 
 const config = {
   // you can also just use 'bottom center'
-  position: positions.BOTTOM_CENTER,
+  position: positions.TOP_RIGHT,
   timeout: 5000,
   offset: '30px',
   // you can also just use 'scale'
   transition: transitions.SCALE,
   containerStyle: {
     alignItems: 'none',
-    left: '50%',
-    width: '87%',
-    transform: 'translateX(-50%)',
+    width: 'calc(100% - 72px)',
+    transform: 'translateX(72px)',
+    zIndex: 100,
   },
 };
 
