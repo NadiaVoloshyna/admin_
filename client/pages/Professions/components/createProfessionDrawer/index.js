@@ -20,6 +20,7 @@ const CreateProfessionDrawer = ({ onApply, canCreate }) => {
     <div className="d-flex align-items-center">
       <Button
         variant="primary"
+        size="lg"
         onClick={() => setIsOpen(true)}
       >Create Profession</Button>
 

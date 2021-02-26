@@ -57,6 +57,7 @@ const CreateButton = ({ onCreate }) => {
 
       <Button
         variant="primary"
+        size="lg"
         className={buttonClasses}
         onClick={onCreateClick}
       >{ buttonText }</Button>
