@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AssetsManager = require('../services/gcp/asset-manager');
 
 const { Schema } = mongoose;
 const { ObjectId } = Schema;
@@ -53,9 +54,9 @@ const schema = new Schema({
     const Asset = mongoose.model('Asset');
     const children = await Asset.find({ parent: this._id });
 
-    children.forEach(doc => {
-      doc.remove();
-      // TODO: remove from Google storage
+    children.forEach(async (doc) => {
+      await doc.remove();
+      await AssetsManager.delete(doc.url);
     });
 
     next();
