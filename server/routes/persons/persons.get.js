@@ -28,12 +28,11 @@ module.exports = (router) => {
 
       options.populate = [
         'professions.profession',
-        { path: 'authors', select: '-password -email' },
-        { path: 'reviewers', select: '-password -email' },
+        { path: 'authors', select: 'firstName lastName image' },
+        { path: 'reviewers', select: 'firstName lastName image' },
       ];
 
       const response = await Person.paginate(query, options);
-
       response.docs = response.docs.map(item => item.toObject());
 
       res.send(response);

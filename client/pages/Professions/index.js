@@ -18,6 +18,7 @@ import dataGridColumns from './columns';
 
 const ProfessionsPage = (props) => {
   const { user, professions, pages } = props;
+
   const handleError = useErrorHandler();
   const alert = useAlert();
   const router = useRouter();
