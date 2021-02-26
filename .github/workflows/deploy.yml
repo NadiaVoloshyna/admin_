@@ -32,7 +32,7 @@ jobs:
 
     - name: Download .env from google storage
       run: |-
-        gsutil cp gs://${{secrets.PROJECT_ID}}.appspot.com/.env .
+        gsutil cp gs://${{CLOUDSDK_CORE_PROJECT}}.appspot.com/.env .
         
     - name: Deploy to App Engine
       run: |-
