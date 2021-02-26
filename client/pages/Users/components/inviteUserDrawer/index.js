@@ -24,6 +24,7 @@ const InviteUserDrawer = ({ onApply, canInviteAdmin }) => {
     <div className="d-flex align-items-center">
       <Button
         variant="primary"
+        size="lg"
         onClick={() => setIsOpen(true)}
       >Invite User</Button>
 

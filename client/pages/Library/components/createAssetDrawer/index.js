@@ -106,7 +106,7 @@ const CreateAssetDrawer = ({ onSubmit }) => {
   return (
     <div className="d-flex align-items-center">
       <Dropdown>
-        <Dropdown.Toggle variant="success">
+        <Dropdown.Toggle variant="success" size="lg">
           Create
         </Dropdown.Toggle>
 
