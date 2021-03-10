@@ -73,8 +73,8 @@ const UsersPage = (props) => {
 
   const headerActions = () => (
     <div className="d-flex align-items-center">
-      <a href="#" className="material-icons">blocked</a>
-      <a href="#" className="material-icons">delete</a>
+      <a href="https://rooh.org.ua/" className="material-icons">blocked</a>
+      <a href="https://rooh.org.ua/" className="material-icons">delete</a>
     </div>
   );
 

@@ -82,7 +82,7 @@ const PersonsPage = ({ user, persons, pages }) => {
 
   const headerActions = () => (
     <div className="d-flex align-items-center">
-      <a href="#" className="material-icons">delete</a>
+      <a href="https://rooh.org.ua/" className="material-icons">delete</a>
     </div>
   );
 
