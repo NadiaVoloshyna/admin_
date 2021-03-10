@@ -23,7 +23,13 @@ module.exports = (router) => {
         user: req.user,
         query: req.query,
       });
+
+      options.populate = [
+        { path: 'createdBy', select: 'firstName lastName image' },
+      ];
+
       const response = await Profession.paginate(query, options);
+      response.docs = response.docs.map(item => item.toObject());
 
       res.send(response);
     } catch (error) {

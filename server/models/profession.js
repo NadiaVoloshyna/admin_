@@ -18,12 +18,13 @@ const schema = new mongoose.Schema({
   },
   createdBy: {
     type: ObjectId,
+    ref: 'User',
     required: true,
   },
   description: {
     type: String,
   },
-});
+}, { collation: { locale: 'en_US', strength: 1 } });
 
 schema.plugin(mongoosePaginate);
 

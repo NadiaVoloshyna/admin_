@@ -9,7 +9,9 @@ const UserSelect = ({ users, onChange, defaultValue }) => {
   const Option = ({ data, innerProps }) => {
     return (
       <div className="d-flex align-items-center" { ...innerProps }>
-        <Avatar image={data.image} className="mx-4 my-2" />
+        <Avatar 
+        user={data}
+        className="mx-4 my-2" />
         <span>{ data.label }</span>
       </div>
     );

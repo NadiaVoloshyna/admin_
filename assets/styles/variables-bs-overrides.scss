@@ -426,22 +426,22 @@ $hover-background: $gray-700;
 $btn-hover-border: $hover-background;
 $btn-color-secondary: transparent;
 
-$btn-padding-y:               1.035rem;
+$btn-padding-y:               0.7rem;
 $btn-padding-x:               1.1rem;
 $btn-font-family:             $input-btn-font-family;
-$btn-font-size:               $font-size-base;
-$btn-line-height:             .853rem;
+$btn-font-size:               .875rem;
+$btn-line-height:             1.025rem;
 $btn-white-space:             null; // Set to `nowrap` to prevent text wrapping
 
-$btn-padding-y-sm:            $input-btn-padding-y-sm;
+$btn-padding-y-sm:            .625rem;
 $btn-padding-x-sm:            $input-btn-padding-x-sm;
 $btn-font-size-sm:            .625rem;
 $btn-line-height-sm:          $input-btn-line-height-sm;
 
-$btn-padding-y-lg:            $input-btn-padding-y-lg;
+$btn-padding-y-lg:            .875rem;
 $btn-padding-x-lg:            $input-btn-padding-x-lg;
-$btn-font-size-lg:            $input-btn-font-size-lg;
-$btn-line-height-lg:          $input-btn-line-height-lg;
+$btn-font-size-lg:            1rem;
+$btn-line-height-lg:          1.172rem;
 
 $btn-border-width:            1px;
 
@@ -514,7 +514,7 @@ $input-height-inner-quarter:            add($input-line-height * .25em, $input-p
 
 $input-height:                          add($input-line-height * 1em, add($input-padding-y * 2, $input-height-border, false));
 $input-height-sm:                       add($input-line-height-sm * 1em, add($input-padding-y-sm * 2, $input-height-border, false));
-$input-height-lg:                       add($input-line-height-lg * 1em, add($input-padding-y-lg * 2, $input-height-border, false));
+$input-height-lg:                       add($input-line-height-lg * 1em, add($input-padding-y-lg * 3, 0, false));
 
 $input-transition:                      border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 

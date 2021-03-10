@@ -100,11 +100,11 @@ const PermissionsPage = ({ permissions: rawPermissions, user }) => {
     <>
       <Layout activePage={PAGE_NAMES.PERMISSIONS} user={user}>
         <Layout.Navbar className="mb-3">
-          <Button type="button" onClick={() => setIsDrawerOpen(true)}>
+          <Button type="button" size="lg" onClick={() => setIsDrawerOpen(true)}>
             Add permission
           </Button>
 
-          <Button type="button" onClick={() => setIsAttributeDrawerOpen(true)}>
+          <Button type="button" size="lg" onClick={() => setIsAttributeDrawerOpen(true)}>
             Add attributes
           </Button>
         </Layout.Navbar>
