@@ -37,13 +37,6 @@ export const dateFormatter = (cell) => {
   return format(new Date(cell), 'd MMM, yyyy');
 };
 
-export const sortedHeaderFormatter = (column) => (
-  <div className="d-flex align-items-center">
-    { column.text }
-    <i className="material-icons">sort</i>
-  </div>
-);
-
 export const statusFormatter = (cell) => {
   const variant = cell ? 'primary' : 'gray';
   const text = cell ? 'Active' : 'Blocked';
@@ -84,7 +77,19 @@ export const checkboxRenderer = ({ mode, ...rest }) => (
   </>
 );
 
+export const sortedHeaderFormatter = (column) => (
+  <div className="d-flex align-items-center">
+    { column.text }
+    <i className="material-icons">sort</i>
+  </div>
+);
+
 export const sortingConfig = {
   headerFormatter: sortedHeaderFormatter,
   headerSortingClasses: 'active',
+};
+
+export const headerConfig = (selectedRecords) => {
+  if (selectedRecords.length > 0) return { headerAttrs: { hidden: true } };
+  return { headerAttrs: { hidden: false } };
 };

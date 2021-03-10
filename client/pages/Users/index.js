@@ -71,6 +71,13 @@ const UsersPage = (props) => {
     return row.active ? '' : 'inactive';
   };
 
+  const headerActions = () => (
+    <div className="d-flex align-items-center">
+      <a href="#" className="material-icons">blocked</a>
+      <a href="#" className="material-icons">delete</a>
+    </div>
+  );
+
   return (
     <>
       <Layout activePage={PAGE_NAMES.USERS} user={user}>
@@ -104,6 +111,7 @@ const UsersPage = (props) => {
           <DataGrid
             data={users}
             columns={columns}
+            headerActions={headerActions}
             rowClasses={setRowClasses}
             rowEvents={rowEvents}
           />

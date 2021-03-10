@@ -64,6 +64,12 @@ const ProfessionsPage = (props) => {
     }
   };
 
+  const headerActions = () => (
+    <div className="d-flex align-items-center">
+      <a href="#" className="material-icons">delete</a>
+    </div>
+  );
+
   return (
     <div>
       <Layout activePage={PAGE_NAMES.PROFESSIONS} user={user}>
@@ -91,6 +97,7 @@ const ProfessionsPage = (props) => {
           <DataGrid
             data={professions}
             columns={dataGridColumns}
+            headerActions={headerActions}
             onDelete={onProfessionDelete}
           />
         </Layout.Content>

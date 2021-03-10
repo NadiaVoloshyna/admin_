@@ -5,14 +5,13 @@ import useListDataFetch from 'shared/hooks/useListDataFetch';
 import { TableColumnType } from '../../prop-types';
 import * as utils from './utils';
 
-const { checkboxRenderer, sortingConfig } = utils;
+const { checkboxRenderer, sortingConfig, headerConfig } = utils;
 
 const DataGrid = (props) => {
-  const { data, rowClasses, rowEvents } = props;
+  const { data, rowClasses, rowEvents, headerActions } = props;
   const [ selectedRecords, setSelectedRecords ] = useState([]);
 
   // eslint-disable-next-line
-  console.log(selectedRecords);
 
   const defaultSorted = { dataField: 'created', order: 'desc' };
 
@@ -21,13 +20,17 @@ const DataGrid = (props) => {
 
   const onSort = ({ sortField, sortOrder }) => {
     if (!sort && defaultSorted.dataField === sortField && defaultSorted.order === sortOrder) return;
-    toggleQueryParams({ sort: [sortField, sortOrder] });
+    if (selectedRecords.length === 0) {
+      toggleQueryParams({ sort: [sortField, sortOrder] });
+    }
   };
 
   const columns = props.columns.map(item => ({
     ...item,
     ...(item.sort && sortingConfig),
     ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] }),
+    ...(item.headerAttrs && headerConfig(selectedRecords)),
+    ...((item.headerFormatter && selectedRecords.length !== 0) && { headerFormatter: headerActions }),
   }));
 
   const onSelect = (row, isSelect) => {
@@ -49,6 +52,7 @@ const DataGrid = (props) => {
 
   const selectRow = {
     mode: 'checkbox',
+    bgColor: '#BEE7CF',
     clickToSelect: false,
     onSelect,
     onSelectAll,
@@ -61,7 +65,7 @@ const DataGrid = (props) => {
       <BootstrapTable
         keyField="_id"
         data={ data }
-        columns={ columns }
+        columns={columns}
         bootstrap4
         bordered={false}
         remote
@@ -111,12 +115,14 @@ DataGrid.propTypes = {
   columns: arrayOf(shape(TableColumnType)).isRequired,
   rowClasses: func,
   rowEvents: shape,
+  headerActions: arrayOf(object),
 };
 
 DataGrid.defaultProps = {
   data: [],
   rowClasses: () => {},
   rowEvents: {},
+  headerActions: [],
 };
 
 export default DataGrid;
