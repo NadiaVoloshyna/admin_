@@ -3,7 +3,6 @@ export default [{
   text: 'Title',
   editable: false,
   sort: true,
-  headerFormatter: 'columnFormatter',
 }, {
   dataField: 'description',
   text: 'Description',

@@ -88,8 +88,3 @@ export const sortingConfig = {
   headerFormatter: sortedHeaderFormatter,
   headerSortingClasses: 'active',
 };
-
-export const headerConfig = (selectedRecords) => {
-  if (selectedRecords.length > 0) return { headerAttrs: { hidden: true } };
-  return { headerAttrs: { hidden: false } };
-};

@@ -98,7 +98,7 @@ const ProfessionsPage = (props) => {
           <DataGrid
             data={professions}
             columns={dataGridColumns}
-            headerActions={headerActions}
+            headerFormatter={headerActions}
             onDelete={onProfessionDelete}
           />
         </Layout.Content>

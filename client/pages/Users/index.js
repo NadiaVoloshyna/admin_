@@ -111,7 +111,7 @@ const UsersPage = (props) => {
           <DataGrid
             data={users}
             columns={columns}
-            headerActions={headerActions}
+            headerFormatter={headerActions}
             rowClasses={setRowClasses}
             rowEvents={rowEvents}
           />

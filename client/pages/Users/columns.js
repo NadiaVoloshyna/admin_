@@ -4,7 +4,6 @@ export default [{
   editable: false,
   sort: true,
   formatter: 'users',
-  headerFormatter: 'columnFormatter',
 }, {
   dataField: 'role',
   text: 'Role',

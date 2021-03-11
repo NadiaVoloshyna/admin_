@@ -104,7 +104,7 @@ const PersonsPage = ({ user, persons, pages }) => {
           <DataGrid
             data={persons}
             columns={columns}
-            headerActions={headerActions}
+            headerFormatter={headerActions}
             onDelete={onDelete}
             rowEvents={rowEvents}
           />

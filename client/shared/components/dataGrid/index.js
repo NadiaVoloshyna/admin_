@@ -5,10 +5,10 @@ import useListDataFetch from 'shared/hooks/useListDataFetch';
 import { TableColumnType } from '../../prop-types';
 import * as utils from './utils';
 
-const { checkboxRenderer, sortingConfig, headerConfig } = utils;
+const { checkboxRenderer, sortingConfig } = utils;
 
 const DataGrid = (props) => {
-  const { data, rowClasses, rowEvents, headerActions } = props;
+  const { data, rowClasses, rowEvents, headerFormatter } = props;
   const [ selectedRecords, setSelectedRecords ] = useState([]);
 
   // eslint-disable-next-line
@@ -29,8 +29,8 @@ const DataGrid = (props) => {
     ...item,
     ...(item.sort && sortingConfig),
     ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] }),
-    ...(item.headerAttrs && headerConfig(selectedRecords)),
-    ...((item.headerFormatter && selectedRecords.length !== 0) && { headerFormatter: headerActions }),
+    ...(item.headerAttrs && { headerAttrs: { hidden: !!selectedRecords.length } }),
+    ...(selectedRecords.length && { headerFormatter }),
   }));
 
   const onSelect = (row, isSelect) => {
@@ -115,14 +115,14 @@ DataGrid.propTypes = {
   columns: arrayOf(shape(TableColumnType)).isRequired,
   rowClasses: func,
   rowEvents: shape,
-  headerActions: arrayOf(object),
+  headerFormatter: arrayOf(object),
 };
 
 DataGrid.defaultProps = {
   data: [],
   rowClasses: () => {},
   rowEvents: {},
-  headerActions: [],
+  headerFormatter: [],
 };
 
 export default DataGrid;
