@@ -9,40 +9,30 @@ export default [{
   text: 'Role',
   editable: false,
   sort: true,
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'email',
   text: 'Email',
   editable: false,
   sort: true,
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'created',
   text: 'Date of creation',
   editable: false,
   sort: true,
   formatter: 'date',
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'active',
   text: 'Status',
   editable: false,
   formatter: 'status',
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }, {
   dataField: '',
   text: '',
   isDummyField: true,
   formatter: 'settings',
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }];

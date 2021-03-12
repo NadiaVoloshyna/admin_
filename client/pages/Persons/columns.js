@@ -8,49 +8,37 @@ export default [{
   text: 'Professions',
   editable: false,
   formatter: 'professions',
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'authors',
   text: 'Authors',
   editable: false,
   formatter: 'users',
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'reviewers',
   text: 'Editors',
   editable: false,
   formatter: 'users',
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'created',
   text: 'Created',
   editable: false,
   formatter: 'date',
   sort: true,
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'status',
   text: 'Status',
   editable: false,
   formatter: 'badge',
   sort: true,
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }, {
   dataField: '',
   text: '',
   isDummyField: true,
   formatter: 'settings',
-  headerAttrs: {
-    hidden: false,
-  },
+  hideHeadingOnSelect: true,
 }];

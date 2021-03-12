@@ -20,16 +20,15 @@ const DataGrid = (props) => {
 
   const onSort = ({ sortField, sortOrder }) => {
     if (!sort && defaultSorted.dataField === sortField && defaultSorted.order === sortOrder) return;
-    if (selectedRecords.length === 0) {
-      toggleQueryParams({ sort: [sortField, sortOrder] });
-    }
+
+    selectedRecords.length && toggleQueryParams({ sort: [sortField, sortOrder] });
   };
 
   const columns = props.columns.map(item => ({
     ...item,
     ...(item.sort && sortingConfig),
     ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] }),
-    ...(item.headerAttrs && { headerAttrs: { hidden: !!selectedRecords.length } }),
+    ...(item.hideHeadingOnSelect && { headerAttrs: { hidden: !!selectedRecords.length } }),
     ...(selectedRecords.length && { headerFormatter }),
   }));
 
