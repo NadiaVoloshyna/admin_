@@ -80,6 +80,12 @@ const PersonsPage = ({ user, persons, pages }) => {
     },
   };
 
+  const headerActions = () => (
+    <div className="d-flex align-items-center">
+      <a href="https://rooh.org.ua/" className="material-icons">delete</a>
+    </div>
+  );
+
   return (
     <div>
       <Layout activePage={PAGE_NAMES.PERSONS} user={user}>
@@ -98,6 +104,7 @@ const PersonsPage = ({ user, persons, pages }) => {
           <DataGrid
             data={persons}
             columns={columns}
+            headerFormatter={headerActions}
             onDelete={onDelete}
             rowEvents={rowEvents}
           />

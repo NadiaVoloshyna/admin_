@@ -8,31 +8,37 @@ export default [{
   text: 'Professions',
   editable: false,
   formatter: 'professions',
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'authors',
   text: 'Authors',
   editable: false,
   formatter: 'users',
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'reviewers',
   text: 'Editors',
   editable: false,
   formatter: 'users',
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'created',
   text: 'Created',
   editable: false,
   formatter: 'date',
   sort: true,
+  hideHeadingOnSelect: true,
 }, {
   dataField: 'status',
   text: 'Status',
   editable: false,
   formatter: 'badge',
   sort: true,
+  hideHeadingOnSelect: true,
 }, {
   dataField: '',
   text: '',
   isDummyField: true,
   formatter: 'settings',
+  hideHeadingOnSelect: true,
 }];
