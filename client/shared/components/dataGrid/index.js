@@ -5,7 +5,7 @@ import useListDataFetch from 'shared/hooks/useListDataFetch';
 import { TableColumnType } from '../../prop-types';
 import * as utils from './utils';
 
-const { checkboxRenderer, sortingConfig } = utils;
+const { checkboxRenderer, headerCheckboxRenderer, sortingConfig } = utils;
 
 const DataGrid = (props) => {
   const { data, rowClasses, rowEvents, headerFormatter } = props;
@@ -55,7 +55,7 @@ const DataGrid = (props) => {
     clickToSelect: false,
     onSelect,
     onSelectAll,
-    selectionHeaderRenderer: checkboxRenderer,
+    selectionHeaderRenderer: headerCheckboxRenderer,
     selectionRenderer: checkboxRenderer,
   };
 

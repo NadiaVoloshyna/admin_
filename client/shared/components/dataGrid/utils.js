@@ -3,6 +3,7 @@ import Badge from 'react-bootstrap/Badge';
 import format from 'date-fns/format';
 import AvatarGroup from './components/avatarGroup';
 import TextFormatter from './formatters/text';
+import HeaderCheckbox from './components/headerCheckbox';
 
 const statuses = {
   NEW: {
@@ -76,6 +77,10 @@ export const checkboxRenderer = ({ mode, ...rest }) => (
     <label />
   </>
 );
+
+export const headerCheckboxRenderer = (props) => {
+  return <HeaderCheckbox { ...props } />;
+};
 
 export const sortedHeaderFormatter = (column) => (
   <div className="d-flex align-items-center">
