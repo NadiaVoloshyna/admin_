@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { string } from 'prop-types';
 
 const HeaderCheckbox = ({ mode, ...rest }) => {
   const checkboxRef = useRef();
@@ -13,6 +14,10 @@ const HeaderCheckbox = ({ mode, ...rest }) => {
       <label />
     </>
   );
+};
+
+HeaderCheckbox.propTypes = {
+  mode: string.isRequired,
 };
 
 export default HeaderCheckbox;
