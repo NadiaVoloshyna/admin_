@@ -29,6 +29,21 @@ input[type="checkbox"]:checked + label::before {
   background-position: center center;
 }
 
+input[type=checkbox]:indeterminate + label {
+  position: relative;
+}
+
+input[type=checkbox]:indeterminate + label::after {
+  content: '';
+  width: 12px;
+  height: 2px;
+  background-color: #27AE60;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 3px;
+}
+
 input[type="checkbox"]:disabled + input[type="checkbox"]:checked + label::before {
   border: $input-border-size solid $gray-300;
   background-image: url($checkmark);
