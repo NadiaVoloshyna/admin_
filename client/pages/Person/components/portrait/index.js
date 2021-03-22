@@ -1,11 +1,14 @@
 import React from 'react';
-import { shape, object } from 'prop-types';
+import getConfig from 'next/config';
+import { shape, object, string } from 'prop-types';
 import { Field } from 'react-final-form';
 import MediaLibraryModal from 'shared/components/mediaLibraryModal';
-import { Image } from 'cloudinary-react';
 import { decodePortrait, encodePortrait } from 'common/utils';
 
-const PersonPortrait = () => {
+const { publicRuntimeConfig } = getConfig();
+const IMAGE_URL = publicRuntimeConfig.assetsUrl;
+
+const PersonPortrait = ({ rootAssetId }) => {
   return (
     <>
       <div className="card mb-3">
@@ -23,17 +26,18 @@ const PersonPortrait = () => {
               });
 
               if (value) {
+                const { url } = decodePortrait(value);
                 return (
-                  <Image
-                    cloudName="ukrainian"
-                    publicId={decodePortrait(value).url}
-                    height="235"
-                    crop="fill"
-                  />
+                  <img src={`${IMAGE_URL}${url}`} alt="img" />
                 );
               }
 
-              return <MediaLibraryModal onAssetSelect={onSelect} />;
+              return (
+                <MediaLibraryModal
+                  rootAssetId={rootAssetId}
+                  onAssetSelect={onSelect}
+                />
+              );
             }}
           </Field>
         </div>
@@ -58,6 +62,7 @@ const PersonPortrait = () => {
 
 PersonPortrait.propTypes = {
   input: shape(object).isRequired,
+  rootAssetId: string.isRequired,
 };
 
 export default PersonPortrait;

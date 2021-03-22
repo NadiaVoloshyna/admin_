@@ -1,4 +1,5 @@
 import React from 'react';
+import getConfig from 'next/config';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import classnames from 'classnames';
@@ -8,8 +9,8 @@ import { Image } from 'react-bootstrap';
 
 import styles from './index.module.scss';
 
-// TODO: this has to be moved into config
-const IMAGE_URL = 'https://storage.googleapis.com/ukrainian-assets/';
+const { publicRuntimeConfig } = getConfig();
+const IMAGE_URL = publicRuntimeConfig.assetsUrl;
 
 const Avatar = ({ user, size, onEdit, className, popoverContent }) => {
   const { image, firstName, lastName } = user;
