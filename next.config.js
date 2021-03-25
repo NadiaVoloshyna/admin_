@@ -19,5 +19,6 @@ module.exports = {
 
   publicRuntimeConfig: {
     baseUrl: `${protocol}://${process.env.BASE_URL}`,
+    assetsUrl: process.env.ASSETS_BUCKET_URL,
   },
 };
