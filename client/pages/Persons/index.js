@@ -25,14 +25,16 @@ const PersonsPage = ({ user, persons, pages }) => {
   const [ personsState, setPersons ] = useState(persons);
 
   const canCreatePerson = user.create('persons');
-  const canDeletePerson = user.deleteOwn('persons');
+  // const canDeletePerson = user.deleteOwn('persons');
 
   const onDelete = async (records) => {
-    if (!canDeletePerson) return;
+    const recs = records.selectedRecords;
+
+    // if (!canDeletePerson) return;
 
     setIsLoading(true);
 
-    const ids = records.map(id => id._id);
+    const ids = recs.map(id => id._id);
 
     try {
       await PersonsApi.deletePersons(ids);
@@ -80,11 +82,15 @@ const PersonsPage = ({ user, persons, pages }) => {
     },
   };
 
-  const headerActions = () => (
+  const headerIcons = (records) => (
     <div className="d-flex align-items-center">
-      <a href="https://rooh.org.ua/" className="material-icons">delete</a>
+      <a href="#/" onClick={() => onDelete(records)} className="material-icons">delete</a>
     </div>
   );
+
+  const headerConfig = {
+    headerFormatter: headerIcons,
+  };
 
   return (
     <div>
@@ -104,9 +110,9 @@ const PersonsPage = ({ user, persons, pages }) => {
           <DataGrid
             data={persons}
             columns={columns}
-            headerFormatter={headerActions}
             onDelete={onDelete}
             rowEvents={rowEvents}
+            headerConfig={headerConfig}
           />
         </Layout.Content>
 
