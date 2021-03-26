@@ -1,0 +1,21 @@
+@import 'assets/styles/_for-imports.scss';
+
+.modal {
+  :global .modal-header {
+    display: block;
+  }
+
+  :global .modal-body {
+    min-height: 50vh;
+    text-align: center;
+  }
+
+  :global .breadcrumb {
+    margin: 0;
+  }
+}
+
+.noImageIcon {
+  font-size: 200px !important;
+  color: $gray-200;
+}

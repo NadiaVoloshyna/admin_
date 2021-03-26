@@ -1,5 +1,5 @@
 import React from 'react';
-import { shape, arrayOf, string } from 'prop-types';
+import { shape, arrayOf, string, func, oneOf } from 'prop-types';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import useListDataFetch from 'shared/hooks/useListDataFetch';
 import { AssetType } from '../../../prop-types';
@@ -11,10 +11,13 @@ const rootFolder = {
   type: 'FOLDER',
 };
 
-const Breadcrumbs = ({ breadcrumbs = [], root }) => {
+const Breadcrumbs = ({ breadcrumbs = [], root, onCrumbClick }) => {
   const { toggleQueryParams } = useListDataFetch();
 
-  const onCrumbClick = (id) => {
+  const handleCrumbClick = (id) => {
+    if (onCrumbClick) {
+      return onCrumbClick(id);
+    }
     toggleQueryParams({ path: id });
   };
 
@@ -24,7 +27,7 @@ const Breadcrumbs = ({ breadcrumbs = [], root }) => {
         const isCurrent = (index === breadcrumbs.length);
         const onClick = () => {
           if (!isCurrent) {
-            onCrumbClick(item._id);
+            handleCrumbClick(item._id);
           }
         };
 
@@ -47,11 +50,13 @@ Breadcrumbs.propTypes = {
     name: string,
   })),
   root: shape(AssetType),
+  onCrumbClick: oneOf([func, null]),
 };
 
 Breadcrumbs.defaultProps = {
   breadcrumbs: [],
   root: rootFolder,
+  onCrumbClick: null,
 };
 
 export default Breadcrumbs;

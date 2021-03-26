@@ -1,0 +1,19 @@
+.loader {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(248, 249, 250, .6);
+}
+
+.loader {
+  :global .spinner-border {
+    width: 5rem;
+    height: 5rem;
+    animation-duration: 1.25s;
+  }
+}

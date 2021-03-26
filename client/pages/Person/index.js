@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { shape } from 'prop-types';
-import _unescape from 'lodash/unescape';
 import { Form } from 'react-final-form';
 import { useAlert } from 'react-alert';
 import arrayMutators from 'final-form-arrays';
@@ -168,7 +167,7 @@ const PersonPage = (props) => {
           }}
           initialValues={{
             name,
-            portrait: _unescape(portrait).replace(/&#x2F;/g, '/'),
+            portrait,
             professions: personsProfessions,
           }}
           render={({
@@ -218,7 +217,7 @@ const PersonPage = (props) => {
                         updateStatus={updateStatus}
                         onHistoryGet={onHistoryGet}
                       />
-                      <PersonPortrait />
+                      <PersonPortrait rootAssetId={rootAssetId} />
                       <PersonYears
                         canEdit={permissions.canEdit()}
                         born={born}

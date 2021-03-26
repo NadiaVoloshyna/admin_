@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, shape, bool, arrayOf, string } from 'prop-types';
+import { func, shape, bool, arrayOf, string, oneOf } from 'prop-types';
 import { AssetType } from 'shared/prop-types';
 import Breadcrumbs from './breadcrumbs';
 import FileSystem from './fileSystem';
@@ -12,6 +12,7 @@ const MediaLibrary = (props) => {
     onDelete,
     onMove,
     canDelete,
+    onCrumbClick,
     isDragDrop,
     root,
   } = props;
@@ -20,6 +21,7 @@ const MediaLibrary = (props) => {
     <>
       <Breadcrumbs
         breadcrumbs={breadcrumbs}
+        onCrumbClick={onCrumbClick}
         root={root}
       />
 
@@ -44,6 +46,7 @@ MediaLibrary.propTypes = {
   onSelect: func,
   onMove: func,
   onDelete: func,
+  onCrumbClick: oneOf([func, null]),
   canDelete: bool,
   isDragDrop: bool,
   root: shape(AssetType),
@@ -53,6 +56,7 @@ MediaLibrary.defaultProps = {
   onSelect: () => {},
   onMove: () => {},
   onDelete: () => {},
+  onCrumbClick: null,
   canDelete: false,
   isDragDrop: false,
   root: undefined,
