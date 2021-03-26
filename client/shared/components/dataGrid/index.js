@@ -18,18 +18,34 @@ const DataGrid = (props) => {
   const { toggleQueryParams, getQueryParams } = useListDataFetch();
   const sort = getQueryParams('sort');
 
+  // Sorting config
   const onSort = ({ sortField, sortOrder }) => {
     if (!sort && defaultSorted.dataField === sortField && defaultSorted.order === sortOrder) return;
-
     !selectedRecords.length && toggleQueryParams({ sort: [sortField, sortOrder] });
   };
 
+  // Grid heading config
+  const headerFormatter = (reconds) => {
+    const { selectedRecords } = reconds;
+    return (
+      <div className="d-flex align-items-center">
+        { headerConfig.map(item => (
+          <span
+            onClick={() => item.action(selectedRecords)}
+            className="material-icons"
+          >{ item.icon }</span>
+        ))}
+      </div>
+    );
+  };
+
+  // Columns config
   const columns = props.columns.map(item => ({
     ...item,
     ...(item.sort && sortingConfig),
     ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] }),
     ...(item.hideHeadingOnSelect && { headerAttrs: { hidden: !!selectedRecords.length } }),
-    ...(selectedRecords.length && { ...headerConfig, selectedRecords }),
+    ...(selectedRecords.length && { headerFormatter, selectedRecords }),
   }));
 
   const onSelect = (row, isSelect) => {

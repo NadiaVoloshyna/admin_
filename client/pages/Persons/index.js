@@ -25,16 +25,14 @@ const PersonsPage = ({ user, persons, pages }) => {
   const [ personsState, setPersons ] = useState(persons);
 
   const canCreatePerson = user.create('persons');
-  // const canDeletePerson = user.deleteOwn('persons');
+  const canDeletePerson = user.deleteOwn('persons');
 
   const onDelete = async (records) => {
-    const recs = records.selectedRecords;
-
-    // if (!canDeletePerson) return;
+    if (!canDeletePerson) return;
 
     setIsLoading(true);
 
-    const ids = recs.map(id => id._id);
+    const ids = records.map(item => item._id);
 
     try {
       await PersonsApi.deletePersons(ids);
@@ -82,15 +80,10 @@ const PersonsPage = ({ user, persons, pages }) => {
     },
   };
 
-  const headerIcons = (records) => (
-    <div className="d-flex align-items-center">
-      <a href="#/" onClick={() => onDelete(records)} className="material-icons">delete</a>
-    </div>
-  );
-
-  const headerConfig = {
-    headerFormatter: headerIcons,
-  };
+  const headerConfig = [{
+    icon: 'delete',
+    action: onDelete,
+  }];
 
   return (
     <div>
