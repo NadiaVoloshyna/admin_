@@ -25,8 +25,8 @@ const DataGrid = (props) => {
   };
 
   // Grid heading config
-  const headerFormatter = (reconds) => {
-    const { selectedRecords } = reconds;
+  const headerFormatter = (records) => {
+    const { selectedRecords } = records;
     return (
       <div className="d-flex align-items-center">
         { headerConfig.map(item => (
