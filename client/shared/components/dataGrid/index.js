@@ -8,7 +8,7 @@ import * as utils from './utils';
 const { checkboxRenderer, headerCheckboxRenderer, sortingConfig } = utils;
 
 const DataGrid = (props) => {
-  const { data, rowClasses, rowEvents, headerFormatter } = props;
+  const { data, rowClasses, rowEvents, headerConfig } = props;
   const [ selectedRecords, setSelectedRecords ] = useState([]);
 
   // eslint-disable-next-line
@@ -18,18 +18,34 @@ const DataGrid = (props) => {
   const { toggleQueryParams, getQueryParams } = useListDataFetch();
   const sort = getQueryParams('sort');
 
+  // Sorting config
   const onSort = ({ sortField, sortOrder }) => {
     if (!sort && defaultSorted.dataField === sortField && defaultSorted.order === sortOrder) return;
-
-    selectedRecords.length && toggleQueryParams({ sort: [sortField, sortOrder] });
+    !selectedRecords.length && toggleQueryParams({ sort: [sortField, sortOrder] });
   };
 
+  // Grid heading config
+  const headerFormatter = (records) => {
+    const { selectedRecords } = records;
+    return (
+      <div className="d-flex align-items-center">
+        { headerConfig.map(item => (
+          <span
+            onClick={() => item.action(selectedRecords)}
+            className="material-icons"
+          >{ item.icon }</span>
+        ))}
+      </div>
+    );
+  };
+
+  // Columns config
   const columns = props.columns.map(item => ({
     ...item,
     ...(item.sort && sortingConfig),
     ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] }),
     ...(item.hideHeadingOnSelect && { headerAttrs: { hidden: !!selectedRecords.length } }),
-    ...(selectedRecords.length && { headerFormatter }),
+    ...(selectedRecords.length && { headerFormatter, selectedRecords }),
   }));
 
   const onSelect = (row, isSelect) => {
@@ -114,14 +130,14 @@ DataGrid.propTypes = {
   columns: arrayOf(shape(TableColumnType)).isRequired,
   rowClasses: func,
   rowEvents: shape,
-  headerFormatter: arrayOf(object),
+  headerConfig: arrayOf(object),
 };
 
 DataGrid.defaultProps = {
   data: [],
   rowClasses: () => {},
   rowEvents: {},
-  headerFormatter: [],
+  headerConfig: [],
 };
 
 export default DataGrid;

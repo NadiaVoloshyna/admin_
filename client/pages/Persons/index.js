@@ -32,7 +32,7 @@ const PersonsPage = ({ user, persons, pages }) => {
 
     setIsLoading(true);
 
-    const ids = records.map(id => id._id);
+    const ids = records.map(item => item._id);
 
     try {
       await PersonsApi.deletePersons(ids);
@@ -80,11 +80,10 @@ const PersonsPage = ({ user, persons, pages }) => {
     },
   };
 
-  const headerActions = () => (
-    <div className="d-flex align-items-center">
-      <a href="https://rooh.org.ua/" className="material-icons">delete</a>
-    </div>
-  );
+  const headerConfig = [{
+    icon: 'delete',
+    action: onDelete,
+  }];
 
   return (
     <div>
@@ -104,9 +103,9 @@ const PersonsPage = ({ user, persons, pages }) => {
           <DataGrid
             data={persons}
             columns={columns}
-            headerFormatter={headerActions}
             onDelete={onDelete}
             rowEvents={rowEvents}
+            headerConfig={headerConfig}
           />
         </Layout.Content>
 
