@@ -1,6 +1,7 @@
 const { body } = require('express-validator');
 const User = require('../../models/user');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
+const removeDrivePermissions = require('./controllers/removeDrivePermissions');
 
 // Get resources from database
 const getResources = async (req, res, next) => {
@@ -47,10 +48,12 @@ const checkPermissions = (req, res, next) => {
 const deactivateUsers = async (req, res) => {
   try {
     const { users } = res.locals;
+    const { ids } = req.body;
     await User.updateMany(
       { _id: { $in: users.map(item => item._id) } },
       { active: false },
     );
+    await removeDrivePermissions(ids);
 
     return res.status(200).end();
   } catch (error) {
