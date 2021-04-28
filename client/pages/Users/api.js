@@ -8,6 +8,10 @@ class UsersApi extends ApiService {
     return this.$http.get(`/api/users${query}`);
   }
 
+  deactivateUser = (ids) => {
+    return this.$http.put('/api/users', { ids });
+  }
+
   invite = (email = '', role = '') => {
     return this.$http.post('/api/users/invite', { email, role });
   }

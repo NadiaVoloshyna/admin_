@@ -1,8 +1,6 @@
 const { body, param } = require('express-validator');
-const { each } = require('async');
 const User = require('../../models/user');
-const DrivePermission = require('../../models/drivePermission');
-const GoogleApi = require('../../services/google');
+const removeDrivePermissions = require('./controllers/removeDrivePermissions');
 const handle400 = require('../../middlewares/errorHandlers/handle400');
 
 // TODO: add permissions check. This one should be simple.
@@ -16,8 +14,6 @@ module.exports = (router) => {
     const query = {
       _id: req.params.id,
     };
-
-    const user = await User.findById({ _id: req.params.id });
 
     const constructBody = (body, fields) => {
       return fields.reduce((acc, key) => {
@@ -36,18 +32,8 @@ module.exports = (router) => {
     ]);
 
     // If not active remove all drive permissions
-    // TODO: think about moving this logic into seperate API
     if (req.body.active === 'false') {
-      const permissions = await DrivePermission.find({ user: user._id });
-
-      await each(permissions, async ({ permissionId, fileId }) => {
-        await GoogleApi.deletePermission(fileId, permissionId);
-      });
-
-      await DrivePermission.updateMany(
-        { _id: { $in: permissions.map(item => item._id) } },
-        { active: false },
-      );
+      await removeDrivePermissions(req.params.id);
     }
 
     try {

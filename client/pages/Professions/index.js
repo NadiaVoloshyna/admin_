@@ -65,11 +65,10 @@ const ProfessionsPage = (props) => {
     }
   };
 
-  const headerActions = () => (
-    <div className="d-flex align-items-center">
-      <a href="https://rooh.org.ua/" className="material-icons">delete</a>
-    </div>
-  );
+  const headerConfig = [{
+    icon: 'delete',
+    action: onProfessionDelete,
+  }];
 
   return (
     <div>
@@ -98,7 +97,7 @@ const ProfessionsPage = (props) => {
           <DataGrid
             data={professions}
             columns={dataGridColumns}
-            headerFormatter={headerActions}
+            headerConfig={headerConfig}
             onDelete={onProfessionDelete}
           />
         </Layout.Content>
