@@ -25,6 +25,8 @@ const UsersPage = (props) => {
   const alert = useAlert();
   const router = useRouter();
   const handleError = useErrorHandler();
+  const [ usersState, setUsers ] = useState(users);
+  const canDeactivateUsers = user.deactivate('users');
 
   const inviteUser = async (payload) => {
     setIsLoading(true);
@@ -40,6 +42,22 @@ const UsersPage = (props) => {
       }
     } catch (error) {
       handleError(error, ERROR_MESSAGES.USERS_INVITE_USER);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onUserDeactivate = async (records) => {
+    if (!canDeactivateUsers) return;
+    setIsLoading(true);
+
+    const ids = records.map(id => id._id);
+
+    try {
+      await UsersAPI.deactivateUser(ids);
+      setUsers(usersState.filter(user => !ids.includes(user._id)));
+    } catch (error) {
+      handleError(error, ERROR_MESSAGES.USERS_DEACTIVATE_USERS);
     } finally {
       setIsLoading(false);
     }
@@ -71,12 +89,10 @@ const UsersPage = (props) => {
     return row.active ? '' : 'inactive';
   };
 
-  const headerActions = () => (
-    <div className="d-flex align-items-center">
-      <a href="https://rooh.org.ua/" className="material-icons">blocked</a>
-      <a href="https://rooh.org.ua/" className="material-icons">delete</a>
-    </div>
-  );
+  const headerConfig = [{
+    icon: 'blocked',
+    action: onUserDeactivate,
+  }];
 
   return (
     <>
@@ -111,7 +127,7 @@ const UsersPage = (props) => {
           <DataGrid
             data={users}
             columns={columns}
-            headerFormatter={headerActions}
+            headerConfig={headerConfig}
             rowClasses={setRowClasses}
             rowEvents={rowEvents}
           />
