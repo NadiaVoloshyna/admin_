@@ -12,6 +12,7 @@ import Pagination from 'shared/components/pagination';
 import Pager from 'shared/components/pager';
 import SearchField from 'shared/components/searchField';
 import DataGrid from 'shared/components/dataGrid';
+import UAPrompt from '../../shared/components/prompt/index';
 import columns from './columns';
 import CreateButton from './components/createButton';
 import FilterPersonsDrawer from './components/filterDrawer';
@@ -23,25 +24,34 @@ const PersonsPage = ({ user, persons, pages }) => {
   const [ isPersonExist, setIsPersonExist ] = useState(false);
   const [ duplicate, setDuplicate ] = useState({});
   const [ personsState, setPersons ] = useState(persons);
+  const [ isShouldDeletePersonsModalOpen, setIsOpen ] = useState(false);
 
   const canCreatePerson = user.create('persons');
   const canDeletePerson = user.deleteOwn('persons');
 
-  const onDelete = async (records) => {
+  const onDelete = async (ids) => {
     if (!canDeletePerson) return;
-
     setIsLoading(true);
-
-    const ids = records.map(item => item._id);
 
     try {
       await PersonsApi.deletePersons(ids);
-      setPersons(personsState.filter(person => !ids.includes(person._id)));
     } catch (error) {
       handleError(error, ERROR_MESSAGES.PERSONS_DELETE_PERSONS);
     } finally {
       setIsLoading(false);
+      setIsOpen(!isShouldDeletePersonsModalOpen);
     }
+  };
+
+  const showModal = (records) => {
+    const ids = records.map(item => item._id);
+    setPersons(personsState.filter(person => ids.includes(person._id)));
+    setIsOpen(!isShouldDeletePersonsModalOpen);
+    onDelete(ids);
+  };
+
+  const toggleModal = () => {
+    setIsOpen(!isShouldDeletePersonsModalOpen);
   };
 
   const onPersonCreate = async (name) => {
@@ -82,7 +92,7 @@ const PersonsPage = ({ user, persons, pages }) => {
 
   const headerConfig = [{
     icon: 'delete',
-    action: onDelete,
+    action: showModal,
   }];
 
   return (
@@ -119,6 +129,14 @@ const PersonsPage = ({ user, persons, pages }) => {
         show={isPersonExist}
         onClose={setIsPersonExist}
         duplicate={duplicate}
+      />
+
+      <UAPrompt
+        show={isShouldDeletePersonsModalOpen}
+        titleContent={`Are you sure you want to delete ${personsState.map(item => `"${item.name}"`)} persons?`}
+        bodyContent="These items can’t be restored later."
+        onSubmit={onDelete}
+        onHide={toggleModal}
       />
     </div>
   );
