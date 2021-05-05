@@ -83,7 +83,7 @@ export const headerCheckboxRenderer = (props) => {
 };
 
 export const sortedHeaderFormatter = (column) => (
-  <div className="d-flex align-items-center">
+  <div className="d-flex align-items-center text-nowrap">
     { column.text }
     <i className="material-icons">sort</i>
   </div>
