@@ -1,4 +1,5 @@
 const USER_ROLES = require('./roles');
+const PATTERNS = require('./patterns');
 
 const LOG_TYPE = {
   API: 'api',
@@ -33,4 +34,5 @@ module.exports = {
   HTTP_HEADERS,
   PERSON_POST_STATUSES,
   ASSET_TYPES,
+  PATTERNS,
 };
