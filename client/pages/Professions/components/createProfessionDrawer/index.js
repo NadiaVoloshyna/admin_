@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { func, bool } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import BootstrapForm from 'react-bootstrap/Form';
-import { Form, Field } from 'react-final-form';
+import { useForm } from 'react-hook-form';
 import Drawer from 'shared/components/drawer';
 
 const CreateProfessionDrawer = ({ onApply, canCreate }) => {
+  const { register, formState: { errors, isSubmitted, isValid }, handleSubmit } = useForm();
   const [isOpen, setIsOpen] = useState(false);
-  let submitHandler;
+
+  const wasValidated = isSubmitted && !isValid;
 
   if (!canCreate) return null;
 
-  const onInvitationSend = (values) => {
+  const onCreate = (values) => {
     onApply(values);
     setIsOpen(false);
   };
@@ -22,51 +24,44 @@ const CreateProfessionDrawer = ({ onApply, canCreate }) => {
         variant="primary"
         size="lg"
         onClick={() => setIsOpen(true)}
-      >Create Profession</Button>
+      >Створити професію</Button>
 
       <Drawer open={isOpen} onClose={setIsOpen}>
-        <Drawer.Header>Create Profession</Drawer.Header>
+        <Drawer.Header>Створити професію</Drawer.Header>
 
         <Drawer.Body>
-          <Form
-            onSubmit={onInvitationSend}
-            render={({ handleSubmit }) => {
-              submitHandler = handleSubmit;
+          <form className={`needs-validation ${wasValidated && 'was-validated'}`} noValidate>
+            <BootstrapForm.Group>
+              <input
+                type="text"
+                name="name"
+                className="form-control"
+                placeholder="Назва"
+                required
+                {...register('name', { required: true })}
+              />
+              {errors.name && <span className="invalid-feedback">Назва професії є обов'язковою</span>}
+            </BootstrapForm.Group>
 
-              return (
-                <form onSubmit={handleSubmit} className="needs-validation" noValidate>
-                  <BootstrapForm.Group>
-                    <Field
-                      name="name"
-                      component="input"
-                      type="text"
-                      placeholder="Title"
-                      className="form-control"
-                    />
-                  </BootstrapForm.Group>
-
-                  <BootstrapForm.Group>
-                    <Field
-                      name="description"
-                      component="textarea"
-                      rows={9}
-                      placeholder="Description"
-                      className="form-control"
-                    />
-                  </BootstrapForm.Group>
-                </form>
-              );
-            }}
-          />
+            <BootstrapForm.Group>
+              <textarea
+                name="description"
+                className="form-control"
+                placeholder="Опис"
+                rows={9}
+                {...register('description')}
+              />
+            </BootstrapForm.Group>
+          </form>
         </Drawer.Body>
 
         <Drawer.Footer>
           <Button
-            type="button"
+            type="submit"
+            onClick={handleSubmit(onCreate)}
             block
-            onClick={(event) => submitHandler(event)}
           >
-            Create
+            Створити
           </Button>
         </Drawer.Footer>
       </Drawer>
