@@ -13,7 +13,7 @@ const CreateProfessionDrawer = ({ onApply, canCreate }) => {
 
   const onInvitationSend = (values) => {
     onApply(values);
-    setIsOpen();
+    setIsOpen(false);
   };
 
   return (
