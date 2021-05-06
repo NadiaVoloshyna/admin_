@@ -23,6 +23,7 @@ module.exports = (router) => {
       USER_ROLES.ADMIN,
       USER_ROLES.AUTHOR,
       USER_ROLES.REVIEWER,
+      USER_ROLES.EDITOR,
     ]),
   ], handle400, async (req, res) => {
     const { email, role } = req.body;
