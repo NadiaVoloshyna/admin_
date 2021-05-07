@@ -20,6 +20,7 @@ const LayoutNavbar = (props) => {
         .layout-navbar {
           height: 96px;
           max-height: 96px;
+          z-index: 1;
         }
       `}</style>
     </>
