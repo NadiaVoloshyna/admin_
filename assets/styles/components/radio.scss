@@ -3,8 +3,11 @@ $dot-position: calc(50% - #{$dot-size} / 2);
 
 input[type="radio"] {
   display: none;
+
   & + label {
-      &:before {
+    margin-bottom: 0;
+  
+    &:before {
       content: '';
       box-shadow:
       0 0 0 calc(#{$dot-size} / 2) $white,
