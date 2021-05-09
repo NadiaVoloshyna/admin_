@@ -8,7 +8,7 @@ import * as utils from './utils';
 const { checkboxRenderer, headerCheckboxRenderer, sortingConfig } = utils;
 
 const DataGrid = (props) => {
-  const { data, rowClasses, rowEvents, headerConfig } = props;
+  const { data, rowClasses, rowEvents, headerConfig, onSelect } = props;
   const [ selectedRecords, setSelectedRecords ] = useState([]);
 
   // eslint-disable-next-line
@@ -48,17 +48,23 @@ const DataGrid = (props) => {
     ...(selectedRecords.length && { headerFormatter, selectedRecords }),
   }));
 
-  const onSelect = (row, isSelect) => {
+  const onSelectHandler = (row, isSelect) => {
     setSelectedRecords(records => {
+      let updatedRecords;
+
       if (isSelect) {
-        return [...records, row];
+        updatedRecords = [...records, row]; // merge selected to records in state
+      } else {
+        updatedRecords = records.filter(record => record._id !== row._id); // filter out selected records
       }
-      return records.filter(record => record._id !== row._id);
+      onSelect(updatedRecords);
+      return updatedRecords;
     });
   };
 
   const onSelectAll = (isSelect, rows) => {
     setSelectedRecords(isSelect ? rows : []);
+    onSelect(rows);
   };
 
   const onTableChange = (type, config) => {
@@ -69,7 +75,7 @@ const DataGrid = (props) => {
     mode: 'checkbox',
     bgColor: '#BEE7CF',
     clickToSelect: false,
-    onSelect,
+    onSelect: onSelectHandler,
     onSelectAll,
     selectionHeaderRenderer: headerCheckboxRenderer,
     selectionRenderer: checkboxRenderer,
@@ -131,6 +137,7 @@ DataGrid.propTypes = {
   rowClasses: func,
   rowEvents: shape,
   headerConfig: arrayOf(object),
+  onSelect: func,
 };
 
 DataGrid.defaultProps = {
@@ -138,6 +145,7 @@ DataGrid.defaultProps = {
   rowClasses: () => {},
   rowEvents: {},
   headerConfig: [],
+  onSelect: () => {},
 };
 
 export default DataGrid;
