@@ -41,7 +41,7 @@ export const ERROR_MESSAGES = {
   PROFESSIONS_CREATE_PROFESSION: 'We are sorry, we couldn\'t create a profession.',
   PROFESSIONS_GET_PROFESSIONS: 'We are sorry, there was a problem retreaving professions.',
   PROFESSIONS_DELETE_PROFESSIONS: 'We are sorry, there was a problem deleting professions.',
-  USERS_INVITE_USER: 'We are sorry, there was a problem inviting user.',
+  USERS_INVITE_USER: 'Користувач з такою електронною адресою вже існує.',
   USERS_EDIT_USER: 'We are sorry, there was a problem editing user.',
   USER_UPLOAD_PHOTO: 'We are sorry, there was a problem updating user\'s photo',
   USERS_DEACTIVATE_USERS: 'We are sorry, there was a problem deactivating users.',

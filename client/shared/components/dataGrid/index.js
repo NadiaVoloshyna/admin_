@@ -32,21 +32,50 @@ const DataGrid = (props) => {
         { headerConfig.map(item => (
           <span
             onClick={() => item.action(selectedRecords)}
-            className="material-icons"
+            className="material-icons cur-pointer"
           >{ item.icon }</span>
         ))}
       </div>
     );
   };
-
   // Columns config
-  const columns = props.columns.map(item => ({
-    ...item,
-    ...(item.sort && sortingConfig),
-    ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] }),
-    ...(item.hideHeadingOnSelect && { headerAttrs: { hidden: !!selectedRecords.length } }),
-    ...(selectedRecords.length && { headerFormatter, selectedRecords }),
-  }));
+  const columns = props.columns.map(item => {
+    // clone item so we don't override original one
+    const column = { ...item };
+
+    // add sorting config if column is sortable
+    if (column.sort && !selectedRecords.length) {
+      column.sortingConfig = sortingConfig;
+    }
+
+    // get column specific formatter
+    if (column.formatter) {
+      column.formatter = utils[`${column.formatter}Formatter`];
+    }
+
+    // hide column header when any row is selected if configured
+    // this will show actions in the header
+    if (column.hideHeadingOnSelect) {
+      column.headerAttrs = {
+        hidden: !!selectedRecords.length,
+      };
+    }
+
+    // this is the wierd way to make actions column not sortable
+    // we need it to remove `sorted` class from this column
+    // trying to remove sorting from all columns breaks selection functionality
+    if (!column.hideHeadingOnSelect && selectedRecords.length) {
+      column.sort = false;
+    }
+
+    // add some meta like header formatter and turn off sorting if any row is selected
+    if (selectedRecords.length) {
+      column.headerFormatter = headerFormatter;
+      column.selectedRecords = selectedRecords;
+    }
+
+    return column;
+  });
 
   const onSelect = (row, isSelect) => {
     setSelectedRecords(records => {

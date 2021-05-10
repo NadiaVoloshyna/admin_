@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, shape } from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import BootstrapForm from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useForm } from 'react-hook-form';
 import Drawer from 'shared/components/drawer';
+import { UserType } from 'common/prop-types/authorization/user';
 import { USER_ROLES, PATTERNS } from 'common/constants';
 
-const roles = Object.values(USER_ROLES).filter(item => item !== USER_ROLES.SUPER);
-
-const InviteUserDrawer = ({ onApply, canInviteAdmin }) => {
-  const { register, formState: { errors, isSubmitted, isSubmitSuccessful }, handleSubmit, reset } = useForm();
+const InviteUserDrawer = ({ onApply, canInviteAdmin, user }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { register, formState: { errors, isSubmitted, isSubmitSuccessful }, handleSubmit, reset } = useForm();
   const wasValidated = isSubmitted && !isSubmitSuccessful;
+
+  const roles = Object.values(USER_ROLES).filter(item => {
+    if (user.role === 'admin') return item !== USER_ROLES.SUPER && item !== USER_ROLES.ADMIN;
+    return item !== USER_ROLES.SUPER;
+  });
 
   if (!canInviteAdmin) return null;
 
@@ -99,6 +102,7 @@ const InviteUserDrawer = ({ onApply, canInviteAdmin }) => {
 InviteUserDrawer.propTypes = {
   onApply: func.isRequired,
   canInviteAdmin: bool.isRequired,
+  user: shape(UserType).isRequired,
 };
 
 export default InviteUserDrawer;
