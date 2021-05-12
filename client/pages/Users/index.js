@@ -43,13 +43,8 @@ const UsersPage = (props) => {
 
     try {
       const { email, role } = payload;
-      const response = await UsersAPI.invite(email, role);
-
-      if (response.status === 200) {
-        alert.success(SUCCESS_MESSAGES.USERS_INVITE_USER);
-      } else {
-        throw Error(response.message);
-      }
+      await UsersAPI.invite(email, role);
+      alert.success(SUCCESS_MESSAGES.USERS_INVITE_USER);
     } catch (error) {
       handleError(error, ERROR_MESSAGES.USERS_INVITE_USER);
     } finally {

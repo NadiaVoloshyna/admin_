@@ -34,8 +34,16 @@ const useListDataFetch = () => {
     setIsLoading(false);
   };
 
-  const removeQueryParam = (param) => {
-    toggleQueryParams({ [param]: null });
+  const removeQueryParam = (paramToRemove, valueToRemove) => {
+    if (!valueToRemove) {
+      toggleQueryParams({ [paramToRemove]: null });
+    } else {
+      // remove one value out of possbile multiple values
+      // e.g. role=author,reviewer -> remove reviewer -> role=author
+      let param = getQueryParams(paramToRemove, true);
+      param = param.filter(item => item !== valueToRemove);
+      toggleQueryParams({ [paramToRemove]: param });
+    }
   };
 
   const refetchQuery = async () => {
