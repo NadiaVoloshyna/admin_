@@ -29,7 +29,8 @@ const PersonsPage = ({ user, persons, pages }) => {
   const canCreatePerson = user.create('persons');
   const canDeletePerson = user.deleteOwn('persons');
 
-  const onDelete = async (ids) => {
+  const onDelete = async () => {
+    const ids = personsState.map(item => item._id);
     if (!canDeletePerson) return;
     setIsLoading(true);
 
@@ -47,7 +48,6 @@ const PersonsPage = ({ user, persons, pages }) => {
     const ids = records.map(item => item._id);
     setPersons(personsState.filter(person => ids.includes(person._id)));
     setIsOpen(!isShouldDeletePersonsModalOpen);
-    onDelete(ids);
   };
 
   const toggleModal = () => {

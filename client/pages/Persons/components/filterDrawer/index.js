@@ -11,12 +11,12 @@ import UserSelect from '../userSelect';
 import styles from './index.module.scss';
 
 const STATUSES = {
-  NEW:       'New',
-  PROGRESS:  'In progress',
-  REVIEW:    'In review',
-  READY:     'Ready',
-  HOLD:      'On Hold',
-  PUBLISHED: 'Published',
+  NEW:          'New',
+  IN_PROGRESS:  'In progress',
+  IN_REVIEW:    'In review',
+  READY:        'Ready',
+  ON_HOLD:      'On Hold',
+  PUBLISHED:    'Published',
 };
 
 const FilterDrawer = () => {

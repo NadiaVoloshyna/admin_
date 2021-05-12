@@ -24,6 +24,7 @@ module.exports = (router) => {
     try {
       const { query, options } = createQueryForPagination({
         query: req.query,
+        user: req.user,
       });
 
       options.populate = [
