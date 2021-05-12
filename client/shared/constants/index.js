@@ -45,6 +45,7 @@ export const ERROR_MESSAGES = {
   USERS_EDIT_USER: 'We are sorry, there was a problem editing user.',
   USER_UPLOAD_PHOTO: 'We are sorry, there was a problem updating user\'s photo',
   USERS_DEACTIVATE_USERS: 'We are sorry, there was a problem deactivating users.',
+  USERS_ACTIVATE_USERS: 'We are sorry, there was a problem activating users.',
   ASSET_UPLOAD_IMAGE: 'We are sorry, there was a problem uploading the image.',
   LIBRARY_FILE_DELETE: 'We are sorry, there was a problem deleting the file.',
   LIBRARY_FILE_MOVE: 'We are sorry, there was a problem moving the file.',

@@ -3,6 +3,7 @@ import { shape, arrayOf, number } from 'prop-types';
 import { useRouter } from 'next/router';
 import { useAlert } from 'react-alert';
 import Layout from 'shared/components/layout';
+import useListDataFetch from 'shared/hooks/useListDataFetch';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import FilterByRoleDrawer from 'pages/Users/components/filterByRoleDrawer';
@@ -21,13 +22,22 @@ import columns from './columns';
 const UsersPage = (props) => {
   const { user, users, pages } = props;
 
-  const [ isLoading, setIsLoading ] = useState(false);
   const alert = useAlert();
   const router = useRouter();
   const handleError = useErrorHandler();
-  const [ usersState, setUsers ] = useState(users);
-  const canDeactivateUsers = user.deactivate('users');
+  const { refetchQuery } = useListDataFetch();
 
+  const [ headerConfig, setHeaderConfig ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(false);
+
+  const canDeactivateUsers = user.deactivate('users');
+  const canActivateUsers = user.activate('users');
+
+  /** **********************
+   * Event handlers
+   *********************** */
+
+  // Send invitation for a new user
   const onUserInvite = async (payload) => {
     setIsLoading(true);
 
@@ -42,6 +52,7 @@ const UsersPage = (props) => {
     }
   };
 
+  // Deactivates one or multiple users
   const onUserDeactivate = async (records) => {
     if (!canDeactivateUsers) return;
     setIsLoading(true);
@@ -50,7 +61,8 @@ const UsersPage = (props) => {
 
     try {
       await UsersAPI.deactivateUser(ids);
-      setUsers(usersState.filter(user => !ids.includes(user._id)));
+      setHeaderConfig([]);
+      refetchQuery();
     } catch (error) {
       handleError(error, ERROR_MESSAGES.USERS_DEACTIVATE_USERS);
     } finally {
@@ -58,17 +70,50 @@ const UsersPage = (props) => {
     }
   };
 
-  // const onEdit = async (payload) => {
-  //   setIsLoading(true);
+  // Aactivates one or multiple users
+  const onUserActivate = async (records) => {
+    if (!canActivateUsers) return;
+    setIsLoading(true);
 
-  //   UsersAPI.update(payload)
-  //     .then(() => {
-  //       alert.success(SUCCESS_MESSAGES.USERS_EDIT_USER);
-  //     })
-  //     .catch(error => handleError(error, ERROR_MESSAGES.USERS_EDIT_USER))
-  //     .finally(() => setIsLoading(false));
-  // };
+    const ids = records.map(id => id._id);
 
+    try {
+      await UsersAPI.activateUser(ids);
+      setHeaderConfig([]);
+      refetchQuery();
+    } catch (error) {
+      handleError(error, ERROR_MESSAGES.USERS_ACTIVATE_USERS);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Set correct header config for selected users
+  const onUsersSelect = (users) => {
+    const allInactive = users.every(item => !item.active);
+    if (allInactive) {
+      return setHeaderConfig([{
+        icon: 'check_circle',
+        action: onUserActivate,
+      }]);
+    }
+
+    const allActive = users.every(item => item.active);
+    if (allActive) {
+      return setHeaderConfig([{
+        icon: 'blocked',
+        action: onUserDeactivate,
+      }]);
+    }
+
+    setHeaderConfig([]);
+  };
+
+  /** **********************
+   * Helpers & Configs
+   *********************** */
+
+  // Redirect to user dashboard if permited
   const rowEvents = {
     onClick: (e, row) => {
       if (!user.read('user')) return;
@@ -84,11 +129,6 @@ const UsersPage = (props) => {
     return row.active ? '' : 'inactive';
   };
 
-  const headerConfig = [{
-    icon: 'block',
-    action: onUserDeactivate,
-  }];
-
   return (
     <>
       <Layout activePage={PAGE_NAMES.USERS} user={user}>
@@ -101,7 +141,6 @@ const UsersPage = (props) => {
           </div>
 
           <InviteUserDrawer
-            user={user}
             onApply={onUserInvite}
             canInviteAdmin={user.invite('users')}
           />
@@ -126,6 +165,7 @@ const UsersPage = (props) => {
             headerConfig={headerConfig}
             rowClasses={setRowClasses}
             rowEvents={rowEvents}
+            onSelect={onUsersSelect}
           />
         </Layout.Content>
 
