@@ -9,7 +9,11 @@ class UsersApi extends ApiService {
   }
 
   deactivateUser = (ids) => {
-    return this.$http.put('/api/users', { ids });
+    return this.$http.patch('/api/users', { ids, active: false });
+  }
+
+  activateUser = (ids) => {
+    return this.$http.patch('/api/users', { ids, active: true });
   }
 
   invite = (email = '', role = '') => {

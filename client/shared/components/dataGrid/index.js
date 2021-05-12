@@ -8,7 +8,7 @@ import * as utils from './utils';
 const { checkboxRenderer, headerCheckboxRenderer, sortingConfig } = utils;
 
 const DataGrid = (props) => {
-  const { data, rowClasses, rowEvents, headerConfig } = props;
+  const { data, rowClasses, rowEvents, headerConfig, onSelect } = props;
   const [ selectedRecords, setSelectedRecords ] = useState([]);
 
   // eslint-disable-next-line
@@ -32,33 +32,68 @@ const DataGrid = (props) => {
         { headerConfig.map(item => (
           <span
             onClick={() => item.action(selectedRecords)}
-            className="material-icons"
+            className="material-icons cur-pointer"
           >{ item.icon }</span>
         ))}
       </div>
     );
   };
-
   // Columns config
-  const columns = props.columns.map(item => ({
-    ...item,
-    ...(item.sort && sortingConfig),
-    ...(item.formatter && { formatter: utils[`${item.formatter}Formatter`] }),
-    ...(item.hideHeadingOnSelect && { headerAttrs: { hidden: !!selectedRecords.length } }),
-    ...(selectedRecords.length && { headerFormatter, selectedRecords }),
-  }));
+  const columns = props.columns.map(item => {
+    // clone item so we don't override original one
+    const column = { ...item };
 
-  const onSelect = (row, isSelect) => {
+    // add sorting config if column is sortable
+    if (column.sort && !selectedRecords.length) {
+      column.sortingConfig = sortingConfig;
+    }
+
+    // get column specific formatter
+    if (column.formatter) {
+      column.formatter = utils[`${column.formatter}Formatter`];
+    }
+
+    // hide column header when any row is selected if configured
+    // this will show actions in the header
+    if (column.hideHeadingOnSelect) {
+      column.headerAttrs = {
+        hidden: !!selectedRecords.length,
+      };
+    }
+
+    // this is the wierd way to make actions column not sortable
+    // we need it to remove `sorted` class from this column
+    // trying to remove sorting from all columns breaks selection functionality
+    if (!column.hideHeadingOnSelect && selectedRecords.length) {
+      column.sort = false;
+    }
+
+    // add some meta like header formatter and turn off sorting if any row is selected
+    if (selectedRecords.length) {
+      column.headerFormatter = headerFormatter;
+      column.selectedRecords = selectedRecords;
+    }
+
+    return column;
+  });
+
+  const onSelectHandler = (row, isSelect) => {
     setSelectedRecords(records => {
+      let updatedRecords;
+
       if (isSelect) {
-        return [...records, row];
+        updatedRecords = [...records, row]; // merge selected to records in state
+      } else {
+        updatedRecords = records.filter(record => record._id !== row._id); // filter out selected records
       }
-      return records.filter(record => record._id !== row._id);
+      onSelect(updatedRecords);
+      return updatedRecords;
     });
   };
 
   const onSelectAll = (isSelect, rows) => {
     setSelectedRecords(isSelect ? rows : []);
+    onSelect(rows);
   };
 
   const onTableChange = (type, config) => {
@@ -69,7 +104,7 @@ const DataGrid = (props) => {
     mode: 'checkbox',
     bgColor: '#BEE7CF',
     clickToSelect: false,
-    onSelect,
+    onSelect: onSelectHandler,
     onSelectAll,
     selectionHeaderRenderer: headerCheckboxRenderer,
     selectionRenderer: checkboxRenderer,
@@ -131,6 +166,7 @@ DataGrid.propTypes = {
   rowClasses: func,
   rowEvents: shape,
   headerConfig: arrayOf(object),
+  onSelect: func,
 };
 
 DataGrid.defaultProps = {
@@ -138,6 +174,7 @@ DataGrid.defaultProps = {
   rowClasses: () => {},
   rowEvents: {},
   headerConfig: [],
+  onSelect: () => {},
 };
 
 export default DataGrid;

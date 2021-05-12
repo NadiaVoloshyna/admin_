@@ -1,9 +1,5 @@
-const USER_ROLES = {
-  SUPER: 'super',
-  ADMIN: 'admin',
-  AUTHOR: 'author',
-  REVIEWER: 'reviewer',
-};
+const USER_ROLES = require('./roles');
+const PATTERNS = require('./patterns');
 
 const LOG_TYPE = {
   API: 'api',
@@ -18,6 +14,7 @@ const PERSON_POST_STATUSES = {
   NEW: 'NEW',
   IN_PROGRESS: 'IN_PROGRESS',
   IN_REVIEW: 'IN_REVIEW',
+  IN_EDIT: 'IN_EDIT',
   READY: 'READY',
   ON_HOLD: 'ON_HOLD',
   PUBLISHED: 'PUBLISHED',
@@ -37,4 +34,5 @@ module.exports = {
   HTTP_HEADERS,
   PERSON_POST_STATUSES,
   ASSET_TYPES,
+  PATTERNS,
 };

@@ -8,13 +8,15 @@ const handle400 = (req, res, next) => {
   });
 
   if (errors.array().length) {
-    const errorToLog = createErrorPayload(
-      req,
-      JSON.stringify(errors.array()),
-      [400, 'badRequest'],
-    );
+    errors.array().forEach(error => {
+      const errorToLog = createErrorPayload(
+        req,
+        { message: error },
+        [400, 'badRequest'],
+      );
 
-    logger.error(errorToLog);
+      logger.error(JSON.stringify(errorToLog));
+    });
 
     const responseBody = createResponseBody(errors.array(), 'badRequest');
     return res.status(400).send(responseBody);
