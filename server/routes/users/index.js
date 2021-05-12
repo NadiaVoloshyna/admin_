@@ -7,5 +7,6 @@ require('./users.[id].roles.patch')(router);
 require('./users.get')(router);
 require('./users.[id].get')(router);
 require('./users.put')(router);
+require('./users.status.patch')(router);
 
 module.exports = router;
