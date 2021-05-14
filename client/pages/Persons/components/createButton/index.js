@@ -32,8 +32,12 @@ const CreateButton = ({ onCreate }) => {
   };
 
   const onClose = () => {
-    setValue('');
-    setIsOpen(false);
+    // When we click `save` button input looses focus to quickly
+    // thus there is not time to use the value to create new person
+    setTimeout(() => {
+      setValue('');
+      setIsOpen(false);
+    }, 200);
   };
 
   return (
