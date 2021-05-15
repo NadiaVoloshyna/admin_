@@ -49,6 +49,15 @@ const queryGenerators = {
       },
     };
   },
+  status: ({ status }) => {
+    const values = status.split(',');
+
+    return {
+      status: {
+        $in: values,
+      },
+    };
+  },
   type: ({ type }) => {
     const values = type.split(',');
 
@@ -83,7 +92,8 @@ const queryGenerators = {
   }),
 };
 
-function construct(generators, query, searchBy) {
+function construct(generators, query) {
+  const { searchBy } = query;
   return Object.entries(generators).reduce((acc, [key, generator]) => ({
     ...acc,
     ...(typeof query[key] !== 'undefined' && generator(query, searchBy)),

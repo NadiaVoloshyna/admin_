@@ -17,10 +17,10 @@ $status-colors: ();
 // stylelint-disable-next-line scss/dollar-variable-default
 $status-colors: (
   "new":       $color-new,
-  "progress":  $color-progress,
-  "review":    $color-review,
+  "in_progress":  $color-progress,
+  "in_review":    $color-review,
   "ready":     $color-ready,
-  "hold":      $color-hold,
+  "on_hold":      $color-hold,
   "published": $color-published,
 );
 
