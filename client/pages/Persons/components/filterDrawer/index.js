@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import _upperFirst from 'lodash/upperFirst';
 import useListDataFetch from 'shared/hooks/useListDataFetch';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import BootstrapForm from 'react-bootstrap/Form';
 import { Form, Field } from 'react-final-form';
+import { PERSON_POST_STATUSES } from 'common/constants';
 import Drawer from 'shared/components/drawer';
 import UsersApi from 'pages/Users/api';
 import UserSelect from '../userSelect';
 
 import styles from './index.module.scss';
-
-const STATUSES = {
-  NEW:          'New',
-  IN_PROGRESS:  'In progress',
-  IN_REVIEW:    'In review',
-  READY:        'Ready',
-  ON_HOLD:      'On Hold',
-  PUBLISHED:    'Published',
-};
 
 const FilterDrawer = () => {
   let submitHandler;
@@ -124,7 +117,9 @@ const FilterDrawer = () => {
 
                   <p className="mt-4">By status</p>
                   <ListGroup>
-                    { Object.entries(STATUSES).map(([key, value]) => {
+                    { Object.entries(PERSON_POST_STATUSES).map(([key, value]) => {
+                      value = _upperFirst(value.toLowerCase()).replace('_', ' ');
+
                       return (
                         <div className={styles.listGroupItem}>
                           <ListGroup.Item key={key}>

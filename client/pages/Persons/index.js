@@ -3,6 +3,7 @@ import { shape, arrayOf, number } from 'prop-types';
 import { useRouter } from 'next/router';
 import Layout from 'shared/components/layout';
 import useErrorHandler from 'shared/hooks/useErrorHandler';
+import useListDataFetch from 'shared/hooks/useListDataFetch';
 import { ERROR_MESSAGES, PAGE_NAMES } from 'shared/constants';
 import DuplicateModal from 'pages/Persons/components/duplicateModal';
 import PersonsApi from 'pages/Persons/api';
@@ -12,49 +13,65 @@ import Pagination from 'shared/components/pagination';
 import Pager from 'shared/components/pager';
 import SearchField from 'shared/components/searchField';
 import DataGrid from 'shared/components/dataGrid';
-import UAPrompt from '../../shared/components/prompt/index';
+import UAPrompt from 'shared/components/prompt';
 import columns from './columns';
 import CreateButton from './components/createButton';
 import FilterPersonsDrawer from './components/filterDrawer';
 
 const PersonsPage = ({ user, persons, pages }) => {
   const handleError = useErrorHandler();
+  const { refetchQuery } = useListDataFetch();
   const router = useRouter();
   const [ isLoading, setIsLoading ] = useState(false);
   const [ isPersonExist, setIsPersonExist ] = useState(false);
   const [ duplicate, setDuplicate ] = useState({});
-  const [ personsState, setPersons ] = useState(persons);
+  const [ personsToDelete, setPersonsToDelete ] = useState([]);
   const [ isShouldDeletePersonsModalOpen, setIsOpen ] = useState(false);
 
-  const canCreatePerson = user.create('persons');
-  const canDeletePerson = user.deleteOwn('persons');
+  const canCreate = user.create('persons');
+  const canDelete = user.deleteOwn('persons');
 
   const onDelete = async () => {
-    const ids = personsState.map(item => item._id);
-    if (!canDeletePerson) return;
+    if (!canDelete) return;
+    setIsOpen(false);
     setIsLoading(true);
 
     try {
+      const ids = personsToDelete.map(item => item._id);
       await PersonsApi.deletePersons(ids);
+      await refetchQuery();
     } catch (error) {
       handleError(error, ERROR_MESSAGES.PERSONS_DELETE_PERSONS);
     } finally {
       setIsLoading(false);
-      setIsOpen(!isShouldDeletePersonsModalOpen);
     }
   };
 
   const showModal = (records) => {
-    const ids = records.map(item => item._id);
-    setPersons(personsState.filter(person => ids.includes(person._id)));
-    setIsOpen(!isShouldDeletePersonsModalOpen);
+    setPersonsToDelete(records);
+    setIsOpen(true);
   };
 
-  const toggleModal = () => {
-    setIsOpen(!isShouldDeletePersonsModalOpen);
+  const hideModal = () => {
+    setIsOpen(false);
+  };
+
+  const deletePersonsModalBody = () => {
+    return (
+      <>
+        <ul>
+          { personsToDelete.map(item => <li key={item.name} className="text-dark">{ item.name }</li>) }
+        </ul>
+        <div className="text-danger">
+          Видаливши персони ви також видалите документ цієї персони а також файли які належать цій персоні
+        </div>
+      </>
+    );
   };
 
   const onPersonCreate = async (name) => {
+    if (!canCreate) return;
+
     setIsLoading(true);
 
     try {
@@ -64,16 +81,16 @@ const PersonsPage = ({ user, persons, pages }) => {
         window.location = `persons/${person.id}`;
         return;
       }
-
-      if (status === 409) {
+    } catch (error) {
+      if (error.response.status === 409) {
         setDuplicate({
-          id: person.id,
-          name: person.name,
+          id: error.response.data.id,
+          name: error.response.data.name,
         });
         setIsPersonExist(true);
+      } else {
+        handleError(error, ERROR_MESSAGES.PERSONS_CREATE_PERSON);
       }
-    } catch (error) {
-      handleError(error, ERROR_MESSAGES.PERSONS_CREATE_PERSON);
     } finally {
       setIsLoading(false);
     }
@@ -106,14 +123,13 @@ const PersonsPage = ({ user, persons, pages }) => {
             <FilterPersonsDrawer />
           </div>
 
-          { canCreatePerson && <CreateButton onCreate={onPersonCreate} /> }
+          { canCreate && <CreateButton onCreate={onPersonCreate} /> }
         </Layout.Navbar>
 
         <Layout.Content isLoading={isLoading}>
           <DataGrid
             data={persons}
             columns={columns}
-            onDelete={onDelete}
             rowEvents={rowEvents}
             headerConfig={headerConfig}
           />
@@ -133,10 +149,10 @@ const PersonsPage = ({ user, persons, pages }) => {
 
       <UAPrompt
         show={isShouldDeletePersonsModalOpen}
-        titleContent={`Are you sure you want to delete ${personsState.map(item => `"${item.name}"`)} persons?`}
-        bodyContent="These items can’t be restored later."
+        titleContent="Ви дійсно хочете видалити наступні персони?"
+        bodyContent={deletePersonsModalBody}
         onSubmit={onDelete}
-        onHide={toggleModal}
+        onHide={hideModal}
       />
     </div>
   );
