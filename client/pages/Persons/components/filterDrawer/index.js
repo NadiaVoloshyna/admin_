@@ -30,10 +30,11 @@ const FilterDrawer = () => {
         const authors = [];
         const reviewers = [];
 
-        data.users.forEach(({ id, fullName, image, role }) => {
+        data.users.forEach(({ id, firstName, lastName, image, role }) => {
           const miniUser = {
             value: id,
-            label: fullName,
+            firstName,
+            lastName,
             image,
           };
 
